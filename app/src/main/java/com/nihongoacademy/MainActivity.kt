@@ -15,6 +15,7 @@ import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
 import com.nihongoacademy.ui.LoginScreen
+import com.nihongoacademy.ui.ProfileScreen
 import com.nihongoacademy.ui.RegisterScreen
 import com.nihongoacademy.ui.SettingsScreen
 import com.nihongoacademy.ui.StudyScreen
@@ -46,6 +47,7 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
         composable(Screens.Home.route) { HomeScreen(navController) }
         composable(Screens.Study.route) { StudyScreen(navController) }
+        composable(Screens.Profile.route) { ProfileScreen(navController) }
         composable(Screens.Settings.route) { SettingsScreen(navController) }
         composable(Screens.Collection.route) { CollectionScreen(navController) }
     }
@@ -58,6 +60,7 @@ sealed class Screens(val route: String) {
     data object LanguageSelection : Screens("language")
     data object Home : Screens("home")
     data object Study : Screens("study")
+    data object Profile : Screens("profile")
     data object Settings : Screens("settings")
     data object Collection : Screens("collection")
 }
