@@ -1,34 +1,53 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.nihongoacademy.model.LanguageCatalogFactory
+import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.StudyProgress
 
 @Composable
-fun ModuleOverviewScreen(navController: NavController, languageCode: String = "JA") {
-    val language = LanguageCatalogFactory.buildSupportedLanguages()
-        .firstOrNull { it.code == languageCode }
-        ?: LanguageCatalogFactory.buildSupportedLanguages().first()
+fun HomeScreen(navController: NavController, languageCode: String = "ja") {
+    val context = LocalContext.current
+    val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
+
+    LaunchedEffect(languageCode) {
+        progress = progressStore.getProgress().copy(languageCode = languageCode.uppercase())
+    }
+
+    val languageLabel = when (languageCode.lowercase()) {
+        "ja" -> "Japonés"
+        "es" -> "Español"
+        "en" -> "Inglés"
+        "fr" -> "Francés"
+        "de" -> "Alemán"
+        "pt" -> "Portugués"
+        "it" -> "Italiano"
+        "ru" -> "Ruso"
+        "ko" -> "Coreano"
+        "zh" -> "Mandarín"
+        "ar" -> "Árabe"
+        else -> languageCode.uppercase()
+    }
 
     Column(
         modifier = Modifier
@@ -37,51 +56,47 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "J
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Text("${language.name} · Módulos", style = MaterialTheme.typography.headlineMedium)
-        Text("10 módulos · 2 integradores · 2 exámenes sorpresa por módulo", style = MaterialTheme.typography.bodyLarge)
+        Text("Resumen por idioma", style = MaterialTheme.typography.headlineMedium)
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(language.modules) { module ->
-                ModuleCard(
-                    module = module,
-                    onClick = { navController.navigate("module/${module.id}") }
-                )
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(languageLabel)
+                Text("${progress.totalXp} XP · ${progress.completedModules.size} módulos completados")
+                Text("Racha: ${progress.streakDays} días")
             }
         }
-    }
-}
 
-@Composable
-private fun ModuleCard(
-    module: com.nihongoacademy.model.LanguageModule,
-    onClick: () -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
-        shape = RoundedCornerShape(18.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Módulo ${module.number}", style = MaterialTheme.typography.labelLarge)
-                if (module.isIntegrative) {
-                    Text("Integrador", style = MaterialTheme.typography.labelLarge)
-                }
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Progreso actual")
+                Text("${progress.completedModules.size}/10 módulos")
+                Text("${progress.completedLessons.size} lecciones revisadas")
             }
-            Text(module.title, style = MaterialTheme.typography.titleLarge)
-            Text(module.targetLevel, style = MaterialTheme.typography.bodyMedium)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text("• ${module.lessons.size} lecciones")
-            Text("• Examen sorpresa a la mitad")
-            Text("• Examen sorpresa final")
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Button(
+                onClick = { navController.navigate("modules/${languageCode.lowercase()}") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Estudiar")
+            }
+            Button(
+                onClick = { navController.navigate("settings") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Ajustes")
+            }
+        }
+
+        Button(
+            onClick = { navController.navigate("collection") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Colección")
         }
     }
 }
