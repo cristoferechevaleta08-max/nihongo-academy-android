@@ -44,7 +44,10 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
         "it" -> "Italiano"
         "ru" -> "Ruso"
         "ko" -> "Coreano"
-        "zh" -> "Mandarín"
+        "nl" -> "Neerlandés"
+        "hi" -> "Hindi"
+        "th" -> "Tailandés"
+        "zh", "zh-hans" -> "Mandarín"
         "ar" -> "Árabe"
         else -> languageCode.uppercase()
     }
