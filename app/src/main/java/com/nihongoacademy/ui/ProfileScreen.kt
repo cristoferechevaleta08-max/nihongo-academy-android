@@ -35,11 +35,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
+import androidx.compose.ui.platform.LocalContext
+import com.nihongoacademy.data.AuthRepository
+import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.StudyProgress
 
 @Composable
 fun ProfileScreen(navController: NavController) {
+    val context = LocalContext.current
+    val authRepository = remember { AuthRepository(context) }
+    val progressStore = remember { StudyProgressStore(context) }
+    var displayName by remember { mutableStateOf("Estudiante") }
+    var email by remember { mutableStateOf("") }
+    var progress by remember { mutableStateOf(StudyProgress()) }
     var visible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
+        val user = authRepository.currentUser()
+        displayName = user?.displayName ?: "Estudiante"
+        email = user?.email.orEmpty()
+        progress = progressStore.getProgress()
         delay(120)
         visible = true
     }
@@ -71,12 +85,13 @@ fun ProfileScreen(navController: NavController) {
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("AR", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                        Text(displayName.split(" ").mapNotNull { it.firstOrNull()?.toString() }.take(2).joinToString("").uppercase(), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                     }
 
                     Column {
-                        Text("Ana Ruiz", style = MaterialTheme.typography.titleLarge)
-                        Text("Nivel N5 · Estudiante activa", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(displayName, style = MaterialTheme.typography.titleLarge)
+                        Text(email, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Nivel ${progress.currentLevel}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -85,9 +100,9 @@ fun ProfileScreen(navController: NavController) {
                 Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("Rendimiento", style = MaterialTheme.typography.titleMedium)
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        MetricChip("86%", "Precisión")
-                        MetricChip("12", "Lecciones")
-                        MetricChip("7d", "Racha")
+                        MetricChip("${progress.totalXp}", "XP")
+                        MetricChip("${progress.completedLessons.size}", "Lecciones")
+                        MetricChip("${progress.streakDays}d", "Racha")
                     }
                 }
             }
@@ -95,8 +110,8 @@ fun ProfileScreen(navController: NavController) {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("Próximo objetivo", style = MaterialTheme.typography.titleMedium)
-                    Text("Completar bloque de saludos y presentaciones", style = MaterialTheme.typography.bodyLarge)
-                    Text("Meta: 4 sesiones esta semana", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(if (progress.completedLessons.isEmpty()) "Completa tu primera lección" else "Continúa con tu siguiente lección", style = MaterialTheme.typography.bodyLarge)
+                    Text("${progress.completedLessons.size} lecciones registradas · ${progress.xpToNextLevel} XP para el próximo nivel", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
