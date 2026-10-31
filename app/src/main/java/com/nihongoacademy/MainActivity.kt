@@ -15,6 +15,7 @@ import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
 import com.nihongoacademy.ui.LoginScreen
+import com.nihongoacademy.ui.ModuleOverviewScreen
 import com.nihongoacademy.ui.ProfileScreen
 import com.nihongoacademy.ui.RegisterScreen
 import com.nihongoacademy.ui.SettingsScreen
@@ -50,6 +51,10 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         composable(Screens.Profile.route) { ProfileScreen(navController) }
         composable(Screens.Settings.route) { SettingsScreen(navController) }
         composable(Screens.Collection.route) { CollectionScreen(navController) }
+        composable("modules/{languageCode}") { backStackEntry ->
+            val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "JA"
+            ModuleOverviewScreen(navController, languageCode)
+        }
     }
 }
 
