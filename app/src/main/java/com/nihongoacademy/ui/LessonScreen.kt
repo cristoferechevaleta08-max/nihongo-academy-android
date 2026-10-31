@@ -27,16 +27,19 @@ import com.nihongoacademy.model.StudyProgress
 import kotlinx.coroutines.launch
 
 @Composable
-fun ModuleDetailScreen(
+fun LessonScreen(
     navController: NavController,
     languageCode: String = "ja",
-    moduleId: String = "module_1"
+    moduleId: String = "module_1",
+    lessonId: String = "m1_l1"
 ) {
     val language = LanguageCatalogFactory.buildSupportedLanguages()
         .firstOrNull { it.code.equals(languageCode, ignoreCase = true) }
         ?: LanguageCatalogFactory.buildSupportedLanguages().first()
     val module = language.modules.firstOrNull { it.id == moduleId }
         ?: language.modules.first()
+    val lesson = module.lessons.firstOrNull { it.id == lessonId }
+        ?: module.lessons.first()
 
     val context = LocalContext.current
     val progressStore = remember { StudyProgressStore(context.applicationContext) }
@@ -54,39 +57,43 @@ fun ModuleDetailScreen(
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Módulo ${module.number}", style = MaterialTheme.typography.headlineMedium)
-        Text(module.title, style = MaterialTheme.typography.titleLarge)
-        Text(module.targetLevel, style = MaterialTheme.typography.bodyMedium)
+        Text("Lección: ${lesson.title}", style = MaterialTheme.typography.headlineMedium)
+        Text("Módulo ${module.number} · ${language.name}", style = MaterialTheme.typography.titleMedium)
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Lecciones del módulo")
-                module.lessons.forEach { lesson ->
-                    Button(
-                        onClick = {
-                            navController.navigate("lesson/${languageCode.lowercase()}/${module.id}/${lesson.id}")
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("${lesson.title} · ${lesson.durationMinutes} min")
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text("Tema")
+                Text(lesson.prompt, style = MaterialTheme.typography.titleLarge)
+            }
+        }
+
+        lesson.options.forEach { option ->
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        val current = progressStore.getProgress()
+                        val next = current.copy(languageCode = language.code.uppercase())
+                        progress = next
                     }
-                }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(option)
             }
         }
 
         Button(
-            onClick = {
-                coroutineScope.launch {
-                    progress = progressStore.completeModule(language.code.uppercase(), module.id)
-                }
-            },
+            onClick = { navController.navigateUp() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Marcar módulo como completado")
+            Text("Volver")
         }
 
         Text(
-            text = "Progreso actual: ${progress.completedModules.size}/${language.modules.size} módulos · ${progress.totalXp} XP",
+            text = "Progreso actual: ${progress.totalXp} XP · Nivel ${progress.currentLevel}",
             style = MaterialTheme.typography.bodyMedium
         )
     }

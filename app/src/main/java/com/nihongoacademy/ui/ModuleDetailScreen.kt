@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import com.nihongoacademy.data.StudyProgressStore
 import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.StudyProgress
-import kotlinx.coroutines.launch
 
 @Composable
 fun ModuleDetailScreen(
@@ -72,9 +71,7 @@ fun ModuleDetailScreen(
         }
 
         Button(
-            onClick = {
-                androidx.lifecycle.viewmodel.compose.viewModel
-            },
+            onClick = { /* no-op until progress saving is implemented */ },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Guardar progreso del módulo")
