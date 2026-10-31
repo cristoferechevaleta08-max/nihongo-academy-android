@@ -41,7 +41,7 @@ fun ModuleDetailScreen(
     var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
 
     LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
+        progress = progressStore.getProgress(languageCode).copy(languageCode = language.code.uppercase())
     }
 
     Column(
