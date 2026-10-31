@@ -30,7 +30,7 @@ jobs:
           gradle-version: '8.7'
 
       - name: Instalar Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Preparar SDK 35
         run: |
