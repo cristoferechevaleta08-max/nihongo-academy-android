@@ -6,11 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.nihongoacademy.data.AuthRepository
 import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
@@ -40,6 +44,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavHost(navController: NavHostController = rememberNavController()) {
+    val context = LocalContext.current
+    val authRepository = remember { AuthRepository(context) }
+
+    LaunchedEffect(Unit) {
+        if (authRepository.currentUser() != null) {
+            navController.navigate("language") {
+                popUpTo("welcome") { inclusive = true }
+                launchSingleTop = true
+            }
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = Screens.Welcome.route
