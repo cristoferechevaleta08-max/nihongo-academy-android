@@ -32,7 +32,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(navController: NavController) {
-    val repository = remember { AuthRepository(LocalContext.current) }
+    val context = LocalContext.current
+    val repository = remember { AuthRepository(context) }
     val scope = rememberCoroutineScope()
     var visibleName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
