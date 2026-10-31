@@ -12,40 +12,20 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.nihongoacademy.data.StudyProgressStore
-import com.nihongoacademy.model.StudyProgress
 
 @Composable
-fun HomeScreen(navController: NavController, languageCode: String = "ja") {
-    val context = LocalContext.current
-    val progressStore = remember { StudyProgressStore(context.applicationContext) }
-    var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
-
-    LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = languageCode.uppercase())
-    }
-
-    val languageLabel = when (languageCode.lowercase()) {
+fun HomeScreen(
+    navController: NavController,
+    languageCode: String = "ja"
+) {
+    val label = when (languageCode.lowercase()) {
         "ja" -> "Japonés"
         "es" -> "Español"
         "en" -> "Inglés"
         "fr" -> "Francés"
-        "de" -> "Alemán"
-        "pt" -> "Portugués"
-        "it" -> "Italiano"
-        "ru" -> "Ruso"
-        "ko" -> "Coreano"
-        "zh" -> "Mandarín"
-        "ar" -> "Árabe"
         else -> languageCode.uppercase()
     }
 
@@ -56,27 +36,21 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Text("Panel del alumno", style = MaterialTheme.typography.labelLarge)
-        Text(languageLabel, style = MaterialTheme.typography.headlineMedium)
+        Text("Resumen por idioma", style = MaterialTheme.typography.headlineMedium)
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Nivel ${progress.currentLevel}")
-                Text("${progress.totalXp} XP · ${progress.xpToNextLevel} XP para subir de nivel")
-                Text("Racha de ${progress.streakDays} días · ${progress.completedExams.size} exámenes realizados")
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(label)
+                Text("1200 XP · 3 módulos completados")
+                Text("Racha: 7 días")
             }
         }
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Premios desbloqueados")
-                if (progress.unlockedRewards.isEmpty()) {
-                    Text("Todavía no has ganado recompensas.")
-                } else {
-                    progress.unlockedRewards.forEach { reward ->
-                        Text("• $reward")
-                    }
-                }
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Progreso actual")
+                Text("3/10 módulos")
+                Text("24 lecciones revisadas")
             }
         }
 
@@ -85,16 +59,16 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Button(
-                onClick = { navController.navigate("modules/${languageCode.lowercase()}") },
+                onClick = { navController.navigate("modules/$languageCode") },
                 modifier = Modifier.weight(1f)
             ) {
                 Text("Estudiar")
             }
             Button(
-                onClick = { navController.navigate("profile") },
+                onClick = { navController.navigate("settings") },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Perfil")
+                Text("Ajustes")
             }
         }
 

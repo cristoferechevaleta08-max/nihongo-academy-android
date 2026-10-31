@@ -48,30 +48,25 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         composable(Screens.Login.route) { LoginScreen(navController) }
         composable(Screens.Register.route) { RegisterScreen(navController) }
         composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
-
         composable("home/{languageCode}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-            HomeScreen(navController, code)
+            val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            HomeScreen(navController, languageCode)
         }
-
         composable("modules/{languageCode}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-            ModuleOverviewScreen(navController, code)
+            val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            ModuleOverviewScreen(navController, languageCode)
         }
-
         composable("module/{languageCode}/{moduleId}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "ja"
             val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
-            ModuleDetailScreen(navController, code, moduleId)
+            ModuleDetailScreen(navController, languageCode, moduleId)
         }
-
         composable("lesson/{languageCode}/{moduleId}/{lessonId}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            val languageCode = backStackEntry.arguments?.getString("languageCode") ?: "ja"
             val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
-            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: "m1_l1"
-            LessonScreen(navController, code, moduleId, lessonId)
+            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: "lesson_1"
+            LessonScreen(navController, languageCode, moduleId, lessonId)
         }
-
         composable(Screens.Study.route) { StudyScreen(navController) }
         composable(Screens.Profile.route) { ProfileScreen(navController) }
         composable(Screens.Settings.route) { SettingsScreen(navController) }

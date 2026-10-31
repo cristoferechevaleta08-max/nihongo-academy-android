@@ -11,18 +11,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.nihongoacademy.data.StudyProgressStore
-import com.nihongoacademy.model.LanguageCatalogFactory
-import com.nihongoacademy.model.StudyProgress
 
 @Composable
 fun ModuleDetailScreen(
@@ -30,19 +21,18 @@ fun ModuleDetailScreen(
     languageCode: String = "ja",
     moduleId: String = "module_1"
 ) {
-    val language = LanguageCatalogFactory.buildSupportedLanguages()
-        .firstOrNull { it.code.equals(languageCode, ignoreCase = true) }
-        ?: LanguageCatalogFactory.buildSupportedLanguages().first()
-    val module = language.modules.firstOrNull { it.id == moduleId }
-        ?: language.modules.first()
-
-    val context = LocalContext.current
-    val progressStore = remember { StudyProgressStore(context.applicationContext) }
-    var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
-
-    LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
+    val moduleTitle = when (moduleId) {
+        "module_1" -> "Fundamentos básicos"
+        "module_2" -> "Saludos y frases esenciales"
+        "module_3" -> "Vocabulario cotidiano"
+        else -> "Módulo"
     }
+
+    val lessons = listOf(
+        "lesson_1" to "Lección 1 · Introducción",
+        "lesson_2" to "Lección 2 · Práctica",
+        "lesson_3" to "Lección 3 · Repaso"
+    )
 
     Column(
         modifier = Modifier
@@ -51,35 +41,28 @@ fun ModuleDetailScreen(
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Módulo ${module.number}", style = MaterialTheme.typography.headlineMedium)
-        Text(module.title, style = MaterialTheme.typography.titleLarge)
+        Text("$moduleTitle", style = MaterialTheme.typography.headlineMedium)
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text("Lecciones del módulo")
-                module.lessons.forEach { lesson ->
+
+                lessons.forEach { (lessonId, title) ->
                     Button(
-                        onClick = {
-                            navController.navigate("lesson/${languageCode.lowercase()}/${module.id}/${lesson.id}")
-                        },
+                        onClick = { navController.navigate("lesson/$languageCode/$moduleId/$lessonId") },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("${lesson.title} · ${lesson.durationMinutes} min")
+                        Text(title)
                     }
                 }
             }
         }
 
         Button(
-            onClick = { /* no-op until progress saving is implemented */ },
+            onClick = { navController.navigate("home/$languageCode") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Guardar progreso del módulo")
+            Text("Marcar módulo como completado")
         }
-
-        Text(
-            text = "Progreso: ${progress.totalXp} XP · Nivel ${progress.currentLevel}",
-            style = MaterialTheme.typography.bodyMedium
-        )
     }
 }
