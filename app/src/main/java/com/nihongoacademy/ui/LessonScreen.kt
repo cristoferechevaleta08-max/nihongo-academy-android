@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,68 +34,111 @@ fun LessonScreen(
     moduleId: String = "module_1",
     lessonId: String = "m1_l1"
 ) {
-    val language = LanguageCatalogFactory.buildSupportedLanguages()
-        .firstOrNull { it.code.equals(languageCode, ignoreCase = true) }
-        ?: LanguageCatalogFactory.buildSupportedLanguages().first()
-    val module = language.modules.firstOrNull { it.id == moduleId }
-        ?: language.modules.first()
-    val lesson = module.lessons.firstOrNull { it.id == lessonId }
-        ?: module.lessons.first()
-
+    val languages = remember { LanguageCatalogFactory.buildSupportedLanguages() }
+    val language = languages.firstOrNull { it.code.equals(languageCode, ignoreCase = true) } ?: languages.first()
+    val module = language.modules.firstOrNull { it.id == moduleId } ?: language.modules.first()
+    val lesson = module.lessons.firstOrNull { it.id == lessonId } ?: module.lessons.first()
     val context = LocalContext.current
     val progressStore = remember { StudyProgressStore(context.applicationContext) }
-    var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
-    val coroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
-    LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
+    var selectedAnswer by remember(lesson.id) { mutableStateOf("") }
+    var checked by remember(lesson.id) { mutableStateOf(false) }
+    var saving by remember { mutableStateOf(false) }
+    var saveError by remember { mutableStateOf<String?>(null) }
+    var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code)) }
+
+    LaunchedEffect(language.code) {
+        progress = progressStore.getProgress().copy(languageCode = language.code)
     }
 
+    val isCorrect = selectedAnswer == lesson.correctAnswer
+
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(20.dp),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Lección: ${lesson.title}", style = MaterialTheme.typography.headlineMedium)
-        Text("Módulo ${module.number} · ${language.name}", style = MaterialTheme.typography.titleMedium)
+        Text("Lección · ${language.name}", style = MaterialTheme.typography.labelLarge)
+        Text(lesson.title, style = MaterialTheme.typography.headlineMedium)
+        Text(lesson.description, style = MaterialTheme.typography.bodyLarge)
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Text("Tema")
+            Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text("Comprueba lo aprendido", style = MaterialTheme.typography.labelLarge)
                 Text(lesson.prompt, style = MaterialTheme.typography.titleLarge)
+                lesson.options.forEach { option ->
+                    OutlinedButton(
+                        onClick = { if (!checked) selectedAnswer = option },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !checked
+                    ) {
+                        Text(if (selectedAnswer == option) "✓  $option" else option)
+                    }
+                }
             }
         }
 
-        lesson.options.forEach { option ->
-            Button(
-                onClick = {
-                    coroutineScope.launch {
-                        val current = progressStore.getProgress()
-                        val next = current.copy(languageCode = language.code.uppercase())
-                        progress = next
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(option)
+        if (checked) {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        if (isCorrect) "¡Respuesta correcta!" else "Vamos a reforzarlo",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = if (isCorrect) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                    )
+                    Text("Respuesta: ${lesson.correctAnswer}")
+                    Text(lesson.explanation)
+                    Text(if (isCorrect) "+10 XP" else "Puedes volver a intentarlo en otra sesión.")
+                    saveError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                }
             }
         }
 
         Button(
-            onClick = { navController.navigateUp() },
+            onClick = {
+                if (!checked && selectedAnswer.isNotBlank()) {
+                    checked = true
+                    saving = true
+                    scope.launch {
+                        runCatching {
+                            progress = progressStore.recordLessonResult(
+                                languageCode = language.code,
+                                moduleId = module.id,
+                                lessonId = lesson.id,
+                                correctAnswers = if (isCorrect) 1 else 0,
+                                totalQuestions = 1
+                            )
+                        }.onFailure {
+                            saveError = "No se pudo guardar el progreso. Inténtalo de nuevo."
+                        }
+                        saving = false
+                    }
+                } else if (checked) {
+                    val nextLesson = module.lessons.firstOrNull { it.id != lesson.id }
+                    if (nextLesson != null) {
+                        navController.navigate("lesson/${languageCode.lowercase()}/${module.id}/${nextLesson.id}")
+                    } else {
+                        navController.navigateUp()
+                    }
+                }
+            },
+            enabled = if (checked) !saving else selectedAnswer.isNotBlank(),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Volver")
+            Text(when {
+                saving -> "Guardando..."
+                checked -> "Continuar"
+                else -> "Comprobar respuesta"
+            })
         }
 
         Text(
-            text = "Progreso actual: ${progress.totalXp} XP · Nivel ${progress.currentLevel}",
-            style = MaterialTheme.typography.bodyMedium
+            "Progreso guardado · ${progress.totalXp} XP · Nivel ${progress.currentLevel}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        OutlinedButton(onClick = { navController.navigateUp() }, modifier = Modifier.fillMaxWidth()) {
+            Text("Volver al módulo")
+        }
     }
 }
