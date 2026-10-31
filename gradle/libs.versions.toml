@@ -13,7 +13,7 @@ material3 = "1.6.8"
 coroutines = "1.7.0"
 turbine = "1.2.0"
 junit = "4.13.2"
-truth = "1.4.2"
+truth = "1.4.2"\ngson = "2.11.0"
 ksp = "2.0.20-1.0.25"
 
 [libraries]
@@ -39,7 +39,7 @@ org-jetbrains-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kot
 org-jetbrains-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 app-cash-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 junit = { module = "junit:junit", version.ref = "junit" }
-com-google-truth = { module = "com.google.truth:truth", version.ref = "truth" }
+com-google-truth = { module = "com.google.truth:truth", version.ref = "truth" }\ngson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
