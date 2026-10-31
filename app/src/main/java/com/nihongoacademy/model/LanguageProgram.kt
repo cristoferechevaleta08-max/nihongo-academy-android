@@ -125,17 +125,17 @@ object LanguageCatalogFactory {
             val midExam = SurpriseExam(
                 id = "m${moduleNumber}_mid",
                 type = SurpriseExamType.MID,
-                title = "Examen sorpresa a la mitad",
+                title = "Evaluación de lectura · ${content.first.title}",
                 questions = listOf(
                     ExamQuestion(
                         id = "q_mid_$moduleNumber",
                         module = ExamModuleType.READING,
                         difficulty = ExamDifficulty.BASIC,
-                        prompt = "Pregunta del examen sorpresa de mitad de módulo $moduleNumber.",
-                        options = listOf("Opción A", "Opción B", "Opción C", "Opción D"),
-                        correctAnswer = "Opción A",
-                        feedback = "Respuesta correcta. Este módulo está funcionando bien.",
-                        hint = "Revisa la estructura del bloque actual."
+                        prompt = content.first.prompt,
+                        options = content.first.options,
+                        correctAnswer = content.first.answer,
+                        feedback = content.first.explanation,
+                        hint = content.first.description
                     )
                 )
             )
@@ -143,17 +143,17 @@ object LanguageCatalogFactory {
             val finalExam = SurpriseExam(
                 id = "m${moduleNumber}_final",
                 type = SurpriseExamType.FINAL,
-                title = "Examen sorpresa final",
+                title = "Evaluación final · ${content.second.title}",
                 questions = listOf(
                     ExamQuestion(
                         id = "q_final_$moduleNumber",
-                        module = ExamModuleType.WRITING,
+                        module = ExamModuleType.READING,
                         difficulty = ExamDifficulty.INTERMEDIATE,
-                        prompt = "Pregunta de aplicación final del módulo $moduleNumber.",
-                        options = emptyList(),
-                        correctAnswer = "Respuesta esperada del módulo",
-                        feedback = "Correcto. Has aplicado bien lo visto en el módulo.",
-                        hint = "Usa la estructura aprendida en este bloque."
+                        prompt = content.second.prompt,
+                        options = content.second.options,
+                        correctAnswer = content.second.answer,
+                        feedback = content.second.explanation,
+                        hint = content.second.description
                     )
                 )
             )
