@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,10 +33,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.ui.platform.LocalContext
+import com.nihongoacademy.data.AuthRepository
 import kotlinx.coroutines.delay
 
 @Composable
 fun SettingsScreen(navController: NavController) {
+    val context = LocalContext.current
+    val authRepository = remember { AuthRepository(context) }
+    val scope = rememberCoroutineScope()
     var romajiEnabled by remember { mutableStateOf(true) }
     var paperGridEnabled by remember { mutableStateOf(false) }
     var reduceMotion by remember { mutableStateOf(false) }
@@ -108,7 +114,10 @@ fun SettingsScreen(navController: NavController) {
                 }
             }
 
-            Button(onClick = { navController.navigate("welcome") }, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = {
+                authRepository.logout()
+                navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
+            }, modifier = Modifier.fillMaxWidth()) {
                 Text("Cerrar sesión")
             }
         }
