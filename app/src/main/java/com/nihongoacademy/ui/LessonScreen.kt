@@ -49,7 +49,7 @@ fun LessonScreen(
     var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code)) }
 
     LaunchedEffect(language.code) {
-        progress = progressStore.getProgress().copy(languageCode = language.code)
+        progress = progressStore.getProgress(languageCode).copy(languageCode = language.code)
     }
 
     val isCorrect = selectedAnswer == lesson.correctAnswer
