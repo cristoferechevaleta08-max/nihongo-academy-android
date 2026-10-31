@@ -1,38 +1,51 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.nihongoacademy.model.LanguageEntry
+import com.nihongoacademy.repository.LanguageCatalogRepository
 
 @Composable
-fun LanguageSelectionScreen(navController: NavController) {
-    val languages = listOf(
-        "日本語" to "JA",
-        "English" to "EN",
-        "Español" to "ES",
-        "中文" to "ZH",
-        "हिन्दी" to "HI",
-        "العربية" to "AR",
-        "Français" to "FR",
-        "Português" to "PT",
-        "বাংলা" to "BN",
-        "Русский" to "RU",
-        "Deutsch" to "DE",
-        "한국어" to "KO",
-        "Italiano" to "IT",
-        "Türkçe" to "TR",
-        "Bahasa" to "ID"
+fun LanguageSelectionScreen(
+    navController: NavController,
+    repository: LanguageCatalogRepository? = null
+) {
+    val fakeLanguages = listOf(
+        LanguageEntry("en", "Inglés", "English", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("zh-Hans", "Mandarín", "中文", "Han", "LTR", listOf("hanzi", "pinyin")),
+        LanguageEntry("es", "Español", "Español", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("hi", "Hindi", "हिन्दी", "Devanagari", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ar", "Árabe", "العربية", "Arabic", "RTL", listOf("vocabulary", "phrases")),
+        LanguageEntry("fr", "Francés", "Français", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("pt", "Portugués", "Português", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("bn", "Bengalí", "বাংলা", "Bengali", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ru", "Ruso", "Русский", "Cyrillic", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("de", "Alemán", "Deutsch", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ja", "Japonés", "日本語", "Kana/Kanji", "LTR", listOf("hiragana", "katakana", "romaji", "n5")),
+        LanguageEntry("ko", "Coreano", "한국어", "Hangul", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("it", "Italiano", "Italiano", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("tr", "Turco", "Türkçe", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("id", "Indonesio", "Bahasa Indonesia", "Latin", "LTR", listOf("vocabulary", "phrases"))
     )
 
     LazyVerticalGrid(
@@ -44,13 +57,42 @@ fun LanguageSelectionScreen(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        items(languages.size) { index ->
-            val (native, code) = languages[index]
-            Card(onClick = { navController.navigate("home") }) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(native, style = MaterialTheme.typography.titleMedium)
-                    Text(code, style = MaterialTheme.typography.labelMedium)
-                }
+        items(fakeLanguages) { entry ->
+            LanguageCard(
+                entry = entry,
+                onClick = { navController.navigate("home") }
+            )
+        }
+    }
+}
+
+@Composable
+private fun LanguageCard(
+    entry: LanguageEntry,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = entry.nameNative,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = entry.code.uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

@@ -3,9 +3,12 @@ package com.nihongoacademy.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,19 +23,40 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         Text("Resumen por idioma", style = MaterialTheme.typography.headlineMedium)
-        Text("Japonés • 82%", style = MaterialTheme.typography.bodyLarge)
-        Button(onClick = { navController.navigate("study") }) {
-            Text("Estudiar")
+
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Japonés")
+                Text("82% precisión · 12 lecciones completadas")
+                Text("Racha: 7 días")
+            }
         }
-        Button(onClick = { navController.navigate("settings") }) {
-            Text("Ajustes")
+
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Español")
+                Text("68% precisión · 5 lecciones completadas")
+                Text("Racha: 3 días")
+            }
         }
-        Button(onClick = { navController.navigate("collection") }) {
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Button(onClick = { navController.navigate("study") }, modifier = Modifier.weight(1f)) {
+                Text("Estudiar")
+            }
+            Button(onClick = { navController.navigate("settings") }, modifier = Modifier.weight(1f)) {
+                Text("Ajustes")
+            }
+        }
+
+        Button(onClick = { navController.navigate("collection") }, modifier = Modifier.fillMaxWidth()) {
             Text("Colección")
         }
     }

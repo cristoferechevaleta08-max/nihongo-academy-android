@@ -8,3 +8,12 @@ data class LanguageEntry(
     val direction: String,
     val modules: List<String>
 )
+
+data class Lesson(
+    val id: String,
+    val title: String,
+    val prompt: String,
+    val options: List<String>,
+    val correctAnswer: String,
+    val languageCode: String
+)

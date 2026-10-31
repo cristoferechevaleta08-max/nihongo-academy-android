@@ -1,8 +1,8 @@
 package com.nihongoacademy.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.nihongoacademy.data.asset.LanguageCatalogRepository
-import com.nihongoacademy.domain.model.LanguageEntry
+import com.nihongoacademy.model.LanguageEntry
+import com.nihongoacademy.repository.LanguageCatalogRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
