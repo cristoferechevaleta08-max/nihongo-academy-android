@@ -41,7 +41,8 @@ object StudyProgressLogic {
         val safeTotal = totalQuestions.coerceAtLeast(1)
         val safeCorrect = correctAnswers.coerceIn(0, safeTotal)
         val ratio = safeCorrect.toFloat() / safeTotal.toFloat()
-        val xpEarned = if (ratio >= 1f) 10 else 0
+        val alreadyCompleted = lessonId in progress.completedLessons
+        val xpEarned = if (ratio >= 1f && !alreadyCompleted) 10 else 0
         val now = System.currentTimeMillis()
         val updatedLessons = progress.completedLessons + lessonId
         val updatedResults = (progress.recentResults + StudyResult(
@@ -54,10 +55,15 @@ object StudyProgressLogic {
             isExam = false
         )).takeLast(10)
 
+        val newTotalXp = progress.totalXp + xpEarned
+        val nextLevel = calculateLevel(newTotalXp)
         val updatedProgress = progress.copy(
             languageCode = languageCode,
             completedLessons = updatedLessons,
-            totalXp = progress.totalXp + xpEarned,
+            totalXp = newTotalXp,
+            currentLevel = nextLevel,
+            xpToNextLevel = calculateXpToNextLevel(newTotalXp),
+            unlockedRewards = buildRewards(nextLevel, progress.unlockedRewards),
             lastStudyDate = now,
             recentResults = updatedResults
         )
