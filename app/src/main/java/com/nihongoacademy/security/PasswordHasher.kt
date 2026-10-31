@@ -1,5 +1,6 @@
 package com.nihongoacademy.security
 
+import java.security.MessageDigest
 import java.security.SecureRandom
 import java.security.spec.KeySpec
 import javax.crypto.SecretKeyFactory
@@ -19,14 +20,13 @@ class PasswordHasher {
         secureRandom.nextBytes(salt)
         val spec: KeySpec = PBEKeySpec(password.toCharArray(), salt, 310_000, 256)
         val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
-        val hash = factory.generateSecret(spec).encoded
-        return PasswordHash(salt, hash, 310_000)
+        return PasswordHash(salt, factory.generateSecret(spec).encoded, 310_000)
     }
 
     fun verifyPassword(password: String, stored: PasswordHash): Boolean {
         val spec: KeySpec = PBEKeySpec(password.toCharArray(), stored.salt, stored.iterations, 256)
         val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
         val computed = factory.generateSecret(spec).encoded
-        return computed.contentEquals(stored.hash)
+        return MessageDigest.isEqual(computed, stored.hash)
     }
 }
