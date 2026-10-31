@@ -43,7 +43,7 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
     var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
 
     LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
+        progress = progressStore.getProgress(languageCode).copy(languageCode = language.code.uppercase())
     }
 
     val completedModuleCount = language.modules.count { module ->
