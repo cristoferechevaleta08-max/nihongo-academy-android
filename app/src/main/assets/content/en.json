@@ -1,0 +1,11 @@
+{
+  "languageCode": "en",
+  "words": [
+    {"id":"en_1","word":"hello","translation":"hola"},
+    {"id":"en_2","word":"book","translation":"libro"},
+    {"id":"en_3","word":"water","translation":"agua"}
+  ],
+  "phrases": [
+    {"id":"en_p1","text":"I am learning Japanese.","translation":"Estoy aprendiendo japonés."}
+  ]
+}

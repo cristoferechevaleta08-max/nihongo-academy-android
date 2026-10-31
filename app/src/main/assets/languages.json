@@ -1,0 +1,17 @@
+[
+  { "code": "en", "nameEs": "Inglés", "nameNative": "English", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "es", "nameEs": "Español", "nameNative": "Español", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "ja", "nameEs": "Japonés", "nameNative": "日本語", "script": "Kana/Kanji", "direction": "LTR", "modules": ["hiragana", "katakana", "romaji", "n5"] },
+  { "code": "zh-Hans", "nameEs": "Mandarín", "nameNative": "中文", "script": "Han", "direction": "LTR", "modules": ["pinyin", "hanzi"] },
+  { "code": "hi", "nameEs": "Hindi", "nameNative": "हिन्दी", "script": "Devanagari", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "ar", "nameEs": "Árabe", "nameNative": "العربية", "script": "Arabic", "direction": "RTL", "modules": ["vocabulary", "phrases"] },
+  { "code": "fr", "nameEs": "Francés", "nameNative": "Français", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "pt", "nameEs": "Portugués", "nameNative": "Português", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "bn", "nameEs": "Bengalí", "nameNative": "বাংলা", "script": "Bengali", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "ru", "nameEs": "Ruso", "nameNative": "Русский", "script": "Cyrillic", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "de", "nameEs": "Alemán", "nameNative": "Deutsch", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "ko", "nameEs": "Coreano", "nameNative": "한국어", "script": "Hangul", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "it", "nameEs": "Italiano", "nameNative": "Italiano", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "tr", "nameEs": "Turco", "nameNative": "Türkçe", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] },
+  { "code": "id", "nameEs": "Indonesio", "nameNative": "Bahasa Indonesia", "script": "Latin", "direction": "LTR", "modules": ["vocabulary", "phrases"] }
+]

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Nihongo Academy</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="register">Crear cuenta</string>
+    <string name="study">Estudiar</string>
+    <string name="settings">Ajustes</string>
+    <string name="collection">Colección</string>
+    <string name="progress">Progreso</string>
+</resources>

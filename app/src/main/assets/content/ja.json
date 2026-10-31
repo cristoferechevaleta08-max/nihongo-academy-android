@@ -1,0 +1,12 @@
+{
+  "languageCode": "ja",
+  "words": [
+    {"id":"ja_1","word":"こんにちは","kana":"こんにちは","romaji":"konnichiwa","translation":"hola"},
+    {"id":"ja_2","word":"学校","kana":"がっこう","romaji":"gakkou","translation":"escuela"},
+    {"id":"ja_3","word":"水","kana":"みず","romaji":"mizu","translation":"agua"}
+  ],
+  "phrases": [
+    {"id":"ja_p1","text":"私は学生です。","translation":"Soy estudiante."},
+    {"id":"ja_p2","text":"今日はいい天気です。","translation":"Hoy hace buen clima."}
+  ]
+}
