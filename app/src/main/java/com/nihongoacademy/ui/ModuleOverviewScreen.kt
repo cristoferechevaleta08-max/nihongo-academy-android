@@ -56,21 +56,30 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Text("Resumen por idioma", style = MaterialTheme.typography.headlineMedium)
+        Text("Panel del alumno", style = MaterialTheme.typography.labelLarge)
+        Text(languageLabel, style = MaterialTheme.typography.headlineMedium)
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(languageLabel)
-                Text("${progress.totalXp} XP · ${progress.completedModules.size} módulos completados")
-                Text("Racha: ${progress.streakDays} días")
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Nivel actual")
+                Text("${progress.totalXp} XP · Racha de ${progress.streakDays} días")
+                Text("${progress.completedModules.size} módulos completados · ${progress.completedLessons.size} lecciones revisadas")
             }
         }
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text("Progreso actual")
-                Text("${progress.completedModules.size}/10 módulos")
-                Text("${progress.completedLessons.size} lecciones revisadas")
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Historial reciente")
+                if (progress.recentResults.isEmpty()) {
+                    Text("Todavía no has realizado ninguna lección.")
+                } else {
+                    progress.recentResults.takeLast(5).forEach { result ->
+                        Text(
+                            text = "Lección ${result.lessonId} · +${result.xpEarned} XP · ${result.correctAnswers}/${result.totalQuestions}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
             }
         }
 
@@ -85,10 +94,10 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
                 Text("Estudiar")
             }
             Button(
-                onClick = { navController.navigate("settings") },
+                onClick = { navController.navigate("profile") },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Ajustes")
+                Text("Perfil")
             }
         }
 
