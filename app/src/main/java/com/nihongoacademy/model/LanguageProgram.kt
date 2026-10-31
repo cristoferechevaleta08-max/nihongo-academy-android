@@ -1,36 +1,7 @@
+
 package com.nihongoacademy.model
 
 import java.util.Locale
-
-enum class ExamModuleType(val label: String) {
-    READING("Lectura"),
-    WRITING("Escritura"),
-    LISTENING("Comprensión auditiva")
-}
-
-enum class ExamDifficulty(val label: String) {
-    BASIC("Básico"),
-    INTERMEDIATE("Intermedio"),
-    ADVANCED("Avanzado")
-}
-
-data class ExamQuestion(
-    val id: String,
-    val module: ExamModuleType,
-    val difficulty: ExamDifficulty,
-    val prompt: String,
-    val options: List<String> = emptyList(),
-    val correctAnswer: String,
-    val feedback: String,
-    val hint: String
-)
-
-data class ExamHistoryEntry(
-    val topic: String,
-    val score: Int,
-    val attempts: Int,
-    val lastReview: String
-)
 
 data class ModuleLesson(
     val id: String,
@@ -73,11 +44,13 @@ data class LanguageCatalog(
 )
 
 object LanguageCatalogFactory {
+
     private fun buildLanguageModules(): List<LanguageModule> {
         val modules = mutableListOf<LanguageModule>()
 
         for (i in 1..10) {
             val moduleNumber = i
+
             val title = when (i) {
                 1 -> "Fundamentos básicos"
                 2 -> "Saludos y frases esenciales"
@@ -119,7 +92,12 @@ object LanguageCatalogFactory {
                         module = ExamModuleType.READING,
                         difficulty = ExamDifficulty.BASIC,
                         prompt = "Pregunta del examen sorpresa de mitad de módulo $moduleNumber.",
-                        options = listOf("Opción A", "Opción B", "Opción C", "Opción D"),
+                        options = listOf(
+                            "Opción A",
+                            "Opción B",
+                            "Opción C",
+                            "Opción D"
+                        ),
                         correctAnswer = "Opción A",
                         feedback = "Respuesta correcta. Este módulo está funcionando bien.",
                         hint = "Revisa la estructura del bloque actual."
@@ -153,7 +131,11 @@ object LanguageCatalogFactory {
                 midExam = midExam,
                 finalExam = finalExam,
                 isIntegrative = moduleNumber == 9 || moduleNumber == 10,
-                targetLevel = if (moduleNumber in 9..10) "Dominio del módulo" else "Nivel básico"
+                targetLevel = if (moduleNumber in 9..10) {
+                    "Dominio del módulo"
+                } else {
+                    "Nivel básico"
+                }
             )
         }
 
