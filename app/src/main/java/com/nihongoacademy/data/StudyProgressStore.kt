@@ -25,7 +25,7 @@ class StudyProgressStore(private val context: Context) {
     suspend fun getProgress(languageCode: String = "JA"): StudyProgress {
         val preferences = context.studyProgressDataStore.data.first()
         val json = preferences[progressKey(languageCode)]
-            ?: if (languageCode.equals("JA", ignoreCase = true)) preferences[legacyProgressKey] else null
+            ?: (if (languageCode.equals("JA", ignoreCase = true)) preferences[legacyProgressKey] else null)
             ?: return StudyProgress(languageCode = languageCode.uppercase())
         return runCatching { gson.fromJson(json, StudyProgress::class.java) }
             .getOrDefault(StudyProgress(languageCode = languageCode.uppercase()))
