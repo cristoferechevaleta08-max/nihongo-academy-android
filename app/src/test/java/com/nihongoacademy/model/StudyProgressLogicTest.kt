@@ -1,143 +1,146 @@
-package com.nihongoacademy.ui
+package com.nihongoacademy.model
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.nihongoacademy.data.StudyProgressStore
-import com.nihongoacademy.model.LanguageCatalogFactory
-import com.nihongoacademy.model.ModuleLesson
-import com.nihongoacademy.model.StudyProgress
-import kotlinx.coroutines.launch
+import java.util.Calendar
 
-private data class LessonQuestion(
-    val prompt: String,
-    val choices: List<String>,
-    val correctAnswer: String
+private const val EXAM_XP_BASE = 120
+private const val EXAM_XP_BONUS = 60
+private const val LEVEL_THRESHOLD = 500
+
+data class StudyProgress(
+    val languageCode: String = "JA",
+    val completedLessons: Set<String> = emptySet(),
+    val completedExams: Set<String> = emptySet(),
+    val totalXp: Int = 0,
+    val currentLevel: Int = 1,
+    val xpToNextLevel: Int = LEVEL_THRESHOLD,
+    val unlockedRewards: Set<String> = emptySet(),
+    val streakDays: Int = 0,
+    val lastStudyDate: Long = 0L,
+    val recentResults: List<StudyResult> = emptyList()
 )
 
-@Composable
-fun LessonScreen(
-    navController: NavController,
-    languageCode: String = "ja",
-    moduleId: String = "module_1",
-    lessonId: String = "m1_l1"
-) {
-    val language = LanguageCatalogFactory.buildSupportedLanguages()
-        .firstOrNull { it.code.equals(languageCode, ignoreCase = true) }
-        ?: LanguageCatalogFactory.buildSupportedLanguages().first()
-    val module = language.modules.firstOrNull { it.id == moduleId }
-        ?: language.modules.first()
-    val lesson = module.lessons.firstOrNull { it.id == lessonId }
-        ?: module.lessons.first()
-    val question = lessonQuestionFor(lesson)
+data class StudyResult(
+    val lessonId: String,
+    val moduleId: String,
+    val xpEarned: Int,
+    val correctAnswers: Int,
+    val totalQuestions: Int,
+    val answeredAt: Long,
+    val isExam: Boolean = false
+)
 
-    val context = LocalContext.current
-    val progressStore = remember { StudyProgressStore(context.applicationContext) }
-    var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
-    val coroutineScope = rememberCoroutineScope()
-    var selectedAnswer by remember { mutableStateOf<String?>(null) }
-    var wasAnswered by remember { mutableStateOf(false) }
-    var isCorrect by remember { mutableStateOf(false) }
+object StudyProgressLogic {
+    fun completeExam(
+        progress: StudyProgress,
+        languageCode: String,
+        moduleId: String,
+        examId: String,
+        correctAnswers: Int,
+        totalQuestions: Int
+    ): StudyProgress {
+        val safeTotal = totalQuestions.coerceAtLeast(1)
+        val safeCorrect = correctAnswers.coerceIn(0, safeTotal)
+        val ratio = safeCorrect.toFloat() / safeTotal.toFloat()
 
-    LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Text("Lección", style = MaterialTheme.typography.labelLarge)
-        Text(lesson.title, style = MaterialTheme.typography.headlineMedium)
-        Text(lesson.description, style = MaterialTheme.typography.bodyMedium)
-
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(question.prompt, style = MaterialTheme.typography.titleLarge)
-                question.choices.forEach { option ->
-                    OutlinedButton(
-                        onClick = { if (!wasAnswered) selectedAnswer = option },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(option)
-                    }
-                }
-            }
+        val examXp = when {
+            ratio >= 1f -> EXAM_XP_BASE + EXAM_XP_BONUS + 80
+            ratio >= 0.8f -> EXAM_XP_BASE + EXAM_XP_BONUS
+            ratio >= 0.6f -> EXAM_XP_BASE
+            else -> 0
         }
 
-        Button(
-            onClick = {
-                if (selectedAnswer == null || wasAnswered) return@Button
-                val correct = selectedAnswer == question.correctAnswer
-                isCorrect = correct
-                wasAnswered = true
+        val now = System.currentTimeMillis()
+        val updatedExams = progress.completedExams + examId
+        val updatedResults = (progress.recentResults + StudyResult(
+            lessonId = examId,
+            moduleId = moduleId,
+            xpEarned = examXp,
+            correctAnswers = safeCorrect,
+            totalQuestions = safeTotal,
+            answeredAt = now,
+            isExam = true
+        )).takeLast(10)
 
-                coroutineScope.launch {
-                    progress = progressStore.recordLessonResult(
-                        languageCode = language.code.uppercase(),
-                        moduleId = module.id,
-                        lessonId = lesson.id,
-                        correctAnswers = if (correct) 1 else 0,
-                        totalQuestions = 1
-                    )
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Enviar respuesta")
-        }
+        val baseXp = progress.totalXp + examXp
+        val nextLevel = calculateLevel(baseXp)
+        val rewards = buildRewards(nextLevel, progress.unlockedRewards)
 
-        if (wasAnswered) {
-            Text(
-                text = if (isCorrect) "Correcto. Has ganado XP por esta lección." else "No es correcto. La respuesta era: ${question.correctAnswer}",
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Volver al módulo")
-        }
-
-        Text(
-            text = "XP total: ${progress.totalXp} · Racha: ${progress.streakDays} días",
-            style = MaterialTheme.typography.bodyMedium
+        val updatedProgress = progress.copy(
+            languageCode = languageCode,
+            completedExams = updatedExams,
+            totalXp = baseXp,
+            currentLevel = nextLevel,
+            xpToNextLevel = calculateXpToNextLevel(baseXp),
+            unlockedRewards = rewards,
+            lastStudyDate = now,
+            recentResults = updatedResults
         )
+
+        return updatedProgress.copy(streakDays = calculateStreakDays(updatedProgress))
+    }
+
+    fun calculateLevel(totalXp: Int): Int = (totalXp / LEVEL_THRESHOLD) + 1
+
+    fun calculateXpToNextLevel(totalXp: Int): Int {
+        val currentLevel = calculateLevel(totalXp)
+        val currentFloor = (currentLevel - 1) * LEVEL_THRESHOLD
+        return LEVEL_THRESHOLD - (totalXp - currentFloor)
+    }
+
+    fun buildRewards(level: Int, currentRewards: Set<String>): Set<String> {
+        val rewards = mutableSetOf<String>()
+        rewards.addAll(currentRewards)
+
+        val rewardsByLevel = mapOf(
+            1 to "Insignia de Iniciado",
+            2 to "Trofeo de Estudiante",
+            3 to "Bono de Práctica",
+            4 to "Medalla de Dominio",
+            5 to "Lote de Reforzamiento"
+        )
+
+        rewardsByLevel[level]?.let { rewards += it }
+        return rewards
+    }
+
+    fun calculateStreakDays(progress: StudyProgress): Int {
+        if (progress.lastStudyDate == 0L && progress.recentResults.isEmpty()) return 0
+
+        val dates = mutableSetOf<Int>()
+        progress.recentResults.forEach { dates += dateKey(it.answeredAt) }
+        if (progress.lastStudyDate != 0L) {
+            dates += dateKey(progress.lastStudyDate)
+        }
+
+        if (dates.isEmpty()) return 0
+
+        var streak = 0
+        var currentDayKey = dateKey(System.currentTimeMillis())
+
+        while (dates.contains(currentDayKey)) {
+            streak += 1
+            currentDayKey = previousDayKey(currentDayKey)
+        }
+
+        return streak.coerceAtLeast(1)
+    }
+
+    private fun dateKey(epochMillis: Long): Int {
+        val calendar = Calendar.getInstance().apply { timeInMillis = epochMillis }
+        return calendar.get(Calendar.YEAR) * 1000 + calendar.get(Calendar.DAY_OF_YEAR)
+    }
+
+    private fun previousDayKey(dayKey: Int): Int {
+        val year = dayKey / 1000
+        val dayOfYear = dayKey % 1000
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.DAY_OF_YEAR, dayOfYear)
+        }
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        return calendar.get(Calendar.YEAR) * 1000 + calendar.get(Calendar.DAY_OF_YEAR)
     }
 }
 
-private fun lessonQuestionFor(lesson: ModuleLesson): LessonQuestion = when (lesson.id) {
-    "m1_l1" -> LessonQuestion("¿Qué significa こんにちは?", listOf("Hola", "Gracias", "Agua", "Casa"), "Hola")
-    "m1_l2" -> LessonQuestion("¿Qué significa ありがとう?", listOf("Casa", "Gracias", "Luz", "Libro"), "Gracias")
-    "m2_l1" -> LessonQuestion("¿Qué significa こんばんは?", listOf("Buenas noches", "Escuela", "Pan", "Amigo"), "Buenas noches")
-    "m2_l2" -> LessonQuestion("¿Qué significa さようなら?", listOf("Hasta luego", "Perdón", "Mañana", "Trabajo"), "Hasta luego")
-    else -> LessonQuestion(
-        prompt = "¿Qué significa '${lesson.title}' en contexto?",
-        choices = listOf("Opción A", "Opción B", "Opción C", "Opción D"),
-        correctAnswer = "Opción A"
-    )
-}
+val StudyProgress.completedModuleCount: Int
+    get() = completedExams.size
