@@ -13,18 +13,22 @@ private val Context.studyProgressDataStore by preferencesDataStore(name = "nihon
 
 class StudyProgressStore(private val context: Context) {
     private val gson = Gson()
-    private val progressKey = stringPreferencesKey("progress_v1")
+    private val legacyProgressKey = stringPreferencesKey("progress_v1")
+    private fun progressKey(languageCode: String) = stringPreferencesKey("progress_${languageCode.lowercase()}_v1")
 
     suspend fun saveProgress(progress: StudyProgress) {
         context.studyProgressDataStore.edit { prefs ->
-            prefs[progressKey] = gson.toJson(progress)
+            prefs[progressKey(progress.languageCode)] = gson.toJson(progress)
         }
     }
 
-    suspend fun getProgress(): StudyProgress {
-        val json = context.studyProgressDataStore.data.first()[progressKey] ?: return StudyProgress()
+    suspend fun getProgress(languageCode: String = "JA"): StudyProgress {
+        val preferences = context.studyProgressDataStore.data.first()
+        val json = preferences[progressKey(languageCode)]
+            ?: if (languageCode.equals("JA", ignoreCase = true)) preferences[legacyProgressKey] else null
+            ?: return StudyProgress(languageCode = languageCode.uppercase())
         return runCatching { gson.fromJson(json, StudyProgress::class.java) }
-            .getOrDefault(StudyProgress())
+            .getOrDefault(StudyProgress(languageCode = languageCode.uppercase()))
     }
 
     suspend fun recordLessonResult(
@@ -34,7 +38,7 @@ class StudyProgressStore(private val context: Context) {
         correctAnswers: Int,
         totalQuestions: Int = 1
     ): StudyProgress {
-        val current = getProgress().copy(languageCode = languageCode)
+        val current = getProgress(languageCode).copy(languageCode = languageCode)
         val updated = StudyProgressLogic.completeLesson(
             progress = current,
             languageCode = languageCode,
