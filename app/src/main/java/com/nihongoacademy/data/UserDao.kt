@@ -7,9 +7,12 @@ import androidx.room.Query
 
 @Dao
 interface UserDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(entity: UserEntity)
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun findByUsername(username: String): UserEntity?
+
+    @Query("SELECT * FROM users WHERE userId = :userId LIMIT 1")
+    suspend fun findById(userId: String): UserEntity?
 }
