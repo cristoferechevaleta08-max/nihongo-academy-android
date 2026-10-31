@@ -46,6 +46,10 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
         progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
     }
 
+    val completedModuleCount = language.modules.count { module ->
+        module.midExam.id in progress.completedExams && module.finalExam.id in progress.completedExams
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,7 +59,7 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
     ) {
         Text("${language.name} · Módulos", style = MaterialTheme.typography.headlineMedium)
         Text(
-            "${progress.completedExams.size}/${language.modules.size} módulos evaluados · ${progress.totalXp} XP",
+            "$completedModuleCount/${language.modules.size} módulos evaluados · ${progress.totalXp} XP",
             style = MaterialTheme.typography.bodyLarge
         )
 
@@ -63,7 +67,7 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
             items(language.modules) { module ->
                 ModuleCard(
                     module = module,
-                    isCompleted = progress.completedExams.contains(module.id),
+                    isCompleted = module.midExam.id in progress.completedExams && module.finalExam.id in progress.completedExams,
                     onClick = { navController.navigate("module/${languageCode.lowercase()}/${module.id}") }
                 )
             }
