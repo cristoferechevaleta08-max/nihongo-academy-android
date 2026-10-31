@@ -70,11 +70,18 @@ fun ModuleDetailScreen(
             }
         }
 
+        Text("Evaluaciones del módulo", style = MaterialTheme.typography.titleMedium)
         Button(
-            onClick = { /* no-op until progress saving is implemented */ },
+            onClick = { navController.navigate("module_exam/${languageCode.lowercase()}/${module.id}/mid") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Guardar progreso del módulo")
+            Text("Examen sorpresa · mitad")
+        }
+        Button(
+            onClick = { navController.navigate("module_exam/${languageCode.lowercase()}/${module.id}/final") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Examen final")
         }
 
         Text(
