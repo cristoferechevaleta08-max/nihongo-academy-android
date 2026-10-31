@@ -31,7 +31,7 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
     var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
 
     LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = languageCode.uppercase())
+        progress = progressStore.getProgress(languageCode).copy(languageCode = languageCode.uppercase())
     }
 
     val languageLabel = when (languageCode.lowercase()) {
