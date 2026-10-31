@@ -83,7 +83,8 @@ object StudyProgressLogic {
         val safeCorrect = correctAnswers.coerceIn(0, safeTotal)
         val ratio = safeCorrect.toFloat() / safeTotal.toFloat()
 
-        val examXp = when {
+        val alreadyCompleted = examId in progress.completedExams
+        val examXp = if (alreadyCompleted) 0 else when {
             ratio >= 1f -> EXAM_XP_BASE + EXAM_XP_BONUS + 80
             ratio >= 0.8f -> EXAM_XP_BASE + EXAM_XP_BONUS
             ratio >= 0.6f -> EXAM_XP_BASE
