@@ -1,13 +1,18 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,36 +22,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.LanguageCatalogFactory
+import com.nihongoacademy.model.LanguageModule
 import com.nihongoacademy.model.StudyProgress
 
 @Composable
-fun HomeScreen(navController: NavController, languageCode: String = "ja") {
+fun ModuleOverviewScreen(navController: NavController, languageCode: String = "ja") {
+    val language = LanguageCatalogFactory.buildSupportedLanguages()
+        .firstOrNull { it.code.equals(languageCode, ignoreCase = true) }
+        ?: LanguageCatalogFactory.buildSupportedLanguages().first()
+
     val context = LocalContext.current
     val progressStore = remember { StudyProgressStore(context.applicationContext) }
-    var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
+    var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code.uppercase())) }
 
     LaunchedEffect(languageCode) {
-        progress = progressStore.getProgress().copy(languageCode = languageCode.uppercase())
-    }
-
-    val languageLabel = when (languageCode.lowercase()) {
-        "ja" -> "Japonés"
-        "es" -> "Español"
-        "en" -> "Inglés"
-        "fr" -> "Francés"
-        "de" -> "Alemán"
-        "pt" -> "Portugués"
-        "it" -> "Italiano"
-        "ru" -> "Ruso"
-        "ko" -> "Coreano"
-        "zh" -> "Mandarín"
-        "ar" -> "Árabe"
-        else -> languageCode.uppercase()
+        progress = progressStore.getProgress().copy(languageCode = language.code.uppercase())
     }
 
     Column(
@@ -56,56 +53,59 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Text("Panel del alumno", style = MaterialTheme.typography.labelLarge)
-        Text(languageLabel, style = MaterialTheme.typography.headlineMedium)
+        Text("${language.name} · Módulos", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            "${progress.completedExams.size}/${language.modules.size} módulos evaluados · ${progress.totalXp} XP",
+            style = MaterialTheme.typography.bodyLarge
+        )
 
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Nivel actual")
-                Text("${progress.totalXp} XP · Racha de ${progress.streakDays} días")
-                Text("${progress.completedModules.size} módulos completados · ${progress.completedLessons.size} lecciones revisadas")
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            items(language.modules) { module ->
+                ModuleCard(
+                    module = module,
+                    isCompleted = progress.completedExams.contains(module.id),
+                    onClick = { navController.navigate("module/${languageCode.lowercase()}/${module.id}") }
+                )
             }
         }
+    }
+}
 
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text("Historial reciente")
-                if (progress.recentResults.isEmpty()) {
-                    Text("Todavía no has realizado ninguna lección.")
-                } else {
-                    progress.recentResults.takeLast(5).forEach { result ->
-                        Text(
-                            text = "Lección ${result.lessonId} · +${result.xpEarned} XP · ${result.correctAnswers}/${result.totalQuestions}",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
+@Composable
+private fun ModuleCard(
+    module: LanguageModule,
+    isCompleted: Boolean,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        shape = RoundedCornerShape(18.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Módulo ${module.number}", style = MaterialTheme.typography.labelLarge)
+                if (module.isIntegrative) {
+                    Text("Integrador", style = MaterialTheme.typography.labelLarge)
                 }
             }
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Button(
-                onClick = { navController.navigate("modules/${languageCode.lowercase()}") },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Estudiar")
+            Text(module.title, style = MaterialTheme.typography.titleLarge)
+            Text(module.targetLevel, style = MaterialTheme.typography.bodyMedium)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text("• ${module.lessons.size} lecciones")
+            Text("• Examen sorpresa a la mitad")
+            Text("• Examen sorpresa final")
+            if (isCompleted) {
+                Text("Completado", color = MaterialTheme.colorScheme.primary)
             }
-            Button(
-                onClick = { navController.navigate("profile") },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Perfil")
-            }
-        }
-
-        Button(
-            onClick = { navController.navigate("collection") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Colección")
         }
     }
 }

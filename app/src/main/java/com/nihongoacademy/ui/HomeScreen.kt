@@ -1,61 +1,108 @@
-package com.nihongoacademy.model
+package com.nihongoacademy.ui
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.StudyProgress
 
-class StudyProgressLogicTest {
-    @Test
-    fun `completeLesson awards xp and stores result`() {
-        val progress = StudyProgress()
+@Composable
+fun HomeScreen(navController: NavController, languageCode: String = "ja") {
+    val context = LocalContext.current
+    val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
 
-        val updated = StudyProgressLogic.completeLesson(
-            progress = progress,
-            languageCode = "JA",
-            moduleId = "module_1",
-            lessonId = "m1_l1",
-            correctAnswers = 1,
-            totalQuestions = 1
-        )
-
-        assertThat(updated.totalXp).isEqualTo(25)
-        assertThat(updated.completedLessons).contains("m1_l1")
-        assertThat(updated.recentResults).hasSize(1)
+    LaunchedEffect(languageCode) {
+        progress = progressStore.getProgress().copy(languageCode = languageCode.uppercase())
     }
 
-    @Test
-    fun `completeModule adds module bonus xp`() {
-        val progress = StudyProgress(totalXp = 50)
-
-        val updated = StudyProgressLogic.completeModule(
-            progress = progress,
-            languageCode = "JA",
-            moduleId = "module_2"
-        )
-
-        assertThat(updated.totalXp).isEqualTo(150)
-        assertThat(updated.completedModules).contains("module_2")
+    val languageLabel = when (languageCode.lowercase()) {
+        "ja" -> "Japonés"
+        "es" -> "Español"
+        "en" -> "Inglés"
+        "fr" -> "Francés"
+        "de" -> "Alemán"
+        "pt" -> "Portugués"
+        "it" -> "Italiano"
+        "ru" -> "Ruso"
+        "ko" -> "Coreano"
+        "zh" -> "Mandarín"
+        "ar" -> "Árabe"
+        else -> languageCode.uppercase()
     }
 
-    @Test
-    fun `calculateStreakDays counts consecutive study days`() {
-        val now = System.currentTimeMillis()
-        val previousDay = now - 24 * 60 * 60 * 1000L
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
+    ) {
+        Text("Panel del alumno", style = MaterialTheme.typography.labelLarge)
+        Text(languageLabel, style = MaterialTheme.typography.headlineMedium)
 
-        val progress = StudyProgress(
-            lastStudyDate = now,
-            recentResults = listOf(
-                StudyResult(
-                    lessonId = "m1_l1",
-                    moduleId = "module_1",
-                    xpEarned = 25,
-                    correctAnswers = 1,
-                    totalQuestions = 1,
-                    answeredAt = previousDay
-                )
-            )
-        )
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Nivel ${progress.currentLevel}")
+                Text("${progress.totalXp} XP · ${progress.xpToNextLevel} XP para subir de nivel")
+                Text("Racha de ${progress.streakDays} días · ${progress.completedExams.size} exámenes realizados")
+            }
+        }
 
-        val streak = StudyProgressLogic.calculateStreakDays(progress)
-        assertThat(streak).isAtLeast(1)
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Premios desbloqueados")
+                if (progress.unlockedRewards.isEmpty()) {
+                    Text("Todavía no has ganado recompensas.")
+                } else {
+                    progress.unlockedRewards.forEach { reward ->
+                        Text("• $reward")
+                    }
+                }
+            }
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Button(
+                onClick = { navController.navigate("modules/${languageCode.lowercase()}") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Estudiar")
+            }
+            Button(
+                onClick = { navController.navigate("profile") },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text("Perfil")
+            }
+        }
+
+        Button(
+            onClick = { navController.navigate("collection") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Colección")
+        }
     }
 }

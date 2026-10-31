@@ -1,80 +1,89 @@
-package com.nihongoacademy
+package com.nihongoacademy.ui
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.nihongoacademy.ui.CollectionScreen
-import com.nihongoacademy.ui.HomeScreen
-import com.nihongoacademy.ui.LanguageSelectionScreen
-import com.nihongoacademy.ui.LoginScreen
-import com.nihongoacademy.ui.ModuleDetailScreen
-import com.nihongoacademy.ui.ModuleOverviewScreen
-import com.nihongoacademy.ui.ProfileScreen
-import com.nihongoacademy.ui.RegisterScreen
-import com.nihongoacademy.ui.SettingsScreen
-import com.nihongoacademy.ui.StudyScreen
-import com.nihongoacademy.ui.WelcomeScreen
-import com.nihongoacademy.ui.theme.NihongoTheme
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.nihongoacademy.model.LanguageEntry
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            NihongoTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    AppNavHost()
+@Composable
+fun LanguageSelectionScreen(
+    navController: NavController,
+    repository: Any? = null
+) {
+    val languages = listOf(
+        LanguageEntry("en", "Inglés", "English", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("zh-Hans", "Mandarín", "中文", "Han", "LTR", listOf("hanzi", "pinyin")),
+        LanguageEntry("es", "Español", "Español", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("hi", "Hindi", "हिन्दी", "Devanagari", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ar", "Árabe", "العربية", "Arabic", "RTL", listOf("vocabulary", "phrases")),
+        LanguageEntry("fr", "Francés", "Français", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("pt", "Portugués", "Português", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("bn", "Bengalí", "বাংলা", "Bengali", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ru", "Ruso", "Русский", "Cyrillic", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("de", "Alemán", "Deutsch", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("ja", "Japonés", "日本語", "Kana/Kanji", "LTR", listOf("hiragana", "katakana", "romaji", "n5")),
+        LanguageEntry("ko", "Coreano", "한국어", "Hangul", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("it", "Italiano", "Italiano", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("tr", "Turco", "Türkçe", "Latin", "LTR", listOf("vocabulary", "phrases")),
+        LanguageEntry("id", "Indonesio", "Bahasa Indonesia", "Latin", "LTR", listOf("vocabulary", "phrases"))
+    )
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(languages) { entry ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        navController.navigate("home/${entry.code.lowercase()}")
+                    },
+                shape = RoundedCornerShape(18.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = entry.nativeName,
+                            style = MaterialTheme.typography.titleMedium,
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = entry.code.uppercase(),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }
     }
-}
-
-@Composable
-fun AppNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(
-        navController = navController,
-        startDestination = Screens.Welcome.route
-    ) {
-        composable(Screens.Welcome.route) { WelcomeScreen(navController) }
-        composable(Screens.Login.route) { LoginScreen(navController) }
-        composable(Screens.Register.route) { RegisterScreen(navController) }
-        composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
-        composable("home/{languageCode}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-            HomeScreen(navController, code)
-        }
-        composable("modules/{languageCode}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-            ModuleOverviewScreen(navController, code)
-        }
-        composable("module/{languageCode}/{moduleId}") { backStackEntry ->
-            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-            val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
-            ModuleDetailScreen(navController, code, moduleId)
-        }
-        composable(Screens.Study.route) { StudyScreen(navController) }
-        composable(Screens.Profile.route) { ProfileScreen(navController) }
-        composable(Screens.Settings.route) { SettingsScreen(navController) }
-        composable(Screens.Collection.route) { CollectionScreen(navController) }
-    }
-}
-
-sealed class Screens(val route: String) {
-    data object Welcome : Screens("welcome")
-    data object Login : Screens("login")
-    data object Register : Screens("register")
-    data object LanguageSelection : Screens("language")
-    data object Home : Screens("home")
-    data object Study : Screens("study")
-    data object Profile : Screens("profile")
-    data object Settings : Screens("settings")
-    data object Collection : Screens("collection")
 }

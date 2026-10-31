@@ -1,60 +1,92 @@
-package com.nihongoacademy.data
+package com.nihongoacademy
 
-import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.google.gson.Gson
-import com.nihongoacademy.model.StudyProgress
-import com.nihongoacademy.model.StudyProgressLogic
-import kotlinx.coroutines.flow.first
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.nihongoacademy.ui.CollectionScreen
+import com.nihongoacademy.ui.HomeScreen
+import com.nihongoacademy.ui.LanguageSelectionScreen
+import com.nihongoacademy.ui.LessonScreen
+import com.nihongoacademy.ui.LoginScreen
+import com.nihongoacademy.ui.ModuleDetailScreen
+import com.nihongoacademy.ui.ModuleOverviewScreen
+import com.nihongoacademy.ui.ProfileScreen
+import com.nihongoacademy.ui.RegisterScreen
+import com.nihongoacademy.ui.SettingsScreen
+import com.nihongoacademy.ui.StudyScreen
+import com.nihongoacademy.ui.WelcomeScreen
+import com.nihongoacademy.ui.theme.NihongoTheme
 
-private val Context.studyProgressDataStore by preferencesDataStore(name = "nihongo_study_progress")
-
-class StudyProgressStore(private val context: Context) {
-    private val gson = Gson()
-    private val progressKey = stringPreferencesKey("progress_v1")
-
-    suspend fun saveProgress(progress: StudyProgress) {
-        context.studyProgressDataStore.edit { prefs ->
-            prefs[progressKey] = gson.toJson(progress)
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            NihongoTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    AppNavHost()
+                }
+            }
         }
     }
+}
 
-    suspend fun getProgress(): StudyProgress {
-        val json = context.studyProgressDataStore.data.first()[progressKey] ?: return StudyProgress()
-        return runCatching { gson.fromJson(json, StudyProgress::class.java) }
-            .getOrDefault(StudyProgress())
-    }
+@Composable
+fun AppNavHost(navController: NavHostController = rememberNavController()) {
+    NavHost(
+        navController = navController,
+        startDestination = Screens.Welcome.route
+    ) {
+        composable(Screens.Welcome.route) { WelcomeScreen(navController) }
+        composable(Screens.Login.route) { LoginScreen(navController) }
+        composable(Screens.Register.route) { RegisterScreen(navController) }
+        composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
 
-    suspend fun recordLessonResult(
-        languageCode: String,
-        moduleId: String,
-        lessonId: String,
-        correctAnswers: Int,
-        totalQuestions: Int = 1
-    ): StudyProgress {
-        val current = getProgress().copy(languageCode = languageCode)
-        val updated = StudyProgressLogic.completeLesson(
-            progress = current,
-            languageCode = languageCode,
-            moduleId = moduleId,
-            lessonId = lessonId,
-            correctAnswers = correctAnswers,
-            totalQuestions = totalQuestions
-        )
-        saveProgress(updated)
-        return updated
-    }
+        composable("home/{languageCode}") { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            HomeScreen(navController, code)
+        }
 
-    suspend fun completeModule(languageCode: String, moduleId: String): StudyProgress {
-        val current = getProgress().copy(languageCode = languageCode)
-        val updated = StudyProgressLogic.completeModule(
-            progress = current,
-            languageCode = languageCode,
-            moduleId = moduleId
-        )
-        saveProgress(updated)
-        return updated
+        composable("modules/{languageCode}") { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            ModuleOverviewScreen(navController, code)
+        }
+
+        composable("module/{languageCode}/{moduleId}") { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
+            ModuleDetailScreen(navController, code, moduleId)
+        }
+
+        composable("lesson/{languageCode}/{moduleId}/{lessonId}") { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
+            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: "m1_l1"
+            LessonScreen(navController, code, moduleId, lessonId)
+        }
+
+        composable(Screens.Study.route) { StudyScreen(navController) }
+        composable(Screens.Profile.route) { ProfileScreen(navController) }
+        composable(Screens.Settings.route) { SettingsScreen(navController) }
+        composable(Screens.Collection.route) { CollectionScreen(navController) }
     }
+}
+
+sealed class Screens(val route: String) {
+    data object Welcome : Screens("welcome")
+    data object Login : Screens("login")
+    data object Register : Screens("register")
+    data object LanguageSelection : Screens("language")
+    data object Home : Screens("home")
+    data object Study : Screens("study")
+    data object Profile : Screens("profile")
+    data object Settings : Screens("settings")
+    data object Collection : Screens("collection")
 }
