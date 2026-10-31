@@ -1,16 +1,17 @@
 # Arquitectura
 
-- Presentación: Activity + Compose + Navigation
-- Dominio: validación de contraseña y repaso adaptativo
-- Datos: Room, DataStore y token cifrado con Keystore
-- Configuración: catálogo de idiomas en JSON
+## Capas
+- Presentación: Compose + Navigation + ViewModel
+- Dominio: validación de contraseñas, repaso adaptativo y modelos del producto
+- Datos: JSON de catálogo, Room y preferencias locales
+- Seguridad: hash PBKDF2, Keystore y sesión local
 
-## Flujos principales
-- Bienvenida → registro / login → selección de idioma → home
-- Ajustes y progreso por idioma
-- Ruta de estudio con lección por sesión
+## Flujo principal
+1. Bienvenida
+2. Registro o login
+3. Selección de idioma
+4. Pantalla principal y estudio
+5. Ajustes y progreso
 
-## Privacidad
-- Todo queda en el dispositivo.
-- Sin servicios externos ni Firebase.
-- `allowBackup=false`.
+## Modelado
+El catálogo de idiomas vive en `app/src/main/assets/languages.json` para permitir extensión sin tocar pantallas.

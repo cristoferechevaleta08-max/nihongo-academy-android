@@ -1,14 +1,15 @@
 # Nihongo Academy
 
+Proyecto base en Android nativo con Jetpack Compose, arquitectura MVVM y motor de repaso adaptativo.
+
 ## Requisitos
 - Android Studio Ladybug o superior
 - JDK 17
 - Android SDK 35
 
-## Compilación
+## Ejecutar
 ```bash
-./gradlew clean assembleDebug
-./gradlew assembleRelease
+./gradlew assembleDebug
 ```
 
 ## Tests
@@ -16,13 +17,11 @@
 ./gradlew test
 ```
 
-## Arquitectura
-- Compose + Material 3
-- MVVM + StateFlow
-- Room + DataStore + Keystore
-- Lógica de repaso adaptativa y validación de contraseña
+## Estructura
+- `app/src/main/java` – lógica de la app, modelos y pantallas
+- `app/src/main/assets` – catálogo de idiomas y contenido JSON
+- `app/src/main/res` – recursos visuales y strings
+- `docs/` – arquitectura y privacidad
 
-## Añadir idiomas
-1. Edita `app/src/main/assets/languages.json`.
-2. Crea un JSON nuevo en `app/src/main/assets/content/<code>.json`.
-3. Recompila.
+## Nota
+Este repositorio es una base funcional y visual de la app, orientada al producto y lista para seguir desarrollándose en Android Studio.

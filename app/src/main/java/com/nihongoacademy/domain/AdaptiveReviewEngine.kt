@@ -23,7 +23,13 @@ class AdaptiveReviewEngine {
         } else {
             0
         }
-        val delayMs = if (success) nextInterval * 24L * 60L * 60L * 1000L else 60L * 60L * 1000L
+
+        val delayMs = if (success) {
+            nextInterval * 24L * 60L * 60L * 1000L
+        } else {
+            60L * 60L * 1000L
+        }
+
         return card.copy(
             streak = nextStreak,
             intervalDays = nextInterval,

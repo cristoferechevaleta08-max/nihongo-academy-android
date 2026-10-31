@@ -19,8 +19,16 @@ class PasswordValidator {
                 score = score.coerceAtMost(66),
                 message = "Debe tener mínimo 8 caracteres, una letra y un número."
             )
-            score >= 100 -> PasswordStrength(valid = true, score = 100, message = "Fuerte")
-            else -> PasswordStrength(valid = true, score = score, message = "Media")
+            score >= 100 -> PasswordStrength(
+                valid = true,
+                score = 100,
+                message = "Fuerte"
+            )
+            else -> PasswordStrength(
+                valid = true,
+                score = score,
+                message = "Media"
+            )
         }
     }
 }

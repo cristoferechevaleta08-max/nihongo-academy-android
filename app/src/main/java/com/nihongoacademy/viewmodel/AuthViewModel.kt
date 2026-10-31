@@ -1,4 +1,4 @@
-package com.nihongoacademy.viewModel
+package com.nihongoacademy.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -12,11 +12,11 @@ data class PasswordHash(
 )
 
 class PasswordHasher {
-    private val random = SecureRandom()
+    private val secureRandom = SecureRandom()
 
     fun hashPassword(password: String): PasswordHash {
         val salt = ByteArray(16)
-        random.nextBytes(salt)
+        secureRandom.nextBytes(salt)
         val spec: KeySpec = PBEKeySpec(password.toCharArray(), salt, 310_000, 256)
         val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
         val hash = factory.generateSecret(spec).encoded
