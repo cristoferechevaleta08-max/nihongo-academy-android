@@ -36,14 +36,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = "welcome") {
-        composable("welcome") { WelcomeScreen(navController) }
-        composable("login") { LoginScreen(navController) }
-        composable("register") { RegisterScreen(navController) }
-        composable("language") { LanguageSelectionScreen(navController) }
-        composable("home") { HomeScreen(navController) }
-        composable("study") { StudyScreen(navController) }
-        composable("settings") { SettingsScreen(navController) }
-        composable("collection") { CollectionScreen(navController) }
+    NavHost(
+        navController = navController,
+        startDestination = Screens.Welcome.route
+    ) {
+        composable(Screens.Welcome.route) { WelcomeScreen(navController) }
+        composable(Screens.Login.route) { LoginScreen(navController) }
+        composable(Screens.Register.route) { RegisterScreen(navController) }
+        composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
+        composable(Screens.Home.route) { HomeScreen(navController) }
+        composable(Screens.Study.route) { StudyScreen(navController) }
+        composable(Screens.Settings.route) { SettingsScreen(navController) }
+        composable(Screens.Collection.route) { CollectionScreen(navController) }
     }
+}
+
+sealed class Screens(val route: String) {
+    data object Welcome : Screens("welcome")
+    data object Login : Screens("login")
+    data object Register : Screens("register")
+    data object LanguageSelection : Screens("language")
+    data object Home : Screens("home")
+    data object Study : Screens("study")
+    data object Settings : Screens("settings")
+    data object Collection : Screens("collection")
 }
