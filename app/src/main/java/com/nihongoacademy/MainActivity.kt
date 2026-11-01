@@ -3,10 +3,8 @@ package com.nihongoacademy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -16,12 +14,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,21 +32,23 @@ import com.nihongoacademy.data.SessionStore
 import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.CommunityScreen
 import com.nihongoacademy.ui.ExamScreen
-import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.FlashcardsScreen
+import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
 import com.nihongoacademy.ui.LessonScreen
 import com.nihongoacademy.ui.LoginScreen
 import com.nihongoacademy.ui.ModuleDetailScreen
 import com.nihongoacademy.ui.ModuleExamScreen
 import com.nihongoacademy.ui.ModuleOverviewScreen
-import com.nihongoacademy.ui.ProfileScreen
 import com.nihongoacademy.ui.PasswordResetScreen
+import com.nihongoacademy.ui.ProfileScreen
 import com.nihongoacademy.ui.RegisterScreen
 import com.nihongoacademy.ui.SettingsScreen
 import com.nihongoacademy.ui.StudyScreen
 import com.nihongoacademy.ui.WelcomeScreen
 import com.nihongoacademy.ui.theme.AcademyColors
+import com.nihongoacademy.ui.theme.AcademyDimens
+import com.nihongoacademy.ui.theme.AcademyShapes
 import com.nihongoacademy.ui.theme.NihongoTheme
 
 class MainActivity : ComponentActivity() {
@@ -68,14 +70,24 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
     val authRepository = remember { AuthRepository(context) }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val route = backStackEntry?.destination?.route.orEmpty()
-    val showBottomBar = route.startsWith("home/") || route.startsWith("modules/") ||
-        route == "community" || route == "profile"
+    var activeLanguage by rememberSaveable { mutableStateOf("ja") }
+
+    LaunchedEffect(route) {
+        val routeLanguage = backStackEntry?.arguments?.getString("languageCode")
+        if (!routeLanguage.isNullOrBlank()) activeLanguage = routeLanguage.lowercase()
+    }
+
+    val showBottomBar = route.startsWith("home/") ||
+        route.startsWith("modules/") ||
+        route == "community" ||
+        route == Screens.Profile.route
 
     LaunchedEffect(Unit) {
         if (authRepository.currentUser() != null) {
             val selectedLanguage = SessionStore(context).readLanguage() ?: "ja"
-            navController.navigate("home/${selectedLanguage.lowercase()}") {
-                popUpTo("welcome") { inclusive = true }
+            activeLanguage = selectedLanguage.lowercase()
+            navController.navigate("home/${activeLanguage}") {
+                popUpTo(Screens.Welcome.route) { inclusive = true }
                 launchSingleTop = true
             }
         }
@@ -85,7 +97,13 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         modifier = Modifier.fillMaxSize(),
         containerColor = AcademyColors.Background,
         bottomBar = {
-            if (showBottomBar) AcademyBottomBar(navController, route)
+            if (showBottomBar) {
+                AcademyBottomBar(
+                    navController = navController,
+                    currentRoute = route,
+                    languageCode = activeLanguage
+                )
+            }
         }
     ) { innerPadding ->
         NavHost(
@@ -99,35 +117,35 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
             composable("password_reset") { PasswordResetScreen(navController) }
             composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
 
-            composable("home/{languageCode}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            composable("home/{languageCode}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
                 HomeScreen(navController, code)
             }
-            composable("modules/{languageCode}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            composable("modules/{languageCode}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
                 ModuleOverviewScreen(navController, code)
             }
             composable("community") { CommunityScreen(navController) }
             composable("exams") { ExamScreen(navController) }
-            composable("module/{languageCode}/{moduleId}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-                val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
+            composable("module/{languageCode}/{moduleId}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
+                val moduleId = entry.arguments?.getString("moduleId") ?: "module_1"
                 ModuleDetailScreen(navController, code, moduleId)
             }
-            composable("module_exam/{languageCode}/{moduleId}/{examType}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-                val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
-                val examType = backStackEntry.arguments?.getString("examType") ?: "mid"
+            composable("module_exam/{languageCode}/{moduleId}/{examType}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
+                val moduleId = entry.arguments?.getString("moduleId") ?: "module_1"
+                val examType = entry.arguments?.getString("examType") ?: "mid"
                 ModuleExamScreen(navController, code, moduleId, examType)
             }
-            composable("lesson/{languageCode}/{moduleId}/{lessonId}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
-                val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
-                val lessonId = backStackEntry.arguments?.getString("lessonId") ?: "m1_l1"
+            composable("lesson/{languageCode}/{moduleId}/{lessonId}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
+                val moduleId = entry.arguments?.getString("moduleId") ?: "module_1"
+                val lessonId = entry.arguments?.getString("lessonId") ?: "m1_l1"
                 LessonScreen(navController, code, moduleId, lessonId)
             }
-            composable("flashcards/{languageCode}") { backStackEntry ->
-                val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            composable("flashcards/{languageCode}") { entry ->
+                val code = entry.arguments?.getString("languageCode") ?: "ja"
                 FlashcardsScreen(navController, code)
             }
             composable(Screens.Study.route) { StudyScreen(navController) }
@@ -138,50 +156,87 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
     }
 }
 
+private data class MainNavigationItem(
+    val routeKey: String,
+    val label: String,
+    val symbol: String
+)
+
+private val mainNavigationItems = listOf(
+    MainNavigationItem("home", "Inicio", "⌂"),
+    MainNavigationItem("courses", "Cursos", "▤"),
+    MainNavigationItem("community", "Comunidad", "◎"),
+    MainNavigationItem("profile", "Perfil", "◉")
+)
+
 @Composable
-private fun AcademyBottomBar(navController: NavHostController, currentRoute: String) {
-    val languageCode = navController.currentBackStackEntry?.arguments?.getString("languageCode") ?: "ja"
-    val selected = when {
+private fun AcademyBottomBar(
+    navController: NavHostController,
+    currentRoute: String,
+    languageCode: String
+) {
+    val selectedRoute = when {
         currentRoute.startsWith("home/") -> "home"
         currentRoute.startsWith("modules/") -> "courses"
         currentRoute == "community" -> "community"
-        currentRoute == "profile" -> "profile"
+        currentRoute == Screens.Profile.route -> "profile"
         else -> ""
     }
+
     NavigationBar(
-        containerColor = AcademyColors.Background,
+        containerColor = AcademyColors.Surface,
         contentColor = AcademyColors.TextPrimary,
-        tonalElevation = 0.dp
+        tonalElevation = AcademyDimens.Space1
     ) {
-        val items = listOf(
-            Triple("home", "⌂", "Inicio"),
-            Triple("courses", "▤", "Cursos"),
-            Triple("community", "◎", "Comunidad"),
-            Triple("profile", "◉", "Perfil")
-        )
-        items.forEach { (key, symbol, label) ->
-            val active = selected == key
+        mainNavigationItems.forEach { item ->
+            val selected = selectedRoute == item.routeKey
             NavigationBarItem(
-                selected = active,
+                selected = selected,
                 onClick = {
-                    val destination = when (key) {
-                        "home" -> "home/${languageCode.lowercase()}"
-                        "courses" -> "modules/${languageCode.lowercase()}"
+                    val destination = when (item.routeKey) {
+                        "home" -> "home/$languageCode"
+                        "courses" -> "modules/$languageCode"
                         "community" -> "community"
-                        else -> "profile"
+                        else -> Screens.Profile.route
                     }
                     navController.navigate(destination) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
                         launchSingleTop = true
                         restoreState = true
                     }
                 },
-                icon = { Text(symbol, fontSize = 21.sp, color = if (active) AcademyColors.TextPrimary else AcademyColors.TextSecondary) },
-                label = { Text(label, color = if (active) AcademyColors.TextPrimary else AcademyColors.TextSecondary) },
+                icon = {
+                    Surface(
+                        shape = AcademyShapes.Pill,
+                        color = if (selected) AcademyColors.Sakura.copy(alpha = 0.14f)
+                        else AcademyColors.Surface,
+                        modifier = Modifier.padding(top = AcademyDimens.Space1)
+                    ) {
+                        Text(
+                            text = item.symbol,
+                            modifier = Modifier.padding(
+                                horizontal = AcademyDimens.Space4,
+                                vertical = AcademyDimens.Space1
+                            ),
+                            color = if (selected) AcademyColors.Sakura
+                            else AcademyColors.TextSecondary,
+                            fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
+                        )
+                    }
+                },
+                label = {
+                    Text(
+                        text = item.label,
+                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
+                    )
+                },
                 alwaysShowLabel = true,
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = AcademyColors.TextPrimary,
+                    selectedIconColor = AcademyColors.Sakura,
                     selectedTextColor = AcademyColors.TextPrimary,
-                    indicatorColor = AcademyColors.Sakura.copy(alpha = 0.16f),
+                    indicatorColor = AcademyColors.Surface,
                     unselectedIconColor = AcademyColors.TextSecondary,
                     unselectedTextColor = AcademyColors.TextSecondary
                 )
