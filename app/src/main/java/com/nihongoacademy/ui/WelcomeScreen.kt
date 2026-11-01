@@ -26,9 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.nihongoacademy.ui.theme.AcademyColors
 
-private val Ink = Color(0xFF0A0A0A)
-private val Paper = Color(0xFFF9F5F0)
+private val Ink = AcademyColors.TextPrimary
+private val Paper = AcademyColors.Background
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -36,7 +37,7 @@ fun WelcomeScreen(navController: NavController) {
     if (providerNotice != null) {
         AlertDialog(
             onDismissRequest = { providerNotice = null },
-            containerColor = Color(0xFFF9F5F0),
+            containerColor = AcademyColors.Surface,
             title = { Text("Acceso con ${providerNotice}") },
             text = { Text("Esta opción estará disponible cuando se integre el inicio de sesión con este proveedor.") },
             confirmButton = { TextButton(onClick = { providerNotice = null }) { Text("Entendido") } }
@@ -51,51 +52,43 @@ fun WelcomeScreen(navController: NavController) {
         Spacer(Modifier.weight(1f))
         Box(contentAlignment = Alignment.Center, modifier = Modifier.height(188.dp).fillMaxWidth()) {
             Canvas(Modifier.fillMaxSize()) {
-                drawCircle(Ink.copy(alpha = 0.62f), size.minDimension * 0.39f,
+                drawCircle(AcademyColors.Sakura.copy(alpha = 0.8f), size.minDimension * 0.39f,
                     Offset(size.width / 2f, size.height / 2f),
                     style = Stroke(1.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(7.dp.toPx(), 5.dp.toPx()), 1f)))
-                drawCircle(Ink.copy(alpha = 0.24f), size.minDimension * 0.34f,
+                drawCircle(AcademyColors.TextSecondary.copy(alpha = 0.35f), size.minDimension * 0.34f,
                     Offset(size.width / 2f, size.height / 2f), style = Stroke(0.7.dp.toPx()))
             }
-            Text("日", color = Ink, fontSize = 58.sp, fontWeight = FontWeight.Light, fontFamily = FontFamily.Serif)
+            Text("狐", color = Ink, fontSize = 66.sp, fontWeight = FontWeight.Light, fontFamily = FontFamily.Serif)
         }
         Spacer(Modifier.height(18.dp))
-        Text("Nihongo Academy", color = Ink, style = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Serif, fontSize = 38.sp, lineHeight = 42.sp), textAlign = TextAlign.Center)
+        Text("Nihongo Academy", color = Ink, style = MaterialTheme.typography.headlineLarge.copy(fontSize = 38.sp, lineHeight = 42.sp), textAlign = TextAlign.Center)
         Spacer(Modifier.height(10.dp))
-        Text("日本語アカデミー", color = Ink.copy(alpha = 0.5f), style = MaterialTheme.typography.bodyMedium.copy(letterSpacing = 3.sp), textAlign = TextAlign.Center)
+        Text("— 日本語 —", color = AcademyColors.Sakura, style = MaterialTheme.typography.bodyMedium.copy(letterSpacing = 3.sp), textAlign = TextAlign.Center)
         Spacer(Modifier.height(26.dp))
         Text("Aprende. Practica. Conecta.", color = Ink, style = MaterialTheme.typography.bodyMedium.copy(letterSpacing = 1.4.sp), textAlign = TextAlign.Center)
         Spacer(Modifier.weight(1f))
-        Button(onClick = { navController.navigate("login") }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Ink, contentColor = Color.White)) { Text("Iniciar sesión", fontWeight = FontWeight.SemiBold, fontSize = 16.sp) }
+        Button(onClick = { navController.navigate("login") }, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(14.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = AcademyColors.ButtonPrimary, contentColor = AcademyColors.ButtonPrimaryText)) {
+            Text("Iniciar sesión", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+        }
         Spacer(Modifier.height(12.dp))
-        OutlinedButton(onClick = { navController.navigate("register") }, modifier = Modifier.fillMaxWidth().height(56.dp),
-            shape = RoundedCornerShape(24.dp), border = BorderStroke(1.5.dp, Ink), colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) {
+        OutlinedButton(onClick = { navController.navigate("register") }, modifier = Modifier.fillMaxWidth().height(52.dp),
+            shape = RoundedCornerShape(14.dp), border = BorderStroke(1.dp, Ink), colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) {
             Text("Crear cuenta", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         }
         Spacer(Modifier.height(28.dp))
-        Text("—  o continuar con  —", color = Ink.copy(alpha = 0.55f), style = MaterialTheme.typography.labelMedium, letterSpacing = 1.sp)
+        Text("—  o continuar con  —", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelMedium, letterSpacing = 1.sp)
         Spacer(Modifier.height(14.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            OutlinedButton(
-                onClick = { providerNotice = "Google" },
-                modifier = Modifier.size(48.dp),
-                shape = CircleShape,
-                border = BorderStroke(1.dp, Ink.copy(alpha = 0.55f)),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)
-            ) { Text("G", fontWeight = FontWeight.Bold, fontSize = 17.sp) }
-            OutlinedButton(
-                onClick = { providerNotice = "Apple" },
-                modifier = Modifier.size(48.dp),
-                shape = CircleShape,
-                border = BorderStroke(1.dp, Ink.copy(alpha = 0.55f)),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)
-            ) { Text("●", fontSize = 17.sp) }
+            OutlinedButton(onClick = { providerNotice = "Google" }, modifier = Modifier.size(48.dp), shape = CircleShape,
+                border = BorderStroke(1.dp, AcademyColors.Border), contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) { Text("G", fontWeight = FontWeight.Bold, fontSize = 17.sp) }
+            OutlinedButton(onClick = { providerNotice = "Apple" }, modifier = Modifier.size(48.dp), shape = CircleShape,
+                border = BorderStroke(1.dp, AcademyColors.Border), contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) { Text("●", fontSize = 17.sp) }
         }
         Spacer(Modifier.height(22.dp))
-        Text("15 IDIOMAS  /  UN SOLO ESPACIO", color = Ink.copy(alpha = 0.62f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
+        Text("15 IDIOMAS  /  UN SOLO ESPACIO", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
         Spacer(Modifier.weight(0.6f))
     }
 }
