@@ -1,134 +1,133 @@
 package com.nihongoacademy.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.delay
-import androidx.compose.ui.platform.LocalContext
-import com.nihongoacademy.data.PreferencesStore
-import com.nihongoacademy.data.StudySettings
+import com.nihongoacademy.data.SessionStore
+import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.StudyProgress
 
 @Composable
 fun StudyScreen(navController: NavController) {
     val context = LocalContext.current
-    val preferencesStore = remember { PreferencesStore(context) }
-    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
-    val settings by settingsFlow.collectAsState(initial = StudySettings())
-    var answer by remember { mutableStateOf("") }
-    var isVisible by remember { mutableStateOf(false) }
+    val sessionStore = remember { SessionStore(context.applicationContext) }
+    val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    var languageCode by remember { mutableStateOf("ja") }
+    var progress by remember { mutableStateOf(StudyProgress()) }
+    var loading by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
-        delay(100)
-        isVisible = true
+        languageCode = sessionStore.readLanguage() ?: "ja"
+        progress = progressStore.getProgress(languageCode)
+        loading = false
     }
 
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = if (settings.reduceMotion) EnterTransition.None else fadeIn() + slideInVertically(initialOffsetY = { 18 }),
-        exit = if (settings.reduceMotion) ExitTransition.None else fadeOut() + slideOutVertically(targetOffsetY = { 18 })
+    val totalAnswered = progress.recentResults.sumOf { it.totalQuestions }
+    val totalCorrect = progress.recentResults.sumOf { it.correctAnswers }
+    val accuracy = if (totalAnswered == 0) null else totalCorrect * 100 / totalAnswered
+    val recent = progress.recentResults.asReversed()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp)
-        ) {
-            Text(
-                text = "Lección 7 · Japonés",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onBackground
-            )
+        Row(Modifier.fillMaxWidth()) {
+            Text("Estadísticas de estudio", style = MaterialTheme.typography.headlineMedium)
+        }
+        Text(
+            "Resumen de tu actividad guardada · ${languageCode.uppercase()}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(18.dp)
-            ) {
+        if (loading) {
+            Text("Cargando tu progreso…", style = MaterialTheme.typography.bodyMedium)
+        } else {
+            Card(Modifier.fillMaxWidth()) {
                 Column(
-                    modifier = Modifier.padding(18.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    Modifier.fillMaxWidth().padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
-                    Text("Bloque: saludar y presentarse", style = MaterialTheme.typography.labelLarge)
-                    Text("¿Qué significa こんにちは?", style = MaterialTheme.typography.titleLarge)
-                    Text("Objetivo: reconocer la forma básica de saludo y usarla en contexto cotidiano.", style = MaterialTheme.typography.bodyMedium)
+                    Text("Tu avance", style = MaterialTheme.typography.titleLarge)
+                    StudyStatRow("Nivel actual", progress.currentLevel.toString())
+                    StudyStatRow("Experiencia acumulada", "${progress.totalXp} EXP")
+                    StudyStatRow("Lecciones completadas", progress.completedLessons.size.toString())
+                    StudyStatRow("Exámenes aprobados", progress.completedExams.size.toString())
+                    StudyStatRow("Racha actual", "${progress.streakDays} días")
+                    StudyStatRow("Precisión reciente", accuracy?.let { "${it}%" } ?: "Aún sin resultados")
                 }
             }
 
-            Text("Elige la respuesta correcta", style = MaterialTheme.typography.titleMedium)
-
-            val options = listOf("Hola", "Gracias", "Agua", "Casa")
-            options.forEach { option ->
-                OutlinedButton(
-                    onClick = { answer = option },
-                    modifier = Modifier.fillMaxWidth()
+            Card(Modifier.fillMaxWidth()) {
+                Column(
+                    Modifier.fillMaxWidth().padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Text(option)
-                }
-            }
-
-            OutlinedTextField(
-                value = answer,
-                onValueChange = { answer = it },
-                label = { Text("Respuesta escrita") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Button(onClick = { navController.navigate("home") }, modifier = Modifier.weight(1f)) {
-                    Text("Comprobar")
-                }
-                Button(onClick = { navController.navigate("profile") }, modifier = Modifier.weight(1f)) {
-                    Text("Tutor")
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-                    .padding(14.dp)
-                    .fillMaxWidth()
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    Text("Tutor de práctica", style = MaterialTheme.typography.labelLarge)
-                    Text("Recomendación: repite la pronunciación y relaciona el saludo con el contexto de la conversación.", style = MaterialTheme.typography.bodyMedium)
+                    Text("Actividad reciente", style = MaterialTheme.typography.titleLarge)
+                    if (recent.isEmpty()) {
+                        Text(
+                            "Todavía no hay actividad registrada. Completa una lección o una evaluación para comenzar tu historial.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        recent.take(10).forEachIndexed { index, result ->
+                            Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                                Text(
+                                    if (result.isExam) "Evaluación · ${result.moduleId}" else "Lección · ${result.moduleId}",
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+                                Text(
+                                    "${result.correctAnswers} de ${result.totalQuestions} respuestas correctas · +${result.xpEarned} EXP",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            if (index < recent.take(10).lastIndex) {
+                                androidx.compose.material3.HorizontalDivider()
+                            }
+                        }
+                    }
                 }
             }
         }
+
+        androidx.compose.material3.OutlinedButton(
+            onClick = { navController.navigateUp() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Volver")
+        }
+    }
+}
+
+@Composable
+private fun StudyStatRow(label: String, value: String) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(value, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurface)
     }
 }

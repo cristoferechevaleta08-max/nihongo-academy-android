@@ -17,10 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -28,10 +26,11 @@ import com.nihongoacademy.data.StudyProgressStore
 import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.LanguageModule
 import com.nihongoacademy.model.StudyProgress
+import com.nihongoacademy.ui.theme.AcademyColors
 
-private val ModulePaper = Color(0xFFF9F5F0)
-private val ModuleInk = Color(0xFF0A0A0A)
-private val ModuleWhite = Color.White
+private val ModulePaper = AcademyColors.Background
+private val ModuleInk = AcademyColors.TextPrimary
+private val ModuleWhite = AcademyColors.Surface
 
 @Composable
 fun ModuleOverviewScreen(navController: NavController, languageCode: String = "ja") {
@@ -46,9 +45,10 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
 
     Column(Modifier.fillMaxSize().background(ModulePaper).padding(horizontal = 22.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("PLAN DE ESTUDIO", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
-        Text("Módulos · ${language.code.uppercase()}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Serif, fontSize = 32.sp))
+        Text("Módulos · ${language.name}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge)
+        Text(language.code.uppercase(), color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelLarge)
         Spacer(Modifier.height(1.dp).fillMaxWidth().background(ModuleInk.copy(alpha = 0.12f)))
-        Text("${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   ${completion.toString().padStart(2, '0')}% COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
+        Text("${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   ${completion.toString().padStart(2, '0')}% completado", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
         LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(language.modules, key = { it.id }) { module ->
                 val completed = module.midExam.id in progress.completedExams && module.finalExam.id in progress.completedExams
@@ -61,14 +61,14 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
 @Composable
 private fun ModuleEditorialCard(module: LanguageModule, isCompleted: Boolean, onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().height(116.dp).background(ModuleWhite, RoundedCornerShape(24.dp))
-        .border(1.dp, ModuleInk.copy(alpha = 0.13f), RoundedCornerShape(24.dp)).clickable(onClick = onClick)
+        .border(1.dp, AcademyColors.Border, RoundedCornerShape(24.dp)).clickable(onClick = onClick)
         .padding(horizontal = 18.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            Text("MÓDULO ${module.number.toString().padStart(2, '0')}", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.5.sp))
-            Text(module.title, color = ModuleInk, style = MaterialTheme.typography.titleLarge.copy(fontFamily = FontFamily.Serif, fontSize = 22.sp), fontWeight = FontWeight.Bold)
+            Text("MÓDULO ${module.number.toString().padStart(2, '0')}", color = AcademyColors.Sakura, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.5.sp))
+            Text(module.title, color = ModuleInk, style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp), fontWeight = FontWeight.Bold)
             Text("${module.lessons.size} lecciones  ·  ${module.targetLevel}", color = ModuleInk.copy(alpha = 0.62f), style = MaterialTheme.typography.bodySmall)
             if (isCompleted) Text("COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.2.sp, fontWeight = FontWeight.Bold))
         }
-        Text("→", color = ModuleInk, fontSize = 27.sp, fontWeight = FontWeight.Light)
+        Text("→", color = AcademyColors.Sakura, fontSize = 27.sp, fontWeight = FontWeight.Light)
     }
 }

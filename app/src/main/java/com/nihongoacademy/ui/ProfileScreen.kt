@@ -1,132 +1,107 @@
 package com.nihongoacademy.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
+import com.nihongoacademy.R
 import com.nihongoacademy.data.AuthRepository
-import com.nihongoacademy.data.PreferencesStore
 import com.nihongoacademy.data.SessionStore
-import com.nihongoacademy.data.StudySettings
 import com.nihongoacademy.data.StudyProgressStore
 import com.nihongoacademy.model.StudyProgress
+import com.nihongoacademy.ui.theme.AcademyColors
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(navController: NavController) {
     val context = LocalContext.current
     val authRepository = remember { AuthRepository(context) }
     val progressStore = remember { StudyProgressStore(context) }
-    val preferencesStore = remember { PreferencesStore(context) }
-    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
-    val settings by settingsFlow.collectAsState(initial = StudySettings())
-    var displayName by remember { mutableStateOf("Estudiante") }
+    val scope = rememberCoroutineScope()
+    var displayName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var languageCode by remember { mutableStateOf("ja") }
     var progress by remember { mutableStateOf(StudyProgress()) }
-    var visible by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         val user = authRepository.currentUser()
-        displayName = user?.displayName ?: "Estudiante"
+        displayName = user?.displayName.orEmpty()
         email = user?.email.orEmpty()
         languageCode = SessionStore(context).readLanguage() ?: "ja"
         progress = progressStore.getProgress(languageCode)
-        delay(120)
-        visible = true
     }
+    val answered = progress.recentResults.sumOf { it.totalQuestions }
+    val correct = progress.recentResults.sumOf { it.correctAnswers }
+    val accuracy = if (answered == 0) 0 else correct * 100 / answered
+    val expInLevel = progress.totalXp % 500
 
-    AnimatedVisibility(
-        visible = visible,
-        enter = if (settings.reduceMotion) EnterTransition.None else fadeIn() + slideInVertically(initialOffsetY = { 20 }),
-        exit = if (settings.reduceMotion) ExitTransition.None else fadeOut() + slideOutVertically(targetOffsetY = { 20 })
+    Column(
+        Modifier.fillMaxSize().background(AcademyColors.Background)
+            .verticalScroll(rememberScrollState()).padding(horizontal = 22.dp, vertical = 18.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .verticalScroll(rememberScrollState())
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text("Perfil del alumno", style = MaterialTheme.typography.headlineMedium)
-            Text("Idioma activo · ${languageCode.uppercase()}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier.padding(18.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(64.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(displayName.split(" ").mapNotNull { it.firstOrNull()?.toString() }.take(2).joinToString("").uppercase(), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                    }
-
-                    Column {
-                        Text(displayName, style = MaterialTheme.typography.titleLarge)
-                        Text(email, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text("Nivel ${progress.currentLevel}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text("Perfil", style = MaterialTheme.typography.headlineLarge, color = AcademyColors.TextPrimary)
+            Spacer(Modifier.weight(1f))
+            Text("⚙", color = AcademyColors.TextPrimary, fontSize = 24.sp,
+                modifier = Modifier.clip(CircleShape).clickable { navController.navigate("settings") }.padding(8.dp))
+        }
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(Modifier.size(112.dp), contentAlignment = Alignment.BottomEnd) {
+                Image(painterResource(R.drawable.ic_kitsune_placeholder), "Avatar Kitsune",
+                    Modifier.size(104.dp).clip(CircleShape).background(AcademyColors.Surface).border(1.dp, AcademyColors.Border, CircleShape).padding(10.dp))
+                Box(Modifier.size(30.dp).clip(CircleShape).background(AcademyColors.Sakura), contentAlignment = Alignment.Center) {
+                    Text("✎", color = AcademyColors.Background, fontSize = 15.sp)
                 }
             }
-
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text("Rendimiento", style = MaterialTheme.typography.titleMedium)
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        MetricChip("${progress.totalXp}", "XP")
-                        MetricChip("${progress.completedLessons.size}", "Lecciones")
-                        MetricChip("${progress.streakDays}d", "Racha")
-                    }
+            Spacer(Modifier.height(12.dp))
+            if (displayName.isNotBlank()) Text(displayName, color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall)
+            if (email.isNotBlank()) Text(email, color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodySmall)
+            Text("Nivel ${progress.currentLevel} • Principiante", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodyMedium)
+            Spacer(Modifier.height(14.dp))
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("EXP", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.labelLarge)
+                Text("$expInLevel / 500 EXP", color = AcademyColors.Sakura, style = MaterialTheme.typography.labelLarge)
+            }
+            Spacer(Modifier.height(7.dp))
+            LinearProgressIndicator(progress = expInLevel / 500f, modifier = Modifier.fillMaxWidth().height(7.dp).clip(CircleShape),
+                color = AcademyColors.Sakura, trackColor = AcademyColors.Border)
+        }
+        Card(colors = CardDefaults.cardColors(containerColor = AcademyColors.Surface), shape = RoundedCornerShape(22.dp)) {
+            Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                Text("Tu progreso", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.titleLarge)
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    ProfileMetric("▣", progress.completedLessons.size.toString(), "Lecciones")
+                    ProfileMetric("✓", if (answered == 0) "—" else "$accuracy%", "Aciertos")
+                    ProfileMetric("♨", progress.streakDays.toString(), "Racha")
                 }
             }
-
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    Text("Próximo objetivo", style = MaterialTheme.typography.titleMedium)
-                    Text(if (progress.completedLessons.isEmpty()) "Completa tu primera lección" else "Continúa con tu siguiente lección", style = MaterialTheme.typography.bodyLarge)
-                    Text("${progress.completedLessons.size} lecciones registradas · ${progress.xpToNextLevel} XP para el próximo nivel", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Column {
+            ProfileMenuRow("Mi perfil", "◎") { }
+            ProfileMenuRow("Estadísticas", "▥") { navController.navigate("study") }
+            ProfileMenuRow("Configuración", "⚙") { navController.navigate("settings") }
+            ProfileMenuRow("Ayuda y soporte", "?") { navController.navigate("community") }
+            ProfileMenuRow("Cerrar sesión", "↪", destructive = true) {
+                scope.launch {
+                    authRepository.logout()
+                    navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
                 }
             }
         }
@@ -134,18 +109,24 @@ fun ProfileScreen(navController: NavController) {
 }
 
 @Composable
-private fun MetricChip(value: String, label: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(0.28f)
-    ) {
-        Column(
-            modifier = Modifier.padding(vertical = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+private fun ProfileMetric(icon: String, value: String, label: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(5.dp)) {
+        Text(icon, color = AcademyColors.Sakura, fontSize = 20.sp)
+        Text(value, color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(label, color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodySmall)
+    }
+}
+
+@Composable
+private fun ProfileMenuRow(title: String, icon: String, destructive: Boolean = false, onClick: () -> Unit) {
+    Column {
+        Row(Modifier.fillMaxWidth().height(58.dp).clickable(onClick = onClick).padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(icon, color = if (destructive) AcademyColors.JapaneseRed else AcademyColors.TextSecondary, fontSize = 19.sp)
+            Text(title, Modifier.padding(start = 14.dp).weight(1f), color = if (destructive) AcademyColors.JapaneseRed else AcademyColors.TextPrimary,
+                style = MaterialTheme.typography.bodyLarge)
+            Text("›", color = AcademyColors.TextSecondary, fontSize = 24.sp)
         }
+        HorizontalDivider(color = AcademyColors.Border, thickness = 1.dp)
     }
 }
