@@ -100,6 +100,7 @@ fun LessonScreen(
                 if (!checked && selectedAnswer.isNotBlank()) {
                     checked = true
                     saving = true
+                    saveError = null
                     scope.launch {
                         runCatching {
                             progress = progressStore.recordLessonResult(
