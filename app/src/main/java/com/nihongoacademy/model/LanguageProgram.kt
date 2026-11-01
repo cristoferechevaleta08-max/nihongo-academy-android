@@ -98,7 +98,7 @@ object LanguageCatalogFactory {
                 title = "Evaluación de lectura · ${content.first.title}",
                 questions = listOf(
                     ExamQuestion(
-                        id = "q_mid_$moduleNumber",
+                        id = "q_mid_${moduleNumber}_1",
                         module = ExamModuleType.READING,
                         difficulty = ExamDifficulty.BASIC,
                         prompt = content.first.prompt,
@@ -106,6 +106,16 @@ object LanguageCatalogFactory {
                         correctAnswer = content.first.answer,
                         feedback = content.first.explanation,
                         hint = content.first.description
+                    ),
+                    ExamQuestion(
+                        id = "q_mid_${moduleNumber}_2",
+                        module = ExamModuleType.READING,
+                        difficulty = ExamDifficulty.BASIC,
+                        prompt = content.second.prompt,
+                        options = content.second.options,
+                        correctAnswer = content.second.answer,
+                        feedback = content.second.explanation,
+                        hint = content.second.description
                     )
                 )
             )
@@ -116,7 +126,17 @@ object LanguageCatalogFactory {
                 title = "Evaluación final · ${content.second.title}",
                 questions = listOf(
                     ExamQuestion(
-                        id = "q_final_$moduleNumber",
+                        id = "q_final_${moduleNumber}_1",
+                        module = ExamModuleType.READING,
+                        difficulty = ExamDifficulty.INTERMEDIATE,
+                        prompt = content.first.prompt,
+                        options = content.first.options,
+                        correctAnswer = content.first.answer,
+                        feedback = content.first.explanation,
+                        hint = content.first.description
+                    ),
+                    ExamQuestion(
+                        id = "q_final_${moduleNumber}_2",
                         module = ExamModuleType.READING,
                         difficulty = ExamDifficulty.INTERMEDIATE,
                         prompt = content.second.prompt,
