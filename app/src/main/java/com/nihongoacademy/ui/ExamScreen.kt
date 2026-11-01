@@ -305,4 +305,4 @@ fun ExamScreen(navController: NavController) {
 @Composable private fun ExamPreview411() { NihongoTheme { ExamPreviewContent() } }
 @Preview(name = "Exámenes 600dp", widthDp = 600, heightDp = 960, showBackground = true)
 @Composable private fun ExamPreview600() { NihongoTheme { ExamPreviewContent() } }
-
+}
