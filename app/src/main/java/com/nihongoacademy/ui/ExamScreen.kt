@@ -313,9 +313,6 @@ fun ExamScreen(navController: NavController) {
     }
 }
 
-    }
-}
-
 @Composable private fun ExamPreviewContent() { ExamScreen(rememberNavController()) }
 @Preview(name = "Exámenes 360dp", widthDp = 360, heightDp = 800, showBackground = true)
 @Composable private fun ExamPreview360() { NihongoTheme { ExamPreviewContent() } }
