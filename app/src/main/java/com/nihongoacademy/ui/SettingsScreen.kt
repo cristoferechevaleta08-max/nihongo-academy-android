@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.ui.platform.LocalContext
 import com.nihongoacademy.data.AuthRepository
+import com.nihongoacademy.data.PreferencesStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -42,6 +43,7 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
     val authRepository = remember { AuthRepository(context) }
+    val preferencesStore = remember { PreferencesStore(context) }
     val scope = rememberCoroutineScope()
     var romajiEnabled by remember { mutableStateOf(true) }
     var paperGridEnabled by remember { mutableStateOf(false) }
@@ -49,6 +51,11 @@ fun SettingsScreen(navController: NavController) {
     var visible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
+        runCatching { preferencesStore.getStudySettings() }.onSuccess { settings ->
+            romajiEnabled = settings.showPronunciation
+            paperGridEnabled = settings.paperGridEnabled
+            reduceMotion = settings.reduceMotion
+        }
         delay(100)
         visible = true
     }
@@ -79,7 +86,7 @@ fun SettingsScreen(navController: NavController) {
                         Text("Romaji / pinyin")
                         Text("Muestra ayuda de pronunciación", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Switch(checked = romajiEnabled, onCheckedChange = { romajiEnabled = it })
+                    Switch(checked = romajiEnabled, onCheckedChange = { enabled -> romajiEnabled = enabled; scope.launch { preferencesStore.setShowPronunciation(enabled) } })
                 }
             }
 
@@ -95,7 +102,7 @@ fun SettingsScreen(navController: NavController) {
                         Text("Cuadrícula de práctica")
                         Text("Layout de cuaderno para escribir", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Switch(checked = paperGridEnabled, onCheckedChange = { paperGridEnabled = it })
+                    Switch(checked = paperGridEnabled, onCheckedChange = { enabled -> paperGridEnabled = enabled; scope.launch { preferencesStore.setPaperGridEnabled(enabled) } })
                 }
             }
 
@@ -111,7 +118,7 @@ fun SettingsScreen(navController: NavController) {
                         Text("Reducir animaciones")
                         Text("Optimiza movimiento y respuesta visual", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Switch(checked = reduceMotion, onCheckedChange = { reduceMotion = it })
+                    Switch(checked = reduceMotion, onCheckedChange = { enabled -> reduceMotion = enabled; scope.launch { preferencesStore.setReduceMotion(enabled) } })
                 }
             }
 
