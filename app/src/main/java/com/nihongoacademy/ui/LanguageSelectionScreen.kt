@@ -16,12 +16,16 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nihongoacademy.model.LanguageEntry
+import com.nihongoacademy.data.SessionStore
+import kotlinx.coroutines.launch
 
 private val academyLanguages = listOf(
     LanguageEntry("ja", "Japonés", "日本語", "Kana/Kanji", "LTR", listOf("hiragana", "katakana", "kanji", "romaji", "vocabulary", "grammar", "listening", "reading", "n5", "n4", "n3", "n2", "n1")),
@@ -43,6 +47,10 @@ private val academyLanguages = listOf(
 
 @Composable
 fun LanguageSelectionScreen(navController: NavController) {
+    val context = LocalContext.current
+    val sessionStore = remember { SessionStore(context) }
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
