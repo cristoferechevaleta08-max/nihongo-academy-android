@@ -9,6 +9,6 @@ class DatabaseProvider(private val context: Context) {
             context.applicationContext,
             AppDatabase::class.java,
             "nihongo_academy.db"
-        ).fallbackToDestructiveMigration().build()
+        ).build()
     }
 }
