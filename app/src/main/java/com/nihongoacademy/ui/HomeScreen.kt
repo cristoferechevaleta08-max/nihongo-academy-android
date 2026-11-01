@@ -71,7 +71,7 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 HomeQuickAction("▤", "Cursos") { navController.navigate("modules/${languageCode.lowercase()}") }
                 HomeQuickAction("▧", "Flashcards") { navController.navigate("flashcards/${languageCode.lowercase()}") }
-                HomeQuickAction("✓", "Exámenes") { navController.navigate("study") }
+                HomeQuickAction("✓", "Exámenes") { navController.navigate("exams") }
                 HomeQuickAction("◎", "Comunidad") { navController.navigate("community") }
             }
         }
