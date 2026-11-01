@@ -85,6 +85,7 @@ fun ProfileScreen(navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text("Perfil del alumno", style = MaterialTheme.typography.headlineMedium)
+            Text("Idioma activo · ${languageCode.uppercase()}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             Card(modifier = Modifier.fillMaxWidth()) {
                 Row(
