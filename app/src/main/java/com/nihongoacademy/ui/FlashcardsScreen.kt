@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +25,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nihongoacademy.data.FlashcardReviewStore
+import com.nihongoacademy.data.PreferencesStore
+import com.nihongoacademy.data.StudySettings
 import com.nihongoacademy.data.FlashcardSchedule
 import com.nihongoacademy.data.ReviewRating
 import com.nihongoacademy.model.LanguageCatalogFactory
@@ -41,6 +44,9 @@ fun FlashcardsScreen(navController: NavController, languageCode: String) {
     }
     val context = LocalContext.current
     val store = remember { FlashcardReviewStore(context.applicationContext) }
+    val preferencesStore = remember { PreferencesStore(context.applicationContext) }
+    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
+    val settings by settingsFlow.collectAsState(initial = StudySettings())
     val scope = rememberCoroutineScope()
     var schedules by remember(language.code) { mutableStateOf<Map<String, FlashcardSchedule>>(emptyMap()) }
     var currentCard by remember(language.code) { mutableStateOf<Triple<String, String, ModuleLesson>?>(null) }
@@ -105,7 +111,7 @@ fun FlashcardsScreen(navController: NavController, languageCode: String) {
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                     Text("Pregunta", style = MaterialTheme.typography.labelLarge)
                     Text(lesson.prompt, style = MaterialTheme.typography.headlineSmall)
-                    if (lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
+                    if (settings.showPronunciation && lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
                     if (answerVisible) {
                         Text("Respuesta", style = MaterialTheme.typography.labelLarge)
                         Text(lesson.correctAnswer, style = MaterialTheme.typography.titleLarge)
