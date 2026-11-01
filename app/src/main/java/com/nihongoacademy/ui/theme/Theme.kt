@@ -17,22 +17,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/**
- * Monochrome visual system for Nihongo Academy.
- * Legacy semantic names are kept to avoid breaking screens that still reference them.
- */
 object AcademyPalette {
-    val Ink = Color(0xFF111111)
-    val Paper = Color(0xFFF7F7F7)
-    val Card = Color(0xFFFFFFFF)
-    val Mist = Color(0xFFEDEDED)
-    val Olive = Color(0xFFD6D6D6)
-    val Sage = Color(0xFF777777)
-    val Sand = Color(0xFFE5E5E5)
-    val Clay = Color(0xFF999999)
-    val Bronze = Color(0xFF555555)
-    val Accent = Color(0xFF202020)
-    val Muted = Color(0xFF717171)
+    val Ink = Color(0xFF0A0A0A)
+    val Paper = Color(0xFFF9F5F0)
+    val Card = Color.White
+    val Mist = Ink.copy(alpha = 0.04f)
+    val Olive = Ink.copy(alpha = 0.12f)
+    val Sage = Ink.copy(alpha = 0.55f)
+    val Sand = Ink.copy(alpha = 0.08f)
+    val Clay = Ink.copy(alpha = 0.4f)
+    val Bronze = Ink
+    val Accent = Ink
+    val Muted = Ink.copy(alpha = 0.6f)
 }
 
 private val LightColors = lightColorScheme(
@@ -43,38 +39,43 @@ private val LightColors = lightColorScheme(
     surface = AcademyPalette.Card,
     onSurface = AcademyPalette.Ink,
     surfaceVariant = AcademyPalette.Mist,
-    secondary = AcademyPalette.Bronze,
+    onSurfaceVariant = AcademyPalette.Muted,
+    secondary = AcademyPalette.Ink,
     onSecondary = Color.White,
-    tertiary = AcademyPalette.Sand,
+    tertiary = AcademyPalette.Ink.copy(alpha = 0.12f),
     onTertiary = AcademyPalette.Ink,
-    outline = Color(0xFFD1D1D1)
+    outline = AcademyPalette.Ink.copy(alpha = 0.16f),
+    error = AcademyPalette.Ink
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color.White,
+    primary = AcademyPalette.Paper,
     onPrimary = AcademyPalette.Ink,
-    background = Color(0xFF101010),
-    onBackground = Color(0xFFF1F1F1),
-    surface = Color(0xFF191919),
-    onSurface = Color(0xFFF1F1F1),
-    surfaceVariant = Color(0xFF262626),
-    onSurfaceVariant = Color(0xFFD0D0D0),
-    secondary = Color(0xFFBDBDBD),
-    onSecondary = Color(0xFF111111),
-    tertiary = Color(0xFF8A8A8A),
-    onTertiary = Color(0xFF101010),
-    outline = Color(0xFF444444)
+    background = AcademyPalette.Ink,
+    onBackground = AcademyPalette.Paper,
+    surface = AcademyPalette.Ink,
+    onSurface = AcademyPalette.Paper,
+    surfaceVariant = AcademyPalette.Ink,
+    onSurfaceVariant = AcademyPalette.Paper.copy(alpha = 0.7f),
+    secondary = AcademyPalette.Paper,
+    onSecondary = AcademyPalette.Ink,
+    tertiary = AcademyPalette.Paper.copy(alpha = 0.12f),
+    onTertiary = AcademyPalette.Paper,
+    outline = AcademyPalette.Paper.copy(alpha = 0.2f),
+    error = AcademyPalette.Paper
 )
 
 private val AppTypography = Typography(
-    displayLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 42.sp),
-    headlineLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 30.sp),
-    headlineMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold, fontSize = 24.sp),
-    titleLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.SemiBold, fontSize = 22.sp),
-    titleMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.SemiBold, fontSize = 18.sp),
+    displayLarge = TextStyle(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 42.sp),
+    headlineLarge = TextStyle(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 32.sp, lineHeight = 38.sp),
+    headlineMedium = TextStyle(fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold, fontSize = 27.sp),
+    titleLarge = TextStyle(fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold, fontSize = 22.sp),
+    titleMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.SemiBold, fontSize = 17.sp),
     bodyLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Normal, fontSize = 16.sp),
     bodyMedium = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Normal, fontSize = 14.sp),
-    labelLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Medium, fontSize = 14.sp)
+    bodySmall = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Normal, fontSize = 12.sp),
+    labelLarge = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Medium, fontSize = 14.sp),
+    labelSmall = TextStyle(fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Medium, fontSize = 11.sp)
 )
 
 @Composable
@@ -90,9 +91,8 @@ fun NihongoTheme(
         "light" -> false
         else -> isSystemInDarkTheme()
     }
-    val colors = if (useDarkTheme) DarkColors else LightColors
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = if (useDarkTheme) DarkColors else LightColors,
         typography = AppTypography,
         content = content
     )
