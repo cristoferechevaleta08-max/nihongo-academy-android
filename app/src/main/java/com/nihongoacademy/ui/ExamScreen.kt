@@ -1,33 +1,26 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
 import com.nihongoacademy.model.ExamDifficulty
 import com.nihongoacademy.model.ExamHistoryEntry
 import com.nihongoacademy.model.ExamModuleType
 import com.nihongoacademy.model.ExamQuestion
+import com.nihongoacademy.ui.theme.AcademyColors
+import com.nihongoacademy.ui.theme.NihongoTheme
 
 @Composable
 fun ExamScreen(navController: NavController) {
@@ -96,6 +89,7 @@ fun ExamScreen(navController: NavController) {
         )
     }
 
+
     val history = remember {
         listOf(
             ExamHistoryEntry("Saludos", 86, 12, "Hace 2 días"),
@@ -105,6 +99,8 @@ fun ExamScreen(navController: NavController) {
         )
     }
 
+
+    var showQuestions by remember { mutableStateOf(false) }
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
     var writtenAnswer by remember { mutableStateOf("") }
@@ -112,6 +108,55 @@ fun ExamScreen(navController: NavController) {
     var score by remember { mutableIntStateOf(0) }
     var finished by remember { mutableStateOf(false) }
 
+
+    if (!showQuestions) {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            Column(
+                Modifier.fillMaxSize().padding(horizontal = 22.dp).padding(bottom = 22.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Row(Modifier.fillMaxWidth().height(54.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text("Exámenes", modifier = Modifier.weight(1f), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onBackground)
+                    IconButton(onClick = { navController.navigate("settings") }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Configuración", tint = MaterialTheme.colorScheme.onBackground)
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(26.dp),
+                    color = AcademyColors.ButtonPrimary,
+                    shadowElevation = 2.dp
+                ) {
+                    Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        Box(
+                            Modifier.size(76.dp).background(AcademyColors.Background, RoundedCornerShape(18.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("JLPT\nN5", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, lineHeight = 24.sp)
+                        }
+                        Text("Examen de Nivel N5", style = MaterialTheme.typography.headlineSmall, color = AcademyColors.ButtonPrimaryText)
+                        Text("Evalúa tus conocimientos", style = MaterialTheme.typography.bodyLarge, color = AcademyColors.ButtonPrimaryText.copy(alpha = .72f))
+                        listOf("Comprensión de lectura", "Comprensión auditiva", "Vocabulario y gramática").forEach { item ->
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                Checkbox(checked = true, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = AcademyColors.Sakura, checkmarkColor = AcademyColors.Background))
+                                Text(item, style = MaterialTheme.typography.bodyMedium, color = AcademyColors.ButtonPrimaryText)
+                            }
+                        }
+                        Button(
+                            onClick = { showQuestions = true },
+                            modifier = Modifier.fillMaxWidth().height(54.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = AcademyColors.Background, contentColor = AcademyColors.TextPrimary)
+                        ) { Text("Iniciar examen →", style = MaterialTheme.typography.titleMedium) }
+                    }
+                }
+                Spacer(Modifier.weight(1f))
+            }
+            // Landscape artwork remains represented by the app's existing vector resource, when available.
+            Text("鳥居     富士山     五重塔", modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 20.dp), color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = .22f), style = MaterialTheme.typography.headlineSmall)
+        }
+    } else {
     val currentQuestion = questionBank[currentQuestionIndex]
 
     Column(
@@ -267,3 +312,14 @@ fun ExamScreen(navController: NavController) {
         }
     }
 }
+
+    }
+}
+
+@Composable private fun ExamPreviewContent() { ExamScreen(rememberNavController()) }
+@Preview(name = "Exámenes 360dp", widthDp = 360, heightDp = 800, showBackground = true)
+@Composable private fun ExamPreview360() { NihongoTheme { ExamPreviewContent() } }
+@Preview(name = "Exámenes 411dp", widthDp = 411, heightDp = 900, showBackground = true)
+@Composable private fun ExamPreview411() { NihongoTheme { ExamPreviewContent() } }
+@Preview(name = "Exámenes 600dp", widthDp = 600, heightDp = 960, showBackground = true)
+@Composable private fun ExamPreview600() { NihongoTheme { ExamPreviewContent() } }
