@@ -105,6 +105,7 @@ fun FlashcardsScreen(navController: NavController, languageCode: String) {
                 Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                     Text("Pregunta", style = MaterialTheme.typography.labelLarge)
                     Text(lesson.prompt, style = MaterialTheme.typography.headlineSmall)
+                    if (lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
                     if (answerVisible) {
                         Text("Respuesta", style = MaterialTheme.typography.labelLarge)
                         Text(lesson.correctAnswer, style = MaterialTheme.typography.titleLarge)
