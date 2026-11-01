@@ -50,4 +50,34 @@ class StudyProgressLogicTest {
             "es", "ru", "ar", "nl", "tr", "hi", "th"
         )
     }
+    @Test
+    fun incorrectLessonIsNotMarkedAsCompleted() {
+        val result = StudyProgressLogic.completeLesson(
+            StudyProgress(), "JA", "module_1", "m1_l1", 0, 1
+        )
+        assertThat(result.completedLessons).doesNotContain("m1_l1")
+        assertThat(result.totalXp).isEqualTo(0)
+    }
+
+    @Test
+    fun failedExamIsNotMarkedAsCompleted() {
+        val result = StudyProgressLogic.completeExam(
+            StudyProgress(), "JA", "module_1", "m1_mid", 0, 1
+        )
+        assertThat(result.completedExams).doesNotContain("m1_mid")
+        assertThat(result.totalXp).isEqualTo(0)
+    }
+
+    @Test
+    fun repeatingPassedExamDoesNotAwardXpTwice() {
+        val first = StudyProgressLogic.completeExam(
+            StudyProgress(), "JA", "module_1", "m1_mid", 1, 1
+        )
+        val second = StudyProgressLogic.completeExam(
+            first, "JA", "module_1", "m1_mid", 1, 1
+        )
+        assertThat(first.totalXp).isEqualTo(second.totalXp)
+        assertThat(second.completedExams).contains("m1_mid")
+    }
+
 }
