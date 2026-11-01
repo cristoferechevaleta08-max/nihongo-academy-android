@@ -1,16 +1,10 @@
 package com.nihongoacademy.ui
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +22,7 @@ import com.nihongoacademy.data.StudySettings
 import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.StudyProgress
 import com.nihongoacademy.ui.theme.AcademyColors
+import com.nihongoacademy.ui.theme.AcademyShapes
 import com.nihongoacademy.ui.theme.NihongoTheme
 import kotlinx.coroutines.launch
 
@@ -72,49 +66,16 @@ fun LessonScreen(
                 Text("Lección", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
             }
 
-            Box(Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(bottom = 26.dp), contentAlignment = Alignment.BottomCenter) {
-                Surface(
-                    modifier = Modifier.fillMaxWidth().heightIn(min = 230.dp).aspectRatio(1.18f),
-                    shape = RoundedCornerShape(26.dp),
-                    color = AcademyColors.ButtonPrimary,
-                    shadowElevation = 2.dp
-                ) {
-                    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text("あ", fontSize = 104.sp, lineHeight = 112.sp, fontWeight = FontWeight.Normal, color = AcademyColors.ButtonPrimaryText)
-                        Text("a", style = MaterialTheme.typography.titleLarge, color = AcademyColors.ButtonPrimaryText)
-                    }
-                }
-                FilledIconButton(
-                    onClick = { if (settings.showPronunciation && lesson.speechText.isNotBlank()) Unit },
-                    modifier = Modifier.size(56.dp).offset(y = 26.dp),
-                    shape = CircleShape,
-                    colors = IconButtonDefaults.filledIconButtonColors(containerColor = AcademyColors.Sakura, contentColor = AcademyColors.Background)
-                ) {
-                    Icon(Icons.Default.PlayArrow, contentDescription = "Audio")
-                }
-                if (settings.showPronunciation && lesson.speechText.isNotBlank()) {
-                    // The existing pronunciation control remains available without changing speech logic.
-                    PronunciationButton(lesson.speechText, language.code)
+            Surface(modifier = Modifier.fillMaxWidth().heightIn(min = 190.dp), shape = AcademyShapes.Large, color = MaterialTheme.colorScheme.surface) {
+                Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Text(lesson.title, style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(lesson.prompt, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.SemiBold)
+                    if (settings.showPronunciation && lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
                 }
             }
-
-            Text("Trazo del carácter", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
-            val guideColor = MaterialTheme.colorScheme.outline
-            Surface(
-                modifier = Modifier.fillMaxWidth().height(188.dp),
-                shape = RoundedCornerShape(18.dp),
-                color = AcademyColors.ButtonPrimary
-            ) {
-                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Canvas(Modifier.fillMaxSize()) {
-                        val guide = guideColor
-                        drawLine(guide, androidx.compose.ui.geometry.Offset(size.width / 2f, 0f), androidx.compose.ui.geometry.Offset(size.width / 2f, size.height), 1.2f)
-                        drawLine(guide, androidx.compose.ui.geometry.Offset(0f, size.height / 2f), androidx.compose.ui.geometry.Offset(size.width, size.height / 2f), 1.2f)
-                        drawLine(guide.copy(alpha = .55f), androidx.compose.ui.geometry.Offset(0f, 0f), androidx.compose.ui.geometry.Offset(size.width, size.height), 1f)
-                        drawLine(guide.copy(alpha = .55f), androidx.compose.ui.geometry.Offset(size.width, 0f), androidx.compose.ui.geometry.Offset(0f, size.height), 1f)
-                    }
-                    Text("あ", fontSize = 112.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = .28f), fontWeight = FontWeight.Light)
-                }
+            Text("Objetivo de la lección", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
+            Surface(modifier = Modifier.fillMaxWidth(), shape = AcademyShapes.Medium, color = MaterialTheme.colorScheme.surfaceVariant) {
+                Text(lesson.description, modifier = Modifier.padding(18.dp), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
 
             Text("Comprueba lo aprendido", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
@@ -155,9 +116,15 @@ fun LessonScreen(
                         saving = false
                     }
                 } else if (checked && !saving) {
-                    val nextLesson = module.lessons.firstOrNull { it.id != lesson.id }
-                    if (nextLesson != null) navController.navigate("lesson/${languageCode.lowercase()}/${module.id}/${nextLesson.id}")
-                    else navController.navigateUp()
+                    val currentIndex = module.lessons.indexOfFirst { it.id == lesson.id }
+                    val nextLesson = module.lessons.getOrNull(currentIndex + 1)
+                    if (nextLesson != null) {
+                        navController.navigate("lesson/${languageCode.lowercase()}/${module.id}/${nextLesson.id}") {
+                            launchSingleTop = true
+                        }
+                    } else {
+                        navController.navigateUp()
+                    }
                 }
             },
             enabled = if (checked) !saving else selectedAnswer.isNotBlank(),
