@@ -46,13 +46,13 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
 
     Column(Modifier.fillMaxSize().background(ModulePaper).padding(horizontal = 22.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("PLAN DE ESTUDIO", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
-        Text("Módulos · \${language.code.uppercase()}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Serif, fontSize = 32.sp))
+        Text("Módulos · ${language.code.uppercase()}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge.copy(fontFamily = FontFamily.Serif, fontSize = 32.sp))
         Spacer(Modifier.height(1.dp).fillMaxWidth().background(ModuleInk.copy(alpha = 0.12f)))
-        Text("\${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   \${completion.toString().padStart(2, '0')}% COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
+        Text("${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   ${completion.toString().padStart(2, '0')}% COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
         LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(language.modules, key = { it.id }) { module ->
                 val completed = module.midExam.id in progress.completedExams && module.finalExam.id in progress.completedExams
-                ModuleEditorialCard(module, completed) { navController.navigate("module/\${languageCode.lowercase()}/\${module.id}") }
+                ModuleEditorialCard(module, completed) { navController.navigate("module/${languageCode.lowercase()}/${module.id}") }
             }
         }
     }
@@ -64,9 +64,9 @@ private fun ModuleEditorialCard(module: LanguageModule, isCompleted: Boolean, on
         .border(1.dp, ModuleInk.copy(alpha = 0.13f), RoundedCornerShape(24.dp)).clickable(onClick = onClick)
         .padding(horizontal = 18.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
-            Text("MÓDULO \${module.number.toString().padStart(2, '0')}", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.5.sp))
+            Text("MÓDULO ${module.number.toString().padStart(2, '0')}", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.5.sp))
             Text(module.title, color = ModuleInk, style = MaterialTheme.typography.titleLarge.copy(fontFamily = FontFamily.Serif, fontSize = 22.sp), fontWeight = FontWeight.Bold)
-            Text("\${module.lessons.size} lecciones  ·  \${module.targetLevel}", color = ModuleInk.copy(alpha = 0.62f), style = MaterialTheme.typography.bodySmall)
+            Text("${module.lessons.size} lecciones  ·  ${module.targetLevel}", color = ModuleInk.copy(alpha = 0.62f), style = MaterialTheme.typography.bodySmall)
             if (isCompleted) Text("COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.2.sp, fontWeight = FontWeight.Bold))
         }
         Text("→", color = ModuleInk, fontSize = 27.sp, fontWeight = FontWeight.Light)
