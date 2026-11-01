@@ -81,13 +81,13 @@ fun SettingsScreen(navController: NavController) {
                     Text("Apariencia", style = MaterialTheme.typography.titleMedium)
                     Text("Elige cómo se muestra Nihongo Academy.", style = MaterialTheme.typography.bodyMedium)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        if (themeMode == "system") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Sistema") }
+                        if (themeMode == "system") Button(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f)) { Text("Sistema") }
                         else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f)) { Text("Sistema") }
 
-                        if (themeMode == "light") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Claro") }
+                        if (themeMode == "light") Button(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f)) { Text("Claro") }
                         else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f)) { Text("Claro") }
 
-                        if (themeMode == "dark") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Oscuro") }
+                        if (themeMode == "dark") Button(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f)) { Text("Oscuro") }
                         else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f)) { Text("Oscuro") }
                     }
                 }
