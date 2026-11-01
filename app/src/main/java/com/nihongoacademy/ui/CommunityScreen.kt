@@ -89,7 +89,7 @@ private fun CommunityPostCard(post: CommunityPost) {
         shape = RoundedCornerShape(20.dp), modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier.size(42.dp).clip(CircleShape).background(AcademyColors.SurfaceVariant),
+                Box(Modifier.size(42.dp).clip(CircleShape).background(AcademyColors.SurfaceElevated),
                     contentAlignment = Alignment.Center) {
                     Text(post.avatar, color = AcademyColors.Sakura, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
