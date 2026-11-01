@@ -11,6 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -52,6 +56,8 @@ fun LanguageSelectionScreen(navController: NavController) {
     val context = LocalContext.current
     val sessionStore = remember { SessionStore(context) }
     val scope = rememberCoroutineScope()
+    var selectedLanguage by remember { mutableStateOf("ja") }
+    LaunchedEffect(Unit) { selectedLanguage = sessionStore.readLanguage() ?: "ja" }
     Column(Modifier.fillMaxSize().background(AcademyPaper).padding(horizontal = 22.dp, vertical = 26.dp)) {
         Text("APRENDE A TU MANERA", color = AcademyInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
         Spacer(Modifier.height(14.dp))
@@ -61,14 +67,15 @@ fun LanguageSelectionScreen(navController: NavController) {
         Spacer(Modifier.height(24.dp))
         LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             items(academyLanguages, key = { it.code }) { entry ->
-                val active = entry.code == "ja"
+                val active = entry.code.equals(selectedLanguage, ignoreCase = true)
                 Row(
                     Modifier.fillMaxWidth().height(76.dp).background(if (active) AcademyInk else AcademyWhite, RoundedCornerShape(24.dp))
                         .border(if (active) 1.5.dp else 1.dp, if (active) AcademyInk else AcademyInk.copy(alpha = 0.14f), RoundedCornerShape(24.dp))
                         .clickable {
                             scope.launch {
+                                selectedLanguage = entry.code
                                 sessionStore.saveLanguage(entry.code)
-                                navController.navigate("home/\${entry.code.lowercase()}") {
+                                navController.navigate("home/${entry.code.lowercase()}") {
                                     popUpTo("language") { inclusive = true }
                                     launchSingleTop = true
                                 }
