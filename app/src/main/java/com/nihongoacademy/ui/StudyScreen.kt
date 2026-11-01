@@ -1,6 +1,8 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -23,6 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,9 +37,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
+import androidx.compose.ui.platform.LocalContext
+import com.nihongoacademy.data.PreferencesStore
+import com.nihongoacademy.data.StudySettings
 
 @Composable
 fun StudyScreen(navController: NavController) {
+    val context = LocalContext.current
+    val preferencesStore = remember { PreferencesStore(context) }
+    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
+    val settings by settingsFlow.collectAsState(initial = StudySettings())
     var answer by remember { mutableStateOf("") }
     var isVisible by remember { mutableStateOf(false) }
 
@@ -47,8 +57,8 @@ fun StudyScreen(navController: NavController) {
 
     AnimatedVisibility(
         visible = isVisible,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { 18 }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { 18 })
+        enter = if (settings.reduceMotion) EnterTransition.None else fadeIn() + slideInVertically(initialOffsetY = { 18 }),
+        exit = if (settings.reduceMotion) ExitTransition.None else fadeOut() + slideOutVertically(targetOffsetY = { 18 })
     ) {
         Column(
             modifier = Modifier
