@@ -85,6 +85,9 @@ fun LoginScreen(navController: NavController) {
             if (loading) CircularProgressIndicator()
             else Text("Entrar")
         }
+        OutlinedButton(onClick = { navController.navigate("password_reset") }, modifier = Modifier.fillMaxWidth()) {
+            Text("¿Olvidaste tu contraseña?")
+        }
         OutlinedButton(onClick = { navController.navigate("register") }, modifier = Modifier.fillMaxWidth()) {
             Text("Crear una cuenta")
         }
