@@ -58,7 +58,7 @@ class StudyProgressStore(private val context: Context) {
         correctAnswers: Int,
         totalQuestions: Int
     ): StudyProgress {
-        val current = getProgress().copy(languageCode = languageCode)
+        val current = getProgress(languageCode).copy(languageCode = languageCode)
         val updated = StudyProgressLogic.completeExam(
             progress = current,
             languageCode = languageCode,
@@ -72,7 +72,7 @@ class StudyProgressStore(private val context: Context) {
     }
 
     suspend fun completeModule(languageCode: String, moduleId: String): StudyProgress {
-        val current = getProgress().copy(languageCode = languageCode)
+        val current = getProgress(languageCode).copy(languageCode = languageCode)
         val updated = StudyProgressLogic.completeModule(
             progress = current,
             languageCode = languageCode,
