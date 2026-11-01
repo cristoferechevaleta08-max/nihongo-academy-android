@@ -31,7 +31,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun PasswordResetScreen(navController: NavController) {
-    val repository = remember { AuthRepository(LocalContext.current) }
+    val context = LocalContext.current
+    val repository = remember { AuthRepository(context) }
     val scope = rememberCoroutineScope()
     var email by remember { mutableStateOf("") }
     var recoveryCode by remember { mutableStateOf("") }
