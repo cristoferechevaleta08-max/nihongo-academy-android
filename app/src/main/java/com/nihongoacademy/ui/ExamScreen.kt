@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
 import com.nihongoacademy.model.ExamDifficulty
-import com.nihongoacademy.model.ExamHistoryEntry
 import com.nihongoacademy.model.ExamModuleType
 import com.nihongoacademy.model.ExamQuestion
 import com.nihongoacademy.ui.theme.AcademyColors
@@ -86,16 +85,6 @@ fun ExamScreen(navController: NavController) {
                 feedback = "Correcto. もう行きます indica que te vas de inmediato.",
                 hint = "Piensa en una acción que se hace enseguida."
             )
-        )
-    }
-
-
-    val history = remember {
-        listOf(
-            ExamHistoryEntry("Saludos", 86, 12, "Hace 2 días"),
-            ExamHistoryEntry("Vocabulario", 74, 9, "Hace 4 días"),
-            ExamHistoryEntry("Frases útiles", 91, 15, "Hace 1 semana"),
-            ExamHistoryEntry("Lectura", 68, 7, "Hace 5 días")
         )
     }
 
@@ -225,6 +214,7 @@ fun ExamScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Button(
+                    enabled = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.isNotBlank() else selectedAnswer.isNotBlank(),
                     onClick = {
                         val answer = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer else selectedAnswer
                         val isCorrect = answer.equals(currentQuestion.correctAnswer, ignoreCase = true)
@@ -250,7 +240,7 @@ fun ExamScreen(navController: NavController) {
                 }
 
                 Button(
-                    onClick = { navController.navigate("home") },
+                    onClick = { navController.navigateUp() },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text("Salir")
@@ -281,25 +271,22 @@ fun ExamScreen(navController: NavController) {
                     Text("• Repite los bloques de saludos y frases útiles\n• Practica la escritura de oraciones cortas\n• Vuelve a evaluar la lectura con contexto real", style = MaterialTheme.typography.bodyMedium)
                 }
             }
-
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(18.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text("Historial de rendimiento", style = MaterialTheme.typography.titleMedium)
-                    history.forEach { entry ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(entry.topic)
-                            Text("${entry.score}% · ${entry.attempts} intentos")
-                        }
-                    }
+                    Text(
+                        "Todavía no hay resultados anteriores para mostrar. Tus próximos resultados aparecerán aquí cuando queden guardados.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
                 }
             }
 
