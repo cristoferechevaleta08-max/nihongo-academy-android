@@ -5,10 +5,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -27,6 +32,16 @@ private val Paper = Color(0xFFF9F5F0)
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
+    var providerNotice by remember { mutableStateOf<String?>(null) }
+    if (providerNotice != null) {
+        AlertDialog(
+            onDismissRequest = { providerNotice = null },
+            containerColor = Color(0xFFF9F5F0),
+            title = { Text("Acceso con ${providerNotice}") },
+            text = { Text("Esta opción estará disponible cuando se integre el inicio de sesión con este proveedor.") },
+            confirmButton = { TextButton(onClick = { providerNotice = null }) { Text("Entendido") } }
+        )
+    }
     Column(
         modifier = Modifier.fillMaxSize().background(Paper).verticalScroll(rememberScrollState())
             .padding(horizontal = 28.dp, vertical = 26.dp),
@@ -61,7 +76,24 @@ fun WelcomeScreen(navController: NavController) {
         Spacer(Modifier.height(28.dp))
         Text("—  o continuar con  —", color = Ink.copy(alpha = 0.55f), style = MaterialTheme.typography.labelMedium, letterSpacing = 1.sp)
         Spacer(Modifier.height(14.dp))
-        Text("Google   ·   Apple", color = Ink.copy(alpha = 0.45f), style = MaterialTheme.typography.labelSmall)
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            OutlinedButton(
+                onClick = { providerNotice = "Google" },
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                border = BorderStroke(1.dp, Ink.copy(alpha = 0.55f)),
+                contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)
+            ) { Text("G", fontWeight = FontWeight.Bold, fontSize = 17.sp) }
+            OutlinedButton(
+                onClick = { providerNotice = "Apple" },
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                border = BorderStroke(1.dp, Ink.copy(alpha = 0.55f)),
+                contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)
+            ) { Text("●", fontSize = 17.sp) }
+        }
         Spacer(Modifier.height(22.dp))
         Text("15 IDIOMAS  /  UN SOLO ESPACIO", color = Ink.copy(alpha = 0.62f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
         Spacer(Modifier.weight(0.6f))
