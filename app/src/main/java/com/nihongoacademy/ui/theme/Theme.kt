@@ -13,8 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.nihongoacademy.data.PreferencesStore
 
 private val DarkColors = darkColorScheme(
-    primary = AcademyColors.Sakura,
-    onPrimary = AcademyColors.Background,
+    primary = AcademyColors.ButtonPrimary,
+    onPrimary = AcademyColors.ButtonPrimaryText,
     secondary = AcademyColors.Sakura,
     onSecondary = AcademyColors.Background,
     tertiary = AcademyColors.JapaneseRed,
