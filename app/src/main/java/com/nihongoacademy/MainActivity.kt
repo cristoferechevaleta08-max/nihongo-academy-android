@@ -18,6 +18,7 @@ import com.nihongoacademy.data.AuthRepository
 import com.nihongoacademy.data.SessionStore
 import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.HomeScreen
+import com.nihongoacademy.ui.FlashcardsScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
 import com.nihongoacademy.ui.LessonScreen
 import com.nihongoacademy.ui.LoginScreen
@@ -96,6 +97,11 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
             val moduleId = backStackEntry.arguments?.getString("moduleId") ?: "module_1"
             val lessonId = backStackEntry.arguments?.getString("lessonId") ?: "m1_l1"
             LessonScreen(navController, code, moduleId, lessonId)
+        }
+
+        composable("flashcards/{languageCode}") { backStackEntry ->
+            val code = backStackEntry.arguments?.getString("languageCode") ?: "ja"
+            FlashcardsScreen(navController, code)
         }
 
         composable(Screens.Study.route) { StudyScreen(navController) }
