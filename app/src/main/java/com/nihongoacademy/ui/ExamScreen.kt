@@ -12,17 +12,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
 import com.nihongoacademy.model.ExamDifficulty
 import com.nihongoacademy.model.ExamModuleType
 import com.nihongoacademy.model.ExamQuestion
+import com.nihongoacademy.data.SessionStore
+import com.nihongoacademy.data.StudyProgressStore
 import com.nihongoacademy.ui.theme.AcademyColors
 import com.nihongoacademy.ui.theme.NihongoTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun ExamScreen(navController: NavController) {
+    val context = LocalContext.current
+    val sessionStore = remember { SessionStore(context.applicationContext) }
+    val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    val scope = rememberCoroutineScope()
+    var languageCode by remember { mutableStateOf("ja") }
+    var savedResults by remember { mutableStateOf(emptyList<com.nihongoacademy.model.StudyResult>()) }
+    var savingResult by remember { mutableStateOf(false) }
+    var saveError by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        languageCode = sessionStore.readLanguage() ?: "ja"
+        savedResults = progressStore.getProgress(languageCode).recentResults.filter { it.isExam }.asReversed()
+    }
     val questionBank = remember {
         listOf(
             ExamQuestion(
@@ -232,6 +248,23 @@ fun ExamScreen(navController: NavController) {
                             writtenAnswer = ""
                         } else {
                             finished = true
+                            savingResult = true
+                            saveError = null
+                            scope.launch {
+                                runCatching {
+                                    val updated = progressStore.recordExamResult(
+                                        languageCode = languageCode,
+                                        moduleId = "general_n5",
+                                        examId = "general_n5",
+                                        correctAnswers = score,
+                                        totalQuestions = questionBank.size
+                                    )
+                                    savedResults = updated.recentResults.filter { it.isExam }.asReversed()
+                                }.onFailure {
+                                    saveError = "No se pudo guardar este resultado. Revisa tu conexión de almacenamiento e inténtalo de nuevo."
+                                }
+                                savingResult = false
+                            }
                         }
                     },
                     modifier = Modifier.weight(1f)
@@ -280,19 +313,30 @@ fun ExamScreen(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text("Historial de rendimiento", style = MaterialTheme.typography.titleMedium)
-                    Text(
-                        "Todavía no hay resultados anteriores para mostrar. Tus próximos resultados aparecerán aquí cuando queden guardados.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    if (savedResults.isEmpty()) {
+                        Text(
+                            "Todavía no hay resultados anteriores guardados.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        savedResults.take(5).forEach { result ->
+                            Text(
+                                "${result.correctAnswers} de ${result.totalQuestions} respuestas · ${if (result.totalQuestions > 0) result.correctAnswers * 100 / result.totalQuestions else 0}%",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
                 }
             }
 
+            saveError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             Button(
                 onClick = { navController.navigateUp() },
+                enabled = !savingResult,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Volver al panel")
+                Text(if (savingResult) "Guardando resultado…" else "Volver al panel")
             }
         }
     }
