@@ -45,9 +45,10 @@ fun ModuleOverviewScreen(navController: NavController, languageCode: String = "j
 
     Column(Modifier.fillMaxSize().background(ModulePaper).padding(horizontal = 22.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("PLAN DE ESTUDIO", color = ModuleInk.copy(alpha = 0.55f), style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
-        Text("Módulos · ${language.code.uppercase()}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge.copy(fontSize = 32.sp))
+        Text("Módulos · ${language.name}", color = ModuleInk, style = MaterialTheme.typography.headlineLarge)
+        Text(language.code.uppercase(), color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelLarge)
         Spacer(Modifier.height(1.dp).fillMaxWidth().background(ModuleInk.copy(alpha = 0.12f)))
-        Text("${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   ${completion.toString().padStart(2, '0')}% COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
+        Text("${language.modules.size.toString().padStart(2, '0')} MÓDULOS   /   ${completion.toString().padStart(2, '0')}% completado", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.8.sp, fontSize = 10.sp, fontWeight = FontWeight.SemiBold))
         LazyColumn(Modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(language.modules, key = { it.id }) { module ->
                 val completed = module.midExam.id in progress.completedExams && module.finalExam.id in progress.completedExams

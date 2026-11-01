@@ -34,19 +34,21 @@ fun ProfileScreen(navController: NavController) {
     val authRepository = remember { AuthRepository(context) }
     val progressStore = remember { StudyProgressStore(context) }
     val scope = rememberCoroutineScope()
-    var displayName by remember { mutableStateOf("UsuarioKun") }
+    var displayName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var languageCode by remember { mutableStateOf("ja") }
     var progress by remember { mutableStateOf(StudyProgress()) }
 
     LaunchedEffect(Unit) {
         val user = authRepository.currentUser()
-        displayName = user?.displayName?.takeIf { it.isNotBlank() } ?: "UsuarioKun"
+        displayName = user?.displayName.orEmpty()
         email = user?.email.orEmpty()
         languageCode = SessionStore(context).readLanguage() ?: "ja"
         progress = progressStore.getProgress(languageCode)
     }
+    val answered = progress.recentResults.sumOf { it.totalQuestions }
     val correct = progress.recentResults.sumOf { it.correctAnswers }
+    val accuracy = if (answered == 0) 0 else correct * 100 / answered
     val expInLevel = progress.totalXp % 500
 
     Column(
@@ -69,7 +71,7 @@ fun ProfileScreen(navController: NavController) {
                 }
             }
             Spacer(Modifier.height(12.dp))
-            Text(displayName, color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall)
+            if (displayName.isNotBlank()) Text(displayName, color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall)
             if (email.isNotBlank()) Text(email, color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodySmall)
             Text("Nivel ${progress.currentLevel} • Principiante", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(14.dp))
@@ -86,7 +88,7 @@ fun ProfileScreen(navController: NavController) {
                 Text("Tu progreso", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.titleLarge)
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                     ProfileMetric("▣", progress.completedLessons.size.toString(), "Lecciones")
-                    ProfileMetric("✓", correct.toString(), "Aciertos")
+                    ProfileMetric("✓", if (answered == 0) "—" else "$accuracy%", "Aciertos")
                     ProfileMetric("♨", progress.streakDays.toString(), "Racha")
                 }
             }

@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.nihongoacademy.data.AuthRepository
 import com.nihongoacademy.data.PreferencesStore
@@ -80,15 +81,15 @@ fun SettingsScreen(navController: NavController) {
                 ) {
                     Text("Apariencia", style = MaterialTheme.typography.titleMedium)
                     Text("Elige cómo se muestra Nihongo Academy.", style = MaterialTheme.typography.bodyMedium)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        if (themeMode == "system") Button(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f)) { Text("Sistema") }
-                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f)) { Text("Sistema") }
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        if (themeMode == "system") Button(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Sistema", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Sistema", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
 
-                        if (themeMode == "light") Button(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f)) { Text("Claro") }
-                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f)) { Text("Claro") }
+                        if (themeMode == "light") Button(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Claro", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Claro", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
 
-                        if (themeMode == "dark") Button(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f)) { Text("Oscuro") }
-                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f)) { Text("Oscuro") }
+                        if (themeMode == "dark") Button(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Oscuro", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f).heightIn(min = 48.dp), contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 4.dp, vertical = 8.dp)) { Text("Oscuro", maxLines = 1, softWrap = false, overflow = TextOverflow.Clip, style = MaterialTheme.typography.labelMedium) }
                     }
                 }
             }

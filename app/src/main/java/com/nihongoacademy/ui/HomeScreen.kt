@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.nihongoacademy.R
+import com.nihongoacademy.data.AuthRepository
 import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.StudyProgress
 import com.nihongoacademy.ui.theme.AcademyColors
 
@@ -34,35 +36,43 @@ import com.nihongoacademy.ui.theme.AcademyColors
 fun HomeScreen(navController: NavController, languageCode: String = "ja") {
     val context = LocalContext.current
     val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    val authRepository = remember { AuthRepository(context.applicationContext) }
+    val languages = remember { LanguageCatalogFactory.buildSupportedLanguages() }
+    val language = languages.firstOrNull { it.code.equals(languageCode, true) } ?: languages.first()
+    var displayName by remember { mutableStateOf("") }
     var progress by remember { mutableStateOf(StudyProgress(languageCode = languageCode.uppercase())) }
     var refreshing by remember { mutableStateOf(false) }
     LaunchedEffect(languageCode, refreshing) {
         progress = progressStore.getProgress(languageCode).copy(languageCode = languageCode.uppercase())
+        displayName = authRepository.currentUser()?.displayName.orEmpty()
         refreshing = false
     }
-    val progressPercent = ((progress.totalXp % 500) / 500f).coerceIn(0f, 1f)
+    val totalLessons = language.modules.sumOf { it.lessons.size }.coerceAtLeast(1)
+    val progressPercent = (progress.completedLessons.size.toFloat() / totalLessons).coerceIn(0f, 1f)
+    val recommended = language.modules.asSequence().flatMap { module -> module.lessons.asSequence().map { module to it } }.firstOrNull { pair -> pair.second.id !in progress.completedLessons }
 
     Column(Modifier.fillMaxSize().background(AcademyColors.Background).verticalScroll(rememberScrollState())
         .padding(horizontal = 20.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(22.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("¡Hola, UsuarioKun! 👋", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall)
+                Text("¡Hola${if (displayName.isBlank()) "" else ", $displayName"}! 👋", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall)
                 Text("¿Listo para aprender hoy?", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodyMedium)
             }
             Text("↻", color = AcademyColors.TextPrimary, fontSize = 25.sp,
                 modifier = Modifier.clip(CircleShape).clickable { refreshing = true }.padding(8.dp))
         }
+        Surface(onClick = { navController.navigate("language") }, color = AcademyColors.Surface, shape = RoundedCornerShape(14.dp), modifier = Modifier.fillMaxWidth()) { Text("${language.name} · ${language.code.uppercase()} · Nivel ${progress.currentLevel}   ›", color = AcademyColors.TextPrimary, modifier = Modifier.padding(14.dp), style = MaterialTheme.typography.titleSmall) }
         Box(Modifier.fillMaxWidth().height(220.dp).clip(RoundedCornerShape(24.dp)).background(AcademyColors.Surface)) {
             Image(painterResource(R.drawable.bg_japanese_landscape_placeholder), null,
                 Modifier.fillMaxSize().alpha(0.65f), contentScale = ContentScale.Crop)
             Column(Modifier.align(Alignment.CenterStart).padding(20.dp).fillMaxWidth(0.78f),
                 verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text("Domina el japonés paso a paso", color = AcademyColors.TextPrimary,
+                Text("${recommended?.second?.title ?: "Has completado las lecciones disponibles"}", color = AcademyColors.TextPrimary,
                     style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold))
-                Button(onClick = { navController.navigate("modules/${languageCode.lowercase()}") },
+                Button(onClick = { if (recommended != null) navController.navigate("lesson/${languageCode.lowercase()}/${recommended.first.id}/${recommended.second.id}") else navController.navigate("modules/${languageCode.lowercase()}") },
                     colors = ButtonDefaults.buttonColors(containerColor = AcademyColors.ButtonPrimary, contentColor = AcademyColors.ButtonPrimaryText),
                     shape = RoundedCornerShape(14.dp), contentPadding = PaddingValues(horizontal = 18.dp, vertical = 10.dp)) {
-                    Text("Comenzar curso →", fontWeight = FontWeight.SemiBold)
+                    Text("${if (recommended != null) "Comenzar →" else "Ver cursos →"}", fontWeight = FontWeight.SemiBold)
                 }
             }
         }
@@ -88,12 +98,13 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
                         Canvas(Modifier.fillMaxSize()) {
                             drawArc(AcademyColors.Border, -90f, 360f, false, style = Stroke(9.dp.toPx(), cap = StrokeCap.Round),
                                 size = Size(size.width, size.height))
-                            drawArc(AcademyColors.Sakura, -90f, 35f * 3.6f, false, style = Stroke(9.dp.toPx(), cap = StrokeCap.Round),
+                            drawArc(AcademyColors.Sakura, -90f, progressPercent * 360f, false, style = Stroke(9.dp.toPx(), cap = StrokeCap.Round),
                                 size = Size(size.width, size.height))
                         }
-                        Text("35%", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                        Text("${(progressPercent * 100).toInt()}%", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+                        if (progress.completedLessons.isEmpty()) Text("Tu camino empieza aquí. Completa tu primera lección para registrar tu progreso.", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodySmall)
                         Text("Nivel ${progress.currentLevel} / Principiante", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.titleMedium)
                         Text("${progress.completedLessons.size} lecciones completadas", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.bodySmall)
                         Text("${progress.totalXp} EXP acumulada", color = AcademyColors.Sakura, style = MaterialTheme.typography.labelLarge)
