@@ -291,7 +291,7 @@ fun ExamScreen(navController: NavController) {
             }
 
             Button(
-                onClick = { navController.navigate("home") },
+                onClick = { navController.navigateUp() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Volver al panel")
