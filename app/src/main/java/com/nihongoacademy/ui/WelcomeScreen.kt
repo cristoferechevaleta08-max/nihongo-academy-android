@@ -1,97 +1,100 @@
 package com.nihongoacademy.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.foundation.Image
-import androidx.compose.ui.draw.alpha
-import com.nihongoacademy.R
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
+import com.nihongoacademy.R
 import com.nihongoacademy.ui.theme.AcademyColors
-
-private val Ink = AcademyColors.TextPrimary
-private val Paper = AcademyColors.Background
+import com.nihongoacademy.ui.theme.NihongoTheme
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
-    var providerNotice by remember { mutableStateOf<String?>(null) }
-    if (providerNotice != null) {
-        AlertDialog(
-            onDismissRequest = { providerNotice = null },
-            containerColor = AcademyColors.Surface,
-            title = { Text("Acceso con ${providerNotice}") },
-            text = { Text("Esta opción estará disponible cuando se integre el inicio de sesión con este proveedor.") },
-            confirmButton = { TextButton(onClick = { providerNotice = null }) { Text("Entendido") } }
-        )
-    }
     Column(
-        modifier = Modifier.fillMaxSize().background(Paper).verticalScroll(rememberScrollState())
-            .padding(horizontal = 28.dp, vertical = 26.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxSize()
+            .background(AcademyColors.Background)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 28.dp, vertical = 22.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(Modifier.weight(1f))
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.height(188.dp).fillMaxWidth()) {
-            Image(
-                painter = painterResource(id = R.drawable.bg_japanese_landscape_placeholder),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize().alpha(0.72f)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.ic_kitsune_placeholder),
-                contentDescription = "Mascota Kitsune de Nihongo Academy",
-                modifier = Modifier.size(118.dp)
-            )
-        }
+        Spacer(Modifier.height(12.dp))
+        Image(
+            painter = painterResource(R.drawable.bg_japanese_landscape_placeholder),
+            contentDescription = "Paisaje japonés con pagoda, montañas y pétalos de sakura",
+            contentScale = ContentScale.Fit,
+            modifier = Modifier.fillMaxWidth().heightIn(min = 176.dp, max = 224.dp)
+        )
         Spacer(Modifier.height(18.dp))
-        Text("Nihongo Academy", color = Ink, style = MaterialTheme.typography.headlineLarge.copy(fontSize = 38.sp, lineHeight = 42.sp), textAlign = TextAlign.Center)
-        Spacer(Modifier.height(10.dp))
-        Text("— 日本語 —", color = AcademyColors.Sakura, style = MaterialTheme.typography.bodyMedium.copy(letterSpacing = 3.sp), textAlign = TextAlign.Center)
-        Spacer(Modifier.height(26.dp))
-        Text("Aprende. Practica. Conecta.", color = Ink, style = MaterialTheme.typography.bodyMedium.copy(letterSpacing = 1.4.sp), textAlign = TextAlign.Center)
-        Spacer(Modifier.weight(1f))
-        Button(onClick = { navController.navigate("login") }, modifier = Modifier.fillMaxWidth().height(52.dp), shape = RoundedCornerShape(14.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = AcademyColors.ButtonPrimary, contentColor = AcademyColors.ButtonPrimaryText)) {
+        Text(
+            text = "Nihongo\nAcademy",
+            color = AcademyColors.TextPrimary,
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontSize = 36.sp, lineHeight = 39.sp, fontWeight = FontWeight.Bold
+            ),
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(9.dp))
+        Text(
+            text = "— 日本語 —",
+            color = AcademyColors.Sakura,
+            style = MaterialTheme.typography.titleMedium.copy(letterSpacing = 4.sp),
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(16.dp))
+        Text(
+            text = "Aprende. Practica. Conecta.",
+            color = AcademyColors.TextPrimary,
+            style = MaterialTheme.typography.bodyLarge.copy(letterSpacing = 0.5.sp),
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(28.dp))
+        Button(
+            onClick = { navController.navigate("login") },
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            shape = RoundedCornerShape(14.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AcademyColors.ButtonPrimary,
+                contentColor = AcademyColors.ButtonPrimaryText
+            )
+        ) {
             Text("Iniciar sesión", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         }
         Spacer(Modifier.height(12.dp))
-        OutlinedButton(onClick = { navController.navigate("register") }, modifier = Modifier.fillMaxWidth().height(52.dp),
-            shape = RoundedCornerShape(14.dp), border = BorderStroke(1.dp, Ink), colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) {
+        OutlinedButton(
+            onClick = { navController.navigate("register") },
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            shape = RoundedCornerShape(14.dp),
+            border = BorderStroke(1.dp, AcademyColors.TextPrimary),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = AcademyColors.TextPrimary)
+        ) {
             Text("Crear cuenta", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         }
-        Spacer(Modifier.height(28.dp))
-        Text("—  o continuar con  —", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelMedium, letterSpacing = 1.sp)
         Spacer(Modifier.height(14.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            OutlinedButton(onClick = { providerNotice = "Google" }, modifier = Modifier.size(48.dp), shape = CircleShape,
-                border = BorderStroke(1.dp, AcademyColors.Border), contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) { Text("G", fontWeight = FontWeight.Bold, fontSize = 17.sp) }
-            OutlinedButton(onClick = { providerNotice = "Apple" }, modifier = Modifier.size(48.dp), shape = CircleShape,
-                border = BorderStroke(1.dp, AcademyColors.Border), contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink)) { Text("●", fontSize = 17.sp) }
-        }
-        Spacer(Modifier.height(22.dp))
-        Text("15 IDIOMAS  /  UN SOLO ESPACIO", color = AcademyColors.TextSecondary, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 2.sp))
-        Spacer(Modifier.weight(0.6f))
     }
 }
+
+@Preview(name = "Portada · 360 dp", widthDp = 360, heightDp = 800, showBackground = true)
+@Composable private fun WelcomePreview360() { NihongoTheme(darkTheme = true) { WelcomeScreen(rememberNavController()) } }
+
+@Preview(name = "Portada · 411 dp", widthDp = 411, heightDp = 900, showBackground = true)
+@Composable private fun WelcomePreview411() { NihongoTheme(darkTheme = true) { WelcomeScreen(rememberNavController()) } }
+
+@Preview(name = "Portada · 600 dp", widthDp = 600, heightDp = 960, showBackground = true)
+@Composable private fun WelcomePreview600() { NihongoTheme(darkTheme = true) { WelcomeScreen(rememberNavController()) } }
