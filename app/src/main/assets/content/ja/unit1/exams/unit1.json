@@ -1,0 +1,828 @@
+{
+  "language": "ja",
+  "unit": 1,
+  "title": "Examen de Unidad 1",
+  "format": "12_items",
+  "scoring": {
+    "total_points": 13,
+    "pass_points": 10,
+    "minimum_competency_percent": 60,
+    "rounding": "ceil",
+    "points_by_competency": {
+      "lectura": 4,
+      "escritura": 3,
+      "produccion": 2,
+      "vocabulario": 2,
+      "auditiva": 2
+    },
+    "competency_minimum_points": {
+      "lectura": 3,
+      "escritura": 2,
+      "produccion": 2,
+      "vocabulario": 2,
+      "auditiva": 2
+    },
+    "note": "INCONSISTENCIA: los mínimos redondeados por competencia suman 11 puntos. Es imposible obtener 10 puntos y cumplir todos los mínimos. Se conserva la regla literal hasta decisión editorial."
+  },
+  "publication": {
+    "candidate_item_ids": [
+      "ja-u1-exam-ko-01",
+      "ja-u1-exam-ne-02",
+      "ja-u1-exam-shi-03",
+      "ja-u1-exam-go-04",
+      "ja-u1-exam-ta-05",
+      "ja-u1-exam-yu-06",
+      "ja-u1-exam-mo-07",
+      "ja-u1-exam-ni-08",
+      "ja-u1-exam-morning-09",
+      "ja-u1-exam-sleep-10",
+      "ja-u1-exam-hai-11",
+      "ja-u1-exam-iie-12"
+    ],
+    "official_item_ids": [],
+    "eligibility_rule": "status == revisado AND reviewer_native != null AND review_date != null AND audio disponible para listening"
+  },
+  "items": [
+    {
+      "id": "ja-u1-exam-ko-01",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.k-row",
+      "competency": "lectura",
+      "type": "read_char",
+      "prompt": "¿Cómo se lee こ?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "ko",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ku",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ka",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ki",
+          "correct": false
+        }
+      ],
+      "expected_answer": "ko",
+      "points": 1,
+      "explanation_correct": "ko es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "fila_similar",
+          "explanation": "く se lee ku; misma fila K, vocal distinta."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "fila_similar",
+          "explanation": "か se lee ka; misma fila K, vocal distinta."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "fila_similar",
+          "explanation": "き se lee ki; misma fila K, vocal distinta."
+        }
+      ],
+      "objective": "Reconocer la lectura de kana de la fila K.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ne-02",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.n-row",
+      "competency": "lectura",
+      "type": "read_char",
+      "prompt": "¿Cómo se lee ね?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "ne",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "nu",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "no",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ni",
+          "correct": false
+        }
+      ],
+      "expected_answer": "ne",
+      "points": 1,
+      "explanation_correct": "ne es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "fila_similar",
+          "explanation": "ぬ se lee nu."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "fila_similar",
+          "explanation": "の se lee no."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "fila_similar",
+          "explanation": "に se lee ni."
+        }
+      ],
+      "objective": "Distinguir kana de la fila N.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-shi-03",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.s-row",
+      "competency": "lectura",
+      "type": "read_char",
+      "prompt": "¿Cómo se lee し?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "shi",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "chi",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "tsu",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "su",
+          "correct": false
+        }
+      ],
+      "expected_answer": "shi",
+      "points": 1,
+      "explanation_correct": "shi es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "fila_similar",
+          "explanation": "ち se lee chi."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "fila_similar",
+          "explanation": "つ se lee tsu."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "fila_similar",
+          "explanation": "す se lee su."
+        }
+      ],
+      "objective": "Reconocer la lectura shi.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-go-04",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.dakuten.g",
+      "competency": "lectura",
+      "type": "read_char",
+      "prompt": "¿Cómo se lee ご?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "go",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ko",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "gu",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "zo",
+          "correct": false
+        }
+      ],
+      "expected_answer": "go",
+      "points": 1,
+      "explanation_correct": "go es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "fila_similar",
+          "explanation": "こ se lee ko, sin dakuten."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "fila_similar",
+          "explanation": "ぐ se lee gu."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "fila_similar",
+          "explanation": "ぞ se lee zo."
+        }
+      ],
+      "objective": "Distinguir kana con y sin dakuten.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ta-05",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.t-row",
+      "competency": "escritura",
+      "type": "kana_from_romaji",
+      "prompt": "¿Qué kana corresponde a \"ta\"?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "た",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ら",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "な",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "さ",
+          "correct": false
+        }
+      ],
+      "expected_answer": "た",
+      "points": 1,
+      "explanation_correct": "た es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_confundido",
+          "explanation": "ら se lee ra."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_confundido",
+          "explanation": "な se lee na."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_confundido",
+          "explanation": "さ se lee sa."
+        }
+      ],
+      "objective": "Seleccionar el kana de lectura ta.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-yu-06",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.y-row",
+      "competency": "escritura",
+      "type": "kana_from_romaji",
+      "prompt": "¿Qué kana corresponde a \"yu\"?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "ゆ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "よ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "や",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ぬ",
+          "correct": false
+        }
+      ],
+      "expected_answer": "ゆ",
+      "points": 1,
+      "explanation_correct": "ゆ es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_confundido",
+          "explanation": "よ se lee yo."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_confundido",
+          "explanation": "や se lee ya."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_confundido",
+          "explanation": "ぬ se lee nu."
+        }
+      ],
+      "objective": "Seleccionar el kana de lectura yu.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-mo-07",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.m-row",
+      "competency": "escritura",
+      "type": "kana_from_romaji",
+      "prompt": "¿Qué kana corresponde a \"mo\"?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "も",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "め",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ね",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "さ",
+          "correct": false
+        }
+      ],
+      "expected_answer": "も",
+      "points": 1,
+      "explanation_correct": "も es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_confundido",
+          "explanation": "め se lee me."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_confundido",
+          "explanation": "ね se lee ne."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_confundido",
+          "explanation": "さ se lee sa."
+        }
+      ],
+      "objective": "Seleccionar el kana de lectura mo.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ni-08",
+      "language": "ja",
+      "unit": 1,
+      "skill": "kana.n-row",
+      "competency": "produccion",
+      "type": "kana_input",
+      "prompt": "Escribe el kana que se lee \"ni\".",
+      "audio_id": null,
+      "options": [],
+      "expected_answer": "に",
+      "points": 2,
+      "explanation_correct": "に es la respuesta correcta para este objetivo.",
+      "distractors": [],
+      "objective": "Producir el kana correspondiente a ni.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-morning-09",
+      "language": "ja",
+      "unit": 1,
+      "skill": "greetings.morning",
+      "competency": "vocabulario",
+      "type": "situational_choice",
+      "prompt": "Son las 8 de la mañana y saludas a un compañero. ¿Qué dices?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "おはようございます",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "こんばんは",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "おやすみなさい",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "さようなら",
+          "correct": false
+        }
+      ],
+      "expected_answer": "おはようございます",
+      "points": 1,
+      "explanation_correct": "おはようございます es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "こんばんは es un saludo nocturno."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "おやすみなさい es una despedida para dormir."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "さようなら es una despedida."
+        }
+      ],
+      "objective": "Elegir un saludo apropiado para la mañana.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-sleep-10",
+      "language": "ja",
+      "unit": 1,
+      "skill": "greetings.sleep",
+      "competency": "vocabulario",
+      "type": "situational_choice",
+      "prompt": "Son las 11 de la noche y te despides de un amigo que se va a dormir. ¿Qué dices?",
+      "audio_id": null,
+      "options": [
+        {
+          "id": "a",
+          "text": "おやすみなさい",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "こんにちは",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "おはようございます",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "すみません",
+          "correct": false
+        }
+      ],
+      "expected_answer": "おやすみなさい",
+      "points": 1,
+      "explanation_correct": "おやすみなさい es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "こんにちは es un saludo diurno."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "おはようございます es un saludo matutino."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "contexto_inadecuado",
+          "explanation": "すみません expresa disculpa o cortesía."
+        }
+      ],
+      "objective": "Elegir una despedida apropiada para dormir.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-hai-11",
+      "language": "ja",
+      "unit": 1,
+      "skill": "greetings.affirmative",
+      "competency": "auditiva",
+      "type": "listening_choice",
+      "prompt": "Escucha 「はい」. ¿Qué significa?",
+      "audio_id": "ja-u1-exam-hai-11",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "No",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gracias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hasta luego",
+          "correct": false
+        }
+      ],
+      "expected_answer": "Sí",
+      "points": 1,
+      "explanation_correct": "Sí es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "significado_confundido",
+          "explanation": "いいえ significa no."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "significado_confundido",
+          "explanation": "ありがとうございます significa muchas gracias."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "significado_confundido",
+          "explanation": "さようなら significa adiós."
+        }
+      ],
+      "objective": "Comprender auditivamente una respuesta afirmativa.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "audio_nativo_faltante",
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-iie-12",
+      "language": "ja",
+      "unit": 1,
+      "skill": "greetings.negative",
+      "competency": "auditiva",
+      "type": "listening_choice",
+      "prompt": "Escucha 「いいえ」. ¿Qué significa?",
+      "audio_id": "ja-u1-exam-iie-12",
+      "options": [
+        {
+          "id": "a",
+          "text": "No",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Sí",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gracias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hasta luego",
+          "correct": false
+        }
+      ],
+      "expected_answer": "No",
+      "points": 1,
+      "explanation_correct": "No es la respuesta correcta para este objetivo.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "significado_confundido",
+          "explanation": "はい significa sí."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "significado_confundido",
+          "explanation": "ありがとうございます significa muchas gracias."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "significado_confundido",
+          "explanation": "さようなら significa adiós."
+        }
+      ],
+      "objective": "Comprender auditivamente una respuesta negativa.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar fuente lexicográfica/gramatical, entrada o página y fecha.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision",
+      "pilot_stats": {
+        "answers": 0,
+        "correct": 0,
+        "last_updated": null
+      },
+      "review_warnings": [
+        "audio_nativo_faltante",
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "language": "ja",
+  "unit": 1,
+  "reviewer_mode": true,
+  "items": [
+    {
+      "id": "ja-u1-exam-ko-01",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ne-02",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-shi-03",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-go-04",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ta-05",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-yu-06",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-mo-07",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-ni-08",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-morning-09",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-sleep-10",
+      "status": "en_revision",
+      "warnings": [
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-hai-11",
+      "status": "en_revision",
+      "warnings": [
+        "audio_nativo_faltante",
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    },
+    {
+      "id": "ja-u1-exam-iie-12",
+      "status": "en_revision",
+      "warnings": [
+        "audio_nativo_faltante",
+        "fuente_pendiente",
+        "revision_nativa_pendiente"
+      ]
+    }
+  ],
+  "warnings_summary": {
+    "audio_missing": [
+      "ja-u1-exam-hai-11",
+      "ja-u1-exam-iie-12"
+    ],
+    "source_note_pending": [
+      "ja-u1-exam-ko-01",
+      "ja-u1-exam-ne-02",
+      "ja-u1-exam-shi-03",
+      "ja-u1-exam-go-04",
+      "ja-u1-exam-ta-05",
+      "ja-u1-exam-yu-06",
+      "ja-u1-exam-mo-07",
+      "ja-u1-exam-ni-08",
+      "ja-u1-exam-morning-09",
+      "ja-u1-exam-sleep-10",
+      "ja-u1-exam-hai-11",
+      "ja-u1-exam-iie-12"
+    ],
+    "native_review_pending": [
+      "ja-u1-exam-ko-01",
+      "ja-u1-exam-ne-02",
+      "ja-u1-exam-shi-03",
+      "ja-u1-exam-go-04",
+      "ja-u1-exam-ta-05",
+      "ja-u1-exam-yu-06",
+      "ja-u1-exam-mo-07",
+      "ja-u1-exam-ni-08",
+      "ja-u1-exam-morning-09",
+      "ja-u1-exam-sleep-10",
+      "ja-u1-exam-hai-11",
+      "ja-u1-exam-iie-12"
+    ],
+    "out_of_scope_kana": []
+  },
+  "history": [],
+  "policy": "Todo cambio a un ítem revisado debe registrar historial y devolverlo a en_revision. Nunca promover automáticamente."
+}

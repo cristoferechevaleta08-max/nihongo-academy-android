@@ -1,0 +1,206 @@
+{
+  "id": "ja-u1-1-5",
+  "language": "ja",
+  "unit": 1,
+  "lesson": "1-5",
+  "title": "Saludos y respuestas",
+  "objective": "Usar saludos y respuestas según el momento del día y la situación.",
+  "explanation": "こんにちは se pronuncia konnichiwa. La は se pronuncia wa por una convención histórica de esta expresión, no por estudiarse aquí como partícula. おはようございます: buenos días; こんばんは: saludo nocturno; おやすみなさい: despedida para dormir; さようなら: adiós; はい: sí; いいえ: no; すみません: disculpe/perdón; ありがとうございます: muchas gracias.",
+  "guided_practice": [
+    {
+      "kana": "おはようございます",
+      "reading": "Buenos días"
+    },
+    {
+      "kana": "こんにちは",
+      "reading": "Hola"
+    },
+    {
+      "kana": "こんばんは",
+      "reading": "Buenas noches (saludo)"
+    },
+    {
+      "kana": "おやすみなさい",
+      "reading": "Buenas noches (despedida para dormir)"
+    },
+    {
+      "kana": "さようなら",
+      "reading": "Adiós"
+    },
+    {
+      "kana": "はい / いいえ",
+      "reading": "Sí / No"
+    },
+    {
+      "kana": "すみません",
+      "reading": "Disculpe / perdón"
+    },
+    {
+      "kana": "ありがとうございます",
+      "reading": "Muchas gracias"
+    }
+  ],
+  "free_practice": "Imagina tres situaciones: saludas por la mañana, saludas por la noche y agradeces una ayuda. Escribe la expresión adecuada.",
+  "closing_quiz": [
+    {
+      "id": "ja-u1-1-5-quiz-1",
+      "prompt": "¿Qué significa はい?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sí",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "No",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Gracias",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Hasta luego",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "はい expresa afirmación: sí.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "No no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "Gracias no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "Hasta luego no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Usar saludos y respuestas según el momento del día y la situación.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-5-quiz-2",
+      "prompt": "¿Qué expresión sirve para disculparse?",
+      "options": [
+        {
+          "id": "a",
+          "text": "すみません",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "はい",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "さようなら",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "こんばんは",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "すみません se usa para disculparse o llamar la atención con cortesía.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "はい no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "さようなら no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "こんばんは no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Usar saludos y respuestas según el momento del día y la situación.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-5-quiz-3",
+      "prompt": "¿Qué significa ありがとうございます?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Muchas gracias",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Buenos días",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "No",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Adiós",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "ありがとうございます expresa agradecimiento.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "Buenos días no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "No no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "Adiós no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Usar saludos y respuestas según el momento del día y la situación.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    }
+  ],
+  "content_status": "en_revision",
+  "review": {
+    "reviewer_native": null,
+    "reviewer_teacher": null,
+    "review_date": null,
+    "source_note": "PENDIENTE DE VERIFICACIÓN HUMANA"
+  }
+}

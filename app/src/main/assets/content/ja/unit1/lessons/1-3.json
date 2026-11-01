@@ -1,0 +1,198 @@
+{
+  "id": "ja-u1-1-3",
+  "language": "ja",
+  "unit": 1,
+  "lesson": "1-3",
+  "title": "Filas N, H, M, Y, R, W y ん",
+  "objective": "Leer y escribir な に ぬ ね の, は ひ ふ へ ほ, ま み む め も, や ゆ よ, ら り る れ ろ, わ y ん.",
+  "explanation": "En esta unidad は se lee ha. Su lectura wa como partícula queda fuera de alcance y se enseña en la Unidad 2.",
+  "guided_practice": [
+    {
+      "kana": "な に ぬ ね の",
+      "reading": "na ni nu ne no"
+    },
+    {
+      "kana": "は ひ ふ へ ほ",
+      "reading": "ha hi fu he ho"
+    },
+    {
+      "kana": "ま み む め も",
+      "reading": "ma mi mu me mo"
+    },
+    {
+      "kana": "や ゆ よ",
+      "reading": "ya yu yo"
+    },
+    {
+      "kana": "ら り る れ ろ",
+      "reading": "ra ri ru re ro"
+    },
+    {
+      "kana": "わ ん",
+      "reading": "wa n"
+    }
+  ],
+  "free_practice": "Escribe cada fila y asocia cada kana con su lectura.",
+  "closing_quiz": [
+    {
+      "id": "ja-u1-1-3-quiz-1",
+      "prompt": "¿Cómo se lee ん?",
+      "options": [
+        {
+          "id": "a",
+          "text": "n",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "na",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ni",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "no",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "ん representa el sonido nasal n.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "na no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ni no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "no no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir な に ぬ ね の, は ひ ふ へ ほ, ま み む め も, や ゆ よ, ら り る れ ろ, わ y ん.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-3-quiz-2",
+      "prompt": "¿Cómo se lee ら?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ra",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ri",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ru",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ro",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "ら corresponde a ra.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ri no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ru no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ro no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir な に ぬ ね の, は ひ ふ へ ほ, ま み む め も, や ゆ よ, ら り る れ ろ, わ y ん.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-3-quiz-3",
+      "prompt": "¿Qué kana corresponde a \"mi\"?",
+      "options": [
+        {
+          "id": "a",
+          "text": "み",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ま",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "む",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "め",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "み corresponde a mi.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ま no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "む no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "め no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir な に ぬ ね の, は ひ ふ へ ほ, ま み む め も, や ゆ よ, ら り る れ ろ, わ y ん.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    }
+  ],
+  "content_status": "en_revision",
+  "review": {
+    "reviewer_native": null,
+    "reviewer_teacher": null,
+    "review_date": null,
+    "source_note": "PENDIENTE DE VERIFICACIÓN HUMANA"
+  }
+}

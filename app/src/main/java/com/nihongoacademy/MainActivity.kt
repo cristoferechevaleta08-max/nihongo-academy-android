@@ -46,6 +46,8 @@ import com.nihongoacademy.ui.RegisterScreen
 import com.nihongoacademy.ui.SettingsScreen
 import com.nihongoacademy.ui.StudyScreen
 import com.nihongoacademy.ui.WelcomeScreen
+import com.nihongoacademy.ui.Unit1ContentScreen
+import com.nihongoacademy.ui.Unit1ReviewerScreen
 import com.nihongoacademy.ui.theme.AcademyColors
 import com.nihongoacademy.ui.theme.AcademyDimens
 import com.nihongoacademy.ui.theme.AcademyShapes
@@ -149,6 +151,8 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
                 FlashcardsScreen(navController, code)
             }
             composable(Screens.Study.route) { StudyScreen(navController) }
+            composable("unit1") { Unit1ContentScreen(navController) }
+            composable("unit1_reviewer") { Unit1ReviewerScreen(navController) }
             composable(Screens.Profile.route) { ProfileScreen(navController) }
             composable(Screens.Settings.route) { SettingsScreen(navController) }
             composable(Screens.Collection.route) { CollectionScreen(navController) }

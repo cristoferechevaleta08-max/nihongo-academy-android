@@ -1,0 +1,193 @@
+{
+  "language": "ja",
+  "unit": 1,
+  "romanization": {
+    "system": "Hepburn",
+    "macrons": false,
+    "double_vowels": "ohayou",
+    "confirmation_required": true,
+    "confirmation_status": "pendiente_de_confirmacion_antes_de_revision_humana"
+  },
+  "kana_allowed": {
+    "vowels": [
+      "あ",
+      "い",
+      "う",
+      "え",
+      "お"
+    ],
+    "k": [
+      "か",
+      "き",
+      "く",
+      "け",
+      "こ"
+    ],
+    "s": [
+      "さ",
+      "し",
+      "す",
+      "せ",
+      "そ"
+    ],
+    "t": [
+      "た",
+      "ち",
+      "つ",
+      "て",
+      "と"
+    ],
+    "n": [
+      "な",
+      "に",
+      "ぬ",
+      "ね",
+      "の"
+    ],
+    "h": [
+      "は",
+      "ひ",
+      "ふ",
+      "へ",
+      "ほ"
+    ],
+    "m": [
+      "ま",
+      "み",
+      "む",
+      "め",
+      "も"
+    ],
+    "y": [
+      "や",
+      "ゆ",
+      "よ"
+    ],
+    "r": [
+      "ら",
+      "り",
+      "る",
+      "れ",
+      "ろ"
+    ],
+    "w_n": [
+      "わ",
+      "ん"
+    ],
+    "dakuten": {
+      "g": [
+        "が",
+        "ぎ",
+        "ぐ",
+        "げ",
+        "ご"
+      ],
+      "z": [
+        "ざ",
+        "じ",
+        "ず",
+        "ぜ",
+        "ぞ"
+      ],
+      "b": [
+        "ば",
+        "び",
+        "ぶ",
+        "べ",
+        "ぼ"
+      ]
+    }
+  },
+  "romanization_reference": {
+    "あ": "a",
+    "い": "i",
+    "う": "u",
+    "え": "e",
+    "お": "o",
+    "か": "ka",
+    "き": "ki",
+    "く": "ku",
+    "け": "ke",
+    "こ": "ko",
+    "さ": "sa",
+    "し": "shi",
+    "す": "su",
+    "せ": "se",
+    "そ": "so",
+    "た": "ta",
+    "ち": "chi",
+    "つ": "tsu",
+    "て": "te",
+    "と": "to",
+    "な": "na",
+    "に": "ni",
+    "ぬ": "nu",
+    "ね": "ne",
+    "の": "no",
+    "は": "ha",
+    "ひ": "hi",
+    "ふ": "fu",
+    "へ": "he",
+    "ほ": "ho",
+    "ま": "ma",
+    "み": "mi",
+    "む": "mu",
+    "め": "me",
+    "も": "mo",
+    "や": "ya",
+    "ゆ": "yu",
+    "よ": "yo",
+    "ら": "ra",
+    "り": "ri",
+    "る": "ru",
+    "れ": "re",
+    "ろ": "ro",
+    "わ": "wa",
+    "ん": "n",
+    "が": "ga",
+    "ぎ": "gi",
+    "ぐ": "gu",
+    "げ": "ge",
+    "ご": "go",
+    "ざ": "za",
+    "じ": "ji",
+    "ず": "zu",
+    "ぜ": "ze",
+    "ぞ": "zo",
+    "ば": "ba",
+    "び": "bi",
+    "ぶ": "bu",
+    "べ": "be",
+    "ぼ": "bo"
+  },
+  "kana_excluded": [
+    "を",
+    "ゃ",
+    "ゅ",
+    "ょ",
+    "っ",
+    "ー",
+    "だ",
+    "ぱ",
+    "きゃ",
+    "きゅ",
+    "きょ",
+    "kanji",
+    "particles"
+  ],
+  "permitted_expressions": [
+    "こんにちは",
+    "おはようございます",
+    "こんばんは",
+    "おやすみなさい",
+    "さようなら",
+    "はい",
+    "いいえ",
+    "すみません",
+    "ありがとうございます"
+  ],
+  "source_policy": {
+    "status": "pendiente_de_verificacion",
+    "note": "No se declara verificada ninguna forma sin registrar referencia lexicográfica/gramatical identificable y revisión humana."
+  }
+}
