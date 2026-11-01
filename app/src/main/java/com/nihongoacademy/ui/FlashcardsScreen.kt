@@ -64,6 +64,21 @@ fun FlashcardsScreen(navController: NavController, languageCode: String) {
         loading = false
     }
 
+    fun review(rating: ReviewRating) {
+        val card = currentCard ?: return
+        saving = true
+        errorMessage = null
+        scope.launch {
+            runCatching { store.recordReview(language.code, cardKey(card), rating) }
+                .onSuccess { saved ->
+                    schedules = schedules + (cardKey(card) to saved)
+                    selectNextCard()
+                }
+                .onFailure { errorMessage = "No se pudo guardar el repaso. Comprueba el almacenamiento e inténtalo otra vez." }
+            saving = false
+        }
+    }
+
     val dueCount = cards.count { (schedules[cardKey(it)]?.dueAt ?: 0L) <= System.currentTimeMillis() }
     val selected = currentCard
 
@@ -140,22 +155,4 @@ fun FlashcardsScreen(navController: NavController, languageCode: String) {
         }
     }
 
-    fun unused() = Unit
-    // Keep review persistence in the screen scope so every rating is saved before the next card appears.
-    @Suppress("UNUSED_VARIABLE")
-    val reviewAction = Unit
-    fun review(rating: ReviewRating) {
-        val card = currentCard ?: return
-        saving = true
-        errorMessage = null
-        scope.launch {
-            runCatching { store.recordReview(language.code, cardKey(card), rating) }
-                .onSuccess { saved ->
-                    schedules = schedules + (cardKey(card) to saved)
-                    selectNextCard()
-                }
-                .onFailure { errorMessage = "No se pudo guardar el repaso. Comprueba el almacenamiento e inténtalo otra vez." }
-            saving = false
-        }
-    }
 }
