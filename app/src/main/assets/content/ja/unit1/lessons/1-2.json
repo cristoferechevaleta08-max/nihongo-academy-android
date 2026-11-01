@@ -1,0 +1,186 @@
+{
+  "id": "ja-u1-1-2",
+  "language": "ja",
+  "unit": 1,
+  "lesson": "1-2",
+  "title": "Filas K, S y T",
+  "objective": "Leer y escribir か き く け こ, さ し す せ そ y た ち つ て と.",
+  "explanation": "Combina cada consonante con las cinco vocales. Recuerda: し = shi, ち = chi y つ = tsu.",
+  "guided_practice": [
+    {
+      "kana": "か き く け こ",
+      "reading": "ka ki ku ke ko"
+    },
+    {
+      "kana": "さ し す せ そ",
+      "reading": "sa shi su se so"
+    },
+    {
+      "kana": "た ち つ て と",
+      "reading": "ta chi tsu te to"
+    }
+  ],
+  "free_practice": "Copia cada fila y luego tapa la romanización para leerla sin ayuda.",
+  "closing_quiz": [
+    {
+      "id": "ja-u1-1-2-quiz-1",
+      "prompt": "¿Cómo se lee さ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "sa",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "shi",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "su",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "se",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "さ corresponde a sa.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "shi no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "su no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "se no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir か き く け こ, さ し す せ そ y た ち つ て と.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-2-quiz-2",
+      "prompt": "¿Cómo se lee つ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "tsu",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ta",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "chi",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "te",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "つ se romaniza tsu.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ta no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "chi no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "te no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir か き く け こ, さ し す せ そ y た ち つ て と.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-2-quiz-3",
+      "prompt": "¿Qué kana corresponde a \"ki\"?",
+      "options": [
+        {
+          "id": "a",
+          "text": "き",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "か",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "く",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "け",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "き corresponde a ki.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "か no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "く no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "け no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir か き く け こ, さ し す せ そ y た ち つ て と.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    }
+  ],
+  "content_status": "en_revision",
+  "review": {
+    "reviewer_native": null,
+    "reviewer_teacher": null,
+    "review_date": null,
+    "source_note": "PENDIENTE DE VERIFICACIÓN HUMANA"
+  }
+}

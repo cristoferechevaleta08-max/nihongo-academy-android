@@ -1,0 +1,186 @@
+{
+  "id": "ja-u1-1-4",
+  "language": "ja",
+  "unit": 1,
+  "lesson": "1-4",
+  "title": "Sonidos sonoros (dakuten)",
+  "objective": "Reconocer cómo ゛ transforma sonidos de las filas K, S y H en G, Z y B.",
+  "explanation": "El dakuten añade sonoridad: か→が, し→じ y は→ば. Aprende también がぎぐげご, ざじずぜぞ y ばびぶべぼ.",
+  "guided_practice": [
+    {
+      "kana": "か → が",
+      "reading": "ka → ga"
+    },
+    {
+      "kana": "し → じ",
+      "reading": "shi → ji"
+    },
+    {
+      "kana": "は → ば",
+      "reading": "ha → ba"
+    }
+  ],
+  "free_practice": "Lee las parejas y escribe las filas がぎぐげご, ざじずぜぞ y ばびぶべぼ.",
+  "closing_quiz": [
+    {
+      "id": "ja-u1-1-4-quiz-1",
+      "prompt": "¿Cómo se lee が?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ga",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ka",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "za",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "ba",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "が se lee ga; el dakuten cambia ka a ga.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ka no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "za no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "ba no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Reconocer cómo ゛ transforma sonidos de las filas K, S y H en G, Z y B.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-4-quiz-2",
+      "prompt": "¿Cómo se lee じ?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ji",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "shi",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "chi",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "za",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "じ se lee ji.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "shi no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "chi no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "za no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Reconocer cómo ゛ transforma sonidos de las filas K, S y H en G, Z y B.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-4-quiz-3",
+      "prompt": "¿Cómo se lee ば?",
+      "options": [
+        {
+          "id": "a",
+          "text": "ba",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "ha",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "ma",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "bu",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "ば se lee ba.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "dakuten_omitido",
+          "explanation": "は se lee ha; sin dakuten conserva el sonido h."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "fila_confundida",
+          "explanation": "ま se lee ma; pertenece a la fila M."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "vocal_confundida",
+          "explanation": "ぶ se lee bu; pertenece a la fila B, pero tiene vocal u."
+        }
+      ],
+      "objective": "Reconocer cómo ゛ transforma sonidos de las filas K, S y H en G, Z y B.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    }
+  ],
+  "content_status": "en_revision",
+  "review": {
+    "reviewer_native": null,
+    "reviewer_teacher": null,
+    "review_date": null,
+    "source_note": "PENDIENTE DE VERIFICACIÓN HUMANA"
+  }
+}

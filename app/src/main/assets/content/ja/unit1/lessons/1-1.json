@@ -1,0 +1,194 @@
+{
+  "id": "ja-u1-1-1",
+  "language": "ja",
+  "unit": 1,
+  "lesson": "1-1",
+  "title": "Vocales",
+  "objective": "Leer y escribir las cinco vocales: あ い う え お.",
+  "explanation": "El hiragana representa sonidos. Aprende あ (a), い (i), う (u), え (e) y お (o). La う japonesa es menos redondeada que la u española.",
+  "guided_practice": [
+    {
+      "kana": "あ",
+      "reading": "a"
+    },
+    {
+      "kana": "い",
+      "reading": "i"
+    },
+    {
+      "kana": "う",
+      "reading": "u"
+    },
+    {
+      "kana": "え",
+      "reading": "e"
+    },
+    {
+      "kana": "お",
+      "reading": "o"
+    }
+  ],
+  "free_practice": "Escribe de memoria las cinco vocales en orden y léelas en voz alta.",
+  "closing_quiz": [
+    {
+      "id": "ja-u1-1-1-quiz-1",
+      "prompt": "¿Cómo se lee え?",
+      "options": [
+        {
+          "id": "a",
+          "text": "e",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "a",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "i",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "o",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "え representa la vocal e.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "a no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "i no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "o no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir las cinco vocales: あ い う え お.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-1-quiz-2",
+      "prompt": "¿Qué kana se lee \"u\"?",
+      "options": [
+        {
+          "id": "a",
+          "text": "う",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "あ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "お",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "え",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "う representa la vocal u.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "あ no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "お no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "え no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir las cinco vocales: あ い う え お.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    },
+    {
+      "id": "ja-u1-1-1-quiz-3",
+      "prompt": "¿Cómo se lee お?",
+      "options": [
+        {
+          "id": "a",
+          "text": "o",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "a",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "e",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "u",
+          "correct": false
+        }
+      ],
+      "explanation_correct": "お representa la vocal o.",
+      "distractors": [
+        {
+          "option_id": "b",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "a no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "c",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "e no responde a la pregunta; comprueba su lectura o significado."
+        },
+        {
+          "option_id": "d",
+          "error_tag": "kana_o_contexto_confundido",
+          "explanation": "u no responde a la pregunta; comprueba su lectura o significado."
+        }
+      ],
+      "objective": "Leer y escribir las cinco vocales: あ い う え お.",
+      "source_note": "PENDIENTE DE VERIFICACIÓN: registrar referencia lexicográfica/gramatical y entrada consultada.",
+      "author": "borrador_interno",
+      "reviewer_native": null,
+      "reviewer_teacher": null,
+      "review_date": null,
+      "status": "en_revision"
+    }
+  ],
+  "content_status": "en_revision",
+  "review": {
+    "reviewer_native": null,
+    "reviewer_teacher": null,
+    "review_date": null,
+    "source_note": "PENDIENTE DE VERIFICACIÓN HUMANA"
+  }
+}
