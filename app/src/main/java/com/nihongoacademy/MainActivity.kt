@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nihongoacademy.data.AuthRepository
+import com.nihongoacademy.data.SessionStore
 import com.nihongoacademy.ui.CollectionScreen
 import com.nihongoacademy.ui.HomeScreen
 import com.nihongoacademy.ui.LanguageSelectionScreen
@@ -50,7 +51,8 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
 
     LaunchedEffect(Unit) {
         if (authRepository.currentUser() != null) {
-            navController.navigate("language") {
+            val selectedLanguage = SessionStore(context).readLanguage() ?: "ja"
+            navController.navigate("home/${selectedLanguage.lowercase()}") {
                 popUpTo("welcome") { inclusive = true }
                 launchSingleTop = true
             }
