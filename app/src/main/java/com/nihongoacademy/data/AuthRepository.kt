@@ -103,14 +103,16 @@ class AuthRepository(context: Context) {
 
         return runCatching {
             val generated = passwordHasher.hashPassword(newPassword)
+            val newRecoveryCode = generateRecoveryCode()
             database.userDao().updatePassword(
                 userId = user.userId,
                 passwordHash = Base64.encodeToString(generated.hash, Base64.NO_WRAP),
                 passwordSalt = Base64.encodeToString(generated.salt, Base64.NO_WRAP),
-                iterations = generated.iterations
+                iterations = generated.iterations,
+                recoveryPhrase = hashRecoveryCode(newRecoveryCode)
             )
             sessionStore.clearUser()
-            AuthResult.Success(AuthUser(user.userId, user.visibleName, user.username))
+            AuthResult.Success(AuthUser(user.userId, user.visibleName, user.username), newRecoveryCode)
         }.getOrElse {
             AuthResult.Failure("No se pudo actualizar la contraseña. Inténtalo nuevamente.")
         }
