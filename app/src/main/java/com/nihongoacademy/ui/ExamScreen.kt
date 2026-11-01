@@ -287,8 +287,6 @@ fun ExamScreen(navController: NavController) {
                     )
                 }
             }
-                }
-            }
 
             Button(
                 onClick = { navController.navigateUp() },
@@ -297,7 +295,6 @@ fun ExamScreen(navController: NavController) {
                 Text("Volver al panel")
             }
         }
-    }
     }
 }
 
