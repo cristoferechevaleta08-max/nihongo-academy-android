@@ -50,7 +50,7 @@ class AuthRepository(context: Context) {
         )
         return try {
             database.userDao().insert(entity)
-            sessionStore.saveToken(userId)
+            sessionStore.saveUser(userId)
             AuthResult.Success(AuthUser(userId, name, normalizedEmail))
         } catch (_: SQLiteConstraintException) {
             AuthResult.Failure("Ya existe una cuenta con ese correo.")
@@ -77,15 +77,15 @@ class AuthRepository(context: Context) {
         if (!passwordHasher.verifyPassword(password, stored)) {
             return AuthResult.Failure("Correo o contraseña incorrectos.")
         }
-        sessionStore.saveToken(user.userId)
+        sessionStore.saveUser(user.userId)
         return AuthResult.Success(AuthUser(user.userId, user.visibleName, user.username))
     }
 
     suspend fun currentUser(): AuthUser? {
-        val userId = sessionStore.readToken() ?: return null
+        val userId = sessionStore.readUser() ?: return null
         val user = database.userDao().findById(userId) ?: return null
         return AuthUser(user.userId, user.visibleName, user.username)
     }
 
-    fun logout() = sessionStore.clearToken()
+    suspend fun logout() = sessionStore.clearUser()
 }
