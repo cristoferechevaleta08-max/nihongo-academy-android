@@ -89,10 +89,11 @@ fun LessonScreen(
                     Text("Respuesta: ${lesson.correctAnswer}")
                     Text(lesson.explanation)
                     Text(if (isCorrect) "+10 XP" else "Puedes volver a intentarlo en otra sesión.")
-                    saveError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
                 }
             }
         }
+
+        saveError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
 
         Button(
             onClick = {
@@ -109,7 +110,8 @@ fun LessonScreen(
                                 totalQuestions = 1
                             )
                         }.onFailure {
-                            saveError = "No se pudo guardar el progreso. Inténtalo de nuevo."
+                            checked = false
+                            saveError = "No se pudo guardar el progreso. Tu respuesta sigue seleccionada; vuelve a comprobarla para reintentar."
                         }
                         saving = false
                     }
