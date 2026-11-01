@@ -66,7 +66,7 @@ object LanguageCatalogFactory {
                 else -> "Módulo $i"
             }
 
-            val content = lessonContent(languageCode)
+            val content = lessonContent(languageCode, moduleNumber)
             val lessons = listOf(
                 ModuleLesson(
                     id = "m${moduleNumber}_l1",
@@ -153,12 +153,22 @@ object LanguageCatalogFactory {
         val explanation: String
     )
 
-    private fun lessonContent(code: String): Pair<LessonSeed, LessonSeed> {
+    private val japaneseLessonPairs = listOf(
+        Pair(LessonSeed("Saludos básicos", "Reconoce un saludo cotidiano japonés.", "¿Qué significa こんにちは?", listOf("Hola", "Gracias", "Agua", "Adiós"), "Hola", "こんにちは es un saludo habitual durante el día."), LessonSeed("Agradecimientos", "Aprende una expresión educada para agradecer.", "¿Qué significa ありがとうございます?", listOf("Por favor", "Gracias", "Perdón", "Buenos días"), "Gracias", "ありがとうございます es una forma cortés de dar las gracias.")),
+        Pair(LessonSeed("Sí y no", "Identifica respuestas afirmativas y negativas.", "¿Qué significa はい?", listOf("Sí", "No", "Gracias", "Hola"), "Sí", "はい significa sí; いいえ significa no."), LessonSeed("Disculpas", "Aprende una disculpa cotidiana.", "¿Qué significa すみません?", listOf("Perdón / disculpe", "Buenos días", "Agua", "Hasta luego"), "Perdón / disculpe", "すみません sirve para disculparse o llamar la atención con cortesía.")),
+        Pair(LessonSeed("Personas", "Reconoce palabras para personas.", "¿Qué significa 先生?", listOf("Profesor", "Estudiante", "Amigo", "Médico"), "Profesor", "先生 (せんせい) se usa para profesor o maestro."), LessonSeed("Estudios", "Aprende una palabra frecuente del aula.", "¿Qué significa 学生?", listOf("Estudiante", "Libro", "Escuela", "Papel"), "Estudiante", "学生 (がくせい) significa estudiante.")),
+        Pair(LessonSeed("Objetos", "Identifica objetos cotidianos.", "¿Qué significa 本?", listOf("Libro", "Agua", "Mesa", "Puerta"), "Libro", "本 (ほん) significa libro."), LessonSeed("Demostrativos", "Reconoce cómo señalar algo cercano.", "¿Qué significa これ?", listOf("Esto", "Aquello", "Allí", "Quién"), "Esto", "これ significa esto y señala algo cerca de quien habla.")),
+        Pair(LessonSeed("Números", "Aprende los primeros números japoneses.", "¿Qué significa 三 (さん)?", listOf("Uno", "Dos", "Tres", "Cuatro"), "Tres", "三 se lee さん (san) y significa tres."), LessonSeed("Contar", "Refuerza los números básicos.", "¿Cómo se dice uno en japonés?", listOf("いち", "に", "さん", "よん"), "いち", "一 se lee いち (ichi) y significa uno.")),
+        Pair(LessonSeed("Lugares", "Reconoce lugares comunes.", "¿Qué significa 学校?", listOf("Escuela", "Hospital", "Estación", "Tienda"), "Escuela", "学校 (がっこう) significa escuela."), LessonSeed("Transporte", "Aprende una palabra para moverse por la ciudad.", "¿Qué significa 駅?", listOf("Estación", "Aeropuerto", "Parque", "Casa"), "Estación", "駅 (えき) significa estación.")),
+        Pair(LessonSeed("Tiempo", "Reconoce una palabra de tiempo.", "¿Qué significa 今日?", listOf("Hoy", "Ayer", "Mañana", "Semana"), "Hoy", "今日 (きょう) significa hoy."), LessonSeed("Días", "Aprende una expresión de tiempo.", "¿Qué significa 明日?", listOf("Ayer", "Hoy", "Mañana", "Noche"), "Mañana", "明日 (あした) significa mañana.")),
+        Pair(LessonSeed("Comida", "Identifica alimentos cotidianos.", "¿Qué significa 水?", listOf("Agua", "Arroz", "Té", "Pan"), "Agua", "水 (みず) significa agua."), LessonSeed("Comer", "Aprende una palabra de comida.", "¿Qué significa ご飯?", listOf("Arroz / comida", "Pescado", "Carne", "Fruta"), "Arroz / comida", "ご飯 (ごはん) puede significar arroz cocido o comida.")),
+        Pair(LessonSeed("Adjetivos", "Reconoce una descripción sencilla.", "¿Qué significa 大きい?", listOf("Grande", "Pequeño", "Nuevo", "Viejo"), "Grande", "大きい (おおきい) significa grande."), LessonSeed("Descripciones", "Identifica un adjetivo frecuente.", "¿Qué significa おいしい?", listOf("Delicioso", "Caro", "Frío", "Rápido"), "Delicioso", "おいしい significa delicioso o sabroso.")),
+        Pair(LessonSeed("Repaso general", "Consolida vocabulario básico.", "¿Qué significa 友だち?", listOf("Amigo", "Familia", "Profesor", "Compañero de trabajo"), "Amigo", "友だち (ともだち) significa amigo."), LessonSeed("Frases útiles", "Aplica una expresión de uso cotidiano.", "¿Qué significa また明日?", listOf("Hasta mañana", "Buenos días", "Muchas gracias", "Buenas noches"), "Hasta mañana", "また明日 significa hasta mañana."))
+    )
+
+    private fun lessonContent(code: String, moduleNumber: Int): Pair<LessonSeed, LessonSeed> {
         val seeds = when (code.lowercase(Locale.ROOT)) {
-            "ja" -> Pair(
-                LessonSeed("Saludos básicos", "Reconoce un saludo cotidiano japonés.", "¿Qué significa こんにちは?", listOf("Hola", "Gracias", "Agua", "Adiós"), "Hola", "こんにちは es un saludo habitual durante el día."),
-                LessonSeed("Agradecimientos", "Aprende una expresión educada para agradecer.", "¿Qué significa ありがとうございます?", listOf("Por favor", "Gracias", "Perdón", "Buenos días"), "Gracias", "ありがとうございます es una forma cortés de dar las gracias.")
-            )
+            "ja" -> japaneseLessonPairs[(moduleNumber - 1).coerceIn(japaneseLessonPairs.indices)]
             "en" -> Pair(LessonSeed("Saludos", "Aprende a saludar en inglés.", "¿Qué significa 'Good morning'?", listOf("Buenas noches", "Buenos días", "Hasta luego", "Gracias"), "Buenos días", "Good morning se usa por la mañana."), LessonSeed("Cortesía", "Practica una expresión de agradecimiento.", "¿Qué significa 'Thank you'?", listOf("Gracias", "Perdón", "Hola", "Adiós"), "Gracias", "Thank you significa gracias."))
             "ko" -> Pair(LessonSeed("Saludos", "Reconoce un saludo coreano.", "¿Qué significa 안녕하세요?", listOf("Hola", "Gracias", "Agua", "Adiós"), "Hola", "안녕하세요 es un saludo educado."), LessonSeed("Agradecimientos", "Aprende a dar las gracias.", "¿Qué significa 감사합니다?", listOf("Perdón", "Gracias", "Hasta mañana", "Casa"), "Gracias", "감사합니다 es una expresión formal de agradecimiento."))
             "zh-hans", "zh" -> Pair(LessonSeed("Saludos", "Reconoce un saludo en mandarín.", "¿Qué significa 你好?", listOf("Hola", "Gracias", "Adiós", "Agua"), "Hola", "你好 (nǐ hǎo) significa hola."), LessonSeed("Agradecimientos", "Aprende a agradecer.", "¿Qué significa 谢谢?", listOf("Por favor", "Gracias", "Perdón", "Buenos días"), "Gracias", "谢谢 (xièxie) significa gracias."))
