@@ -69,7 +69,7 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("Nivel ${progress.currentLevel}")
                 Text("${progress.totalXp} XP · ${progress.xpToNextLevel} XP para subir de nivel")
-                Text("Racha de ${progress.streakDays} días · ${progress.completedExams.size} exámenes realizados")
+                Text("Racha de ${progress.streakDays} días · ${progress.recentResults.count { it.isExam }} intentos de examen")
             }
         }
 
