@@ -101,6 +101,7 @@ fun ModuleExamScreen(
                         } else if (allAnswered) {
                             evaluated = true
                             saving = true
+                            saveMessage = null
                             scope.launch {
                                 runCatching {
                                     progressStore.recordExamResult(
@@ -111,7 +112,9 @@ fun ModuleExamScreen(
                                         totalQuestions = questions.size
                                     )
                                 }.onFailure {
-                                    saveMessage = "No se pudo guardar el resultado. Inténtalo de nuevo."
+                                    evaluated = false
+                                    currentIndex = questions.lastIndex
+                                    saveMessage = "No se pudo guardar el resultado. Vuelve a enviarlo para reintentar."
                                 }
                                 saving = false
                             }
@@ -146,7 +149,6 @@ fun ModuleExamScreen(
                     }
                 }
             }
-            saveMessage?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             Button(
                 onClick = { navController.navigateUp() },
                 enabled = !saving,
@@ -155,5 +157,6 @@ fun ModuleExamScreen(
                 Text(if (saving) "Guardando resultado..." else "Volver al módulo")
             }
         }
+        saveMessage?.let { Text(it, color = MaterialTheme.colorScheme.error) }
     }
 }
