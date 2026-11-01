@@ -22,7 +22,7 @@ class AuthRepository(context: Context) {
     private val appContext = context.applicationContext
     private val database = DatabaseProvider(appContext).database
     private val passwordHasher = PasswordHasher()
-    private val sessionStore = SecureTokenStore(appContext)
+    private val sessionStore = SessionStore(appContext)
 
     suspend fun register(displayName: String, email: String, password: String): AuthResult {
         val name = displayName.trim()
