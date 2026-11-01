@@ -6,6 +6,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import com.nihongoacademy.data.PreferencesStore
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -74,10 +79,18 @@ private val AppTypography = Typography(
 
 @Composable
 fun NihongoTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean? = null,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) DarkColors else LightColors
+    val context = LocalContext.current
+    val themeModeFlow = remember(context) { PreferencesStore(context).themeModeFlow() }
+    val themeMode by themeModeFlow.collectAsState(initial = "system")
+    val useDarkTheme = darkTheme ?: when (themeMode) {
+        "dark" -> true
+        "light" -> false
+        else -> isSystemInDarkTheme()
+    }
+    val colors = if (useDarkTheme) DarkColors else LightColors
     MaterialTheme(
         colorScheme = colors,
         typography = AppTypography,
