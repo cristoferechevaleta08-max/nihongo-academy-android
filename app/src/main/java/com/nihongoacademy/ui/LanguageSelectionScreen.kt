@@ -74,7 +74,7 @@ fun LanguageSelectionScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { navController.navigate("home/${entry.code}") },
+                        .clickable { scope.launch { sessionStore.saveLanguage(entry.code); navController.navigate("home/${entry.code.lowercase()}") { popUpTo("language") { inclusive = true }; launchSingleTop = true } } },
                     shape = RoundedCornerShape(18.dp)
                 ) {
                     Box(
