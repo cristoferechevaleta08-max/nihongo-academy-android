@@ -36,6 +36,7 @@ import androidx.navigation.NavController
 import androidx.compose.ui.platform.LocalContext
 import com.nihongoacademy.data.AuthRepository
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(navController: NavController) {
@@ -115,8 +116,10 @@ fun SettingsScreen(navController: NavController) {
             }
 
             Button(onClick = {
-                authRepository.logout()
-                navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
+                scope.launch {
+                    authRepository.logout()
+                    navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
+                }
             }, modifier = Modifier.fillMaxWidth()) {
                 Text("Cerrar sesión")
             }
