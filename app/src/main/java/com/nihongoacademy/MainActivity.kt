@@ -26,6 +26,7 @@ import com.nihongoacademy.ui.ModuleDetailScreen
 import com.nihongoacademy.ui.ModuleExamScreen
 import com.nihongoacademy.ui.ModuleOverviewScreen
 import com.nihongoacademy.ui.ProfileScreen
+import com.nihongoacademy.ui.PasswordResetScreen
 import com.nihongoacademy.ui.RegisterScreen
 import com.nihongoacademy.ui.SettingsScreen
 import com.nihongoacademy.ui.StudyScreen
@@ -67,6 +68,7 @@ fun AppNavHost(navController: NavHostController = rememberNavController()) {
         composable(Screens.Welcome.route) { WelcomeScreen(navController) }
         composable(Screens.Login.route) { LoginScreen(navController) }
         composable(Screens.Register.route) { RegisterScreen(navController) }
+        composable("password_reset") { PasswordResetScreen(navController) }
         composable(Screens.LanguageSelection.route) { LanguageSelectionScreen(navController) }
 
         composable("home/{languageCode}") { backStackEntry ->
