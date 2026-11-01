@@ -44,7 +44,7 @@ object StudyProgressLogic {
         val alreadyCompleted = lessonId in progress.completedLessons
         val xpEarned = if (ratio >= 1f && !alreadyCompleted) 10 else 0
         val now = System.currentTimeMillis()
-        val updatedLessons = progress.completedLessons + lessonId
+        val updatedLessons = if (ratio >= 0.6f) progress.completedLessons + lessonId else progress.completedLessons
         val updatedResults = (progress.recentResults + StudyResult(
             lessonId = lessonId,
             moduleId = moduleId,
@@ -65,10 +65,11 @@ object StudyProgressLogic {
             xpToNextLevel = calculateXpToNextLevel(newTotalXp),
             unlockedRewards = buildRewards(nextLevel, progress.unlockedRewards),
             lastStudyDate = now,
+            streakDays = nextStreakDays(progress.lastStudyDate, progress.streakDays, now),
             recentResults = updatedResults
         )
 
-        return updatedProgress.copy(streakDays = calculateStreakDays(updatedProgress))
+        return updatedProgress
     }
 
     fun completeExam(
@@ -115,10 +116,11 @@ object StudyProgressLogic {
             xpToNextLevel = calculateXpToNextLevel(baseXp),
             unlockedRewards = rewards,
             lastStudyDate = now,
+            streakDays = nextStreakDays(progress.lastStudyDate, progress.streakDays, now),
             recentResults = updatedResults
         )
 
-        return updatedProgress.copy(streakDays = calculateStreakDays(updatedProgress))
+        return updatedProgress
     }
 
     fun completeModule(
@@ -156,6 +158,17 @@ object StudyProgressLogic {
         )
         rewardsByLevel[level]?.let { rewards += it }
         return rewards
+    }
+
+    private fun nextStreakDays(lastStudyDate: Long, currentStreak: Int, now: Long): Int {
+        if (lastStudyDate == 0L) return 1
+        val lastDay = dateKey(lastStudyDate)
+        val today = dateKey(now)
+        return when {
+            lastDay == today -> currentStreak.coerceAtLeast(1)
+            previousDayKey(today) == lastDay -> currentStreak.coerceAtLeast(1) + 1
+            else -> 1
+        }
     }
 
     fun calculateStreakDays(progress: StudyProgress): Int {
