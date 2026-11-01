@@ -11,7 +11,8 @@ data class ModuleLesson(
     val prompt: String = description,
     val options: List<String> = emptyList(),
     val correctAnswer: String = "",
-    val explanation: String = ""
+    val explanation: String = "",
+    val speechText: String = ""
 )
 
 data class SurpriseExam(
@@ -77,7 +78,8 @@ object LanguageCatalogFactory {
                     prompt = content.first.prompt,
                     options = content.first.options,
                     correctAnswer = content.first.answer,
-                    explanation = content.first.explanation
+                    explanation = content.first.explanation,
+                    speechText = extractSpeechPhrase(content.first.prompt)
                 ),
                 ModuleLesson(
                     id = "m${moduleNumber}_l2",
@@ -88,7 +90,8 @@ object LanguageCatalogFactory {
                     prompt = content.second.prompt,
                     options = content.second.options,
                     correctAnswer = content.second.answer,
-                    explanation = content.second.explanation
+                    explanation = content.second.explanation,
+                    speechText = extractSpeechPhrase(content.second.prompt)
                 )
             )
 
@@ -163,6 +166,12 @@ object LanguageCatalogFactory {
         return modules
     }
 
+
+    private fun extractSpeechPhrase(prompt: String): String {
+        val prefix = "¿Qué significa "
+        if (!prompt.startsWith(prefix)) return ""
+        return prompt.removePrefix(prefix).substringBefore("?").trim().trim('\'', '"')
+    }
 
     private data class LessonSeed(
         val title: String,
