@@ -1,41 +1,43 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.compose.ui.platform.LocalContext
 import com.nihongoacademy.data.AuthRepository
 import com.nihongoacademy.data.PreferencesStore
+import com.nihongoacademy.data.StudySettings
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,89 +47,95 @@ fun SettingsScreen(navController: NavController) {
     val authRepository = remember { AuthRepository(context) }
     val preferencesStore = remember { PreferencesStore(context) }
     val scope = rememberCoroutineScope()
-    var romajiEnabled by remember { mutableStateOf(true) }
-    var paperGridEnabled by remember { mutableStateOf(false) }
-    var reduceMotion by remember { mutableStateOf(false) }
+    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
+    val settings by settingsFlow.collectAsState(initial = StudySettings())
+    val themeModeFlow = remember(preferencesStore) { preferencesStore.themeModeFlow() }
+    val themeMode by themeModeFlow.collectAsState(initial = "system")
     var visible by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        runCatching { preferencesStore.getStudySettings() }.onSuccess { settings ->
-            romajiEnabled = settings.showPronunciation
-            paperGridEnabled = settings.paperGridEnabled
-            reduceMotion = settings.reduceMotion
-        }
         delay(100)
         visible = true
     }
 
     AnimatedVisibility(
         visible = visible,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { 16 }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { 16 })
+        enter = if (settings.reduceMotion) EnterTransition.None else fadeIn() + slideInVertically(initialOffsetY = { 16 }),
+        exit = if (settings.reduceMotion) ExitTransition.None else fadeOut() + slideOutVertically(targetOffsetY = { 16 })
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
+                .verticalScroll(rememberScrollState())
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text("Configuración del estudio", style = MaterialTheme.typography.headlineMedium)
+            Text("Configuración", style = MaterialTheme.typography.headlineMedium)
 
             Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Column {
-                        Text("Romaji / pinyin")
-                        Text("Muestra ayuda de pronunciación", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Apariencia", style = MaterialTheme.typography.titleMedium)
+                    Text("Elige cómo se muestra Nihongo Academy.", style = MaterialTheme.typography.bodyMedium)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        if (themeMode == "system") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Sistema") }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("system") } }, modifier = Modifier.weight(1f)) { Text("Sistema") }
+
+                        if (themeMode == "light") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Claro") }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("light") } }, modifier = Modifier.weight(1f)) { Text("Claro") }
+
+                        if (themeMode == "dark") Button(onClick = {}, modifier = Modifier.weight(1f)) { Text("Oscuro") }
+                        else OutlinedButton(onClick = { scope.launch { preferencesStore.setThemeMode("dark") } }, modifier = Modifier.weight(1f)) { Text("Oscuro") }
                     }
-                    Switch(checked = romajiEnabled, onCheckedChange = { enabled -> romajiEnabled = enabled; scope.launch { preferencesStore.setShowPronunciation(enabled) } })
                 }
             }
 
             Card(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
+                    modifier = Modifier.fillMaxWidth().padding(18.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
-                        Text("Cuadrícula de práctica")
-                        Text("Layout de cuaderno para escribir", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Ayuda de pronunciación")
+                        Text("Muestra controles de audio cuando hay una voz instalada.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Switch(checked = paperGridEnabled, onCheckedChange = { enabled -> paperGridEnabled = enabled; scope.launch { preferencesStore.setPaperGridEnabled(enabled) } })
+                    Switch(
+                        checked = settings.showPronunciation,
+                        onCheckedChange = { enabled -> scope.launch { preferencesStore.setShowPronunciation(enabled) } }
+                    )
                 }
             }
 
             Card(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
+                    modifier = Modifier.fillMaxWidth().padding(18.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column {
+                    Column(modifier = Modifier.weight(1f)) {
                         Text("Reducir animaciones")
-                        Text("Optimiza movimiento y respuesta visual", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("Desactiva las transiciones decorativas.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Switch(checked = reduceMotion, onCheckedChange = { enabled -> reduceMotion = enabled; scope.launch { preferencesStore.setReduceMotion(enabled) } })
+                    Switch(
+                        checked = settings.reduceMotion,
+                        onCheckedChange = { enabled -> scope.launch { preferencesStore.setReduceMotion(enabled) } }
+                    )
                 }
             }
 
-            Button(onClick = {
-                scope.launch {
-                    authRepository.logout()
-                    navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
-                }
-            }, modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = {
+                    scope.launch {
+                        authRepository.logout()
+                        navController.navigate("welcome") { popUpTo(0) { inclusive = true } }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text("Cerrar sesión")
             }
         }
