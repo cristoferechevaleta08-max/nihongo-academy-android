@@ -64,7 +64,7 @@ private fun ModuleEditorialCard(module: LanguageModule, isCompleted: Boolean, on
         .padding(horizontal = 18.dp, vertical = 14.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text("MÓDULO ${module.number.toString().padStart(2, '0')}", color = AcademyColors.Sakura, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.5.sp))
-            Text(module.title, color = ModuleInk, style = MaterialTheme.typography.titleLarge.copy(fontFamily = FontFamily.Serif, fontSize = 22.sp), fontWeight = FontWeight.Bold)
+            Text(module.title, color = ModuleInk, style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp), fontWeight = FontWeight.Bold)
             Text("${module.lessons.size} lecciones  ·  ${module.targetLevel}", color = ModuleInk.copy(alpha = 0.62f), style = MaterialTheme.typography.bodySmall)
             if (isCompleted) Text("COMPLETADO", color = ModuleInk, style = MaterialTheme.typography.labelSmall.copy(letterSpacing = 1.2.sp, fontWeight = FontWeight.Bold))
         }
