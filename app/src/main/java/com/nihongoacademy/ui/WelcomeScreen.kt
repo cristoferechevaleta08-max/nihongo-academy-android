@@ -1,6 +1,5 @@
 package com.nihongoacademy.ui
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,15 +15,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.Image
+import androidx.compose.ui.draw.alpha
+import com.nihongoacademy.R
 import androidx.navigation.NavController
 import com.nihongoacademy.ui.theme.AcademyColors
 
@@ -51,14 +51,17 @@ fun WelcomeScreen(navController: NavController) {
     ) {
         Spacer(Modifier.weight(1f))
         Box(contentAlignment = Alignment.Center, modifier = Modifier.height(188.dp).fillMaxWidth()) {
-            Canvas(Modifier.fillMaxSize()) {
-                drawCircle(AcademyColors.Sakura.copy(alpha = 0.8f), size.minDimension * 0.39f,
-                    Offset(size.width / 2f, size.height / 2f),
-                    style = Stroke(1.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(7.dp.toPx(), 5.dp.toPx()), 1f)))
-                drawCircle(AcademyColors.TextSecondary.copy(alpha = 0.35f), size.minDimension * 0.34f,
-                    Offset(size.width / 2f, size.height / 2f), style = Stroke(0.7.dp.toPx()))
-            }
-            Text("狐", color = Ink, fontSize = 66.sp, fontWeight = FontWeight.Light, fontFamily = FontFamily.Serif)
+            Image(
+                painter = painterResource(id = R.drawable.bg_japanese_landscape_placeholder),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize().alpha(0.72f)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_kitsune_placeholder),
+                contentDescription = "Mascota Kitsune de Nihongo Academy",
+                modifier = Modifier.size(118.dp)
+            )
         }
         Spacer(Modifier.height(18.dp))
         Text("Nihongo Academy", color = Ink, style = MaterialTheme.typography.headlineLarge.copy(fontSize = 38.sp, lineHeight = 42.sp), textAlign = TextAlign.Center)
