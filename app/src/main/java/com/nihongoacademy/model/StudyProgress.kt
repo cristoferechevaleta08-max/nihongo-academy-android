@@ -92,7 +92,7 @@ object StudyProgressLogic {
         }
 
         val now = System.currentTimeMillis()
-        val updatedExams = progress.completedExams + examId
+        val updatedExams = if (ratio >= 0.6f) progress.completedExams + examId else progress.completedExams
         val updatedResults = (progress.recentResults + StudyResult(
             lessonId = examId,
             moduleId = moduleId,
