@@ -10,7 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -90,7 +90,7 @@ fun LessonScreen(
                     shape = CircleShape,
                     colors = IconButtonDefaults.filledIconButtonColors(containerColor = AcademyColors.Sakura, contentColor = AcademyColors.Background)
                 ) {
-                    Icon(Icons.Default.VolumeUp, contentDescription = "Audio")
+                    Icon(Icons.Default.PlayArrow, contentDescription = "Audio")
                 }
                 if (settings.showPronunciation && lesson.speechText.isNotBlank()) {
                     // The existing pronunciation control remains available without changing speech logic.
@@ -99,6 +99,7 @@ fun LessonScreen(
             }
 
             Text("Trazo del carácter", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
+            val guideColor = MaterialTheme.colorScheme.outline
             Surface(
                 modifier = Modifier.fillMaxWidth().height(188.dp),
                 shape = RoundedCornerShape(18.dp),
@@ -106,7 +107,7 @@ fun LessonScreen(
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Canvas(Modifier.fillMaxSize()) {
-                        val guide = MaterialTheme.colorScheme.outline
+                        val guide = guideColor
                         drawLine(guide, androidx.compose.ui.geometry.Offset(size.width / 2f, 0f), androidx.compose.ui.geometry.Offset(size.width / 2f, size.height), 1.2f)
                         drawLine(guide, androidx.compose.ui.geometry.Offset(0f, size.height / 2f), androidx.compose.ui.geometry.Offset(size.width, size.height / 2f), 1.2f)
                         drawLine(guide.copy(alpha = .55f), androidx.compose.ui.geometry.Offset(0f, 0f), androidx.compose.ui.geometry.Offset(size.width, size.height), 1f)
