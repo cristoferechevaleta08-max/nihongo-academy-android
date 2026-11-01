@@ -6,6 +6,8 @@ import android.util.Base64
 import com.nihongoacademy.security.PasswordHash
 import com.nihongoacademy.security.PasswordHasher
 import java.util.UUID
+import java.security.MessageDigest
+import java.security.SecureRandom
 
 data class AuthUser(
     val id: String,
@@ -14,7 +16,7 @@ data class AuthUser(
 )
 
 sealed interface AuthResult {
-    data class Success(val user: AuthUser) : AuthResult
+    data class Success(val user: AuthUser, val recoveryCode: String? = null) : AuthResult
     data class Failure(val message: String) : AuthResult
 }
 
@@ -37,6 +39,7 @@ class AuthRepository(context: Context) {
         }
 
         val generated = passwordHasher.hashPassword(password)
+        val recoveryCode = generateRecoveryCode()
         val userId = UUID.randomUUID().toString()
         val entity = UserEntity(
             userId = userId,
@@ -45,13 +48,13 @@ class AuthRepository(context: Context) {
             passwordHash = Base64.encodeToString(generated.hash, Base64.NO_WRAP),
             passwordSalt = Base64.encodeToString(generated.salt, Base64.NO_WRAP),
             iterations = generated.iterations,
-            recoveryPhrase = "",
+            recoveryPhrase = hashRecoveryCode(recoveryCode),
             createdAt = System.currentTimeMillis()
         )
         return try {
             database.userDao().insert(entity)
             sessionStore.saveUser(userId)
-            AuthResult.Success(AuthUser(userId, name, normalizedEmail))
+            AuthResult.Success(AuthUser(userId, name, normalizedEmail), recoveryCode)
         } catch (_: SQLiteConstraintException) {
             AuthResult.Failure("Ya existe una cuenta con ese correo.")
         } catch (_: Exception) {
@@ -79,6 +82,51 @@ class AuthRepository(context: Context) {
         }
         sessionStore.saveUser(user.userId)
         return AuthResult.Success(AuthUser(user.userId, user.visibleName, user.username))
+    }
+
+
+    suspend fun resetPassword(email: String, recoveryCode: String, newPassword: String): AuthResult {
+        val normalizedEmail = email.trim().lowercase()
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(normalizedEmail).matches()) {
+            return AuthResult.Failure("Introduce el correo asociado a tu cuenta.")
+        }
+        if (recoveryCode.isBlank()) return AuthResult.Failure("Introduce tu código de recuperación.")
+        if (newPassword.length < 8) return AuthResult.Failure("La nueva contraseña debe tener al menos 8 caracteres.")
+
+        val user = database.userDao().findByUsername(normalizedEmail)
+            ?: return AuthResult.Failure("El correo o el código de recuperación no son válidos.")
+        val expected = user.recoveryPhrase.toByteArray(Charsets.UTF_8)
+        val supplied = hashRecoveryCode(recoveryCode).toByteArray(Charsets.UTF_8)
+        if (expected.isEmpty() || !MessageDigest.isEqual(expected, supplied)) {
+            return AuthResult.Failure("El correo o el código de recuperación no son válidos.")
+        }
+
+        return runCatching {
+            val generated = passwordHasher.hashPassword(newPassword)
+            database.userDao().updatePassword(
+                userId = user.userId,
+                passwordHash = Base64.encodeToString(generated.hash, Base64.NO_WRAP),
+                passwordSalt = Base64.encodeToString(generated.salt, Base64.NO_WRAP),
+                iterations = generated.iterations
+            )
+            sessionStore.clearUser()
+            AuthResult.Success(AuthUser(user.userId, user.visibleName, user.username))
+        }.getOrElse {
+            AuthResult.Failure("No se pudo actualizar la contraseña. Inténtalo nuevamente.")
+        }
+    }
+
+    private fun generateRecoveryCode(): String {
+        val alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+        val random = SecureRandom()
+        val raw = (1..12).map { alphabet[random.nextInt(alphabet.length)] }.joinToString("")
+        return raw.chunked(4).joinToString("-")
+    }
+
+    private fun hashRecoveryCode(code: String): String {
+        val normalized = code.filterNot { it == '-' || it.isWhitespace() }.uppercase()
+        val digest = MessageDigest.getInstance("SHA-256").digest(normalized.toByteArray(Charsets.UTF_8))
+        return digest.joinToString("") { byte -> "%02x".format(byte) }
     }
 
     suspend fun currentUser(): AuthUser? {
