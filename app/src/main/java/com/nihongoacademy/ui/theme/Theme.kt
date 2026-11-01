@@ -1,6 +1,8 @@
 package com.nihongoacademy.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -10,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.nihongoacademy.data.PreferencesStore
 
 private val DarkColors = darkColorScheme(
@@ -63,6 +66,7 @@ fun NihongoTheme(
     MaterialTheme(
         colorScheme = if (useDarkTheme) DarkColors else LightColors,
         typography = AcademyTypography,
+        shapes = Shapes(small = RoundedCornerShape(14.dp), medium = RoundedCornerShape(18.dp), large = RoundedCornerShape(24.dp)),
         content = content
     )
 }
