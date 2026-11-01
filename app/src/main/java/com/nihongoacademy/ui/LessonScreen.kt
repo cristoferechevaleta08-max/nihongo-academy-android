@@ -66,6 +66,7 @@ fun LessonScreen(
             Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text("Comprueba lo aprendido", style = MaterialTheme.typography.labelLarge)
                 Text(lesson.prompt, style = MaterialTheme.typography.titleLarge)
+                if (lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
                 lesson.options.forEach { option ->
                     OutlinedButton(
                         onClick = { if (!checked) selectedAnswer = option },
