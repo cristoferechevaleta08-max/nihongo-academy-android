@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.data.PreferencesStore
+import com.nihongoacademy.data.StudySettings
 import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.StudyProgress
 import kotlinx.coroutines.launch
@@ -40,6 +43,9 @@ fun LessonScreen(
     val lesson = module.lessons.firstOrNull { it.id == lessonId } ?: module.lessons.first()
     val context = LocalContext.current
     val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    val preferencesStore = remember { PreferencesStore(context.applicationContext) }
+    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
+    val settings by settingsFlow.collectAsState(initial = StudySettings())
     val scope = rememberCoroutineScope()
 
     var selectedAnswer by remember(lesson.id) { mutableStateOf("") }
@@ -66,7 +72,7 @@ fun LessonScreen(
             Column(modifier = Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text("Comprueba lo aprendido", style = MaterialTheme.typography.labelLarge)
                 Text(lesson.prompt, style = MaterialTheme.typography.titleLarge)
-                if (lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
+                if (settings.showPronunciation && lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
                 lesson.options.forEach { option ->
                     OutlinedButton(
                         onClick = { if (!checked) selectedAnswer = option },
