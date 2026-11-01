@@ -292,7 +292,7 @@ private fun RegisterPagodaDecoration(modifier: Modifier = Modifier) {
                 close()
             }
             drawPath(roof, ink)
-            drawRect(ink, androidx.compose.ui.geometry.Offset(centerX - half * 0.62f, y + h * 0.09f), androidx.compose.ui.Size(half * 1.24f, h * 0.12f))
+            drawRect(ink, androidx.compose.ui.geometry.Offset(centerX - half * 0.62f, y + h * 0.09f), Size(half * 1.24f, h * 0.12f))
         }
         drawLine(ink, androidx.compose.ui.geometry.Offset(centerX, h * 0.08f), androidx.compose.ui.geometry.Offset(centerX, h * 0.29f), 1.dp.toPx())
         val petals = listOf(
