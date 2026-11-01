@@ -1,6 +1,8 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -15,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +26,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +42,9 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import androidx.compose.ui.platform.LocalContext
 import com.nihongoacademy.data.AuthRepository
+import com.nihongoacademy.data.PreferencesStore
+import com.nihongoacademy.data.SessionStore
+import com.nihongoacademy.data.StudySettings
 import com.nihongoacademy.data.StudyProgressStore
 import com.nihongoacademy.model.StudyProgress
 
@@ -45,28 +53,34 @@ fun ProfileScreen(navController: NavController) {
     val context = LocalContext.current
     val authRepository = remember { AuthRepository(context) }
     val progressStore = remember { StudyProgressStore(context) }
+    val preferencesStore = remember { PreferencesStore(context) }
+    val settingsFlow = remember(preferencesStore) { preferencesStore.studySettingsFlow() }
+    val settings by settingsFlow.collectAsState(initial = StudySettings())
     var displayName by remember { mutableStateOf("Estudiante") }
     var email by remember { mutableStateOf("") }
+    var languageCode by remember { mutableStateOf("ja") }
     var progress by remember { mutableStateOf(StudyProgress()) }
     var visible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         val user = authRepository.currentUser()
         displayName = user?.displayName ?: "Estudiante"
         email = user?.email.orEmpty()
-        progress = progressStore.getProgress()
+        languageCode = SessionStore(context).readLanguage() ?: "ja"
+        progress = progressStore.getProgress(languageCode)
         delay(120)
         visible = true
     }
 
     AnimatedVisibility(
         visible = visible,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { 20 }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { 20 })
+        enter = if (settings.reduceMotion) EnterTransition.None else fadeIn() + slideInVertically(initialOffsetY = { 20 }),
+        exit = if (settings.reduceMotion) ExitTransition.None else fadeOut() + slideOutVertically(targetOffsetY = { 20 })
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
+                .verticalScroll(rememberScrollState())
                 .padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
