@@ -20,6 +20,10 @@ class SessionStore(private val context: Context) {
         context.sessionDataStore.edit { prefs -> prefs[currentUser] = userId }
     }
 
+    suspend fun clearUser() {
+        context.sessionDataStore.edit { prefs -> prefs.remove(currentUser) }
+    }
+
     suspend fun readLanguage(): String? = context.sessionDataStore.data.first()[activeLanguage]
     suspend fun readUser(): String? = context.sessionDataStore.data.first()[currentUser]
 }
