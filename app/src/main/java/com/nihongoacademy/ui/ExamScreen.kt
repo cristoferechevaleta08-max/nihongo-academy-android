@@ -311,6 +311,7 @@ fun ExamScreen(navController: NavController) {
             }
         }
     }
+    }
 }
 
 @Composable private fun ExamPreviewContent() { ExamScreen(rememberNavController()) }
