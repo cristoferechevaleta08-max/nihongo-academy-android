@@ -16,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -107,13 +106,13 @@ fun LessonScreen(
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Canvas(Modifier.fillMaxSize()) {
-                        val guide = Color(0xFFD5D5D8)
+                        val guide = MaterialTheme.colorScheme.outline
                         drawLine(guide, androidx.compose.ui.geometry.Offset(size.width / 2f, 0f), androidx.compose.ui.geometry.Offset(size.width / 2f, size.height), 1.2f)
                         drawLine(guide, androidx.compose.ui.geometry.Offset(0f, size.height / 2f), androidx.compose.ui.geometry.Offset(size.width, size.height / 2f), 1.2f)
                         drawLine(guide.copy(alpha = .55f), androidx.compose.ui.geometry.Offset(0f, 0f), androidx.compose.ui.geometry.Offset(size.width, size.height), 1f)
                         drawLine(guide.copy(alpha = .55f), androidx.compose.ui.geometry.Offset(size.width, 0f), androidx.compose.ui.geometry.Offset(0f, size.height), 1f)
                     }
-                    Text("あ", fontSize = 112.sp, color = Color(0xFFD8D8DA), fontWeight = FontWeight.Light)
+                    Text("あ", fontSize = 112.sp, color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = .28f), fontWeight = FontWeight.Light)
                 }
             }
 
