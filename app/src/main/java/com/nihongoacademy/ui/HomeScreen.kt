@@ -107,5 +107,12 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
         ) {
             Text("Colección")
         }
+
+        Button(
+            onClick = { navController.navigate("settings") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Configuración")
+        }
     }
 }
