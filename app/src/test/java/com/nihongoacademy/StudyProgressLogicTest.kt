@@ -5,6 +5,7 @@ import com.nihongoacademy.model.LanguageCatalogFactory
 import com.nihongoacademy.model.StudyProgress
 import com.nihongoacademy.model.StudyProgressLogic
 import org.junit.Test
+import java.util.Calendar
 
 class StudyProgressLogicTest {
     @Test
@@ -78,6 +79,28 @@ class StudyProgressLogicTest {
         )
         assertThat(first.totalXp).isEqualTo(second.totalXp)
         assertThat(second.completedExams).contains("m1_mid")
+    }
+
+    @Test
+    fun studyingOnConsecutiveCalendarDaysExtendsStreak() {
+        val yesterday = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, -1)
+        }.timeInMillis
+        val previous = StudyProgress(streakDays = 3, lastStudyDate = yesterday)
+        val result = StudyProgressLogic.completeLesson(
+            previous, "JA", "module_1", "m1_l1", 1, 1
+        )
+        assertThat(result.streakDays).isEqualTo(4)
+    }
+
+    @Test
+    fun repeatingStudyOnSameDayDoesNotIncreaseStreak() {
+        val now = System.currentTimeMillis()
+        val previous = StudyProgress(streakDays = 3, lastStudyDate = now)
+        val result = StudyProgressLogic.completeLesson(
+            previous, "JA", "module_1", "m1_l1", 1, 1
+        )
+        assertThat(result.streakDays).isEqualTo(3)
     }
 
 }
