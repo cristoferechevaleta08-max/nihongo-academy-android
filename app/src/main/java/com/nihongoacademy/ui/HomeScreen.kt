@@ -114,5 +114,12 @@ fun HomeScreen(navController: NavController, languageCode: String = "ja") {
         ) {
             Text("Configuración")
         }
+
+        Button(
+            onClick = { navController.navigate("language") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Cambiar idioma")
+        }
     }
 }
