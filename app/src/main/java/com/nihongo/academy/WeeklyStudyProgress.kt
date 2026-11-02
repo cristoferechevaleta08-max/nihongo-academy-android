@@ -46,6 +46,7 @@ internal fun submitWeeklyAssessment(
 ): WeeklyStudyProgress {
     require(!progress.paused) { "Reanudá el plan antes de enviar la evaluación." }
     require(!progress.isPlanComplete) { "El plan N5 ya está completo." }
+    require(progress.currentWeek !in progress.completedWeeks) { "Esta semana ya está aprobada." }
     require(isStudyWeekUnlocked(progress, progress.currentWeek)) {
         "Aprobá las semanas anteriores antes de continuar."
     }
