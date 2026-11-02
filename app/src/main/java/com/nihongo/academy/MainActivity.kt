@@ -441,7 +441,7 @@ val q=lesson.exercises[currentExerciseIndex]
 val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
 var taskResponse by remember(lesson.id){mutableStateOf("")}
 var taskConfirmed by remember(lesson.id){mutableStateOf(false)}
-val requiresPracticalTask=lesson.id!="n5-u02"
+val requiresPracticalTask=lesson.level=="N5"&&lesson.id!="n5-u02"
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver")}
  Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+exerciseOrder.size)
