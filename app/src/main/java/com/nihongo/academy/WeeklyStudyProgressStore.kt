@@ -15,6 +15,7 @@ private val weeklyCompletedKey = stringSetPreferencesKey("n5_weekly_completed")
 private val weeklyAttemptsKey = stringSetPreferencesKey("n5_weekly_attempts")
 private val weeklyPausedKey = booleanPreferencesKey("n5_weekly_paused")
 private val weeklyAssessmentKey = stringPreferencesKey("n5_weekly_last_assessment")
+private val weeklyMistakesKey = stringSetPreferencesKey("n5_weekly_mistakes")
 
 /** Lee el avance semanal guardado localmente para sobrevivir al cierre de la app. */
 internal fun DataStore<Preferences>.weeklyStudyProgress(): Flow<WeeklyStudyProgress> =
@@ -63,10 +64,15 @@ private fun decodeWeeklyAssessment(value: String?): WeeklyAssessment? {
     return WeeklyAssessment(week, correct, total, incorrect, fields[4].toBoolean(), fields[5].toBoolean())
 }
 
-/** Aplica una evaluación y persiste el resultado en una única operación DataStore. */
+/** Errores de kana pendientes por semana, persistidos para el repaso. */
+internal fun DataStore<Preferences>.weeklyKanaMistakes(): Flow<Set<String>> =
+    data.map { it[weeklyMistakesKey].orEmpty() }
+
+/** Aplica una evaluación y persiste el resultado y los errores en una única operación DataStore. */
 internal suspend fun DataStore<Preferences>.recordWeeklyAssessment(
     correctAnswers: Int,
-    totalQuestions: Int
+    totalQuestions: Int,
+    incorrectKana: Set<String> = emptySet()
 ): WeeklyStudyProgress {
     var updated = WeeklyStudyProgress()
     edit { preferences ->
@@ -90,7 +96,15 @@ internal suspend fun DataStore<Preferences>.recordWeeklyAssessment(
         preferences[weeklyCompletedKey] = updated.completedWeeks.map(Int::toString).toSet()
         preferences[weeklyAttemptsKey] = updated.attemptsByWeek.map { (week, count) -> "$week:$count" }.toSet()
         preferences[weeklyPausedKey] = updated.paused
-        updated.lastAssessment?.let { preferences[weeklyAssessmentKey] = encodeWeeklyAssessment(it) }
+        updated.lastAssessment?.let { assessment ->
+            preferences[weeklyAssessmentKey] = encodeWeeklyAssessment(assessment)
+            val weekPrefix = assessment.week.toString() + ":"
+            val remaining = preferences[weeklyMistakesKey].orEmpty().filterNot { it.startsWith(weekPrefix) }.toMutableSet()
+            if (!assessment.passed) incorrectKana.forEach { kana ->
+                if (kana.isNotBlank() && !kana.contains("|")) remaining.add(weekPrefix + kana)
+            }
+            preferences[weeklyMistakesKey] = remaining
+        }
     }
     return updated
 }
