@@ -246,7 +246,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
   onDismissRequest={picker=false},
   title={Text("Elegí un idioma")},
   text={Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())){
-   languages.forEach{item->TextButton(onClick={lang=item.code;picker=false;scope.launch{ds.edit{prefs->prefs[langKey]=item.code}},modifier=Modifier.fillMaxWidth()){Text(item.flag+" "+item.name+" ("+item.native+")")}}
+   languages.forEach{item->TextButton(onClick={lang=item.code;picker=false;scope.launch{ds.edit{prefs->prefs[langKey]=item.code}}},modifier=Modifier.fillMaxWidth()){Text(item.flag+" "+item.name+" ("+item.native+")")}}
   }},
   confirmButton={TextButton(onClick={picker=false}){Text("Cerrar")}}
  )
