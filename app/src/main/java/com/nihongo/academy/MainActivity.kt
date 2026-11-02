@@ -40,13 +40,13 @@ private val streakKey=intPreferencesKey("daily_streak")
 private val lastGoalDateKey=stringPreferencesKey("last_goal_date")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
 private data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
-private data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
+internal data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
 private data class Question(val section:String,val prompt:String,val options:List<String>,val answer:Int)
 private val languages=listOf(
 Language("en","Inglés","English","🇬🇧"),Language("zh","Mandarín","中文","🇨🇳"),Language("es","Español","Español","🇪🇸"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("ar","Árabe","العربية","🇸🇦"),Language("fr","Francés","Français","🇫🇷"),Language("pt","Portugués","Português","🇧🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("ru","Ruso","Русский","🇷🇺"),Language("de","Alemán","Deutsch","🇩🇪"),Language("ja","Japonés","日本語","🇯🇵"),Language("ko","Coreano","한국어","🇰🇷"),Language("it","Italiano","Italiano","🇮🇹"),Language("tr","Turco","Türkçe","🇹🇷"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
 private fun ex(p:String,o:List<String>,a:Int,n:String)=Exercise(p,o,a,n)
 private fun lesson(id:String,level:String,title:String,vararg exercises:Exercise)=Lesson(id,level,title,exercises.toList())
-private val lessons=listOf(
+internal val lessons=listOf(
  lesson("n5-u01","N5","Saludos y presentación",
   ex("¿Qué significa watashi?",listOf("Yo","Tú","Maestro","Estudiante"),0,"watashi significa yo."),
   ex("Completá: Watashi ___ Sakura desu.",listOf("wa","o","ni","de"),0,"wa marca el tema de la frase."),
@@ -177,6 +177,10 @@ private val lessons=listOf(
   ex("¿Qué significa kaeru?",listOf("Volver","Llover","Florecer","Estudiar"),0,"kaeru significa volver."),
   ex("¿Qué significa tsukarete iru?",listOf("Estar cansado","Estar contento","Estar ocupado","Estar enfermo"),0,"tsukarete iru significa estar cansado."))
 )
+internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean{
+ val index=lessons.indexOfFirst{it.id==lessonId}
+ return index>=0&&(index==0||lessons[index-1].id in completed)
+}
 private val examQuestions=listOf(
 Question("Vocabulario","¿Qué significa みず?",listOf("Agua","Fuego","Tierra","Viento"),0),
 Question("Vocabulario","¿Qué significa ねこ?",listOf("Perro","Gato","Pájaro","Pez"),1),
@@ -388,7 +392,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    items.forEach{l->val previous=lessons.getOrNull(lessons.indexOf(l)-1);val unlocked=previous==null||previous.id in done;OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
+    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done);OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
    }
   }
  }else BoxCard{
