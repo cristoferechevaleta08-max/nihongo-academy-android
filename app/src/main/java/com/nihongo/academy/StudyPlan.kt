@@ -1,6 +1,6 @@
-import java.time.LocalDate
-
 package com.nihongo.academy
+
+import java.time.LocalDate
 
 internal data class StudyPlanBlock(
     val weeks: String,
