@@ -227,7 +227,9 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  var quizWeek by remember{mutableIntStateOf(0)}
  var quizIndex by remember{mutableIntStateOf(0)}
  var selectedAnswer by remember{mutableIntStateOf(-1)}
- var correct by remember{mutableIntStateOf(0)}
+ val correctExercises=remember{mutableStateListOf<Int>()}
+val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
+val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
  var submitted by remember{mutableStateOf(false)}
  var resultText by remember{mutableStateOf("")}
  val week=progress.currentWeek
@@ -433,11 +435,12 @@ var choice by remember{mutableIntStateOf(-1)}
 var correct by remember{mutableIntStateOf(0)}
 var answered by remember{mutableStateOf(false)}
 val wrong=remember{mutableStateListOf<String>()}
-val q=lesson.exercises[index]
+val currentExerciseIndex=exerciseOrder[index]
+val q=lesson.exercises[currentExerciseIndex]
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver")}
- Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+lesson.exercises.size)
- LinearProgressIndicator(progress={(index+if(answered)1 else 0).toFloat()/lesson.exercises.size},modifier=Modifier.fillMaxWidth())
+ Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+exerciseOrder.size)
+ LinearProgressIndicator(progress={(index+if(answered)1 else 0).toFloat()/exerciseOrder.size},modifier=Modifier.fillMaxWidth())
  lessonSupplements[lesson.id]?.let{content->
   BoxCard{
    Text("Objetivo",style=MaterialTheme.typography.titleMedium)
@@ -460,14 +463,14 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
   Button(onClick={
    if(!answered&&choice>=0){
     answered=true
-    if(choice==q.answer)correct++ else wrong.add(lesson.id+"-"+index)
+    if(choice==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
    }else if(answered){
-    if(index==lesson.exercises.lastIndex)finish(wrong.toSet(),isLessonPassed(correct,lesson.exercises.size))
+    if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size))
     else{index++;choice=-1;answered=false}
    }
   },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==lesson.exercises.lastIndex)"Finalizar lección" else "Siguiente")}
   if(answered&&index==lesson.exercises.lastIndex){
-   val percentage=correct*100/lesson.exercises.size
+   val percentage=correctExercises.size*100/lesson.exercises.size
    Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
    if(percentage<70)Text("La lección no se marcará como completada. Tus errores quedarán guardados para repasarlos.")
   }
