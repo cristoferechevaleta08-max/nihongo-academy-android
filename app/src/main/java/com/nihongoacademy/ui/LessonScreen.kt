@@ -132,6 +132,7 @@ fun LessonScreen(
                         fontSize = 104.sp,
                         fontWeight = FontWeight.Normal
                     )
+                    val traceColor = MaterialTheme.colorScheme.onSurface
                     Canvas(
                         Modifier.fillMaxSize().pointerInput(lesson.id) {
                             detectDragGestures(
@@ -148,7 +149,7 @@ fun LessonScreen(
                             )
                         }
                     ) {
-                        val ink = MaterialTheme.colorScheme.onSurface
+                        val ink = traceColor
                         (strokes + listOf(activeStroke)).forEach { points ->
                             if (points.size == 1) {
                                 drawCircle(ink, radius = 4.dp.toPx(), center = points.first())
