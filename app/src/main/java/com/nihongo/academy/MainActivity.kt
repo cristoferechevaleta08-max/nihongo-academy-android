@@ -191,43 +191,111 @@ BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Te
 BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Una guía progresiva para organizar tu estudio y sostener el hábito.")}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,m:Modifier){
-val scope=rememberCoroutineScope();var selected by remember{mutableStateOf<Lesson?>(null)};var lang by remember(language){mutableStateOf(language)};var picker by remember{mutableStateOf(false)}
-if(selected!=null){LessonPage(selected!!,{selected=null}){wrong->scope.launch{ds.edit{p->val old=p[doneKey]?:emptySet();if(selected!!.id !in old)p[xpKey]=(p[xpKey]?:0)+20;p[doneKey]=old+selected!!.id;p[mistakesKey]=(p[mistakesKey]?:emptySet())+wrong}};selected=null};return}
+val scope=rememberCoroutineScope()
+var selected by remember{mutableStateOf<Lesson?>(null)}
+var lang by remember(language){mutableStateOf(language)}
+var picker by remember{mutableStateOf(false)}
+var reviewing by remember{mutableStateOf(false)}
+if(selected!=null){
+ LessonPage(selected!!,{selected=null}){wrong,passed->
+  scope.launch{ds.edit{p->
+   p[mistakesKey]=(p[mistakesKey]?:emptySet())+wrong
+   if(passed&&selected!!.id !in (p[doneKey]?:emptySet())){
+    p[doneKey]=(p[doneKey]?:emptySet())+selected!!.id
+    p[xpKey]=(p[xpKey]?:0)+20
+   }
+  }}
+  selected=null
+ }
+ return
+}
+if(reviewing){
+ MistakeReview(mistakes,{key->scope.launch{ds.edit{p->p[mistakesKey]=(p[mistakesKey]?:emptySet())-key}}},{reviewing=false})
+ return
+}
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
-Heading("Tu ruta de estudio","Elegí idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
-OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
-if(picker) AlertDialog(
- onDismissRequest={picker=false},
- title={Text("Elegí un idioma")},
- text={
-  Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())) {
-   languages.forEach { item ->
-    TextButton(
-     onClick={
-      lang=item.code
-      picker=false
-      scope.launch { ds.edit { prefs -> prefs[langKey]=item.code } }
-     },
-     modifier=Modifier.fillMaxWidth()
-    ) { Text(item.flag+" "+item.name+" ("+item.native+")") }
+ Heading("Tu ruta de estudio","Elegí idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
+ OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
+ if(picker) AlertDialog(
+  onDismissRequest={picker=false},
+  title={Text("Elegí un idioma")},
+  text={Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())){
+   languages.forEach{item->TextButton(onClick={lang=item.code;picker=false;scope.launch{ds.edit{prefs->prefs[langKey]=item.code}},modifier=Modifier.fillMaxWidth()){Text(item.flag+" "+item.name+" ("+item.native+")")}}
+  }},
+  confirmButton={TextButton(onClick={picker=false}){Text("Cerrar")}}
+ )
+ if(lang=="ja"){
+  listOf("N5" to "Principiante","N4" to "Básico","N3" to "Intermedio","N2" to "Intermedio alto","N1" to "Avanzado").forEach{pair->
+   BoxCard{
+    Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
+    val items=lessons.filter{it.level==pair.first}
+    if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
+    items.forEach{l->OutlinedButton(onClick={selected=l},modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else "")+l.title)}}
    }
   }
- },
- confirmButton={TextButton(onClick={picker=false}){Text("Cerrar")}}
-)
-if(lang=="ja")listOf("N5" to "Principiante","N4" to "Básico","N3" to "Intermedio","N2" to "Intermedio alto","N1" to "Avanzado").forEach{pair->BoxCard{Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge);val items=lessons.filter{it.level==pair.first};if(items.isEmpty())Text("Ruta preparada. El contenido de este nivel se completará al incorporar el catálogo curricular.");items.forEach{l->OutlinedButton(onClick={selected=l},modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else "")+l.title)}}}}
-else BoxCard{Text("Ruta de "+languages.first{it.code==lang}.name,style=MaterialTheme.typography.titleLarge);Text("El catálogo de 15 idiomas está configurado. Esta versión publica únicamente lecciones japonesas con contenido revisado; no presenta cursos vacíos como completos.")}
-if(mistakes.isNotEmpty())BoxCard{Text("Repaso de errores",style=MaterialTheme.typography.titleLarge);Text("Hay "+mistakes.size+" respuestas guardadas para revisar.")}
-}}
-@Composable private fun LessonPage(lesson:Lesson,back:()->Unit,finish:(Set<String>)->Unit){
-var index by remember{mutableIntStateOf(0)};var choice by remember{mutableIntStateOf(-1)};var correct by remember{mutableIntStateOf(0)};var answered by remember{mutableStateOf(false)};val wrong=remember{mutableStateListOf<String>()};val q=lesson.exercises[index]
+ }else BoxCard{
+  Text("Ruta de "+languages.first{it.code==lang}.name,style=MaterialTheme.typography.titleLarge)
+  Text("El catálogo de 15 idiomas está configurado. Esta versión publica únicamente lecciones japonesas; los demás cursos se incorporarán con contenido propio revisado.")
+ }
+ if(mistakes.isNotEmpty())BoxCard{
+  Text("Cuaderno de errores",style=MaterialTheme.typography.titleLarge)
+  Text("Tenés "+mistakes.size+" respuestas falladas guardadas para revisar.")
+  Button(onClick={reviewing=true},modifier=Modifier.fillMaxWidth()){Text("Repasar mis errores")}
+ }
+}
+}
+@Composable private fun MistakeReview(mistakes:Set<String>,remove:(String)->Unit,back:()->Unit){
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
-TextButton(onClick=back){Text("← Volver")};Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+lesson.exercises.size);LinearProgressIndicator(progress={(index+if(answered)1 else 0).toFloat()/lesson.exercises.size},modifier=Modifier.fillMaxWidth())
-BoxCard{Text(q.prompt,style=MaterialTheme.typography.titleLarge);q.options.forEachIndexed{i,s->OutlinedButton(onClick={if(!answered)choice=i},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}}
-if(answered){Text(if(choice==q.answer)"¡Correcto!" else "Respuesta: "+q.options[q.answer],color=MaterialTheme.colorScheme.primary);Text(q.note)}
-Button(onClick={if(!answered&&choice>=0){answered=true;if(choice==q.answer)correct++ else wrong.add(lesson.id+"-"+index)}else if(answered){if(index==lesson.exercises.lastIndex){if(correct.toFloat()/lesson.exercises.size>=.7f)finish(wrong.toSet())else{index=0;choice=-1;correct=0;answered=false;wrong.clear()}}else{index++;choice=-1;answered=false}}},enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==lesson.exercises.lastIndex)"Finalizar lección" else "Siguiente")}
-if(answered&&index==lesson.exercises.lastIndex)Text("Resultado: "+(correct*100/lesson.exercises.size)+"%. Se requiere 70% para completar.")
-}}
+ TextButton(onClick=back){Text("← Volver a las lecciones")}
+ Heading("Cuaderno de errores","Revisá qué fallaste, cuál era la respuesta correcta y la explicación.")
+ if(mistakes.isEmpty())Text("No tenés errores pendientes. ¡Buen trabajo!")
+ mistakes.sorted().forEach{key->
+  val split=key.lastIndexOf('-')
+  val lessonId=if(split>0)key.substring(0,split) else ""
+  val index=if(split>0)key.substring(split+1).toIntOrNull()?:-1 else -1
+  val lesson=lessons.firstOrNull{it.id==lessonId}
+  val exercise=lesson?.exercises?.getOrNull(index)
+  if(lesson!=null&&exercise!=null)BoxCard{
+   Text(lesson.level+" · "+lesson.title,color=MaterialTheme.colorScheme.primary)
+   Text(exercise.prompt,style=MaterialTheme.typography.titleMedium)
+   Text("Respuesta correcta: "+exercise.options[exercise.answer])
+   Text(exercise.note,color=MaterialTheme.colorScheme.onSurfaceVariant)
+   OutlinedButton(onClick={remove(key)},modifier=Modifier.fillMaxWidth()){Text("Marcar como repasado")}
+  }
+ }
+}
+}
+@Composable private fun LessonPage(lesson:Lesson,back:()->Unit,finish:(Set<String>,Boolean)->Unit){
+var index by remember{mutableIntStateOf(0)}
+var choice by remember{mutableIntStateOf(-1)}
+var correct by remember{mutableIntStateOf(0)}
+var answered by remember{mutableStateOf(false)}
+val wrong=remember{mutableStateListOf<String>()}
+val q=lesson.exercises[index]
+Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+ TextButton(onClick=back){Text("← Volver")}
+ Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+lesson.exercises.size)
+ LinearProgressIndicator(progress={(index+if(answered)1 else 0).toFloat()/lesson.exercises.size},modifier=Modifier.fillMaxWidth())
+ BoxCard{
+  Text(q.prompt,style=MaterialTheme.typography.titleLarge)
+  q.options.forEachIndexed{i,s->OutlinedButton(onClick={if(!answered)choice=i},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}}
+  if(answered){Text(if(choice==q.answer)"¡Correcto!" else "Respuesta: "+q.options[q.answer],color=MaterialTheme.colorScheme.primary);Text(q.note)}
+  Button(onClick={
+   if(!answered&&choice>=0){
+    answered=true
+    if(choice==q.answer)correct++ else wrong.add(lesson.id+"-"+index)
+   }else if(answered){
+    if(index==lesson.exercises.lastIndex)finish(wrong.toSet(),correct.toFloat()/lesson.exercises.size>=.7f)
+    else{index++;choice=-1;answered=false}
+   }
+  },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==lesson.exercises.lastIndex)"Finalizar lección" else "Siguiente")}
+  if(answered&&index==lesson.exercises.lastIndex){
+   val percentage=correct*100/lesson.exercises.size
+   Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
+   if(percentage<70)Text("La lección no se marcará como completada. Tus errores quedarán guardados para repasarlos.")
+  }
+ }
+}
 }
 @Composable private fun Exam(m:Modifier){
 var started by remember{mutableStateOf(false)};var index by remember{mutableIntStateOf(0)};var choice by remember{mutableIntStateOf(-1)};var score by remember{mutableIntStateOf(0)};var seconds by remember{mutableIntStateOf(600)};var finished by remember{mutableStateOf(false)}
