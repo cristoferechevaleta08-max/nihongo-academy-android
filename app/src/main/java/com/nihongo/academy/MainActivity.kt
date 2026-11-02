@@ -229,17 +229,19 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  val week=progress.currentWeek
  val entries=kanaForWeek(week)
  val assessment=weeklyAssessmentForWeek(week)
- val weekDays=when(week){1->n5KanaWeeks.take(7);2->n5KanaWeeks.drop(7).take(7);3,4->grammarDaysForWeek(week);5,6->verbDaysForWeek(week);7,8->adjectiveDaysForWeek(week);9,10->kanjiDaysForWeek(week);else->emptyList()}
+ val weekDays=when(week){1->n5KanaWeeks.take(7);2->n5KanaWeeks.drop(7).take(7);3,4->grammarDaysForWeek(week);5,6->verbDaysForWeek(week);7,8->adjectiveDaysForWeek(week);9,10->kanjiDaysForWeek(week);11,12->finalPlanDaysForWeek(week);else->emptyList()}
  Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
   Heading("Plan N5 · 12 semanas","30 minutos diarios · semana actual: $week de 12")
   LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
-   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else if(week==5)"Verbos en forma masu" else if(week==6)"Pasado y negativo" else if(week==7)"Adjetivos i" else if(week==8)"Adjetivos na" else if(week==9)"Kanji básicos · primer bloque" else if(week==10)"Kanji básicos · segundo bloque y repaso" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
-   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practicá su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
+   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else if(week==5)"Verbos en forma masu" else if(week==6)"Pasado y negativo" else if(week==7)"Adjetivos i" else if(week==8)"Adjetivos na" else if(week==9)"Kanji básicos · primer bloque" else if(week==10)"Kanji básicos · segundo bloque y repaso" else if(week==11)"Comprensión auditiva · diálogos N5" else if(week==12)"Simulacro completo N5" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
+   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practicá su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else if(week==11)"Escuchá diálogos cortos del nivel N5 y prepará el simulacro de escucha." else if(week==12)"Realizá un simulacro N5 con tiempo real y revisá el cuaderno de errores." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
     OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}}){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
     if(week<=8) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
      else if(week in 9..10) Text("Evaluación pendiente: falta conectar el banco validado de kanji y sus lecturas.")
+      else if(week==11) Text("Simulacro de escucha pendiente: faltan los audios N5 y sus preguntas verificadas.")
+      else if(week==12) Text("Simulacro completo pendiente: falta integrar y validar el banco completo de preguntas y audios.")
    }
    progress.lastAssessment?.let{last->
     Text("Última prueba: semana ${last.week} · ${last.correctAnswers}/${last.totalQuestions} · ${last.incorrectPercent}% de errores")
@@ -293,7 +295,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
     Text(day.focus)
     day.practice.forEachIndexed{i,task->Text("${i+1}. $task")}
    }}
-  }else if(week in 3..10){
+  }else if(week in 3..12){
    Text("Rutina diaria",style=MaterialTheme.typography.titleLarge)
    weekDays.forEach{day->BoxCard{
     Text("Día ${day.day} · ${day.title}",style=MaterialTheme.typography.titleMedium)
@@ -306,6 +308,16 @@ else->Profile(ds,name,lang,Modifier.padding(p))
     Text("El plan continúa con la semana 11: comprensión auditiva mediante diálogos cortos del nivel N5.")
    }
   }
+  if(week==11)BoxCard{
+    Text("Comprensión auditiva N5",style=MaterialTheme.typography.titleLarge)
+    Text("El PDF pide diálogos cortos del nivel N5 y un simulacro de escucha. La práctica se habilitará cuando estén incorporados los audios y las preguntas verificadas.")
+   }
+   if(week==12)BoxCard{
+    Text("Estructura del simulacro N5",style=MaterialTheme.typography.titleLarge)
+    Text("Vocabulario: 20 minutos · Gramática y lectura: 40 minutos · Comprensión auditiva: 30 minutos.")
+    Text("Tiempo total de referencia: 90 minutos. La duración se basa en la información oficial vigente del JLPT; puede variar ligeramente en escucha según el material grabado.")
+    Text("El simulacro completo se habilitará cuando estén integradas todas las preguntas y pistas de audio validadas. Después se revisará el cuaderno de errores.")
+   }
   if(savedKanaMistakes.isNotEmpty())BoxCard{
    Text("Errores para repasar",style=MaterialTheme.typography.titleLarge)
    Text("Estos elementos quedaron guardados de una evaluación no aprobada:")
