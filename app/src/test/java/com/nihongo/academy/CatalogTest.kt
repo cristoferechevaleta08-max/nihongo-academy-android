@@ -16,6 +16,11 @@ class CatalogTest {
   assertEquals(18, lessonSupplements.size)
   assertTrue(lessonSupplements.values.all { it.vocabulary.isNotEmpty() && it.examples.isNotEmpty() && it.unitAssessment.isNotBlank() })
  }
+ @Test fun dailyStreakContinuesOnlyOnConsecutiveGoalDays() {
+  assertEquals(5, nextDailyStreak(4,"2026-11-01","2026-11-02"))
+  assertEquals(4, nextDailyStreak(4,"2026-11-02","2026-11-02"))
+  assertEquals(1, nextDailyStreak(4,"2026-10-30","2026-11-02"))
+ }
  @Test fun dailyEnvelopeRequiresThirtyMinutesOfStudy() {
   assertFalse(isDailyStudyGoalReached(1799))
   assertTrue(isDailyStudyGoalReached(1800))
