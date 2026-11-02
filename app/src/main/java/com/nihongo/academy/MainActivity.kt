@@ -440,6 +440,9 @@ val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
 val currentExerciseIndex=exerciseOrder[index]
 val q=lesson.exercises[currentExerciseIndex]
 val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
+var taskResponse by remember(lesson.id){mutableStateOf("")}
+var taskConfirmed by remember(lesson.id){mutableStateOf(false)}
+val requiresPracticalTask=lesson.id!="n5-u02"
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver")}
  Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+exerciseOrder.size)
@@ -459,6 +462,21 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    Text("Las escrituras japonesas son una incorporación preliminar y requieren revisión nativa antes de publicarse, tal como advierte el PDF.",color=MaterialTheme.colorScheme.onSurfaceVariant)
   }
  }
+ if(requiresPracticalTask){
+  BoxCard{
+   Text("Tarea práctica de la unidad",style=MaterialTheme.typography.titleMedium)
+   Text(lessonSupplements[lesson.id]?.unitAssessment.orEmpty())
+   if(lesson.id!="n5-u07"){
+    OutlinedTextField(value=taskResponse,onValueChange={taskResponse=it;taskConfirmed=false},label={Text("Tu respuesta")},modifier=Modifier.fillMaxWidth(),minLines=3)
+   }else{
+    Text("Leé en voz alta tres horas y dos días de la semana. Esta versión no califica tu pronunciación automáticamente.")
+   }
+   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
+    Checkbox(checked=taskConfirmed,onCheckedChange={taskConfirmed=it},enabled=lesson.id=="n5-u07"||taskResponse.isNotBlank())
+    Text(if(lesson.id=="n5-u07")"Ya leí los ejemplos en voz alta." else "Completé la tarea y revisé que responde a la consigna.")
+   }
+  }
+ }
  BoxCard{
   Text(q.prompt,style=MaterialTheme.typography.titleLarge)
   optionOrder.forEachIndexed{displayIndex,optionIndex->val option=q.options[optionIndex];OutlinedButton(onClick={if(!answered)choice=displayIndex},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==displayIndex)"● " else "○ ")+option)}}
@@ -468,7 +486,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
     answered=true
     if(optionOrder.getOrNull(choice)==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
    }else if(answered){
-    if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size))
+    if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size)&&(!requiresPracticalTask||taskConfirmed))
     else{index++;choice=-1;answered=false}
    }
   },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==exerciseOrder.lastIndex)"Finalizar lección" else "Siguiente")}
@@ -476,6 +494,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    val percentage=correctExercises.size*100/lesson.exercises.size
    Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
    if(percentage<70)Text("La lección no se marcará como completada. Tus errores quedarán guardados para repasarlos.")
+   if(requiresPracticalTask&&!taskConfirmed)Text("También tenés que completar y confirmar la tarea práctica de esta unidad antes de aprobar.")
   }
  }
 }
