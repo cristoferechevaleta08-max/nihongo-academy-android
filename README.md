@@ -1,41 +1,36 @@
-# Nihongo Academy — reconstrucción Android
+# Nihongo Academy — Android
 
-Proyecto Android nativo reconstruido en una rama separada a partir de `Nihongo_Academy_Ideas_App.pdf`.
+Aplicación Android nativa en desarrollo, con interfaz en español.
 
 ## Base técnica
 - Kotlin + Jetpack Compose.
-- Interfaz en español; tema oscuro y claro.
-- Datos locales persistentes con DataStore.
-- Sin dependencia de Google Play Services.
-- CI con Java 17, Gradle 8.9, compilación APK y pruebas unitarias.
+- Tema oscuro y claro.
+- Persistencia local con DataStore.
+- Compatible con dispositivos Android sin Google Play Services.
+- Integración continua para compilar el APK y ejecutar pruebas unitarias.
 
-## Alcance incorporado
-- Selector de 15 idiomas de estudio, con japonés como curso publicado en esta versión.
-- Ruta curricular japonesa N5 (10 unidades) y N4 (8 unidades).
-- 111 ejercicios; cada unidad tiene entre 5 y 7 ejercicios.
-- Cada unidad muestra objetivo, gramática, vocabulario, ejemplos y prueba de unidad.
-- Preferencia persistente para alternar romaji y kana en el vocabulario.
-- Lecciones con corrección inmediata y aprobación mínima del 70%.
-- Cuaderno de errores persistente con explicación y respuesta correcta.
-- Plan visual N5 de 12 semanas y resumen de transición a N4 de 16 semanas.
-- Simulacro de práctica cronometrado, resultado por sección y mejor puntuación guardada.
-- Temporizador de estudio diario de 30 minutos y racha de días consecutivos.
-- Sobres diarios bloqueados hasta cumplir la meta de 30 minutos.
-- Sobres diarios de tres cartas y colección persistente.
-- Perfil local, nombre y preferencia de tema.
+## Estado del proyecto
+- Ruta de japonés N5 organizada en diez unidades.
+- Contenidos de las unidades: objetivo, gramática, vocabulario, ejemplos y ejercicios.
+- Preferencia para mostrar romaji o kana.
+- Corrección de ejercicios y cuaderno de errores.
+- Plan de estudio N5 de doce semanas, con seguimiento del progreso.
+- Las semanas de kanji, escucha y simulacro final permanecen pendientes de materiales originales y revisión; no se presentan como terminadas.
+- N4 no se habilita como siguiente etapa hasta cerrar y validar N5.
+- El selector de idiomas no significa que todos esos cursos estén disponibles.
+- Las funciones que dependan de cuentas, sincronización o comunidad requieren una fase posterior.
 
-## Pendiente antes de considerar el producto completo
-- Evaluaciones semanales del plan con repetición automática si se falla más del 30%, desbloqueo secuencial y pausa/reanudación persistente.
-- Completar la práctica específica de hiragana/katakana, kanji y escucha descrita en el plan.
-- Automatizar las pruebas semanales del plan, la repetición de semanas y el desbloqueo secuencial.
-- Completar los contenidos de inglés y los otros idiomas; el selector no representa cursos ya terminados.
-- Cuentas seguras, sincronización y comunidad online mediante backend.
-- Evaluación fonética de pronunciación; el reconocedor Android actual solo devuelve texto reconocido.
-- Revisión nativa del contenido japonés: el PDF advierte que los textos fuente están en romaji y deben revisarse antes de publicarse.
+## Contenido y propiedad intelectual
+- El PDF de planificación es una referencia interna de desarrollo; no se distribuye desde la aplicación ni se ofrece como descarga.
+- Los documentos de `docs/` son notas técnicas internas para el equipo, no materiales de estudio para el usuario final.
+- Las lecciones, explicaciones, ejemplos, preguntas y audios publicados deben ser originales o contar con una licencia o permiso que autorice su uso.
+- No se copiarán páginas de libros, cursos comerciales, bancos de preguntas ni audios protegidos.
+- Las referencias al JLPT se usan para describir objetivos y formatos de práctica; Nihongo Academy no está afiliada, aprobada ni certificada por JLPT.
+- Antes de publicar, se revisarán las licencias de recursos externos, las atribuciones necesarias y el contenido japonés.
 
-## Reglas del documento fuente
-- No incorporar flashcards: el PDF indica que el repaso se basa en el cuaderno de errores.
-- No marcar una lección como completada si no alcanza el 70%.
-- No presentar las funciones pendientes como si ya estuvieran implementadas.
+## Reglas de calidad
+- No declarar terminada una función que todavía esté pendiente.
+- No presentar una selección curricular propia como una lista oficial del JLPT.
+- No desbloquear kanji, escucha ni simulacro final hasta que sus materiales estén preparados y revisados.
 
-Requiere Android Studio, JDK 17 y Android SDK 35.
+Requiere Android Studio, JDK 17 y Android SDK 35 para compilar localmente.
