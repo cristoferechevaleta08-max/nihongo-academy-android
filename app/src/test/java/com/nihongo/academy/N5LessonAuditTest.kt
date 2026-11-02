@@ -46,6 +46,15 @@ class N5LessonAuditTest {
         }
     }
     @Test
+    fun practicalTaskPanelAppliesOnlyToN5UnitsThatRequireIt() {
+        lessons.filter { it.level == "N5" }.forEach { lesson ->
+            assertEquals(lesson.id != "n5-u02", requiresPracticalAssessment(lesson))
+        }
+        lessons.filter { it.level == "N4" }.forEach { lesson ->
+            assertFalse(requiresPracticalAssessment(lesson))
+        }
+    }
+    @Test
     fun n5GrammarSummariesRetainTheSpecificFormsListedInThePdf() {
         val unit2 = lessonSupplements.getValue("n5-u02").grammar
         listOf("wa", "ga", "o", "ni", "de", "mo").forEach { assertTrue("unit 2: $it", unit2.contains(it)) }
