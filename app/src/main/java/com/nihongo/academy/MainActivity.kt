@@ -36,6 +36,8 @@ private val bestExamKey=intPreferencesKey("best_exam_score")
 private val romajiKey=booleanPreferencesKey("show_romaji")
 private val dailySecondsKey=intPreferencesKey("daily_seconds")
 private val dailyDateKey=stringPreferencesKey("daily_date")
+private val streakKey=intPreferencesKey("daily_streak")
+private val lastGoalDateKey=stringPreferencesKey("last_goal_date")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
 private data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
 private data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
@@ -197,6 +199,7 @@ val xp by ds.data.map{it[xpKey]?:0}.collectAsState(initial=0)
 val owned by ds.data.map{it[cardsKey]?:emptySet()}.collectAsState(initial=emptySet())
 val today=LocalDate.now().toString()
 val dailySeconds by ds.data.map{if(it[dailyDateKey]==today)it[dailySecondsKey]?:0 else 0}.collectAsState(initial=0)
+val streak by ds.data.map{it[streakKey]?:0}.collectAsState(initial=0)
 var sessionRunning by remember{mutableStateOf(false)}
 var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
@@ -204,7 +207,7 @@ var tab by remember{mutableStateOf("Inicio")}
 val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFE7A8B8),secondary=androidx.compose.ui.graphics.Color(0xFFD6B56D),background=androidx.compose.ui.graphics.Color(0xFF101014),surface=androidx.compose.ui.graphics.Color(0xFF1B1B22))else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF9E5268),secondary=androidx.compose.ui.graphics.Color(0xFF856B34))
 MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
-"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=previous+elapsed}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
+"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
 "Plan"->StudyPlanScreen(Modifier.padding(p))
 "Exámenes"->Exam(ds,Modifier.padding(p))
@@ -240,13 +243,13 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
-@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,plan:()->Unit,m:Modifier){
+@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,plan:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
 BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/18f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
-BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
+BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
 BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=plan,modifier=Modifier.fillMaxWidth()){Text("Ver plan completo")}}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,m:Modifier){
