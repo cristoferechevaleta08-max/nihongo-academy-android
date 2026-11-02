@@ -332,7 +332,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
     answered=true
     if(choice==q.answer)correct++ else wrong.add(lesson.id+"-"+index)
    }else if(answered){
-    if(index==lesson.exercises.lastIndex)finish(wrong.toSet(),correct.toFloat()/lesson.exercises.size>=.7f)
+    if(index==lesson.exercises.lastIndex)finish(wrong.toSet(),isLessonPassed(correct,lesson.exercises.size))
     else{index++;choice=-1;answered=false}
    }
   },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==lesson.exercises.lastIndex)"Finalizar lección" else "Siguiente")}
