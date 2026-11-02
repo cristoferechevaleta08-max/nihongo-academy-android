@@ -13,16 +13,21 @@ Proyecto Android nativo reconstruido en una rama separada a partir de `Nihongo_A
 - Selector de 15 idiomas de estudio, con japonés como curso publicado en esta versión.
 - Ruta curricular japonesa N5 (10 unidades) y N4 (8 unidades).
 - 111 ejercicios; cada unidad tiene entre 5 y 7 ejercicios.
+- Cada unidad muestra objetivo, gramática, vocabulario, ejemplos y prueba de unidad.
+- Preferencia persistente para alternar romaji y kana en el vocabulario.
 - Lecciones con corrección inmediata y aprobación mínima del 70%.
 - Cuaderno de errores persistente con explicación y respuesta correcta.
 - Plan visual N5 de 12 semanas y resumen de transición a N4 de 16 semanas.
-- Simulacro de práctica cronometrado.
+- Simulacro de práctica cronometrado, resultado por sección y mejor puntuación guardada.
+- Temporizador de estudio diario de 30 minutos y racha de días consecutivos.
+- Sobres diarios bloqueados hasta cumplir la meta de 30 minutos.
 - Sobres diarios de tres cartas y colección persistente.
 - Perfil local, nombre y preferencia de tema.
 
 ## Pendiente antes de considerar el producto completo
 - Evaluaciones semanales del plan con repetición automática si se falla más del 30%, desbloqueo secuencial y pausa/reanudación persistente.
 - Completar la práctica específica de hiragana/katakana, kanji y escucha descrita en el plan.
+- Automatizar las pruebas semanales del plan, la repetición de semanas y el desbloqueo secuencial.
 - Completar los contenidos de inglés y los otros idiomas; el selector no representa cursos ya terminados.
 - Cuentas seguras, sincronización y comunidad online mediante backend.
 - Evaluación fonética de pronunciación; el reconocedor Android actual solo devuelve texto reconocido.
