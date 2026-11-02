@@ -37,3 +37,6 @@ internal fun nextDailyStreak(currentStreak: Int, lastGoalDate: String?, today: S
     if (lastGoalDate == today) currentStreak
     else if (lastGoalDate == LocalDate.parse(today).minusDays(1).toString()) currentStreak + 1
     else 1
+
+/** El nivel N4 permanece bloqueado hasta aprobar el plan completo de 12 semanas N5. */
+internal fun isN4Unlocked(n5PlanComplete: Boolean): Boolean = n5PlanComplete
