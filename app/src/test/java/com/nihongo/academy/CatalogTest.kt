@@ -12,6 +12,10 @@ class CatalogTest {
   assertEquals("12", n5TwelveWeekPlan.last().weeks)
   assertEquals(30, N5_DAILY_STUDY_MINUTES)
  }
+ @Test fun allEighteenPublishedUnitsHavePdfLessonContent() {
+  assertEquals(18, lessonSupplements.size)
+  assertTrue(lessonSupplements.values.all { it.vocabulary.isNotEmpty() && it.examples.isNotEmpty() && it.unitAssessment.isNotBlank() })
+ }
  @Test fun lessonPassThresholdIsSeventyPercent() {
   assertTrue(isLessonPassed(7,10))
   assertFalse(isLessonPassed(6,10))
