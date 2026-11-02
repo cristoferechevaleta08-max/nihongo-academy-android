@@ -33,6 +33,7 @@ private val xpKey=intPreferencesKey("xp")
 private val rewardKey=stringPreferencesKey("reward")
 private val cardsKey=stringSetPreferencesKey("cards")
 private val bestExamKey=intPreferencesKey("best_exam_score")
+private val romajiKey=booleanPreferencesKey("show_romaji")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
 private data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
 private data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
@@ -186,6 +187,7 @@ class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:
 val context=LocalContext.current;val ds=context.store;val scope=rememberCoroutineScope()
 val dark by ds.data.map{it[darkKey]?:true}.collectAsState(initial=true)
 val lang by ds.data.map{it[langKey]?:"ja"}.collectAsState(initial="ja")
+val showRomaji by ds.data.map{it[romajiKey]?:true}.collectAsState(initial=true)
 val name by ds.data.map{it[nameKey]?:"Estudiante"}.collectAsState(initial="Estudiante")
 val done by ds.data.map{it[doneKey]?:emptySet()}.collectAsState(initial=emptySet())
 val mistakes by ds.data.map{it[mistakesKey]?:emptySet()}.collectAsState(initial=emptySet())
@@ -196,7 +198,7 @@ val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0x
 MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
-"Estudiar"->Study(ds,lang,done,mistakes,Modifier.padding(p))
+"Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
 "Plan"->StudyPlanScreen(Modifier.padding(p))
 "Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,Modifier.padding(p))
@@ -239,14 +241,14 @@ BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
 BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=plan,modifier=Modifier.fillMaxWidth()){Text("Ver plan completo")}}
 }}
-@Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,m:Modifier){
+@Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,m:Modifier){
 val scope=rememberCoroutineScope()
 var selected by remember{mutableStateOf<Lesson?>(null)}
 var lang by remember(language){mutableStateOf(language)}
 var picker by remember{mutableStateOf(false)}
 var reviewing by remember{mutableStateOf(false)}
 if(selected!=null){
- LessonPage(selected!!,{selected=null}){wrong,passed->
+ LessonPage(selected!!,showRomaji,{selected=null}){wrong,passed->
   scope.launch{ds.edit{p->
    p[mistakesKey]=(p[mistakesKey]?:emptySet())+wrong
    if(passed&&selected!!.id !in (p[doneKey]?:emptySet())){
@@ -314,7 +316,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
  }
 }
 }
-@Composable private fun LessonPage(lesson:Lesson,back:()->Unit,finish:(Set<String>,Boolean)->Unit){
+@Composable private fun LessonPage(lesson:Lesson,showRomaji:Boolean,back:()->Unit,finish:(Set<String>,Boolean)->Unit){
 var index by remember{mutableIntStateOf(0)}
 var choice by remember{mutableIntStateOf(-1)}
 var correct by remember{mutableIntStateOf(0)}
@@ -332,7 +334,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    Text("Gramática",style=MaterialTheme.typography.titleMedium)
    Text(content.grammar)
    Text("Vocabulario",style=MaterialTheme.typography.titleMedium)
-   content.vocabulary.forEach{word->Text(word.first+" · "+word.second+" — "+word.third)}
+   content.vocabulary.forEach{word->Text((if(showRomaji)word.first else word.second)+" — "+word.third)}
    Text("Ejemplos",style=MaterialTheme.typography.titleMedium)
    content.examples.forEach{example->Text(example)}
    Text("Prueba de unidad",style=MaterialTheme.typography.titleMedium)
@@ -428,6 +430,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 Heading("Perfil y ajustes","Preferencias, privacidad y accesibilidad.")
 BoxCard{Text("Tu perfil",style=MaterialTheme.typography.titleLarge);OutlinedTextField(value=edit,onValueChange={edit=it},label={Text("Nombre visible")},modifier=Modifier.fillMaxWidth());Button(onClick={scope.launch{ds.edit{it[nameKey]=edit.trim().ifBlank{"Estudiante"}}}}){Text("Guardar nombre")};Text("Idioma: "+languages.first{it.code==lang}.name)}
 BoxCard{Text("Apariencia",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(dark)"Tema oscuro" else "Tema claro");Switch(checked=dark,onCheckedChange={v->scope.launch{ds.edit{it[darkKey]=v}}})}}
+BoxCard{Text("Lectura japonesa",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(showRomaji)"Mostrar romaji" else "Mostrar kana");Switch(checked=showRomaji,onCheckedChange={v->scope.launch{ds.edit{it[romajiKey]=v}}})};Text("Alterná entre romaji y kana en el vocabulario de las unidades.")}
 BoxCard{Text("Privacidad y sincronización",style=MaterialTheme.typography.titleLarge);Text("El progreso se guarda localmente. Las cuentas online y la sincronización entre dispositivos requieren integrar un backend seguro.")}
 BoxCard{Text("Comunidad",style=MaterialTheme.typography.titleLarge);Text("Preguntas, respuestas, votos y moderación necesitan un servicio online. No se muestran publicaciones ficticias.")}
 BoxCard{Text("Pronunciación",style=MaterialTheme.typography.titleLarge);VoicePractice()}
