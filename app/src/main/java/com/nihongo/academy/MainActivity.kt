@@ -358,6 +358,7 @@ BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Tex
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,m:Modifier){
 val scope=rememberCoroutineScope()
+val weeklyProgress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
 var selected by remember{mutableStateOf<Lesson?>(null)}
 var lang by remember(language){mutableStateOf(language)}
 var picker by remember{mutableStateOf(false)}
@@ -396,7 +397,8 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done);OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
+    if(pair.first=="N4"&&!weeklyProgress.isPlanComplete)Text("N4 se habilita cuando completes las 12 semanas del plan N5.")
+    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done)&&(l.level!="N4"||isN4Unlocked(weeklyProgress.isPlanComplete));OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
    }
   }
  }else BoxCard{
