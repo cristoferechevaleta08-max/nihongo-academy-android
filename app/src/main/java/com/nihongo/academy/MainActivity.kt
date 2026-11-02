@@ -465,6 +465,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
   BoxCard{
    Text("Tarea práctica de la unidad",style=MaterialTheme.typography.titleMedium)
    Text(lessonSupplements[lesson.id]?.unitAssessment.orEmpty())
+   if(lesson.id!="n5-u07")Text("La respuesta escrita se revisa mediante autoevaluación; la aplicación todavía no corrige respuestas libres automáticamente.",color=MaterialTheme.colorScheme.onSurfaceVariant)
    if(lesson.id!="n5-u07"){
     OutlinedTextField(value=taskResponse,onValueChange={taskResponse=it;taskConfirmed=false},label={Text("Tu respuesta")},modifier=Modifier.fillMaxWidth(),minLines=3)
    }else{
