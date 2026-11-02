@@ -21,3 +21,9 @@ internal const val N5_DAILY_STUDY_MINUTES = 30
 internal const val N4_DAILY_STUDY_MINUTES = 40
 internal const val N4_TRANSITION_WEEKS = 16
 internal const val WEEKLY_TEST_MAX_FAILURE_PERCENT = 30
+
+internal fun isLessonPassed(correctAnswers: Int, totalQuestions: Int): Boolean =
+    totalQuestions > 0 && correctAnswers.toFloat() / totalQuestions >= 0.70f
+
+internal fun shouldRepeatStudyWeek(incorrectAnswers: Int, totalQuestions: Int): Boolean =
+    totalQuestions > 0 && incorrectAnswers.toFloat() / totalQuestions > 0.30f
