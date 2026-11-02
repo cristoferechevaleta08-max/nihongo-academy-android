@@ -249,7 +249,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   if(quizWeek>0){
    val q=assessment.getOrNull(quizIndex)
    BoxCard{
-    Text("Evaluación de "+if(quizWeek==1)"hiragana" else "katakana",style=MaterialTheme.typography.titleLarge)
+    Text("Evaluación · "+when(quizWeek){1->"hiragana";2->"katakana";3->"saludos y presentación";4->"partículas";5->"verbos en masu";6->"pasado y negativo";else->"N5"},style=MaterialTheme.typography.titleLarge)
     if(!submitted&&q!=null){
      Text("Pregunta ${quizIndex+1} de ${assessment.size}")
      Text(q.prompt,style=MaterialTheme.typography.titleMedium)
