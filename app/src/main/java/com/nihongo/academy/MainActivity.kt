@@ -218,6 +218,8 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 @Composable private fun StudyPlanScreen(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
  val scope=rememberCoroutineScope()
  val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
+ val savedKanaMistakes by ds.weeklyKanaMistakes().collectAsState(initial=emptySet())
+ val wrongKana=remember{mutableStateListOf<String>()}
  var quizWeek by remember{mutableIntStateOf(0)}
  var quizIndex by remember{mutableIntStateOf(0)}
  var selectedAnswer by remember{mutableIntStateOf(-1)}
@@ -236,7 +238,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
    Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
     OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}}){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
-    if(week<=2) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
+    if(week<=2) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
    }
    progress.lastAssessment?.let{last->
     Text("Última prueba: semana ${last.week} · ${last.correctAnswers}/${last.totalQuestions} · ${last.incorrectPercent}% de errores")
@@ -254,11 +256,10 @@ else->Profile(ds,name,lang,Modifier.padding(p))
      q.options.forEachIndexed{i,option->OutlinedButton(onClick={selectedAnswer=i},enabled=selectedAnswer<0,modifier=Modifier.fillMaxWidth()){Text((if(selectedAnswer==i)"● " else "○ ")+option)}}
      Button(onClick={
       if(selectedAnswer>=0){
-       if(selectedAnswer==q.answerIndex)correct++
+       if(selectedAnswer==q.answerIndex)correct++ else wrongKana.add(q.prompt.substringAfter("representa "))
        if(quizIndex==assessment.lastIndex){
-        val totalCorrect=correct+(if(selectedAnswer==q.answerIndex)0 else 0)
         scope.launch{
-         val saved=ds.recordWeeklyAssessment(totalCorrect,assessment.size)
+         val saved=ds.recordWeeklyAssessment(correct,assessment.size,wrongKana.toSet())
          resultText=if(saved.lastAssessment?.passed==true)"¡Semana aprobada! Se desbloqueó la siguiente semana." else "Semana no aprobada. Repasá los errores y volvé a intentarlo."
          submitted=true
         }
@@ -296,6 +297,11 @@ else->Profile(ds,name,lang,Modifier.padding(p))
     Text("Próximo contenido en preparación",style=MaterialTheme.typography.titleLarge)
     Text("El PDF continúa con saludos y partículas wa, ga, o, ni y de en las semanas 3 y 4. Este bloque todavía no se habilita como lección hasta incorporar sus ejercicios y prueba.")
    }
+  }
+  if(savedKanaMistakes.isNotEmpty())BoxCard{
+   Text("Kana para repasar",style=MaterialTheme.typography.titleLarge)
+   Text("Estos caracteres quedaron guardados de una evaluación no aprobada:")
+   savedKanaMistakes.sorted().forEach{item->Text("• "+item.replaceFirst(":", " · "))}
   }
   BoxCard{
    Text("Reglas del plan",style=MaterialTheme.typography.titleLarge)
