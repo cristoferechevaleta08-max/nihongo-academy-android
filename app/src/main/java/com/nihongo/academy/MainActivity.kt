@@ -84,7 +84,7 @@ when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,Modifier.padding(p))
 "Exámenes"->Exam(Modifier.padding(p))
-"Colección"->Collection(ds,owned,Modifier.padding(p))
+"Colección"->CollectionScreen(ds,owned,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
 }
@@ -93,7 +93,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 @Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,study:()->Unit,exam:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
-BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.size.toString()+" para repasar")};LinearProgressIndicator(progress={(done/20f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
+BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/20f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
 BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Una guía progresiva para organizar tu estudio y sostener el hábito.")}
@@ -104,7 +104,25 @@ if(selected!=null){LessonPage(selected!!,{selected=null}){wrong->scope.launch{ds
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
 Heading("Tu ruta de estudio","Elegí idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
 OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
-if(picker)AlertDialog(onDismissRequest={picker=false},title={Text("Elegí un idioma")},text={Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())){languages.forEach{l->TextButton(onClick={lang=l.code;picker=false;scope.launch{ds.edit{it[langKey]=l.code}},modifier=Modifier.fillMaxWidth()){Text(l.flag+" "+l.name+" ("+l.native+")")}}}},confirmButton={TextButton(onClick={picker=false}){Text("Cerrar")}})
+if(picker) AlertDialog(
+ onDismissRequest={picker=false},
+ title={Text("Elegí un idioma")},
+ text={
+  Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())) {
+   languages.forEach { item ->
+    TextButton(
+     onClick={
+      lang=item.code
+      picker=false
+      scope.launch { ds.edit { prefs -> prefs[langKey]=item.code } }
+     },
+     modifier=Modifier.fillMaxWidth()
+    ) { Text(item.flag+" "+item.name+" ("+item.native+")") }
+   }
+  }
+ },
+ confirmButton={TextButton(onClick={picker=false}){Text("Cerrar")}}
+)
 if(lang=="ja")listOf("N5" to "Principiante","N4" to "Básico","N3" to "Intermedio","N2" to "Intermedio alto","N1" to "Avanzado").forEach{pair->BoxCard{Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge);val items=lessons.filter{it.level==pair.first};if(items.isEmpty())Text("Ruta preparada. El contenido de este nivel se completará al incorporar el catálogo curricular.");items.forEach{l->OutlinedButton(onClick={selected=l},modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else "")+l.title)}}}}
 else BoxCard{Text("Ruta de "+languages.first{it.code==lang}.name,style=MaterialTheme.typography.titleLarge);Text("El catálogo de 15 idiomas está configurado. Esta versión publica únicamente lecciones japonesas con contenido revisado; no presenta cursos vacíos como completos.")}
 if(mistakes.isNotEmpty())BoxCard{Text("Repaso de errores",style=MaterialTheme.typography.titleLarge);Text("Hay "+mistakes.size+" respuestas guardadas para revisar.")}
@@ -128,7 +146,7 @@ if(!started)BoxCard{Text("Simulacro de práctica",style=MaterialTheme.typography
 else if(finished)BoxCard{Text("Resultado",style=MaterialTheme.typography.headlineSmall);Text(score.toString()+" de "+examQuestions.size+" respuestas correctas");examQuestions.map{it.section}.distinct().forEach{s->Text(s+" · "+examQuestions.count{it.section==s}+" preguntas")};Button(onClick={started=false;finished=false;index=0;choice=-1;score=0;seconds=600},modifier=Modifier.fillMaxWidth()){Text("Repetir")}}
 else{val q=examQuestions[index];BoxCard{Text("Tiempo restante "+(seconds/60)+":"+ (seconds%60).toString().padStart(2,'0'));Text("Pregunta "+(index+1)+" de "+examQuestions.size);Text(q.prompt,style=MaterialTheme.typography.titleLarge);q.options.forEachIndexed{i,s->OutlinedButton(onClick={choice=i},enabled=choice<0,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}};Button(onClick={if(choice>=0){if(choice==q.answer)score++;if(index==examQuestions.lastIndex)finished=true else{index++;choice=-1}}},enabled=choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(index==examQuestions.lastIndex)"Terminar" else "Siguiente")}}}
 }}
-@Composable private fun Collection(ds:androidx.datastore.core.DataStore<Preferences>,owned:Set<String>,m:Modifier){
+@Composable private fun CollectionScreen(ds:androidx.datastore.core.DataStore<Preferences>,owned:Set<String>,m:Modifier){
 val scope=rememberCoroutineScope();var message by remember{mutableStateOf("")}
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
 Heading("Colección","Sobres diarios con tres cartas coleccionables.")
