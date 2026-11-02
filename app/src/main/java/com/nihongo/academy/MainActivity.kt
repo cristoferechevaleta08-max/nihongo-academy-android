@@ -258,15 +258,16 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   }
   if(quizWeek>0){
    val q=assessment.getOrNull(quizIndex)
+   val quizOptionOrder=remember(quizWeek,quizIndex){q?.let{shuffledQuizOptionIndices(it.options.size)}.orEmpty()}
    BoxCard{
     Text("Evaluación · "+when(quizWeek){1->"hiragana";2->"katakana";3->"saludos y presentación";4->"partículas";5->"verbos en masu";6->"pasado y negativo";7->"adjetivos i";8->"adjetivos na";else->"N5"},style=MaterialTheme.typography.titleLarge)
     if(!submitted&&q!=null){
      Text("Pregunta ${quizIndex+1} de ${assessment.size}")
      Text(q.prompt,style=MaterialTheme.typography.titleMedium)
-     q.options.forEachIndexed{i,option->OutlinedButton(onClick={selectedAnswer=i},enabled=selectedAnswer<0,modifier=Modifier.fillMaxWidth()){Text((if(selectedAnswer==i)"● " else "○ ")+option)}}
+     quizOptionOrder.forEach{optionIndex->val option=q.options[optionIndex];OutlinedButton(onClick={selectedAnswer=optionIndex},enabled=selectedAnswer<0,modifier=Modifier.fillMaxWidth()){Text((if(selectedAnswer==optionIndex)"● " else "○ ")+option)}}
      Button(onClick={
       if(selectedAnswer>=0){
-       if(selectedAnswer==q.answerIndex)correct++ else wrongKana.add(q.prompt.substringAfter("representa "))
+       if(selectedAnswer==q.answerIndex)correct++ else wrongKana.add(q.prompt)
        if(quizIndex==assessment.lastIndex){
         scope.launch{
          val saved=ds.recordWeeklyAssessment(correct,assessment.size,wrongKana.toSet())
