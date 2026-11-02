@@ -31,6 +31,6 @@ class N5GrammarWeeksTest {
                 assertTrue(question.answerIndex in question.options.indices)
             }
         }
-        assertTrue(weeklyAssessmentForWeek(7).isEmpty())
+        assertEquals(10, weeklyAssessmentForWeek(7).size)
     }
 }
