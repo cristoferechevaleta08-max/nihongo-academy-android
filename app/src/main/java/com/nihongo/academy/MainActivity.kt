@@ -487,12 +487,12 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
   Button(onClick={
    if(!answered&&choice>=0){
     answered=true
-    if(optionOrder.getOrNull(choice)==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
+    if(optionOrder.getOrNull(choice)==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex);wrong.remove(lesson.id+"-"+currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
    }else if(answered){
     if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size)&&(!requiresPracticalTask||taskConfirmed))
     else{index++;choice=-1;answered=false}
    }
-  },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==exerciseOrder.lastIndex)"Finalizar lección" else "Siguiente")}
+  },enabled=if(answered&&index==exerciseOrder.lastIndex)(!requiresPracticalTask||taskConfirmed) else answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==exerciseOrder.lastIndex)"Finalizar lección" else "Siguiente")}
   if(answered&&index==exerciseOrder.lastIndex){
    val percentage=correctExercises.size*100/lesson.exercises.size
    Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
