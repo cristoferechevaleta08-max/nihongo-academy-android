@@ -1,71 +1,25 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
+ id("com.android.application")
+ id("org.jetbrains.kotlin.android")
+ id("org.jetbrains.kotlin.plugin.compose")
 }
-
 android {
-    namespace = "com.nihongoacademy"
-    compileSdk = 35
-
-    defaultConfig {
-        applicationId = "com.nihongoacademy"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    buildFeatures {
-        compose = true
-    }
+ namespace = "com.nihongo.academy"
+ compileSdk = 35
+ defaultConfig { applicationId = "com.nihongo.academy"; minSdk = 26; targetSdk = 35; versionCode = 1; versionName = "1.0.0" }
+ buildFeatures { compose = true }
+ compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+ kotlinOptions { jvmTarget = "17" }
 }
-
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.gson)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.org.jetbrains.kotlinx.coroutines.android)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.com.google.truth)
-    testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    testImplementation(libs.app.cash.turbine)
-
-    debugImplementation(libs.androidx.compose.ui.tooling)
+ implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+ implementation("androidx.activity:activity-compose:1.9.3")
+ implementation("androidx.compose.ui:ui")
+ implementation("androidx.compose.ui:ui-tooling-preview")
+ implementation("androidx.compose.material3:material3")
+ implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+ implementation("androidx.datastore:datastore-preferences:1.1.1")
+ implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+ debugImplementation("androidx.compose.ui:ui-tooling")
+ testImplementation("junit:junit:4.13.2")
 }
