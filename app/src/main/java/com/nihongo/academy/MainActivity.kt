@@ -39,7 +39,7 @@ private val dailyDateKey=stringPreferencesKey("daily_date")
 private val streakKey=intPreferencesKey("daily_streak")
 private val lastGoalDateKey=stringPreferencesKey("last_goal_date")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
-private data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
+internal data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
 internal data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
 private data class Question(val section:String,val prompt:String,val options:List<String>,val answer:Int)
 private val languages=listOf(
