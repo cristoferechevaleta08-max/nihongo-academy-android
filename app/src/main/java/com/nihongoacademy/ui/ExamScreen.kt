@@ -112,6 +112,7 @@ fun ExamScreen(navController: NavController) {
     var feedback by remember { mutableStateOf<String?>(null) }
     var score by remember { mutableIntStateOf(0) }
     var finished by remember { mutableStateOf(false) }
+    var answered by remember { mutableStateOf(false) }
 
 
     if (!showQuestions) {
@@ -192,6 +193,7 @@ fun ExamScreen(navController: NavController) {
                         OutlinedTextField(
                             value = writtenAnswer,
                             onValueChange = { writtenAnswer = it },
+                            enabled = !answered,
                             label = { Text("Escribe tu respuesta") },
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -199,7 +201,8 @@ fun ExamScreen(navController: NavController) {
                         currentQuestion.options.forEach { option ->
                             val isSelected = selectedAnswer == option
                             OutlinedButton(
-                                onClick = { selectedAnswer = option },
+                                onClick = { if (!answered) selectedAnswer = option },
+                                enabled = !answered,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(option)
@@ -231,22 +234,24 @@ fun ExamScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Button(
-                    enabled = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.isNotBlank() else selectedAnswer.isNotBlank(),
+                    enabled = if (answered) true else if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.isNotBlank() else selectedAnswer.isNotBlank(),
                     onClick = {
-                        val answer = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer else selectedAnswer
-                        val isCorrect = answer.equals(currentQuestion.correctAnswer, ignoreCase = true)
-
-                        if (isCorrect) {
-                            score += 1
-                            feedback = "Correcto. ${currentQuestion.feedback}"
-                        } else {
-                            feedback = "No es correcto. La respuesta esperada era: ${currentQuestion.correctAnswer}."
-                        }
-
-                        if (currentQuestionIndex < questionBank.lastIndex) {
+                        if (!answered) {
+                            val answer = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.trim() else selectedAnswer
+                            val isCorrect = answer.equals(currentQuestion.correctAnswer, ignoreCase = true)
+                            if (isCorrect) {
+                                score += 1
+                                feedback = "Correcto. ${currentQuestion.feedback}"
+                            } else {
+                                feedback = "No es correcto. La respuesta esperada era: ${currentQuestion.correctAnswer}."
+                            }
+                            answered = true
+                        } else if (currentQuestionIndex < questionBank.lastIndex) {
                             currentQuestionIndex += 1
                             selectedAnswer = ""
                             writtenAnswer = ""
+                            feedback = null
+                            answered = false
                         } else {
                             finished = true
                             savingResult = true
@@ -270,7 +275,11 @@ fun ExamScreen(navController: NavController) {
                     },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(if (currentQuestionIndex < questionBank.lastIndex) "Siguiente" else "Finalizar")
+                    Text(when {
+                        !answered -> "Comprobar respuesta"
+                        currentQuestionIndex < questionBank.lastIndex -> "Siguiente pregunta"
+                        else -> "Ver resultado"
+                    })
                 }
 
                 Button(
