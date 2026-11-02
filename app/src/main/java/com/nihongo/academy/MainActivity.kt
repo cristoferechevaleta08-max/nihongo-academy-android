@@ -173,7 +173,7 @@ var tab by remember{mutableStateOf("Inicio")}
 val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFE7A8B8),secondary=androidx.compose.ui.graphics.Color(0xFFD6B56D),background=androidx.compose.ui.graphics.Color(0xFF101014),surface=androidx.compose.ui.graphics.Color(0xFF1B1B22))else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF9E5268),secondary=androidx.compose.ui.graphics.Color(0xFF856B34))
 MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
-"Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},Modifier.padding(p))
+"Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,Modifier.padding(p))
 "Plan"->StudyPlanScreen(Modifier.padding(p))
 "Exámenes"->Exam(Modifier.padding(p))
@@ -208,13 +208,13 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
-@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,study:()->Unit,exam:()->Unit,m:Modifier){
+@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,study:()->Unit,exam:()->Unit,plan:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
 BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/20f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
-BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Ver simulacro N5")}}
+BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=plan,modifier=Modifier.fillMaxWidth()){Text("Ver plan completo")}}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,m:Modifier){
 val scope=rememberCoroutineScope()
