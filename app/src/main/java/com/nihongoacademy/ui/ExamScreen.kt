@@ -130,29 +130,30 @@ fun ExamScreen(navController: NavController) {
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(26.dp),
-                    color = AcademyColors.ButtonPrimary,
-                    shadowElevation = 2.dp
+                    color = MaterialTheme.colorScheme.surface,
+                    shadowElevation = 1.dp,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = .18f))
                 ) {
                     Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         Box(
-                            Modifier.size(76.dp).background(AcademyColors.Background, RoundedCornerShape(18.dp)),
+                            Modifier.size(76.dp).background(MaterialTheme.colorScheme.background, RoundedCornerShape(18.dp)),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("JLPT\nN5", color = AcademyColors.TextPrimary, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, lineHeight = 24.sp)
+                            Text("JLPT\nN5", color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, lineHeight = 24.sp)
                         }
-                        Text("Examen de Nivel N5", style = MaterialTheme.typography.headlineSmall, color = AcademyColors.ButtonPrimaryText)
-                        Text("Evalúa tus conocimientos", style = MaterialTheme.typography.bodyLarge, color = AcademyColors.ButtonPrimaryText.copy(alpha = .72f))
+                        Text("Examen de Nivel N5", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface)
+                        Text("Evalúa tus conocimientos", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         listOf("Comprensión de lectura", "Comprensión auditiva", "Vocabulario y gramática").forEach { item ->
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                Checkbox(checked = true, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = AcademyColors.Sakura, checkmarkColor = AcademyColors.Background))
-                                Text(item, style = MaterialTheme.typography.bodyMedium, color = AcademyColors.ButtonPrimaryText)
+                                Checkbox(checked = true, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.onSurface, checkmarkColor = MaterialTheme.colorScheme.surface))
+                                Text(item, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                             }
                         }
                         Button(
                             onClick = { showQuestions = true },
                             modifier = Modifier.fillMaxWidth().height(54.dp),
                             shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = AcademyColors.Background, contentColor = AcademyColors.TextPrimary)
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onBackground, contentColor = MaterialTheme.colorScheme.background)
                         ) { Text("Iniciar examen →", style = MaterialTheme.typography.titleMedium) }
                     }
                 }
