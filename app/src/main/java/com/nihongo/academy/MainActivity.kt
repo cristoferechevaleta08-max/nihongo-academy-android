@@ -439,6 +439,7 @@ val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(les
 val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
 val currentExerciseIndex=exerciseOrder[index]
 val q=lesson.exercises[currentExerciseIndex]
+val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver")}
  Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+exerciseOrder.size)
@@ -460,12 +461,12 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
  }
  BoxCard{
   Text(q.prompt,style=MaterialTheme.typography.titleLarge)
-  q.options.forEachIndexed{i,s->OutlinedButton(onClick={if(!answered)choice=i},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}}
-  if(answered){Text(if(choice==q.answer)"¡Correcto!" else "Respuesta: "+q.options[q.answer],color=MaterialTheme.colorScheme.primary);Text(q.note)}
+  optionOrder.forEachIndexed{displayIndex,optionIndex->val option=q.options[optionIndex];OutlinedButton(onClick={if(!answered)choice=displayIndex},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==displayIndex)"● " else "○ ")+option)}}
+  if(answered){Text(if(optionOrder.getOrNull(choice)==q.answer)"¡Correcto!" else "Respuesta: "+q.options[q.answer],color=MaterialTheme.colorScheme.primary);Text(q.note)}
   Button(onClick={
    if(!answered&&choice>=0){
     answered=true
-    if(choice==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
+    if(optionOrder.getOrNull(choice)==q.answer){if(currentExerciseIndex !in correctExercises)correctExercises.add(currentExerciseIndex)}else{wrong.add(lesson.id+"-"+currentExerciseIndex);if(currentExerciseIndex !in repeatedExercises){repeatedExercises.add(currentExerciseIndex);exerciseOrder.add(currentExerciseIndex)}}
    }else if(answered){
     if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size))
     else{index++;choice=-1;answered=false}
