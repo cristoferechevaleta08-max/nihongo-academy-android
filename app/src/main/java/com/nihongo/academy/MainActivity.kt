@@ -425,7 +425,7 @@ BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Pod
 Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium);Text(c.second)}};if(owned.isEmpty())Text("Todavía no tenés cartas.")
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
-val scope=rememberCoroutineScope();val dark by ds.data.map{it[darkKey]?:true}.collectAsState(initial=true);var edit by remember(name){mutableStateOf(name)}
+val scope=rememberCoroutineScope();val dark by ds.data.map{it[darkKey]?:true}.collectAsState(initial=true);val showRomaji by ds.data.map{it[romajiKey]?:true}.collectAsState(initial=true);var edit by remember(name){mutableStateOf(name)}
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
 Heading("Perfil y ajustes","Preferencias, privacidad y accesibilidad.")
 BoxCard{Text("Tu perfil",style=MaterialTheme.typography.titleLarge);OutlinedTextField(value=edit,onValueChange={edit=it},label={Text("Nombre visible")},modifier=Modifier.fillMaxWidth());Button(onClick={scope.launch{ds.edit{it[nameKey]=edit.trim().ifBlank{"Estudiante"}}}}){Text("Guardar nombre")};Text("Idioma: "+languages.first{it.code==lang}.name)}
