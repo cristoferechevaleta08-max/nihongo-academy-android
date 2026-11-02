@@ -23,7 +23,7 @@ class N5LessonAuditTest {
     fun unitTwoUsesFiveParticlePracticeQuestionsAsSpecifiedInThePdf() {
         val unit2 = lessons.first { it.id == "n5-u02" }
         assertEquals(5, unit2.exercises.size)
-        assertTrue(unit2.exercises.first().prompt.contains("wa y mo"))
+        assertEquals("wa y mo", unit2.exercises.first().options[unit2.exercises.first().answer])
         assertTrue(unit2.exercises.any { it.prompt.contains("lugar donde ocurre") })
         assertTrue(unit2.exercises.any { it.prompt.contains("destino") })
     }
