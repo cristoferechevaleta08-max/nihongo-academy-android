@@ -199,7 +199,7 @@ val xp by ds.data.map{it[xpKey]?:0}.collectAsState(initial=0)
 val owned by ds.data.map{it[cardsKey]?:emptySet()}.collectAsState(initial=emptySet())
 val today=LocalDate.now().toString()
 val dailySeconds by ds.data.map{if(it[dailyDateKey]==today)it[dailySecondsKey]?:0 else 0}.collectAsState(initial=0)
-val streak by ds.data.map{it[streakKey]?:0}.collectAsState(initial=0)
+val streak by ds.data.map{val last=it[lastGoalDateKey];if(last==today||last==LocalDate.now().minusDays(1).toString())it[streakKey]?:0 else 0}.collectAsState(initial=0)
 var sessionRunning by remember{mutableStateOf(false)}
 var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
