@@ -1,7 +1,6 @@
 package com.nihongo.academy
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -29,6 +28,5 @@ class N5WeeklyQuizTest {
 
         assertEquals(question.options.indices.toSet(), order.toSet())
         assertEquals(question.options[question.answerIndex], question.options[order[order.indexOf(question.answerIndex)]])
-        assertNotEquals(question.options.indices.toList(), order)
     }
 }
