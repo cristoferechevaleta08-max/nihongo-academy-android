@@ -228,9 +228,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  var quizWeek by remember{mutableIntStateOf(0)}
  var quizIndex by remember{mutableIntStateOf(0)}
  var selectedAnswer by remember{mutableIntStateOf(-1)}
- val correctExercises=remember{mutableStateListOf<Int>()}
-val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
-val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
+ var correct by remember{mutableIntStateOf(0)}
  var submitted by remember{mutableStateOf(false)}
  var resultText by remember{mutableStateOf("")}
  val week=progress.currentWeek
@@ -436,6 +434,9 @@ var choice by remember{mutableIntStateOf(-1)}
 var correct by remember{mutableIntStateOf(0)}
 var answered by remember{mutableStateOf(false)}
 val wrong=remember{mutableStateListOf<String>()}
+val correctExercises=remember(lesson.id){mutableStateListOf<Int>()}
+val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
+val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
 val currentExerciseIndex=exerciseOrder[index]
 val q=lesson.exercises[currentExerciseIndex]
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
