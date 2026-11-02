@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +57,7 @@ fun LessonScreen(
         progress = progressStore.getProgress(languageCode).copy(languageCode = language.code)
     }
     val isCorrect = selectedAnswer == lesson.correctAnswer
+    val practiceCharacter = remember(lesson.prompt) { Regex("[ぁ-んァ-ン一-龯]").find(lesson.prompt)?.value ?: "あ" }
 
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Column(
@@ -69,17 +71,67 @@ fun LessonScreen(
                 Text("Lección", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
             }
 
-            Surface(modifier = Modifier.fillMaxWidth().heightIn(min = 190.dp), shape = AcademyShapes.Large, color = MaterialTheme.colorScheme.surface) {
-                Column(Modifier.fillMaxWidth().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Text(lesson.title, style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(lesson.prompt, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.SemiBold)
-                    if (settings.showPronunciation && lesson.speechText.isNotBlank()) PronunciationButton(lesson.speechText, language.code)
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = AcademyShapes.Large,
+                color = MaterialTheme.colorScheme.surface,
+                shadowElevation = 1.dp
+            ) {
+                Column(
+                    Modifier.fillMaxWidth().padding(vertical = 24.dp, horizontal = 22.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(lesson.title.uppercase(), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        practiceCharacter,
+                        style = MaterialTheme.typography.displayLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = 76.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    if (practiceCharacter == "あ") {
+                        Text("a", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                    Text(lesson.prompt, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    if (settings.showPronunciation && lesson.speechText.isNotBlank()) {
+                        Surface(shape = RoundedCornerShape(50), color = MaterialTheme.colorScheme.background) {
+                            Box(Modifier.padding(4.dp)) {
+                                PronunciationButton(lesson.speechText, language.code)
+                            }
+                        }
+                    }
                 }
             }
             Text("Objetivo de la lección", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
             Surface(modifier = Modifier.fillMaxWidth(), shape = AcademyShapes.Medium, color = MaterialTheme.colorScheme.surfaceVariant) {
                 Text(lesson.description, modifier = Modifier.padding(18.dp), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+
+            Text("Trazo del carácter", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
+            Surface(
+                modifier = Modifier.fillMaxWidth().height(220.dp),
+                shape = AcademyShapes.Large,
+                color = MaterialTheme.colorScheme.surface,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = .25f))
+            ) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Box(Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.outline.copy(alpha = .28f)))
+                    Box(Modifier.fillMaxHeight().width(1.dp).background(MaterialTheme.colorScheme.outline.copy(alpha = .28f)))
+                    Text(
+                        practiceCharacter,
+                        style = MaterialTheme.typography.displayLarge,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = .13f),
+                        fontSize = 104.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+            }
+            Text(
+                "Observa la forma y practica el orden de los trazos.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
             Text("Comprueba lo aprendido", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
             Text(lesson.prompt, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onBackground)
