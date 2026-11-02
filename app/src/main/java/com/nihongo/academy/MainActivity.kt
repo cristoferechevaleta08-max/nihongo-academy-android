@@ -388,7 +388,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    items.forEach{l->OutlinedButton(onClick={selected=l},modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else "")+l.title)}}
+    items.forEach{l->val previous=lessons.getOrNull(lessons.indexOf(l)-1);val unlocked=previous==null||previous.id in done;OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
    }
   }
  }else BoxCard{
@@ -441,7 +441,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    Text("Gramática",style=MaterialTheme.typography.titleMedium)
    Text(content.grammar)
    Text("Vocabulario",style=MaterialTheme.typography.titleMedium)
-   content.vocabulary.forEach{word->Text((if(showRomaji)word.first else word.second)+" — "+word.third)}
+   content.vocabulary.forEach{word->Text((if(showRomaji||!content.kanaReviewed)word.first else word.second)+" — "+word.third)}
    Text("Ejemplos",style=MaterialTheme.typography.titleMedium)
    content.examples.forEach{example->Text(example)}
    Text("Prueba de unidad",style=MaterialTheme.typography.titleMedium)
