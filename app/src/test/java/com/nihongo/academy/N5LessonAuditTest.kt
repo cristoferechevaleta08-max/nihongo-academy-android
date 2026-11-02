@@ -77,6 +77,21 @@ class N5LessonAuditTest {
     }
 
     @Test
+    fun unitsThreeFiveAndSixPracticeTheRequiredConjugationsAndAdjectiveForms() {
+        val unit3 = lessons.first { it.id == "n5-u03" }
+        listOf("tabemasu", "nomimasu", "ikimasu", "kimasu", "shimasu", "mimasu").forEach { form ->
+            assertTrue("unit 3 must practice $form", unit3.exercises.any { exercise -> exercise.prompt.contains(form, true) || exercise.options.any { it == form } })
+        }
+        val unit5 = lessons.first { it.id == "n5-u05" }
+        listOf("atsukunai desu", "chiisakunai desu", "yasukunai desu", "samukunai desu").forEach { form ->
+            assertTrue("unit 5 must practice $form", unit5.exercises.any { exercise -> exercise.options.any { it == form } })
+        }
+        val unit6 = lessons.first { it.id == "n5-u06" }
+        assertTrue(unit6.exercises.any { it.options.contains("genki desu") })
+        assertTrue(unit6.exercises.any { it.options.contains("hima ja arimasen") })
+        assertTrue(unit6.exercises.size in 5..8)
+    }
+    @Test
     fun n5UnitsSevenToTenKeepThePdfTopicsAndRequiredExpressions() {
         val unit7 = lessonSupplements.getValue("n5-u07")
         listOf("ichi", "ni", "san", "yon", "go", "roku", "nana", "hachi", "kyuu", "juu", "ji", "fun", "getsuyoubi")
