@@ -32,9 +32,23 @@ El PDF menciona los recursos oficiales de JLPT como referencia y exige revisar s
 
 El PDF pide un simulacro N5 cronometrado y revisión del cuaderno de errores. Falta un banco original completo, validado y equilibrado por sección. Los tiempos configurados son 20 minutos para vocabulario, 40 para gramática/lectura y 30 para escucha (90 minutos en total), conforme a la tabla oficial JLPT consultada.
 
+## Criterios oficiales que afectan al contenido pendiente
+
+El PDF del proyecto propone aproximadamente 100 kanji para N5. Esa cifra se conserva como orientación del documento del proyecto, no como una lista oficial cerrada del JLPT. El propio JLPT explica que dejó de publicar especificaciones de contenido con listas de vocabulario, kanji y gramática después de la revisión de 2010. Por lo tanto, el banco futuro deberá identificarse como una selección curricular de Nihongo Academy, documentar sus fuentes y pasar revisión lingüística; no se etiquetará como "lista oficial JLPT".
+
+Para que las evaluaciones de práctica se parezcan mejor a las competencias del N5, el JLPT publica tipos de ítems para:
+- Vocabulario: lectura de kanji, escritura/ortografía, expresiones definidas por contexto y paráfrasis.
+- Gramática: selección de forma, composición de oraciones y gramática de texto.
+- Lectura: comprensión de textos cortos y medianos e identificación de información.
+- Escucha: comprensión de tareas, puntos clave, expresiones verbales y respuesta rápida.
+
+La aplicación debe usar esos tipos como referencia de diseño, no copiar preguntas protegidas ni afirmar que una prueba breve reproduce el examen oficial.
+
 ## Fuentes externas consultadas para verificar el formato
 
 - JLPT, composición de secciones y tiempos: https://www.jlpt.jp/e/guideline/testsections.html
+- JLPT, por qué dejó de publicar listas fijas de kanji/vocabulario/gramática y muestra de ítems: https://www.jlpt.jp/e/faq/
+- JLPT, propósitos de los tipos de ítems N5: https://www.jlpt.jp/e/guideline/pdf/n5_e_revised.pdf
 - JLPT, Official Practice Workbook y aviso de copyright: https://ns2.jlpt.jp/e/samples/sampleindex.html
 - JLPT, preguntas frecuentes sobre muestras y audio: https://www.jlpt.jp/e/faq/
 
