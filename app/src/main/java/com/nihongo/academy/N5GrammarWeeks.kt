@@ -119,6 +119,8 @@ internal fun weeklyAssessmentForWeek(week: Int): List<KanaQuizQuestion> = when (
     4 -> particlesWeekAssessment
     5 -> masuWeekAssessment
     6 -> masuPastNegativeAssessment
+    7 -> iAdjectivesWeekAssessment
+    8 -> naAdjectivesWeekAssessment
     else -> emptyList()
 }
 
