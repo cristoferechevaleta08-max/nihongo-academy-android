@@ -1,6 +1,8 @@
 package com.nihongoacademy.ui
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +15,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,6 +57,8 @@ fun LessonScreen(
     var saving by remember { mutableStateOf(false) }
     var saveError by remember { mutableStateOf<String?>(null) }
     var progress by remember { mutableStateOf(StudyProgress(languageCode = language.code)) }
+    var strokes by remember(lesson.id) { mutableStateOf(emptyList<List<Offset>>()) }
+    var activeStroke by remember(lesson.id) { mutableStateOf(emptyList<Offset>()) }
 
     LaunchedEffect(language.code) {
         progress = progressStore.getProgress(languageCode).copy(languageCode = language.code)
@@ -125,13 +132,46 @@ fun LessonScreen(
                         fontSize = 104.sp,
                         fontWeight = FontWeight.Normal
                     )
+                    Canvas(
+                        Modifier.fillMaxSize().pointerInput(lesson.id) {
+                            detectDragGestures(
+                                onDragStart = { activeStroke = listOf(it) },
+                                onDrag = { change, _ ->
+                                    change.consume()
+                                    activeStroke = activeStroke + change.position
+                                },
+                                onDragEnd = {
+                                    if (activeStroke.isNotEmpty()) strokes = strokes + listOf(activeStroke)
+                                    activeStroke = emptyList()
+                                },
+                                onDragCancel = { activeStroke = emptyList() }
+                            )
+                        }
+                    ) {
+                        val ink = MaterialTheme.colorScheme.onSurface
+                        (strokes + listOf(activeStroke)).forEach { points ->
+                            if (points.size == 1) {
+                                drawCircle(ink, radius = 4.dp.toPx(), center = points.first())
+                            } else {
+                                points.zipWithNext().forEach { (start, end) ->
+                                    drawLine(ink, start, end, strokeWidth = 7.dp.toPx(), cap = StrokeCap.Round)
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            Text(
-                "Observa la forma y practica el orden de los trazos.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    "Desliza el dedo para practicar el carácter.",
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                TextButton(onClick = { strokes = emptyList(); activeStroke = emptyList() }) {
+                    Text("Borrar trazos")
+                }
+            }
 
             Text("Comprueba lo aprendido", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
             Text(lesson.prompt, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onBackground)
