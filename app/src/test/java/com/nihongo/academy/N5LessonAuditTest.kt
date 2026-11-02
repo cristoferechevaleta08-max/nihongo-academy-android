@@ -42,6 +42,30 @@ class N5LessonAuditTest {
     }
 
     @Test
+    fun n5UnitsSevenToTenKeepThePdfTopicsAndRequiredExpressions() {
+        val unit7 = lessonSupplements.getValue("n5-u07")
+        listOf("ichi", "ni", "san", "yon", "go", "roku", "nana", "hachi", "kyuu", "juu", "ji", "fun", "getsuyoubi")
+            .forEach { assertTrue("unit 7 grammar: $it", unit7.grammar.contains(it)) }
+        assertTrue(unit7.examples.any { it.contains("san ji") })
+        assertTrue(unit7.examples.any { it.contains("getsuyoubi") })
+
+        val unit8 = lessonSupplements.getValue("n5-u08")
+        listOf("eki", "byouin", "toshokan", "kouen", "koko", "asoko", "doko")
+            .forEach { term -> assertTrue("unit 8 content: $term", (unit8.grammar + unit8.vocabulary.joinToString { it.first }).contains(term)) }
+        assertTrue(unit8.unitAssessment.contains("koko, soko o asoko"))
+
+        val unit9 = lessonSupplements.getValue("n5-u09")
+        listOf("~te kudasai", "~te mo ii desu ka").forEach { assertTrue("unit 9: $it", unit9.grammar.contains(it)) }
+        listOf("mite", "kiite", "matte", "hayaku", "yukkuri", "shizuka ni")
+            .forEach { term -> assertTrue("unit 9 vocabulary: $term", unit9.vocabulary.any { it.first == term }) }
+
+        val unit10 = lessonSupplements.getValue("n5-u10")
+        listOf("~ga arimasu", "~ga imasu", "~ga arimasen").forEach { assertTrue("unit 10: $it", unit10.grammar.contains(it)) }
+        listOf("hito", "kuruma", "tsukue", "kippu", "aru", "iru")
+            .forEach { term -> assertTrue("unit 10 vocabulary: $term", unit10.vocabulary.any { it.first == term }) }
+    }
+
+    @Test
     fun lessonsUnlockOnlyAfterTheImmediatelyPreviousLessonIsCompleted() {
         assertTrue(isLessonUnlocked("n5-u01", emptySet()))
         assertFalse(isLessonUnlocked("n5-u02", emptySet()))
