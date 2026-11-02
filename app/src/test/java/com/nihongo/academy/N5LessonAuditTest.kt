@@ -20,6 +20,14 @@ class N5LessonAuditTest {
     }
 
     @Test
+    fun unitTwoUsesFiveParticlePracticeQuestionsAsSpecifiedInThePdf() {
+        val unit2 = lessons.first { it.id == "n5-u02" }
+        assertEquals(5, unit2.exercises.size)
+        assertTrue(unit2.exercises.first().prompt.contains("wa y mo"))
+        assertTrue(unit2.exercises.any { it.prompt.contains("lugar donde ocurre") })
+        assertTrue(unit2.exercises.any { it.prompt.contains("destino") })
+    }
+    @Test
     fun n5GrammarSummariesRetainTheSpecificFormsListedInThePdf() {
         val unit2 = lessonSupplements.getValue("n5-u02").grammar
         listOf("wa", "ga", "o", "ni", "de", "mo").forEach { assertTrue("unit 2: $it", unit2.contains(it)) }
