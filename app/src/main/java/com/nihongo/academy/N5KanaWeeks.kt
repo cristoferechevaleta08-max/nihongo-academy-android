@@ -5,6 +5,10 @@ internal data class KanaEntry(val kana: String, val romaji: String)
 internal data class KanaDay(val day: Int, val title: String, val focus: String, val practice: List<String>)
 internal data class KanaQuizQuestion(val prompt: String, val options: List<String>, val answerIndex: Int)
 
+/** Devuelve índices mezclados sin perder la referencia al índice de respuesta original. */
+internal fun shuffledQuizOptionIndices(optionCount: Int, random: kotlin.random.Random = kotlin.random.Random.Default): List<Int> =
+    (0 until optionCount).shuffled(random)
+
 internal val hiraganaBasic = listOf(
  KanaEntry("あ","a"),KanaEntry("い","i"),KanaEntry("う","u"),KanaEntry("え","e"),KanaEntry("お","o"),
  KanaEntry("か","ka"),KanaEntry("き","ki"),KanaEntry("く","ku"),KanaEntry("け","ke"),KanaEntry("こ","ko"),
