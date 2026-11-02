@@ -53,6 +53,28 @@ class WeeklyStudyProgressTest {
         assertTrue(result.isPlanComplete)
     }
 
+
+    @Test fun cannotSubmitAssessmentForLaterWeekWhenEarlierWeeksAreIncomplete() {
+        val inconsistentProgress = WeeklyStudyProgress(
+            currentWeek = 3,
+            completedWeeks = setOf(1)
+        )
+        try {
+            submitWeeklyAssessment(inconsistentProgress, 10, 10)
+            fail("No debe permitir saltar la semana 2")
+        } catch (_: IllegalArgumentException) {
+            // Expected: week 2 has not been approved.
+        }
+    }
+
+    @Test fun planCompletionRequiresEveryWeekToBeApproved() {
+        val incomplete = WeeklyStudyProgress(
+            currentWeek = N5_PLAN_WEEKS,
+            completedWeeks = (1..N5_PLAN_WEEKS).filter { it != 7 }.toSet()
+        )
+        assertFalse(incomplete.isPlanComplete)
+    }
+
     @Test(expected = IllegalArgumentException::class)
     fun emptyAssessmentIsRejected() {
         submitWeeklyAssessment(WeeklyStudyProgress(), 0, 0)
