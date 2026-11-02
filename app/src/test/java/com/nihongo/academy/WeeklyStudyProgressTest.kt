@@ -53,6 +53,14 @@ class WeeklyStudyProgressTest {
         assertTrue(result.isPlanComplete)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun completedPlanRejectsFurtherAssessments() {
+        val completed = WeeklyStudyProgress(
+            currentWeek = N5_PLAN_WEEKS,
+            completedWeeks = (1..N5_PLAN_WEEKS).toSet()
+        )
+        submitWeeklyAssessment(completed, 10, 10)
+    }
 
     @Test fun cannotSubmitAssessmentForLaterWeekWhenEarlierWeeksAreIncomplete() {
         val inconsistentProgress = WeeklyStudyProgress(
