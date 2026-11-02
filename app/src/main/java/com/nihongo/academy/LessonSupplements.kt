@@ -33,7 +33,7 @@ internal val lessonSupplements = mapOf(
  ),
  "n5-u04" to LessonSupplement(
   "Expresar acciones pasadas y negativas.",
-  "Pasado cortés: ~mashita. Negativo cortés: ~masen.",
+  "Pasado cortés: tabemashita (comí), nomimashita (bebí). Negativo cortés: tabemasen (no como), ikimasen (no voy). Las formas se construyen con ~mashita y ~masen.",
   listOf(Triple("kinou","きのう","ayer"),Triple("kyou","きょう","hoy"),Triple("ashita","あした","mañana"),Triple("tabemasen","たべません","no como"),Triple("ikimashita","いきました","fui"),Triple("nomimasen","のみません","no bebo")),
   listOf("Kinou eiga o mimashita. — Ayer vi una película.","Kyou wa benkyou shimasen. — Hoy no estudio."),
   "Transformar cinco frases del presente al pasado y al negativo."
