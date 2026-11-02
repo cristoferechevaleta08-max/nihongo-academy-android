@@ -1,3 +1,5 @@
+import java.time.LocalDate
+
 package com.nihongo.academy
 
 internal data class StudyPlanBlock(
@@ -30,3 +32,8 @@ internal fun shouldRepeatStudyWeek(incorrectAnswers: Int, totalQuestions: Int): 
     totalQuestions > 0 && incorrectAnswers.toFloat() / totalQuestions > 0.30f
 
 internal fun isDailyStudyGoalReached(studiedSeconds: Int): Boolean = studiedSeconds >= N5_DAILY_STUDY_SECONDS
+
+internal fun nextDailyStreak(currentStreak: Int, lastGoalDate: String?, today: String): Int =
+    if (lastGoalDate == today) currentStreak
+    else if (lastGoalDate == LocalDate.parse(today).minusDays(1).toString()) currentStreak + 1
+    else 1
