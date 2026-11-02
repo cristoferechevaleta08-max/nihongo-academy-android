@@ -228,17 +228,17 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  var resultText by remember{mutableStateOf("")}
  val week=progress.currentWeek
  val entries=kanaForWeek(week)
- val assessment=kanaAssessmentForWeek(week)
- val weekDays=if(week==1)n5KanaWeeks.take(7) else if(week==2)n5KanaWeeks.drop(7).take(7) else emptyList()
+ val assessment=weeklyAssessmentForWeek(week)
+ val weekDays=when(week){1->n5KanaWeeks.take(7);2->n5KanaWeeks.drop(7).take(7);3,4->grammarDaysForWeek(week);else->emptyList()}
  Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
   Heading("Plan N5 · 12 semanas","30 minutos diarios · semana actual: $week de 12")
   LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
-   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
-   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
+   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
+   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
     OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}}){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
-    if(week<=2) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
+    if(week<=4) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
    }
    progress.lastAssessment?.let{last->
     Text("Última prueba: semana ${last.week} · ${last.correctAnswers}/${last.totalQuestions} · ${last.incorrectPercent}% de errores")
@@ -292,15 +292,22 @@ else->Profile(ds,name,lang,Modifier.padding(p))
     Text(day.focus)
     day.practice.forEachIndexed{i,task->Text("${i+1}. $task")}
    }}
+  }else if(week in 3..4){
+   Text("Rutina diaria",style=MaterialTheme.typography.titleLarge)
+   weekDays.forEach{day->BoxCard{
+    Text("Día ${day.day} · ${day.title}",style=MaterialTheme.typography.titleMedium)
+    Text(day.focus)
+    day.practice.forEachIndexed{i,task->Text("${i+1}. $task")}
+   }}
   }else{
    BoxCard{
     Text("Próximo contenido en preparación",style=MaterialTheme.typography.titleLarge)
-    Text("El PDF continúa con saludos y partículas wa, ga, o, ni y de en las semanas 3 y 4. Este bloque todavía no se habilita como lección hasta incorporar sus ejercicios y prueba.")
+    Text("El PDF continúa con verbos en forma masu en las semanas 5 y 6. Este bloque todavía no se habilita como lección hasta incorporar sus ejercicios y prueba.")
    }
   }
   if(savedKanaMistakes.isNotEmpty())BoxCard{
-   Text("Kana para repasar",style=MaterialTheme.typography.titleLarge)
-   Text("Estos caracteres quedaron guardados de una evaluación no aprobada:")
+   Text("Errores para repasar",style=MaterialTheme.typography.titleLarge)
+   Text("Estos elementos quedaron guardados de una evaluación no aprobada:")
    savedKanaMistakes.sorted().forEach{item->Text("• "+item.replaceFirst(":", " · "))}
   }
   BoxCard{
