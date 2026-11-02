@@ -1,36 +1,44 @@
 package com.nihongoacademy.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.tooling.preview.Preview
 import com.nihongoacademy.model.ExamDifficulty
-import com.nihongoacademy.model.ExamHistoryEntry
 import com.nihongoacademy.model.ExamModuleType
 import com.nihongoacademy.model.ExamQuestion
+import com.nihongoacademy.data.SessionStore
+import com.nihongoacademy.data.StudyProgressStore
+import com.nihongoacademy.ui.theme.AcademyColors
+import com.nihongoacademy.ui.theme.NihongoTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun ExamScreen(navController: NavController) {
+    val context = LocalContext.current
+    val sessionStore = remember { SessionStore(context.applicationContext) }
+    val progressStore = remember { StudyProgressStore(context.applicationContext) }
+    val scope = rememberCoroutineScope()
+    var languageCode by remember { mutableStateOf("ja") }
+    var savedResults by remember { mutableStateOf(emptyList<com.nihongoacademy.model.StudyResult>()) }
+    var savingResult by remember { mutableStateOf(false) }
+    var saveError by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        languageCode = sessionStore.readLanguage() ?: "ja"
+        savedResults = progressStore.getProgress(languageCode).recentResults.filter { it.isExam }.asReversed()
+    }
     val questionBank = remember {
         listOf(
             ExamQuestion(
@@ -96,22 +104,66 @@ fun ExamScreen(navController: NavController) {
         )
     }
 
-    val history = remember {
-        listOf(
-            ExamHistoryEntry("Saludos", 86, 12, "Hace 2 días"),
-            ExamHistoryEntry("Vocabulario", 74, 9, "Hace 4 días"),
-            ExamHistoryEntry("Frases útiles", 91, 15, "Hace 1 semana"),
-            ExamHistoryEntry("Lectura", 68, 7, "Hace 5 días")
-        )
-    }
 
+    var showQuestions by remember { mutableStateOf(false) }
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var selectedAnswer by remember { mutableStateOf("") }
     var writtenAnswer by remember { mutableStateOf("") }
     var feedback by remember { mutableStateOf<String?>(null) }
     var score by remember { mutableIntStateOf(0) }
     var finished by remember { mutableStateOf(false) }
+    var answered by remember { mutableStateOf(false) }
 
+
+    if (!showQuestions) {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            Column(
+                Modifier.fillMaxSize().padding(horizontal = 22.dp).padding(bottom = 22.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Row(Modifier.fillMaxWidth().height(54.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text("Exámenes", modifier = Modifier.weight(1f), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onBackground)
+                    IconButton(onClick = { navController.navigate("settings") }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Configuración", tint = MaterialTheme.colorScheme.onBackground)
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(26.dp),
+                    color = MaterialTheme.colorScheme.surface,
+                    shadowElevation = 1.dp,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = .18f))
+                ) {
+                    Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        Box(
+                            Modifier.size(76.dp).background(MaterialTheme.colorScheme.background, RoundedCornerShape(18.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("JLPT\nN5", color = MaterialTheme.colorScheme.onBackground, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, lineHeight = 24.sp)
+                        }
+                        Text("Examen de Nivel N5", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface)
+                        Text("Evalúa tus conocimientos", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        listOf("Comprensión de lectura", "Comprensión auditiva", "Vocabulario y gramática").forEach { item ->
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                Checkbox(checked = true, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.onSurface, checkmarkColor = MaterialTheme.colorScheme.surface))
+                                Text(item, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                            }
+                        }
+                        Button(
+                            onClick = { showQuestions = true },
+                            modifier = Modifier.fillMaxWidth().height(54.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onBackground, contentColor = MaterialTheme.colorScheme.background)
+                        ) { Text("Iniciar examen →", style = MaterialTheme.typography.titleMedium) }
+                    }
+                }
+                Spacer(Modifier.weight(1f))
+            }
+            // Landscape artwork remains represented by the app's existing vector resource, when available.
+            Text("鳥居     富士山     五重塔", modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 20.dp), color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = .22f), style = MaterialTheme.typography.headlineSmall)
+        }
+    } else {
     val currentQuestion = questionBank[currentQuestionIndex]
 
     Column(
@@ -141,6 +193,7 @@ fun ExamScreen(navController: NavController) {
                         OutlinedTextField(
                             value = writtenAnswer,
                             onValueChange = { writtenAnswer = it },
+                            enabled = !answered,
                             label = { Text("Escribe tu respuesta") },
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -148,7 +201,8 @@ fun ExamScreen(navController: NavController) {
                         currentQuestion.options.forEach { option ->
                             val isSelected = selectedAnswer == option
                             OutlinedButton(
-                                onClick = { selectedAnswer = option },
+                                onClick = { if (!answered) selectedAnswer = option },
+                                enabled = !answered,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Text(option)
@@ -180,32 +234,56 @@ fun ExamScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Button(
+                    enabled = if (answered) true else if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.isNotBlank() else selectedAnswer.isNotBlank(),
                     onClick = {
-                        val answer = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer else selectedAnswer
-                        val isCorrect = answer.equals(currentQuestion.correctAnswer, ignoreCase = true)
-
-                        if (isCorrect) {
-                            score += 1
-                            feedback = "Correcto. ${currentQuestion.feedback}"
-                        } else {
-                            feedback = "No es correcto. La respuesta esperada era: ${currentQuestion.correctAnswer}."
-                        }
-
-                        if (currentQuestionIndex < questionBank.lastIndex) {
+                        if (!answered) {
+                            val answer = if (currentQuestion.module == ExamModuleType.WRITING) writtenAnswer.trim() else selectedAnswer
+                            val isCorrect = answer.equals(currentQuestion.correctAnswer, ignoreCase = true)
+                            if (isCorrect) {
+                                score += 1
+                                feedback = "Correcto. ${currentQuestion.feedback}"
+                            } else {
+                                feedback = "No es correcto. La respuesta esperada era: ${currentQuestion.correctAnswer}."
+                            }
+                            answered = true
+                        } else if (currentQuestionIndex < questionBank.lastIndex) {
                             currentQuestionIndex += 1
                             selectedAnswer = ""
                             writtenAnswer = ""
+                            feedback = null
+                            answered = false
                         } else {
                             finished = true
+                            savingResult = true
+                            saveError = null
+                            scope.launch {
+                                runCatching {
+                                    val updated = progressStore.recordExamResult(
+                                        languageCode = languageCode,
+                                        moduleId = "general_n5",
+                                        examId = "general_n5",
+                                        correctAnswers = score,
+                                        totalQuestions = questionBank.size
+                                    )
+                                    savedResults = updated.recentResults.filter { it.isExam }.asReversed()
+                                }.onFailure {
+                                    saveError = "No se pudo guardar este resultado. Revisa tu conexión de almacenamiento e inténtalo de nuevo."
+                                }
+                                savingResult = false
+                            }
                         }
                     },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(if (currentQuestionIndex < questionBank.lastIndex) "Siguiente" else "Finalizar")
+                    Text(when {
+                        !answered -> "Comprobar respuesta"
+                        currentQuestionIndex < questionBank.lastIndex -> "Siguiente pregunta"
+                        else -> "Ver resultado"
+                    })
                 }
 
                 Button(
-                    onClick = { navController.navigate("home") },
+                    onClick = { navController.navigateUp() },
                     modifier = Modifier.weight(1f)
                 ) {
                     Text("Salir")
@@ -236,34 +314,51 @@ fun ExamScreen(navController: NavController) {
                     Text("• Repite los bloques de saludos y frases útiles\n• Practica la escritura de oraciones cortas\n• Vuelve a evaluar la lectura con contexto real", style = MaterialTheme.typography.bodyMedium)
                 }
             }
-
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(18.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text("Historial de rendimiento", style = MaterialTheme.typography.titleMedium)
-                    history.forEach { entry ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(entry.topic)
-                            Text("${entry.score}% · ${entry.attempts} intentos")
+                    if (savedResults.isEmpty()) {
+                        Text(
+                            "Todavía no hay resultados anteriores guardados.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        savedResults.take(5).forEach { result ->
+                            Text(
+                                "${result.correctAnswers} de ${result.totalQuestions} respuestas · ${if (result.totalQuestions > 0) result.correctAnswers * 100 / result.totalQuestions else 0}%",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
                         }
                     }
                 }
             }
 
+            saveError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
             Button(
-                onClick = { navController.navigate("home") },
+                onClick = { navController.navigateUp() },
+                enabled = !savingResult,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Volver al panel")
+                Text(if (savingResult) "Guardando resultado…" else "Volver al panel")
             }
         }
     }
 }
+
+}
+
+@Composable private fun ExamPreviewContent() { ExamScreen(rememberNavController()) }
+@Preview(name = "Exámenes 360dp", widthDp = 360, heightDp = 800, showBackground = true)
+@Composable private fun ExamPreview360() { NihongoTheme { ExamPreviewContent() } }
+@Preview(name = "Exámenes 411dp", widthDp = 411, heightDp = 900, showBackground = true)
+@Composable private fun ExamPreview411() { NihongoTheme { ExamPreviewContent() } }
+@Preview(name = "Exámenes 600dp", widthDp = 600, heightDp = 960, showBackground = true)
+@Composable private fun ExamPreview600() { NihongoTheme { ExamPreviewContent() } }
+
