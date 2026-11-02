@@ -62,7 +62,7 @@ internal val lessonSupplements = mapOf(
  "n5-u08" to LessonSupplement(
   "Nombrar lugares y preguntar dónde están.",
   "eki, byouin, toshokan, kouen, koko, soko, asoko; ~wa doko desu ka (¿dónde está?).",
-  listOf(Triple("eki","えき","estación"),Triple("byouin","びょういん","hospital"),Triple("toshokan","としょかん","biblioteca"),Triple("kouen","こうえん","parque"),Triple("koko","ここ","aquí"),Triple("asoko","あそこ","allí")),
+  listOf(Triple("eki","えき","estación"),Triple("byouin","びょういん","hospital"),Triple("toshokan","としょかん","biblioteca"),Triple("kouen","こうえん","parque"),Triple("koko","ここ","aquí"),Triple("soko","そこ","ahí"),Triple("asoko","あそこ","allí")),
   listOf("Eki wa doko desu ka. — ¿Dónde está la estación?","Toshokan wa asoko desu. — La biblioteca está allí."),
   "Preguntar dónde está un lugar y responder con koko, soko o asoko."
  ),
