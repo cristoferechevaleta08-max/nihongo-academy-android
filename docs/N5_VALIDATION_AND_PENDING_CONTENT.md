@@ -52,6 +52,15 @@ La aplicación debe usar esos tipos como referencia de diseño, no copiar pregun
 - JLPT, Official Practice Workbook y aviso de copyright: https://ns2.jlpt.jp/e/samples/sampleindex.html
 - JLPT, preguntas frecuentes sobre muestras y audio: https://www.jlpt.jp/e/faq/
 
+
+## Política de publicación y derechos del contenido
+
+- El material de estudio se mostrará dentro de Nihongo Academy; no se generarán cuadernillos ni documentos descargables para el usuario como parte de las semanas 9–10.
+- El futuro banco de kanji se integrará como datos internos de la aplicación, con explicaciones, ejemplos y ejercicios propios, revisados antes de publicarse.
+- Cada recurso externo deberá tener una fuente y una licencia/permiso compatible con su uso. No copiar páginas de libros, cursos comerciales, bancos de preguntas, audios ni materiales de preparación protegidos.
+- Las referencias al JLPT describen el nivel y el formato de práctica; no implican afiliación, aprobación ni certificación por parte del JLPT.
+- Esta política reduce riesgos, pero no constituye una garantía legal ni sustituye la revisión de licencias y permisos antes de publicar la app o la web.
+
 ## Regla de cierre
 
 No pasar al desarrollo curricular N4 hasta que las diez unidades N5 y los bloques de las semanas 9–12 estén completos, revisados y validados. No declarar como terminado un simulacro, audio, banco de kanji o corrección automática que todavía no exista.
