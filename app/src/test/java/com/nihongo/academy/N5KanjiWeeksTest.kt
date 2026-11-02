@@ -17,5 +17,7 @@ class N5KanjiWeeksTest {
         assertTrue(combined.contains("lectura", ignoreCase = true))
         assertTrue(combined.contains("escritura", ignoreCase = true))
         assertTrue(combined.contains("banco validado", ignoreCase = true))
+        assertTrue(weeklyAssessmentForWeek(9).isEmpty())
+        assertTrue(weeklyAssessmentForWeek(10).isEmpty())
     }
 }
