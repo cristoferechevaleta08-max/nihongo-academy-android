@@ -37,3 +37,11 @@ class N5StudyPlanCoverageTest {
         }
     }
 }
+
+
+class N5ToN4GateTest {
+    @Test fun n4StaysLockedUntilAllTwelveN5WeeksAreComplete() {
+        assertFalse(isN4Unlocked(false))
+        assertTrue(isN4Unlocked(true))
+    }
+}
