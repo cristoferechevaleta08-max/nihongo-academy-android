@@ -99,6 +99,7 @@ internal val lessons=listOf(
   ex("¿Qué significa eki?",listOf("Estación","Hospital","Biblioteca","Parque"),0,"eki significa estación."),
   ex("¿Qué significa byouin?",listOf("Hospital","Escuela","Casa","Parque"),0,"byouin significa hospital."),
   ex("¿Qué significa koko?",listOf("Aquí","Allí","Ayer","Mañana"),0,"koko significa aquí."),
+  ex("¿Qué significa soko?",listOf("Ahí","Aquí","Allí","Ayer"),0,"soko se usa para indicar ahí; la prueba de la unidad pide responder con koko, soko o asoko."),
   ex("¿Cómo se pregunta dónde está un lugar?",listOf("wa doko desu ka","wa nan desu ka","wa dare desu ka","wa itsu desu ka"),0,"doko pregunta dónde."),
   ex("¿Qué significa toshokan?",listOf("Biblioteca","Estación","Hospital","Casa"),0,"toshokan significa biblioteca."),
   ex("¿Qué significa kouen?",listOf("Parque","Hospital","Estación","Biblioteca"),0,"kouen significa parque."),
