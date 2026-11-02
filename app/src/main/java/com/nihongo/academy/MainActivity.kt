@@ -324,6 +324,21 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
  TextButton(onClick=back){Text("← Volver")}
  Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+lesson.exercises.size)
  LinearProgressIndicator(progress={(index+if(answered)1 else 0).toFloat()/lesson.exercises.size},modifier=Modifier.fillMaxWidth())
+ lessonSupplements[lesson.id]?.let{content->
+  BoxCard{
+   Text("Objetivo",style=MaterialTheme.typography.titleMedium)
+   Text(content.objective)
+   Text("Gramática",style=MaterialTheme.typography.titleMedium)
+   Text(content.grammar)
+   Text("Vocabulario",style=MaterialTheme.typography.titleMedium)
+   content.vocabulary.forEach{word->Text(word.first+" · "+word.second+" — "+word.third)}
+   Text("Ejemplos",style=MaterialTheme.typography.titleMedium)
+   content.examples.forEach{example->Text(example)}
+   Text("Prueba de unidad",style=MaterialTheme.typography.titleMedium)
+   Text(content.unitAssessment)
+   Text("Las escrituras japonesas son una incorporación preliminar y requieren revisión nativa antes de publicarse, tal como advierte el PDF.",color=MaterialTheme.colorScheme.onSurfaceVariant)
+  }
+ }
  BoxCard{
   Text(q.prompt,style=MaterialTheme.typography.titleLarge)
   q.options.forEachIndexed{i,s->OutlinedButton(onClick={if(!answered)choice=i},enabled=!answered,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}}
