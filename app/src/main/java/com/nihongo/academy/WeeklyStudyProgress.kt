@@ -17,7 +17,7 @@ internal data class WeeklyStudyProgress(
         require(attemptsByWeek.all { (week, attempts) -> week in 1..N5_PLAN_WEEKS && attempts >= 0 })
     }
 
-    val isPlanComplete: Boolean get() = completedWeeks.size == N5_PLAN_WEEKS
+    val isPlanComplete: Boolean get() = (1..N5_PLAN_WEEKS).all { it in completedWeeks }
     fun pause(): WeeklyStudyProgress = copy(paused = true)
     fun resume(): WeeklyStudyProgress = copy(paused = false)
 }
@@ -44,6 +44,9 @@ internal fun submitWeeklyAssessment(
     totalQuestions: Int
 ): WeeklyStudyProgress {
     require(!progress.paused) { "Reanudá el plan antes de enviar la evaluación." }
+    require(isStudyWeekUnlocked(progress, progress.currentWeek)) {
+        "Aprobá las semanas anteriores antes de continuar."
+    }
     require(totalQuestions > 0) { "La evaluación debe tener preguntas." }
     require(correctAnswers in 0..totalQuestions) { "La cantidad de aciertos no es válida." }
 
