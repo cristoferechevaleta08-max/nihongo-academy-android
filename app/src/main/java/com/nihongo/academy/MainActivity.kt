@@ -470,7 +470,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
     if(index==exerciseOrder.lastIndex)finish(wrong.toSet(),isLessonPassed(correctExercises.size,lesson.exercises.size))
     else{index++;choice=-1;answered=false}
    }
-  },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==lesson.exercises.lastIndex)"Finalizar lección" else "Siguiente")}
+  },enabled=answered||choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(!answered)"Comprobar" else if(index==exerciseOrder.lastIndex)"Finalizar lección" else "Siguiente")}
   if(answered&&index==lesson.exercises.lastIndex){
    val percentage=correctExercises.size*100/lesson.exercises.size
    Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
