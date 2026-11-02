@@ -5,7 +5,8 @@ internal data class LessonSupplement(
     val grammar: String,
     val vocabulary: List<Triple<String, String, String>>,
     val examples: List<String>,
-    val unitAssessment: String
+    val unitAssessment: String,
+    val kanaReviewed: Boolean = false
 )
 
 internal val lessonSupplements = mapOf(
@@ -13,70 +14,70 @@ internal val lessonSupplements = mapOf(
   "Decir quién sos y saludar con cortesía.",
   "watashi wa [nombre] desu (soy [nombre]); anata (tú); sufijo ~san.",
   listOf(Triple("watashi","わたし","yo"),Triple("anata","あなた","tú"),Triple("sensei","せんせい","maestro/a"),Triple("gakusei","がくせい","estudiante"),Triple("hajimemashite","はじめまして","encantado de conocerte"),Triple("arigatou","ありがとう","gracias"),Triple("sumimasen","すみません","disculpe / perdón"),Triple("onegaishimasu","おねがいします","por favor al pedir algo")),
-  listOf("わたしはさくらです。 — Soy Sakura.","あなたはがくせいですか。 — ¿Eres estudiante?"),
+  listOf("Watashi wa Sakura desu. — Soy Sakura.","Anata wa gakusei desu ka. — ¿Eres estudiante?"),
   "Presentarse en dos frases y responder una pregunta sencilla sobre la persona."
  ),
  "n5-u02" to LessonSupplement(
   "Usar wa, ga, o, ni, de y mo para unir palabras en una frase.",
   "wa: tema; ga: sujeto; o: objeto; ni: lugar o destino; de: lugar de la acción; mo: también.",
   listOf(Triple("neko","ねこ","gato"),Triple("inu","いぬ","perro"),Triple("hon","ほん","libro"),Triple("gakkou","がっこう","escuela"),Triple("uchi","うち","casa"),Triple("tomodachi","ともだち","amigo"),Triple("mizu","みず","agua"),Triple("kouhii","コーヒー","café")),
-  listOf("ねこがいます。 — Hay un gato.","わたしもがくせいです。 — Yo también soy estudiante."),
+  listOf("Neko ga imasu. — Hay un gato.","Watashi mo gakusei desu. — Yo también soy estudiante."),
   "Elegir la partícula correcta en cinco frases de práctica."
  ),
  "n5-u03" to LessonSupplement(
   "Conjugar verbos comunes en presente afirmativo cortés.",
   "taberu → tabemasu; nomu → nomimasu; iku → ikimasu; kuru → kimasu; suru → shimasu; miru → mimasu.",
   listOf(Triple("taberu","たべる","comer"),Triple("nomu","のむ","beber"),Triple("iku","いく","ir"),Triple("kuru","くる","venir"),Triple("suru","する","hacer"),Triple("miru","みる","ver")),
-  listOf("まいにちごはんをたべます。 — Como arroz todos los días.","がっこうにいきます。 — Voy a la escuela."),
+  listOf("Mainichi gohan o tabemasu. — Como arroz todos los días.","Gakkou ni ikimasu. — Voy a la escuela."),
   "Conjugar seis verbos en forma masu sin error."
  ),
  "n5-u04" to LessonSupplement(
   "Expresar acciones pasadas y negativas.",
   "Pasado cortés: ~mashita. Negativo cortés: ~masen.",
   listOf(Triple("kinou","きのう","ayer"),Triple("kyou","きょう","hoy"),Triple("ashita","あした","mañana"),Triple("tabemasen","たべません","no como"),Triple("ikimashita","いきました","fui"),Triple("nomimasen","のみません","no bebo")),
-  listOf("きのうえいがをみました。 — Ayer vi una película.","きょうはべんきょうしません。 — Hoy no estudio."),
+  listOf("Kinou eiga o mimashita. — Ayer vi una película.","Kyou wa benkyou shimasen. — Hoy no estudio."),
   "Transformar cinco frases del presente al pasado y al negativo."
  ),
  "n5-u05" to LessonSupplement(
   "Describir cosas con adjetivos que terminan en i.",
   "Adjetivos i: ookii, chiisai, takai, yasui, atsui, samui. Negativo: ~kunai desu.",
   listOf(Triple("ookii","おおきい","grande"),Triple("chiisai","ちいさい","pequeño"),Triple("takai","たかい","caro / alto"),Triple("yasui","やすい","barato"),Triple("atsui","あつい","caliente"),Triple("samui","さむい","frío")),
-  listOf("このほんはたかいです。 — Este libro es caro.","きょうはさむいです。 — Hoy hace frío."),
+  listOf("Kono hon wa takai desu. — Este libro es caro.","Kyou wa samui desu. — Hoy hace frío."),
   "Usar cuatro adjetivos i con su forma negativa."
  ),
  "n5-u06" to LessonSupplement(
   "Describir cosas con adjetivos que van seguidos de na.",
   "kirei, shizuka, genki, benri, hima, suki. Formas: ~desu / ~ja arimasen.",
   listOf(Triple("kirei","きれい","bonito"),Triple("shizuka","しずか","tranquilo"),Triple("genki","げんき","sano / animado"),Triple("benri","べんり","práctico"),Triple("hima","ひま","libre"),Triple("suki","すき","gustar")),
-  listOf("このまちはしずかです。 — Esta ciudad es tranquila.","そのへやはきれいじゃありません。 — Esa habitación no es bonita."),
+  listOf("Kono machi wa shizuka desu. — Esta ciudad es tranquila.","Sono heya wa kirei ja arimasen. — Esa habitación no es bonita."),
   "Escribir tres frases con adjetivos na en afirmativo y negativo."
  ),
  "n5-u07" to LessonSupplement(
   "Decir números, horas y días de la semana.",
   "Números ichi, ni, san, yon, go, roku, nana, hachi, kyuu, juu; ji (hora), fun (minuto), getsuyoubi (lunes).",
   listOf(Triple("ichi","いち","uno"),Triple("ni","に","dos"),Triple("san","さん","tres"),Triple("go","ご","cinco"),Triple("juu","じゅう","diez"),Triple("ji","じ","hora"),Triple("fun","ふん","minuto"),Triple("nichiyoubi","にちようび","domingo")),
-  listOf("いまさんじです。 — Son las tres.","かいぎはげつようびです。 — La reunión es el lunes."),
+  listOf("Ima san ji desu. — Son las tres.","Kaigi wa getsuyoubi desu. — La reunión es el lunes."),
   "Leer tres horas y dos días de la semana en voz alta."
  ),
  "n5-u08" to LessonSupplement(
   "Nombrar lugares y preguntar dónde están.",
   "eki, byouin, toshokan, kouen, koko, asoko; ~wa doko desu ka (¿dónde está?).",
   listOf(Triple("eki","えき","estación"),Triple("byouin","びょういん","hospital"),Triple("toshokan","としょかん","biblioteca"),Triple("kouen","こうえん","parque"),Triple("koko","ここ","aquí"),Triple("asoko","あそこ","allí")),
-  listOf("えきはどこですか。 — ¿Dónde está la estación?","としょかんはあそこです。 — La biblioteca está allí."),
+  listOf("Eki wa doko desu ka. — ¿Dónde está la estación?","Toshokan wa asoko desu. — La biblioteca está allí."),
   "Preguntar dónde está un lugar y responder con koko, soko o asoko."
  ),
  "n5-u09" to LessonSupplement(
   "Pedir a alguien que haga algo con ~te kudasai.",
   "~te kudasai (por favor, haga algo); ~te mo ii desu ka (¿puedo hacer algo?).",
   listOf(Triple("mite","みて","mire"),Triple("kiite","きいて","escuche"),Triple("matte","まって","espere"),Triple("hayaku","はやく","rápido"),Triple("yukkuri","ゆっくり","despacio"),Triple("shizuka ni","しずかに","en silencio")),
-  listOf("みてください。 — Mire, por favor.","ゆっくりはなしてください。 — Hable despacio, por favor."),
+  listOf("Mite kudasai. — Mire, por favor.","Yukkuri hanashite kudasai. — Hable despacio, por favor."),
   "Dar cuatro instrucciones con ~te kudasai."
  ),
  "n5-u10" to LessonSupplement(
   "Decir qué hay y dónde está algo o alguien.",
   "~ga arimasu (hay algo, para cosas); ~ga imasu (hay alguien, para seres vivos); ~ga arimasen (no hay).",
   listOf(Triple("hito","ひと","persona"),Triple("kuruma","くるま","coche"),Triple("tsukue","つくえ","escritorio"),Triple("kippu","きっぷ","boleto"),Triple("aru","ある","estar / haber, para cosas"),Triple("iru","いる","estar / haber, para seres vivos")),
-  listOf("つくえのうえにほんがあります。 — Hay un libro encima del escritorio.","へやにひとがいます。 — Hay una persona en la habitación."),
+  listOf("Tsukue no ue ni hon ga arimasu. — Hay un libro encima del escritorio.","Heya ni hito ga imasu. — Hay una persona en la habitación."),
   "Describir una habitación con cuatro frases correctas."
  ),
  "n4-u01" to LessonSupplement(
