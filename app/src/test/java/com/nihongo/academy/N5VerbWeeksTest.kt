@@ -25,6 +25,6 @@ class N5VerbWeeksTest {
     @Test fun assessmentRouterIncludesWeeksFiveAndSix() {
         assertEquals(10, weeklyAssessmentForWeek(5).size)
         assertEquals(10, weeklyAssessmentForWeek(6).size)
-        assertTrue(weeklyAssessmentForWeek(7).isEmpty())
+        assertEquals(10, weeklyAssessmentForWeek(7).size)
     }
 }
