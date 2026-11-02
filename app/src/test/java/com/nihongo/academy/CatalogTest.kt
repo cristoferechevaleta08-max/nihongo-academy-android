@@ -16,6 +16,10 @@ class CatalogTest {
   assertEquals(18, lessonSupplements.size)
   assertTrue(lessonSupplements.values.all { it.vocabulary.isNotEmpty() && it.examples.isNotEmpty() && it.unitAssessment.isNotBlank() })
  }
+ @Test fun dailyEnvelopeRequiresThirtyMinutesOfStudy() {
+  assertFalse(isDailyStudyGoalReached(1799))
+  assertTrue(isDailyStudyGoalReached(1800))
+ }
  @Test fun lessonPassThresholdIsSeventyPercent() {
   assertTrue(isLessonPassed(7,10))
   assertFalse(isLessonPassed(6,10))
