@@ -100,7 +100,7 @@ class N5LessonAuditTest {
         assertTrue(unit7.examples.any { it.contains("getsuyoubi") })
 
         val unit8 = lessonSupplements.getValue("n5-u08")
-        listOf("eki", "byouin", "toshokan", "kouen", "koko", "asoko", "doko")
+        listOf("eki", "byouin", "toshokan", "kouen", "koko", "soko", "asoko", "doko")
             .forEach { term -> assertTrue("unit 8 content: $term", (unit8.grammar + unit8.vocabulary.joinToString { it.first }).contains(term)) }
         assertTrue(unit8.unitAssessment.contains("koko, soko o asoko"))
 
@@ -108,6 +108,11 @@ class N5LessonAuditTest {
         listOf("~te kudasai", "~te mo ii desu ka").forEach { assertTrue("unit 9: $it", unit9.grammar.contains(it)) }
         listOf("mite", "kiite", "matte", "hayaku", "yukkuri", "shizuka ni")
             .forEach { term -> assertTrue("unit 9 vocabulary: $term", unit9.vocabulary.any { it.first == term }) }
+        val unit9Exercises = lessons.first { it.id == "n5-u09" }.exercises
+        listOf("Mite kudasai", "Kiite kudasai", "Matte kudasai", "Yukkuri hanashite kudasai")
+            .forEach { instruction ->
+                assertTrue("unit 9 must practice $instruction", unit9Exercises.any { exercise -> exercise.options.contains(instruction) })
+            }
 
         val unit10 = lessonSupplements.getValue("n5-u10")
         listOf("~ga arimasu", "~ga imasu", "~ga arimasen").forEach { assertTrue("unit 10: $it", unit10.grammar.contains(it)) }
