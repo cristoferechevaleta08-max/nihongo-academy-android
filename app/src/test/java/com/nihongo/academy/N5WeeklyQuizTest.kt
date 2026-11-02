@@ -13,6 +13,7 @@ class N5WeeklyQuizTest {
             questions.forEach { question ->
                 assertTrue(question.prompt.isNotBlank())
                 assertTrue(question.options.size >= 2)
+                assertEquals("options must be unique: ${question.prompt}", question.options.size, question.options.distinct().size)
                 assertTrue(question.answerIndex in question.options.indices)
             }
         }
