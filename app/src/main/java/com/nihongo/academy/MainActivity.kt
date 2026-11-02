@@ -41,6 +41,7 @@ private val lastGoalDateKey=stringPreferencesKey("last_goal_date")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
 internal data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
 internal data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
+internal fun requiresPracticalAssessment(lesson:Lesson)=lesson.level=="N5"&&lesson.id!="n5-u02"
 private data class Question(val section:String,val prompt:String,val options:List<String>,val answer:Int)
 private val languages=listOf(
 Language("en","Inglés","English","🇬🇧"),Language("zh","Mandarín","中文","🇨🇳"),Language("es","Español","Español","🇪🇸"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("ar","Árabe","العربية","🇸🇦"),Language("fr","Francés","Français","🇫🇷"),Language("pt","Portugués","Português","🇧🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("ru","Ruso","Русский","🇷🇺"),Language("de","Alemán","Deutsch","🇩🇪"),Language("ja","Japonés","日本語","🇯🇵"),Language("ko","Coreano","한국어","🇰🇷"),Language("it","Italiano","Italiano","🇮🇹"),Language("tr","Turco","Türkçe","🇹🇷"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
@@ -441,7 +442,7 @@ val q=lesson.exercises[currentExerciseIndex]
 val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
 var taskResponse by remember(lesson.id){mutableStateOf("")}
 var taskConfirmed by remember(lesson.id){mutableStateOf(false)}
-val requiresPracticalTask=lesson.level=="N5"&&lesson.id!="n5-u02"
+val requiresPracticalTask=requiresPracticalAssessment(lesson)
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver")}
  Heading(lesson.title,lesson.level+" · Ejercicio "+(index+1)+" de "+exerciseOrder.size)
