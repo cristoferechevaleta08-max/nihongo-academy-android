@@ -36,7 +36,8 @@ internal const val WEEKLY_REPEAT_THRESHOLD_PERCENT = 30
 
 /**
  * La semana se repite solo cuando los errores superan el 30 %.
- * Con 30 % exacto se aprueba. No se avanza con el plan pausado.
+ * Con 30 % exacto se aprueba. No se avanza con el plan pausado ni se
+ * aceptan nuevos intentos cuando las doce semanas ya están aprobadas.
  */
 internal fun submitWeeklyAssessment(
     progress: WeeklyStudyProgress,
@@ -44,6 +45,7 @@ internal fun submitWeeklyAssessment(
     totalQuestions: Int
 ): WeeklyStudyProgress {
     require(!progress.paused) { "Reanudá el plan antes de enviar la evaluación." }
+    require(!progress.isPlanComplete) { "El plan N5 ya está completo." }
     require(isStudyWeekUnlocked(progress, progress.currentWeek)) {
         "Aprobá las semanas anteriores antes de continuar."
     }
