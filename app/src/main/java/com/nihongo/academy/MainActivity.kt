@@ -209,37 +209,107 @@ MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inic
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
-"Plan"->StudyPlanScreen(Modifier.padding(p))
+"Plan"->StudyPlanScreen(ds,Modifier.padding(p))
 "Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
 }
-@Composable private fun StudyPlanScreen(m:Modifier){
-Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
- Heading("Plan de estudio · 12 semanas","Ruta base del PDF para comenzar en N5 con una meta de 30 minutos diarios.")
- n5TwelveWeekPlan.forEachIndexed{index,block->
+@Composable private fun StudyPlanScreen(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
+ val scope=rememberCoroutineScope()
+ val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
+ var quizWeek by remember{mutableIntStateOf(0)}
+ var quizIndex by remember{mutableIntStateOf(0)}
+ var selectedAnswer by remember{mutableIntStateOf(-1)}
+ var correct by remember{mutableIntStateOf(0)}
+ var submitted by remember{mutableStateOf(false)}
+ var resultText by remember{mutableStateOf("")}
+ val week=progress.currentWeek
+ val entries=kanaForWeek(week)
+ val assessment=kanaAssessmentForWeek(week)
+ val weekDays=if(week==1)n5KanaWeeks.take(7) else if(week==2)n5KanaWeeks.drop(7).take(7) else emptyList()
+ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+  Heading("Plan N5 · 12 semanas","30 minutos diarios · semana actual: $week de 12")
+  LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
-   Text("Semanas "+block.weeks,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.primary)
-   Text(block.focus,style=MaterialTheme.typography.titleLarge)
-   Text(block.activities)
-   Text("Prueba al final: "+block.finalAssessment,color=MaterialTheme.colorScheme.onSurfaceVariant)
+   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
+   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
+   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
+    OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}}){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
+    if(week<=2) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
+   }
+   progress.lastAssessment?.let{last->
+    Text("Última prueba: semana ${last.week} · ${last.correctAnswers}/${last.totalQuestions} · ${last.incorrectPercent}% de errores")
+    Text(if(last.passed)"Semana aprobada." else "Hay que repetir la semana con práctica adicional.",color=MaterialTheme.colorScheme.primary)
+   }
+   if(resultText.isNotBlank())Text(resultText)
+  }
+  if(quizWeek>0){
+   val q=assessment.getOrNull(quizIndex)
+   BoxCard{
+    Text("Evaluación de "+if(quizWeek==1)"hiragana" else "katakana",style=MaterialTheme.typography.titleLarge)
+    if(!submitted&&q!=null){
+     Text("Pregunta ${quizIndex+1} de ${assessment.size}")
+     Text(q.prompt,style=MaterialTheme.typography.titleMedium)
+     q.options.forEachIndexed{i,option->OutlinedButton(onClick={selectedAnswer=i},enabled=selectedAnswer<0,modifier=Modifier.fillMaxWidth()){Text((if(selectedAnswer==i)"● " else "○ ")+option)}}
+     Button(onClick={
+      if(selectedAnswer>=0){
+       if(selectedAnswer==q.answerIndex)correct++
+       if(quizIndex==assessment.lastIndex){
+        val totalCorrect=correct+(if(selectedAnswer==q.answerIndex)0 else 0)
+        scope.launch{
+         val saved=ds.recordWeeklyAssessment(totalCorrect,assessment.size)
+         resultText=if(saved.lastAssessment?.passed==true)"¡Semana aprobada! Se desbloqueó la siguiente semana." else "Semana no aprobada. Repasá los errores y volvé a intentarlo."
+         submitted=true
+        }
+       }else{quizIndex++;selectedAnswer=-1}
+      }
+     },enabled=selectedAnswer>=0,modifier=Modifier.fillMaxWidth()){Text(if(quizIndex==assessment.lastIndex)"Enviar evaluación" else "Siguiente pregunta")}
+    }else if(submitted){
+     Text(resultText)
+     Text("Resultado: $correct de ${assessment.size}.")
+     Button(onClick={quizWeek=0},modifier=Modifier.fillMaxWidth()){Text("Volver al plan")}
+    }
+   }
+  }else if(week<=2){
+   BoxCard{
+    Text("Caracteres de la semana",style=MaterialTheme.typography.titleLarge)
+    Text(if(week==1)"Hiragana · 46 caracteres básicos" else "Katakana · 46 caracteres básicos")
+    entries.chunked(5).forEach{line->
+     Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceEvenly){
+      line.forEach{entry->Column(horizontalAlignment=androidx.compose.ui.Alignment.CenterHorizontally){
+       Text(entry.kana,style=MaterialTheme.typography.headlineSmall)
+       Text(entry.romaji,color=MaterialTheme.colorScheme.onSurfaceVariant)
+      }}
+     }
+    }
+    Text("El romaji sirve de apoyo inicial. Intentá leer primero el kana y usá la transliteración para comprobar.")
+   }
+   Text("Rutina diaria",style=MaterialTheme.typography.titleLarge)
+   weekDays.forEach{day->BoxCard{
+    Text("Día ${day.day} · ${day.title}",style=MaterialTheme.typography.titleMedium)
+    Text(day.focus)
+    day.practice.forEachIndexed{i,task->Text("${i+1}. $task")}
+   }}
+  }else{
+   BoxCard{
+    Text("Próximo contenido en preparación",style=MaterialTheme.typography.titleLarge)
+    Text("El PDF continúa con saludos y partículas wa, ga, o, ni y de en las semanas 3 y 4. Este bloque todavía no se habilita como lección hasta incorporar sus ejercicios y prueba.")
+   }
+  }
+  BoxCard{
+   Text("Reglas del plan",style=MaterialTheme.typography.titleLarge)
+   Text("• Si los errores superan el 30%, repetís la semana con práctica adicional.")
+   Text("• Con 30% de errores o menos, aprobás y se desbloquea la semana siguiente.")
+   Text("• Podés pausar y reanudar; el progreso se guarda localmente.")
+   Text("• Cada semana está limitada a 30 minutos diarios como propone el PDF.")
+  }
+  BoxCard{
+   Text("Progreso",style=MaterialTheme.typography.titleLarge)
+   Text("Semanas aprobadas: ${progress.completedWeeks.sorted().joinToString().ifBlank{"ninguna"}}")
+   Text("Intentos registrados: ${progress.attemptsByWeek.toSortedMap().entries.joinToString { "Semana ${it.key}: ${it.value}" }.ifBlank{"ninguno"}}")
   }
  }
- BoxCard{
-  Text("Reglas de la ruta",style=MaterialTheme.typography.titleLarge)
-  Text("• Cada semana incluye una prueba corta y sus errores deben guardarse en el cuaderno.")
-  Text("• Si fallás más del 30% de una prueba, repetís esa semana con ejercicios adicionales.")
-  Text("• La siguiente unidad se desbloquea al aprobar la prueba semanal, sin saltar pasos.")
-  Text("• Podés pausar el plan sin perder el progreso.")
-  Text("El calendario y las reglas corresponden al PDF. La evaluación semanal automática, el desbloqueo secuencial y la pausa con guardado aún están pendientes; esta pantalla no los presenta como completados.",color=MaterialTheme.colorScheme.onSurfaceVariant)
- }
- BoxCard{
-  Text("Transición a N4",style=MaterialTheme.typography.titleLarge)
-  Text("Al terminar N5, el PDF propone un plan de 16 semanas con 40 minutos diarios, incorporando formas te, potencial, deseo y más kanji y vocabulario.")
-  Text("La ruta N4 todavía está en preparación; no se marca como disponible hasta completar sus evaluaciones.")
- }
-}
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
