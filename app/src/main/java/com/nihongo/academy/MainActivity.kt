@@ -171,14 +171,40 @@ val xp by ds.data.map{it[xpKey]?:0}.collectAsState(initial=0)
 val owned by ds.data.map{it[cardsKey]?:emptySet()}.collectAsState(initial=emptySet())
 var tab by remember{mutableStateOf("Inicio")}
 val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFE7A8B8),secondary=androidx.compose.ui.graphics.Color(0xFFD6B56D),background=androidx.compose.ui.graphics.Color(0xFF101014),surface=androidx.compose.ui.graphics.Color(0xFF1B1B22))else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF9E5268),secondary=androidx.compose.ui.graphics.Color(0xFF856B34))
-MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
+MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,Modifier.padding(p))
+"Plan"->StudyPlanScreen(Modifier.padding(p))
 "Exámenes"->Exam(Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
+}
+@Composable private fun StudyPlanScreen(m:Modifier){
+Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+ Heading("Plan de estudio · 12 semanas","Ruta base del PDF para comenzar en N5 con una meta de 30 minutos diarios.")
+ n5TwelveWeekPlan.forEachIndexed{index,block->
+  BoxCard{
+   Text("Semanas "+block.weeks,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.primary)
+   Text(block.focus,style=MaterialTheme.typography.titleLarge)
+   Text(block.activities)
+   Text("Prueba al final: "+block.finalAssessment,color=MaterialTheme.colorScheme.onSurfaceVariant)
+  }
+ }
+ BoxCard{
+  Text("Reglas de la ruta",style=MaterialTheme.typography.titleLarge)
+  Text("• Cada semana incluye una prueba corta y sus errores deben guardarse en el cuaderno.")
+  Text("• Si fallás más del 30% de una prueba, repetís esa semana con ejercicios adicionales.")
+  Text("• La siguiente unidad se desbloquea al aprobar la prueba semanal, sin saltar pasos.")
+  Text("• Podés pausar el plan sin perder el progreso.")
+ }
+ BoxCard{
+  Text("Transición a N4",style=MaterialTheme.typography.titleLarge)
+  Text("Al terminar N5, el PDF propone un plan de 16 semanas con 40 minutos diarios, incorporando formas te, potencial, deseo y más kanji y vocabulario.")
+  Text("La ruta N4 todavía está en preparación; no se marca como disponible hasta completar sus evaluaciones.")
+ }
+}
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
@@ -188,7 +214,7 @@ Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こん�
 BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/20f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
-BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Una guía progresiva para organizar tu estudio y sostener el hábito.")}
+BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Ver simulacro N5")}}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,m:Modifier){
 val scope=rememberCoroutineScope()
