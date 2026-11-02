@@ -32,6 +32,7 @@ private val mistakesKey=stringSetPreferencesKey("mistakes")
 private val xpKey=intPreferencesKey("xp")
 private val rewardKey=stringPreferencesKey("reward")
 private val cardsKey=stringSetPreferencesKey("cards")
+private val bestExamKey=intPreferencesKey("best_exam_score")
 private data class Language(val code:String,val name:String,val native:String,val flag:String)
 private data class Exercise(val prompt:String,val options:List<String>,val answer:Int,val note:String)
 private data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
@@ -197,7 +198,7 @@ when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,Modifier.padding(p))
 "Plan"->StudyPlanScreen(Modifier.padding(p))
-"Exámenes"->Exam(Modifier.padding(p))
+"Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
@@ -360,15 +361,60 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
  }
 }
 }
-@Composable private fun Exam(m:Modifier){
-var started by remember{mutableStateOf(false)};var index by remember{mutableIntStateOf(0)};var choice by remember{mutableIntStateOf(-1)};var score by remember{mutableIntStateOf(0)};var seconds by remember{mutableIntStateOf(600)};var finished by remember{mutableStateOf(false)}
+@Composable private fun Exam(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
+val scope=rememberCoroutineScope()
+val bestScore by ds.data.map{it[bestExamKey]?:0}.collectAsState(initial=0)
+var started by remember{mutableStateOf(false)}
+var index by remember{mutableIntStateOf(0)}
+var choice by remember{mutableIntStateOf(-1)}
+var score by remember{mutableIntStateOf(0)}
+var seconds by remember{mutableIntStateOf(600)}
+var finished by remember{mutableStateOf(false)}
+val sectionCorrect=remember{mutableStateMapOf<String,Int>()}
 LaunchedEffect(started,finished){while(started&&!finished&&seconds>0){delay(1000);seconds--};if(seconds==0)finished=true}
+LaunchedEffect(finished){
+ if(finished){
+  val percent=score*100/examQuestions.size
+  ds.edit{prefs->if(percent>(prefs[bestExamKey]?:0))prefs[bestExamKey]=percent}
+ }
+}
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
-Heading("Exámenes","Simulacros cronometrados con resultados por sección.")
-if(!started)BoxCard{Text("Simulacro de práctica",style=MaterialTheme.typography.titleLarge);Text(examQuestions.size.toString()+" preguntas · 10 minutos · vocabulario, gramática, lectura y comprensión.");Button(onClick={started=true},modifier=Modifier.fillMaxWidth()){Text("Comenzar examen")}}
-else if(finished)BoxCard{Text("Resultado",style=MaterialTheme.typography.headlineSmall);Text(score.toString()+" de "+examQuestions.size+" respuestas correctas");examQuestions.map{it.section}.distinct().forEach{s->Text(s+" · "+examQuestions.count{it.section==s}+" preguntas")};Button(onClick={started=false;finished=false;index=0;choice=-1;score=0;seconds=600},modifier=Modifier.fillMaxWidth()){Text("Repetir")}}
-else{val q=examQuestions[index];BoxCard{Text("Tiempo restante "+(seconds/60)+":"+ (seconds%60).toString().padStart(2,'0'));Text("Pregunta "+(index+1)+" de "+examQuestions.size);Text(q.prompt,style=MaterialTheme.typography.titleLarge);q.options.forEachIndexed{i,s->OutlinedButton(onClick={choice=i},enabled=choice<0,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+s)}};Button(onClick={if(choice>=0){if(choice==q.answer)score++;if(index==examQuestions.lastIndex)finished=true else{index++;choice=-1}}},enabled=choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(index==examQuestions.lastIndex)"Terminar" else "Siguiente")}}}
-}}
+ Heading("Exámenes","Práctica breve con resultados separados por sección.")
+ if(!started)BoxCard{
+  Text("Simulacro de práctica",style=MaterialTheme.typography.titleLarge)
+  Text(examQuestions.size.toString()+" preguntas · 10 minutos · vocabulario, gramática, lectura y comprensión.")
+  Text("Mejor resultado: "+bestScore+"%")
+  Text("Este ejercicio es una práctica breve, no un examen oficial JLPT. Los tiempos y criterios oficiales deben verificarse en jlpt.jp.",color=MaterialTheme.colorScheme.onSurfaceVariant)
+  Button(onClick={started=true},modifier=Modifier.fillMaxWidth()){Text("Comenzar examen")}
+ }
+ else if(finished)BoxCard{
+  Text("Resultado",style=MaterialTheme.typography.headlineSmall)
+  Text(score.toString()+" de "+examQuestions.size+" respuestas correctas · "+(score*100/examQuestions.size)+"%")
+  examQuestions.map{it.section}.distinct().forEach{section->
+   val total=examQuestions.count{it.section==section}
+   val correctInSection=sectionCorrect[section]?:0
+   Text(section+" · "+correctInSection+"/"+total+" correctas ("+(correctInSection*100/total)+"%)")
+  }
+  Button(onClick={started=false;finished=false;index=0;choice=-1;score=0;seconds=600;sectionCorrect.clear()},modifier=Modifier.fillMaxWidth()){Text("Repetir")}
+ }
+ else{
+  val q=examQuestions[index]
+  BoxCard{
+   Text("Tiempo restante "+(seconds/60)+":"+ (seconds%60).toString().padStart(2,'0'))
+   Text("Pregunta "+(index+1)+" de "+examQuestions.size)
+   Text(q.section,color=MaterialTheme.colorScheme.primary)
+   Text(q.prompt,style=MaterialTheme.typography.titleLarge)
+   q.options.forEachIndexed{i,option->OutlinedButton(onClick={choice=i},enabled=choice<0,modifier=Modifier.fillMaxWidth()){Text((if(choice==i)"● " else "○ ")+option)}}
+   Button(onClick={
+    if(choice>=0){
+     if(choice==q.answer){score++;sectionCorrect[q.section]=(sectionCorrect[q.section]?:0)+1}
+     if(index==examQuestions.lastIndex)finished=true else{index++;choice=-1}
+    }
+   },enabled=choice>=0,modifier=Modifier.fillMaxWidth()){Text(if(index==examQuestions.lastIndex)"Terminar" else "Siguiente")}
+  }
+ }
+}
+}
 @Composable private fun CollectionScreen(ds:androidx.datastore.core.DataStore<Preferences>,owned:Set<String>,m:Modifier){
 val scope=rememberCoroutineScope();var message by remember{mutableStateOf("")}
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
