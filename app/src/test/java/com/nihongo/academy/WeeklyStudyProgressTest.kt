@@ -62,6 +62,15 @@ class WeeklyStudyProgressTest {
         submitWeeklyAssessment(completed, 10, 10)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun alreadyApprovedCurrentWeekCannotBeSubmittedAgain() {
+        val inconsistent = WeeklyStudyProgress(
+            currentWeek = 2,
+            completedWeeks = setOf(1, 2)
+        )
+        submitWeeklyAssessment(inconsistent, 10, 10)
+    }
+
     @Test fun cannotSubmitAssessmentForLaterWeekWhenEarlierWeeksAreIncomplete() {
         val inconsistentProgress = WeeklyStudyProgress(
             currentWeek = 3,
