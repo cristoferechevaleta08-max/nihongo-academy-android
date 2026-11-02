@@ -22,11 +22,15 @@ class N5GrammarWeeksTest {
         }
     }
 
-    @Test fun assessmentRouterMapsWeeksOneThroughFour() {
-        assertEquals(10, weeklyAssessmentForWeek(1).size)
-        assertEquals(10, weeklyAssessmentForWeek(2).size)
-        assertEquals(10, weeklyAssessmentForWeek(3).size)
-        assertEquals(10, weeklyAssessmentForWeek(4).size)
-        assertTrue(weeklyAssessmentForWeek(5).isEmpty())
+    @Test fun assessmentRouterMapsWeeksOneThroughSix() {
+        (1..6).forEach { week ->
+            val questions = weeklyAssessmentForWeek(week)
+            assertEquals("Week $week should have ten questions", 10, questions.size)
+            questions.forEach { question ->
+                assertEquals(4, question.options.size)
+                assertTrue(question.answerIndex in question.options.indices)
+            }
+        }
+        assertTrue(weeklyAssessmentForWeek(7).isEmpty())
     }
 }
