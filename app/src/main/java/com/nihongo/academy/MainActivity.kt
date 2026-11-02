@@ -219,6 +219,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
   Text("• Si fallás más del 30% de una prueba, repetís esa semana con ejercicios adicionales.")
   Text("• La siguiente unidad se desbloquea al aprobar la prueba semanal, sin saltar pasos.")
   Text("• Podés pausar el plan sin perder el progreso.")
+  Text("El calendario y las reglas corresponden al PDF. La evaluación semanal automática, el desbloqueo secuencial y la pausa con guardado aún están pendientes; esta pantalla no los presenta como completados.",color=MaterialTheme.colorScheme.onSurfaceVariant)
  }
  BoxCard{
   Text("Transición a N4",style=MaterialTheme.typography.titleLarge)
