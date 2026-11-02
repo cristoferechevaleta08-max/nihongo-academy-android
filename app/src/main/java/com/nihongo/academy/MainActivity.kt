@@ -39,7 +39,7 @@ private data class Exercise(val prompt:String,val options:List<String>,val answe
 private data class Lesson(val id:String,val level:String,val title:String,val exercises:List<Exercise>)
 private data class Question(val section:String,val prompt:String,val options:List<String>,val answer:Int)
 private val languages=listOf(
-Language("ja","Japonés","日本語","🇯🇵"),Language("en","Inglés","English","🇬🇧"),Language("ko","Coreano","한국어","🇰🇷"),Language("zh","Chino","中文","🇨🇳"),Language("fr","Francés","Français","🇫🇷"),Language("de","Alemán","Deutsch","🇩🇪"),Language("it","Italiano","Italiano","🇮🇹"),Language("pt","Portugués","Português","🇧🇷"),Language("es","Español","Español","🇪🇸"),Language("ru","Ruso","Русский","🇷🇺"),Language("ar","Árabe","العربية","🇸🇦"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("tr","Turco","Türkçe","🇹🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
+Language("en","Inglés","English","🇬🇧"),Language("zh","Mandarín","中文","🇨🇳"),Language("es","Español","Español","🇪🇸"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("ar","Árabe","العربية","🇸🇦"),Language("fr","Francés","Français","🇫🇷"),Language("pt","Portugués","Português","🇧🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("ru","Ruso","Русский","🇷🇺"),Language("de","Alemán","Deutsch","🇩🇪"),Language("ja","Japonés","日本語","🇯🇵"),Language("ko","Coreano","한국어","🇰🇷"),Language("it","Italiano","Italiano","🇮🇹"),Language("tr","Turco","Türkçe","🇹🇷"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
 private fun ex(p:String,o:List<String>,a:Int,n:String)=Exercise(p,o,a,n)
 private fun lesson(id:String,level:String,title:String,vararg exercises:Exercise)=Lesson(id,level,title,exercises.toList())
 private val lessons=listOf(
