@@ -28,6 +28,24 @@ class N5LessonAuditTest {
         assertTrue(unit2.exercises.any { it.prompt.contains("destino") })
     }
     @Test
+    fun allN5PracticalAssessmentInstructionsMatchThePdfTasks() {
+        val expected = mapOf(
+            "n5-u01" to "dos frases",
+            "n5-u02" to "cinco frases",
+            "n5-u03" to "seis verbos",
+            "n5-u04" to "cinco frases",
+            "n5-u05" to "cuatro adjetivos",
+            "n5-u06" to "tres frases",
+            "n5-u07" to "tres horas",
+            "n5-u08" to "dónde está un lugar",
+            "n5-u09" to "cuatro instrucciones",
+            "n5-u10" to "cuatro frases"
+        )
+        expected.forEach { (id, phrase) ->
+            assertTrue("$id assessment must preserve its PDF task", lessonSupplements.getValue(id).unitAssessment.contains(phrase, ignoreCase = true))
+        }
+    }
+    @Test
     fun n5GrammarSummariesRetainTheSpecificFormsListedInThePdf() {
         val unit2 = lessonSupplements.getValue("n5-u02").grammar
         listOf("wa", "ga", "o", "ni", "de", "mo").forEach { assertTrue("unit 2: $it", unit2.contains(it)) }
