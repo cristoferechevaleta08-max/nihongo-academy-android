@@ -35,4 +35,16 @@ class N5KanjiCatalogTest {
     fun allEntriesBelongToN5CatalogOnly() {
         assertTrue(n5KanjiCatalog.all { it.character.codePointCount(0, it.character.length) == 1 })
     }
+    @Test
+    fun strokeOrderDataCoversEveryEntryAndMatchesStrokeCount() {
+        assertEquals(n5KanjiCatalog.map { it.character }.toSet(), n5KanjiStrokePaths.keys)
+        n5KanjiCatalog.forEach { entry ->
+            assertEquals(
+                "Stroke data mismatch for ${entry.character}",
+                entry.strokeCount,
+                n5KanjiStrokePaths[entry.character]?.size
+            )
+        }
+    }
+
 }
