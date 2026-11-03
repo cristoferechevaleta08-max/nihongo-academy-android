@@ -196,10 +196,26 @@ internal val n5ListeningAssessment: List<KanaQuizQuestion> =
         }
     }
 
-/** Simulacro breve e integrado de 30 ítems; no representa el examen oficial JLPT. */
+/** Tres lecturas breves originales con preguntas de comprensión N5. */
+internal val n5ReadingAssessment = listOf(
+    KanaQuizQuestion(
+        "Leé: 田中さんは毎朝七時に起きます。八時に学校へ行きます。 ¿A qué hora se levanta Tanaka?",
+        listOf("A las seis", "A las siete", "A las ocho", "A las nueve"), 1
+    ),
+    KanaQuizQuestion(
+        "Leé: 日曜日、山田さんは友だちと公園へ行きました。公園でサッカーをしました。 ¿Qué hicieron en el parque?",
+        listOf("Jugaron al fútbol", "Leyeron un libro", "Comieron", "Estudiaron"), 0
+    ),
+    KanaQuizQuestion(
+        "Leé: 今日は雨です。鈴木さんは家で本を読みます。 ¿Dónde lee Suzuki?",
+        listOf("En la escuela", "En el parque", "En casa", "En la estación"), 2
+    )
+)
+
+/** Simulacro breve de 30 ítems: vocabulario/gramática, lectura y escucha. */
 internal val n5FinalMockAssessment: List<KanaQuizQuestion> =
     lessons.filter { it.level == "N5" }
         .flatMap { lesson -> lesson.exercises.map { exercise ->
             KanaQuizQuestion(exercise.prompt, exercise.options, exercise.answer)
         } }
-        .take(18) + n5ListeningAssessment.take(12)
+        .take(15) + n5ReadingAssessment + n5ListeningAssessment.take(12)
