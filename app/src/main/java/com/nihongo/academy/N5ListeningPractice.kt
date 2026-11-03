@@ -155,7 +155,7 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
         selected.questions.forEachIndexed { index, question ->
             Card(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("\${index + 1}. \${question.prompt}", style = MaterialTheme.typography.titleMedium)
+                    Text("${index + 1}. ${question.prompt}", style = MaterialTheme.typography.titleMedium)
                     question.options.forEachIndexed { optionIndex, option ->
                         OutlinedButton(onClick = { answers = answers + (selected.id + "-" + index to optionIndex) }, modifier = Modifier.fillMaxWidth()) {
                             Text((if (answers[selected.id + "-" + index] == optionIndex) "● " else "○ ") + option)
@@ -163,14 +163,14 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
                     }
                     val answer = answers[selected.id + "-" + index]
                     if (answer != null) {
-                        Text(if (answer == question.answer) "Correcto" else "Respuesta: \${question.options[question.answer]}", color = MaterialTheme.colorScheme.primary)
+                        Text(if (answer == question.answer) "Correcto" else "Respuesta: ${question.options[question.answer]}", color = MaterialTheme.colorScheme.primary)
                         Text(question.explanation, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
         }
         val score = selected.questions.indices.count { answers[selected.id + "-" + it] == selected.questions[it].answer }
-        Text("Resultado: $score de \${selected.questions.size} respuestas correctas.")
+        Text("Resultado: $score de ${selected.questions.size} respuestas correctas.")
         OutlinedButton(onClick = { answers = emptyMap() }, modifier = Modifier.fillMaxWidth()) { Text("Repetir preguntas") }
     }
 }
