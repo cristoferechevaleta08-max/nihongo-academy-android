@@ -227,7 +227,7 @@ MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inic
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
-"Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
+"Kanji"->KanjiHub(ds,Modifier.padding(p))
 "Escucha"->ListeningHub(ds,Modifier.padding(p))
 "Plan"->StudyPlanScreen(ds,Modifier.padding(p))
 "Exámenes"->ExamHub(ds,Modifier.padding(p))
@@ -607,5 +607,18 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
    FilterChip(selected=level=="N4",onClick={level="N4"},enabled=progress.isPlanComplete,label={Text(if(progress.isPlanComplete)"Examen N4" else "N4 bloqueado")})
   }
   if(level=="N4") N4AssessmentScreen(ds,Modifier.weight(1f)) else Exam(ds,Modifier.weight(1f))
+ }
+}
+
+
+@Composable private fun KanjiHub(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
+ val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
+ var level by remember{mutableStateOf("N5")}
+ Column(m.fillMaxSize()){
+  Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
+   FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Kanji N5")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=progress.isPlanComplete,label={Text(if(progress.isPlanComplete)"Kanji N4" else "N4 bloqueado")})
+  }
+  if(level=="N4") N4KanjiScreen(ds,Modifier.weight(1f)) else N5KanjiScreen(ds,Modifier.weight(1f))
  }
 }
