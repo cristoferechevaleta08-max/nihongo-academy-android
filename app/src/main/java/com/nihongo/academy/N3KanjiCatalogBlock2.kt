@@ -76,7 +76,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "害",
-        meaningEs = "desastre; obstáculo; daño",
+        meaningEs = "daño; perjuicio; obstáculo",
         onyomi = listOf("ガイ"),
         kunyomi = listOf(),
         strokeCount = 10
@@ -90,7 +90,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "警",
-        meaningEs = "amonestar; advertir",
+        meaningEs = "advertir; vigilar; policía",
         onyomi = listOf("ケイ"),
         kunyomi = listOf("いまし.める"),
         strokeCount = 19
@@ -139,21 +139,21 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "労",
-        meaningEs = "trabajo duro; cansancio; compensación",
+        meaningEs = "trabajo; esfuerzo; fatiga",
         onyomi = listOf("ロウ"),
         kunyomi = listOf("ろう.する", "いたわ.る", "いた.ずき", "ねぎら", "つか.れる", "ねぎら.う"),
         strokeCount = 7
     ),
     N3KanjiEntry(
         character = "例",
-        meaningEs = "ejemplo; normal; comparar",
+        meaningEs = "ejemplo; caso; comparar",
         onyomi = listOf("レイ"),
         kunyomi = listOf("たと.える"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "然",
-        meaningEs = "de esa forma; en ese caso",
+        meaningEs = "así; de esa manera; natural",
         onyomi = listOf("ゼン", "ネン"),
         kunyomi = listOf("しか", "しか.り", "しか.し", "さ"),
         strokeCount = 12
@@ -167,14 +167,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "追",
-        meaningEs = "perseguir; ahuyentar; expulsar",
+        meaningEs = "perseguir; seguir; alcanzar",
         onyomi = listOf("ツイ"),
         kunyomi = listOf("お.う"),
         strokeCount = 9
     ),
     N3KanjiEntry(
         character = "商",
-        meaningEs = "trato; negociación; vender",
+        meaningEs = "comercio; trato; vender",
         onyomi = listOf("ショウ"),
         kunyomi = listOf("あきな.う"),
         strokeCount = 11
@@ -384,7 +384,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "達",
-        meaningEs = "realizar; alcanzar; llegar",
+        meaningEs = "alcanzar; lograr; llegar",
         onyomi = listOf("タツ", "ダ"),
         kunyomi = listOf("-たち"),
         strokeCount = 12
@@ -440,7 +440,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "突",
-        meaningEs = "súbito; repentino; empuje",
+        meaningEs = "empujar; embestir; repentino",
         onyomi = listOf("トツ", "カ"),
         kunyomi = listOf("つ.く"),
         strokeCount = 8
@@ -615,7 +615,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "給",
-        meaningEs = "sueldo; salario; distribuir",
+        meaningEs = "salario; sueldo; suministrar",
         onyomi = listOf("キュウ"),
         kunyomi = listOf("たま.う", "たも.う", "-たま.え"),
         strokeCount = 12
@@ -727,7 +727,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "婦",
-        meaningEs = "mujer; esposa",
+        meaningEs = "mujer; esposa; mujer casada",
         onyomi = listOf("フ"),
         kunyomi = listOf("よめ"),
         strokeCount = 11
@@ -804,7 +804,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "険",
-        meaningEs = "escarpado; inaccesible; peligroso",
+        meaningEs = "escarpado; peligroso; arriesgado",
         onyomi = listOf("ケン"),
         kunyomi = listOf("けわ.しい"),
         strokeCount = 11
