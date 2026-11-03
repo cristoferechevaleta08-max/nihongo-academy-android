@@ -54,16 +54,16 @@ internal val n3ChangeDecisionHabitsDays = listOf(
 )
 
 internal val n3ChangeDecisionHabitsAssessment = listOf(
-    KanaQuizQuestion("¿Qué expresa 日本語が話せるようになりました?", listOf("Llegué a poder hablar japonés", "Decidí dejar de hablar japonés", "Intenté hablar una vez", "Preparé japonés con antelación"), 0),
+    KanaQuizQuestion("¿Qué expresa 日本語が話せるようになりました?", listOf("Decidí dejar de hablar japonés", "Intenté hablar una vez", "Llegué a poder hablar japonés", "Preparé japonés con antelación"), 2),
     KanaQuizQuestion("¿Qué estructura expresa un esfuerzo o hábito consciente?", listOf("ようにする", "ようになる", "ことになる", "途中で"), 0),
-    KanaQuizQuestion("¿Qué matiz suele tener ことになる?", listOf("Una decisión o situación que queda establecida", "Una decisión personal destacada", "Una acción repetida cada vez", "Un resultado favorable"), 0),
-    KanaQuizQuestion("¿Qué estructura destaca una decisión propia?", listOf("ことにする", "ことになる", "ようになる", "たびに"), 0),
-    KanaQuizQuestion("¿Qué significa 夜は使わないことにしました?", listOf("Decidí no usarlo por la noche", "Se decidió que no lo use otra persona", "No puedo usarlo por la noche", "Lo usé cada noche"), 0),
+    KanaQuizQuestion("¿Qué matiz suele tener ことになる?", listOf("Una decisión personal destacada", "Una acción repetida cada vez", "Un resultado favorable", "Una decisión o situación que queda establecida"), 3),
+    KanaQuizQuestion("¿Qué estructura destaca una decisión propia?", listOf("ことになる", "ことにする", "ようになる", "たびに"), 1),
+    KanaQuizQuestion("¿Qué significa 夜は使わないことにしました?", listOf("Se decidió que no lo use otra persona", "No puedo usarlo por la noche", "Decidí no usarlo por la noche", "Lo usé cada noche"), 2),
     KanaQuizQuestion("¿Cómo se forma ようとする?", listOf("Forma volitiva + とする", "Forma て + おく", "Forma pasada + ら", "Sustantivo + の + ため"), 0),
-    KanaQuizQuestion("¿Qué puede expresar 出かけようとしたとき?", listOf("Justo cuando iba a intentar salir", "Cada vez que salía", "Después de haber salido durante horas", "Antes de decidir no salir"), 0),
-    KanaQuizQuestion("¿Qué estructura indica preparar algo con antelación?", listOf("ておく", "てしまう", "てみる", "てあげる"), 0),
-    KanaQuizQuestion("¿Cuál es un ejemplo natural de ようにしています?", listOf("毎日、本を読むようにしています", "毎日、本を読んだようにしています", "毎日、本を読むことになりました (si se quiere expresar un hábito propio)", "毎日、本を読んでいる間にしています"), 0),
+    KanaQuizQuestion("¿Qué puede expresar 出かけようとしたとき?", listOf("Cada vez que salía", "Después de haber salido durante horas", "Antes de decidir no salir", "Justo cuando iba a intentar salir"), 3),
+    KanaQuizQuestion("¿Qué estructura indica preparar algo con antelación?", listOf("てしまう", "ておく", "てみる", "てあげる"), 1),
+    KanaQuizQuestion("¿Cuál es un ejemplo natural de ようにしています?", listOf("毎日、本を読んだようにしています", "毎日、本を読むことになりました (si se quiere expresar un hábito propio)", "毎日、本を読むようにしています", "毎日、本を読んでいる間にしています"), 2),
     KanaQuizQuestion("¿Qué diferencia principal hay entre ようになる y ようにする?", listOf("Cambio que se produce frente a esfuerzo consciente", "Pasado frente a futuro exclusivamente", "Causa positiva frente a negativa", "Lugar frente a dirección"), 0),
-    KanaQuizQuestion("¿Qué expresa ておく en 試験の前に復習しておきます?", listOf("Repasaré de antemano para el examen", "Repaso cada vez que hay un examen", "Dejé de repasar", "Me obligaron a repasar"), 0),
-    KanaQuizQuestion("¿Qué debes observar para elegir entre ことになる y ことにする?", listOf("Si se presenta una decisión establecida o una decisión propia", "Solo el número de kanji", "Si la frase tiene sujeto explícito", "La cantidad de sílabas"), 0)
+    KanaQuizQuestion("¿Qué expresa ておく en 試験の前に復習しておきます?", listOf("Repaso cada vez que hay un examen", "Dejé de repasar", "Me obligaron a repasar", "Repasaré de antemano para el examen"), 3),
+    KanaQuizQuestion("¿Qué debes observar para elegir entre ことになる y ことにする?", listOf("Solo el número de kanji", "Si se presenta una decisión establecida o una decisión propia", "Si la frase tiene sujeto explícito", "La cantidad de sílabas"), 1)
 )
