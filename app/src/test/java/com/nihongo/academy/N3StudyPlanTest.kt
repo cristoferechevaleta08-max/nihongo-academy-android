@@ -18,7 +18,7 @@ class N3StudyPlanTest {
     }
 
     @Test fun planMovesFromGrammarToKanjiListeningReadingAndIntegration() {
-        assertTrue(n3SixteenWeekPlan[0].title.contains("Pasiva"))
+        assertTrue(n3SixteenWeekPlan[0].title.contains("Voz pasiva"))
         assertTrue(n3SixteenWeekPlan[3].title.contains("Condiciones"))
         assertTrue(n3SixteenWeekPlan.slice(8..10).all { it.title.contains("Kanji") })
         assertTrue(n3SixteenWeekPlan[11].title.contains("auditiva"))
