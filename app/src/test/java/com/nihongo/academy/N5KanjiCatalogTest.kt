@@ -13,7 +13,7 @@ class N5KanjiCatalogTest {
 
     @Test
     fun everyEntryHasCoreLearningContent() {
-        assertTrue(n5KanjiCatalog.size >= 40)
+        assertTrue(n5KanjiCatalog.size >= 64)
         n5KanjiCatalog.forEach { entry ->
             assertTrue(entry.character.isNotBlank())
             assertTrue(entry.meaningEs.isNotBlank())
