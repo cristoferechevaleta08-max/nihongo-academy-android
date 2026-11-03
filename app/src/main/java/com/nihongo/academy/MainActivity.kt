@@ -464,7 +464,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    content.examples.forEach{example->Text(example)}
    Text("Prueba de unidad",style=MaterialTheme.typography.titleMedium)
    Text(content.unitAssessment)
-   Text("Las escrituras japonesas son una incorporación preliminar y requieren revisión nativa antes de publicarse, tal como advierte el PDF.",color=MaterialTheme.colorScheme.onSurfaceVariant)
+   if(lesson.level=="N5") Text("Las escrituras japonesas N5 son una incorporación preliminar y requieren revisión nativa antes de publicarse, tal como advierte el PDF.",color=MaterialTheme.colorScheme.onSurfaceVariant)
   }
  }
  if(requiresPracticalTask){
