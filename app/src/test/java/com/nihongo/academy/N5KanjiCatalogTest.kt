@@ -42,7 +42,7 @@ class N5KanjiCatalogTest {
             assertEquals(
                 "Stroke data mismatch for ${entry.character}",
                 entry.strokeCount,
-                n5KanjiStrokePaths[entry.character]?.size
+                n5KanjiStrokePaths[entry.character].orEmpty().size
             )
         }
     }
