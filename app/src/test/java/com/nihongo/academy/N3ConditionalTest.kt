@@ -37,7 +37,9 @@ class N3ConditionalTest {
         assertEquals(n3CausativeAssessment, n3GrammarAssessmentForWeek(2))
         assertEquals(n3PassiveVoiceDays, n3GrammarDaysForWeek(1))
         assertEquals(n3PassiveVoiceAssessment, n3GrammarAssessmentForWeek(1))
-        assertTrue(n3GrammarDaysForWeek(5).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(5).isEmpty())
+        assertEquals(n3TimeExpressionsDays, n3GrammarDaysForWeek(5))
+        assertEquals(n3TimeExpressionsAssessment, n3GrammarAssessmentForWeek(5))
+        assertTrue(n3GrammarDaysForWeek(6).isEmpty())
+        assertTrue(n3GrammarAssessmentForWeek(6).isEmpty())
     }
 }
