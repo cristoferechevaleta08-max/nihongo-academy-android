@@ -20,7 +20,7 @@ internal data class N5KanjiEntry(
 )
 
 internal val n5KanjiCatalog = listOf(
-    N5KanjiEntry("一","uno",listOf("イチ","イツ"),listOf("ひと","ひとつ"),1,listOf(N5KanjiWord("一つ","ひとつ","uno (objeto)"),N5KanjiWord("一月","いちがつ","enero")),"りんごを一つください。","りんごをひとつください。","Unas manzana, por favor."),
+    N5KanjiEntry("一","uno",listOf("イチ","イツ"),listOf("ひと","ひとつ"),1,listOf(N5KanjiWord("一つ","ひとつ","uno (objeto)"),N5KanjiWord("一月","いちがつ","enero")),"りんごを一つください。","りんごをひとつください。","Una manzana, por favor."),
     N5KanjiEntry("二","dos",listOf("ニ"),listOf("ふた","ふたつ"),2,listOf(N5KanjiWord("二つ","ふたつ","dos (objetos)"),N5KanjiWord("二月","にがつ","febrero")),"本を二つ買いました。","ほんをふたつかいました。","Compré dos libros."),
     N5KanjiEntry("三","tres",listOf("サン"),listOf("み","みっつ"),3,listOf(N5KanjiWord("三つ","みっつ","tres (objetos)"),N5KanjiWord("三月","さんがつ","marzo")),"りんごが三つあります。","りんごがみっつあります。","Hay tres manzanas."),
     N5KanjiEntry("四","cuatro",listOf("シ"),listOf("よ","よん","よっつ"),5,listOf(N5KanjiWord("四つ","よっつ","cuatro (objetos)"),N5KanjiWord("四月","しがつ","abril")),"四月に日本へ行きます。","しがつににほんへいきます。","Voy a Japón en abril."),
@@ -44,7 +44,7 @@ internal val n5KanjiCatalog = listOf(
     N5KanjiEntry("年","año",listOf("ネン"),listOf("とし"),6,listOf(N5KanjiWord("今年","ことし","este año"),N5KanjiWord("去年","きょねん","el año pasado"),N5KanjiWord("来年","らいねん","el año que viene")),"今年、日本語を勉強します。","ことし、にほんごをべんきょうします。","Este año estudio japonés."),
     N5KanjiEntry("時","hora; tiempo",listOf("ジ"),listOf("とき"),10,listOf(N5KanjiWord("時間","じかん","tiempo; duración"),N5KanjiWord("三時","さんじ","las tres")),"今は三時です。","いまはさんじです。","Ahora son las tres."),
     N5KanjiEntry("分","minuto; parte",listOf("ブン","フン","ブ"),listOf("わ"),4,listOf(N5KanjiWord("五分","ごふん","cinco minutos"),N5KanjiWord("十分","じゅっぷん","diez minutos")),"十分休みます。","じゅっぷんやすみます。","Descanso diez minutos."),
-    N5KanjiEntry("半","mitad",listOf("ハン"),listOf("なか"),5,listOf(N5KanjiWord("半分","はんぶん","mitad"),N5KanjiWord("三時半","さんじはん","las tres y media")),"三時半に会いましょう。","さんじはんにあいましょう。","Encontrémonos a las tres y media."),
+    N5KanjiEntry("半","mitad",listOf("ハン"),emptyList(),5,listOf(N5KanjiWord("半分","はんぶん","mitad"),N5KanjiWord("三時半","さんじはん","las tres y media")),"三時半に会いましょう。","さんじはんにあいましょう。","Encontrémonos a las tres y media."),
     N5KanjiEntry("今","ahora",listOf("コン","キン"),listOf("いま"),4,listOf(N5KanjiWord("今","いま","ahora"),N5KanjiWord("今日","きょう","hoy"),N5KanjiWord("今月","こんげつ","este mes")),"今、何時ですか。","いま、なんじですか。","¿Qué hora es ahora?"),
     N5KanjiEntry("人","persona",listOf("ジン","ニン"),listOf("ひと"),2,listOf(N5KanjiWord("人","ひと","persona"),N5KanjiWord("日本人","にほんじん","japonés/a"),N5KanjiWord("三人","さんにん","tres personas")),"あの人は先生です。","あのひとはせんせいです。","Aquella persona es docente."),
     N5KanjiEntry("大","grande",listOf("ダイ","タイ"),listOf("おお"),3,listOf(N5KanjiWord("大学","だいがく","universidad"),N5KanjiWord("大きい","おおきい","grande")),"大学で日本語を勉強します。","だいがくでにほんごをべんきょうします。","Estudio japonés en la universidad."),
