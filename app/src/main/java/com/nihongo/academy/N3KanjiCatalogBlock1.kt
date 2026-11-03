@@ -88,7 +88,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "米",
         meaningEs = "arroz; América; arroz (crudo)",
-        onyomi = listOf("ベイ", "マイ", "メエトル"),
+        onyomi = listOf("ベイ", "マイ"),
         kunyomi = listOf("こめ", "よね"),
         strokeCount = 6
     ),
@@ -186,7 +186,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "法",
         meaningEs = "método; ley; doctrina",
-        onyomi = listOf("ホウ", "ハッ", "ホッ", "フラン"),
+        onyomi = listOf("ホウ", "ハッ", "ホッ"),
         kunyomi = listOf("のり"),
         strokeCount = 8
     ),
@@ -613,7 +613,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "打",
         meaningEs = "golpear; pegar",
-        onyomi = listOf("ダ", "ダース"),
+        onyomi = listOf("ダ"),
         kunyomi = listOf("う.つ", "う.ち-", "ぶ.つ"),
         strokeCount = 5
     ),
