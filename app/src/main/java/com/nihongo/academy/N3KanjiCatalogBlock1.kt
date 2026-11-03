@@ -31,28 +31,28 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "議",
-        meaningEs = "opinión; consulta; consideración",
+        meaningEs = "debate; deliberación; consulta",
         onyomi = listOf("ギ"),
         kunyomi = listOf(),
         strokeCount = 20
     ),
     N3KanjiEntry(
         character = "連",
-        meaningEs = "unir; acompañar; estar junto; grupo; agrupar",
+        meaningEs = "unir; acompañar; llevar consigo",
         onyomi = listOf("レン"),
         kunyomi = listOf("つら.なる", "つら.ねる", "つ.れる", "-づ.れ"),
         strokeCount = 10
     ),
     N3KanjiEntry(
         character = "対",
-        meaningEs = "opuesto; contrario; por serie",
+        meaningEs = "opuesto; frente a; pareja",
         onyomi = listOf("タイ", "ツイ"),
         kunyomi = listOf("あいて", "こた.える", "そろ.い", "つれあ.い", "なら.ぶ", "むか.う"),
         strokeCount = 7
     ),
     N3KanjiEntry(
         character = "部",
-        meaningEs = "sección; departamento; parte; copia",
+        meaningEs = "sección; departamento; parte",
         onyomi = listOf("ブ"),
         kunyomi = listOf("-べ"),
         strokeCount = 11
@@ -101,7 +101,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "関",
-        meaningEs = "barrera; puerta; relación; mecanismo; valla",
+        meaningEs = "barrera; puesto de control; relación",
         onyomi = listOf("カン"),
         kunyomi = listOf("せき", "-ぜき", "かか.わる", "からくり", "かんぬき"),
         strokeCount = 14
