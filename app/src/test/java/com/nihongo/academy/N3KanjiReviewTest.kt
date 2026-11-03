@@ -36,6 +36,12 @@ class N3KanjiReviewTest {
         assertTrue(dueLater.any { it.character == "政" })
     }
 
+    @Test fun kunyomiDisplayRemovesDictionaryNotationMarkers() {
+        assertEquals("つらなる", displayN3KunYomi("つら.なる"))
+        assertEquals("づれ", displayN3KunYomi("-づ.れ"))
+        assertEquals("あい", displayN3KunYomi("あい-"))
+    }
+
     @Test fun malformedStoredRecordsAreIgnored() {
         assertTrue(parseN3ReviewRecords(setOf("政|bad|3", "議|1|0", "broken")).isEmpty())
     }
