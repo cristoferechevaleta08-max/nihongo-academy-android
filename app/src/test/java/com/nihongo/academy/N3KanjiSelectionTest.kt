@@ -14,7 +14,10 @@ class N3KanjiSelectionTest {
     }
 
     @Test fun selectionDoesNotDuplicateN4OrN5() {
-        val lowerLevels = n4KanjiCatalog.map { it.character }.toSet() + n5KanjiCatalog.map { it.character }.toSet()
+        val lowerLevels = mutableSetOf<String>().apply {
+            addAll(n4KanjiCatalog.map { it.character })
+            addAll(n5KanjiCatalog.map { it.character })
+        }
         assertTrue(n3KanjiCharacters.none { it in lowerLevels })
     }
 
