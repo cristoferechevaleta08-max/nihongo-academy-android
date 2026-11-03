@@ -18,9 +18,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 private val n3KanjiLearnedKey = stringSetPreferencesKey("n3_kanji_learned")
 private val n3KanjiBestQuizKey = intPreferencesKey("n3_kanji_best_quiz")
+private val n3KanjiReviewScheduleKey = stringSetPreferencesKey("n3_kanji_review_schedule")
 
 @Composable
 internal fun N3KanjiScreen(
@@ -30,6 +32,8 @@ internal fun N3KanjiScreen(
     val preferences by ds.data.collectAsState(initial = androidx.datastore.preferences.core.emptyPreferences())
     val learnedSet = preferences[n3KanjiLearnedKey] ?: emptySet()
     val bestScore = preferences[n3KanjiBestQuizKey] ?: 0
+    val reviewSchedule = preferences[n3KanjiReviewScheduleKey] ?: emptySet()
+    val dueReviewCount = n3KanjiDueForReview(n3KanjiCatalog, reviewSchedule, LocalDate.now()).size
     val scope = rememberCoroutineScope()
     var blockIndex by remember { mutableIntStateOf(0) }
     var query by remember { mutableStateOf("") }
@@ -39,6 +43,16 @@ internal fun N3KanjiScreen(
     var quizScore by remember { mutableIntStateOf(0) }
     var quizChoice by remember { mutableStateOf<String?>(null) }
     var quizDone by remember { mutableStateOf(false) }
+    var reviewMode by remember { mutableStateOf(false) }
+    var reviewEntries by remember { mutableStateOf<List<N3KanjiEntry>>(emptyList()) }
+
+    if (reviewMode) {
+        N3KanjiReviewScreen(ds, reviewEntries) {
+            reviewMode = false
+            reviewEntries = emptyList()
+        }
+        return
+    }
 
     if (quiz.isNotEmpty()) {
         if (quizDone) {
@@ -167,7 +181,15 @@ internal fun N3KanjiScreen(
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
             Spacer(Modifier.height(8.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                AssistChip(
+                    onClick = {
+                        reviewEntries = n3KanjiDueForReview(n3KanjiCatalog, reviewSchedule, LocalDate.now())
+                        reviewMode = true
+                    },
+                    label = { Text("Repasar hoy · $dueReviewCount") },
+                    enabled = dueReviewCount > 0
+                )
                 AssistChip(
                     onClick = {
                         quiz = buildN3KanjiQuiz()
@@ -178,8 +200,8 @@ internal fun N3KanjiScreen(
                     },
                     label = { Text("Prueba de 10") }
                 )
-                Text("Mejor resultado: $bestScore/10", modifier = Modifier.align(Alignment.CenterVertically), style = MaterialTheme.typography.labelMedium)
             }
+            Text("Mejor resultado: $bestScore/10", style = MaterialTheme.typography.labelMedium)
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
