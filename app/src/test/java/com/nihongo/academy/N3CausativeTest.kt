@@ -33,7 +33,7 @@ class N3CausativeTest {
         assertEquals(n3CausativeAssessment, n3GrammarAssessmentForWeek(2))
         assertEquals(n3PassiveVoiceDays, n3GrammarDaysForWeek(1))
         assertEquals(n3PassiveVoiceAssessment, n3GrammarAssessmentForWeek(1))
-        assertTrue(n3GrammarDaysForWeek(3).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(3).isEmpty())
+        assertEquals(n3GivingReceivingDays, n3GrammarDaysForWeek(3))
+        assertEquals(n3GivingReceivingAssessment, n3GrammarAssessmentForWeek(3))
     }
 }
