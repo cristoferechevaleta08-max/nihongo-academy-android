@@ -243,7 +243,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
    FilterChip(selected=level=="N5", onClick={level="N5"}, label={Text("Plan N5")})
    FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=n5Progress.isPlanComplete, label={Text(if(n5Progress.isPlanComplete)"Plan N4" else "N4 bloqueado")})
   }
-  if(level=="N4") N4StudyPlanOverview(n5Unlocked=n5Progress.isPlanComplete, modifier=Modifier.weight(1f))
+  if(level=="N4") N4StudyPlanOverview(ds=ds, n5Unlocked=n5Progress.isPlanComplete, modifier=Modifier.weight(1f))
   else N5StudyPlanScreen(ds, Modifier.weight(1f))
  }
 }
