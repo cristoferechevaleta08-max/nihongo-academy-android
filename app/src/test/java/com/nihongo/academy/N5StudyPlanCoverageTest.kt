@@ -32,10 +32,11 @@ class N5StudyPlanCoverageTest {
     }
 
     @Test
-    fun weeksNineThroughTwelveStayLockedUntilRequiredValidatedMaterialsExist() {
-        (9..12).forEach { week ->
-            assertTrue("week $week assessment must not be fabricated", weeklyAssessmentForWeek(week).isEmpty())
-        }
+    fun weeksNineThroughTwelveHaveTheirIntegratedAssessments() {
+        assertEquals(10, weeklyAssessmentForWeek(9).size)
+        assertEquals(10, weeklyAssessmentForWeek(10).size)
+        assertEquals(18, weeklyAssessmentForWeek(11).size)
+        assertEquals(30, weeklyAssessmentForWeek(12).size)
     }
 }
 
