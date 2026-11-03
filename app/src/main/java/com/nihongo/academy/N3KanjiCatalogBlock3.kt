@@ -76,7 +76,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "倒",
-        meaningEs = "caida; derribo; derrocar",
+        meaningEs = "caída; derribo; derrocar",
         onyomi = listOf("トウ"),
         kunyomi = listOf("たお.れる", "-だお.れ", "たお.す", "さかさま", "さかさ", "さかしま"),
         strokeCount = 10
