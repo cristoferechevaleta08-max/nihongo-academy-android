@@ -217,8 +217,8 @@ when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
 "Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
-"Escucha"->N5ListeningPractice(Modifier.padding(p))"Plan"->StudyPlanScreen(ds,Modifier.padding(p))
-"Exámenes"->Exam(ds,Modifier.padding(p))
+"Escucha"->N5ListeningPractice(Modifier.padding(p))
+"Plan"->StudyPlanScreen(ds,Modifier.padding(p))"Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
@@ -242,12 +242,12 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   Heading("Plan N5 · 12 semanas","30 minutos diarios · semana actual: $week de 12")
   LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
-   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else if(week==5)"Verbos en forma masu" else if(week==6)"Pasado y negativo" else if(week==7)"Adjetivos i" else if(week==8)"Adjetivos na" else if(week==9)"Kanji básicos · primer bloque" else if(week==10)"Kanji básicos · segundo bloque y repaso" else if(week==11)"Comprensión auditiva · diálogos N5" else if(week==12)"Simulacro completo N5" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
+   Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else if(week==5)"Verbos en forma masu" else if(week==6)"Pasado y negativo" else if(week==7)"Adjetivos i" else if(week==8)"Adjetivos na" else if(week==9)"Kanji básicos · primer bloque" else if(week==10)"Kanji básicos · segundo bloque y repaso" else if(week==11)"Comprensión auditiva · diálogos N5" else if(week==12)"Simulacro integrado de práctica N5" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
    Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practicá su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else if(week==11)"Escuchá diálogos cortos del nivel N5 y prepará el simulacro de escucha." else if(week==12)"Completá una práctica integrada de 30 preguntas y revisá el cuaderno de errores." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
+   if(week==11) Text("Seis diálogos originales y 18 preguntas de comprensión están disponibles en la pestaña Escucha.")
+   if(week==12) Text("Simulacro final de práctica: 30 preguntas originales de vocabulario, gramática, lectura y escucha.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
     OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}},enabled=quizWeek==0){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
-    if(week==11) Text("Seis diálogos originales y 18 preguntas de comprensión están disponibles en la pestaña Escucha.")
-    if(week==12) Text("Simulacro final de práctica: 30 preguntas originales de vocabulario, gramática, lectura y escucha.")
     if(week in 1..12) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text(if(week==12)"Simulacro final N5" else "Evaluación semanal")}
    }
    progress.lastAssessment?.let{last->
@@ -437,8 +437,7 @@ var index by remember{mutableIntStateOf(0)}
 var choice by remember{mutableIntStateOf(-1)}
 var correct by remember{mutableIntStateOf(0)}var answered by remember{mutableStateOf(false)}
 val wrong=remember{mutableStateListOf<String>()}val correctExercises=remember(lesson.id){mutableStateListOf<Int>()}
-val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
-val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
+val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
 val currentExerciseIndex=exerciseOrder[index]
 val q=lesson.exercises[currentExerciseIndex]
 val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
