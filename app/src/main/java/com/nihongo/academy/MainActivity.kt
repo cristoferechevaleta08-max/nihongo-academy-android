@@ -212,13 +212,13 @@ var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
 var tab by remember{mutableStateOf("Inicio")}
 val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFE7A8B8),secondary=androidx.compose.ui.graphics.Color(0xFFD6B56D),background=androidx.compose.ui.graphics.Color(0xFF101014),surface=androidx.compose.ui.graphics.Color(0xFF1B1B22))else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF9E5268),secondary=androidx.compose.ui.graphics.Color(0xFF856B34))
-MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Kanji","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Kanji"->"漢";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
+MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Kanji","Escucha","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Kanji"->"漢";"Escucha"->"♫";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
 "Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
-"Plan"->StudyPlanScreen(ds,Modifier.padding(p))
-"Exámenes"->Exam(ds,Modifier.padding(p))
+"Escucha"->N5ListeningPractice(Modifier.padding(p))
+"Plan"->StudyPlanScreen(ds,Modifier.padding(p))"Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
@@ -246,10 +246,9 @@ else->Profile(ds,name,lang,Modifier.padding(p))
    Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practicá su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else if(week==11)"Escuchá diálogos cortos del nivel N5 y prepará el simulacro de escucha." else if(week==12)"Realizá un simulacro N5 con tiempo real y revisá el cuaderno de errores." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
     OutlinedButton(onClick={scope.launch{ds.saveWeeklyStudyProgress(if(progress.paused)progress.resume() else progress.pause())}},enabled=quizWeek==0){Text(if(progress.paused)"Reanudar plan" else "Pausar plan")}
-    if(week<=8) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text("Evaluación semanal")}
-     else if(week in 9..10) Text("Evaluación pendiente: falta conectar el banco validado de kanji y sus lecturas.")
-      else if(week==11) Text("Simulacro de escucha pendiente: faltan los audios N5 y sus preguntas verificadas.")
-      else if(week==12) Text("Simulacro completo pendiente: falta integrar y validar el banco completo de preguntas y audios.")
+    if(week<=12) Button(onClick={quizWeek=week;quizIndex=0;selectedAnswer=-1;correct=0;wrongKana.clear();submitted=false;resultText=""},enabled=!progress.paused){Text(if(week==12)"Simulacro final N5" else "Evaluación semanal")}
+      else if(week==11) Text("Seis diálogos originales y 18 preguntas de comprensión están disponibles en la pestaña Escucha.")
+      else if(week==12) Text("Simulacro final de práctica: 30 preguntas originales de vocabulario, gramática, lectura y escucha.")
    }
    progress.lastAssessment?.let{last->
     Text("Última prueba: semana ${last.week} · ${last.correctAnswers}/${last.totalQuestions} · ${last.incorrectPercent}% de errores")
@@ -325,7 +324,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
     Text("Estructura del simulacro N5",style=MaterialTheme.typography.titleLarge)
     Text("Vocabulario: 20 minutos · Gramática y lectura: 40 minutos · Comprensión auditiva: 30 minutos.")
     Text("Tiempo total de referencia: 90 minutos. La duración se basa en la información oficial vigente del JLPT; puede variar ligeramente en escucha según el material grabado.")
-    Text("El simulacro completo se habilitará cuando estén integradas todas las preguntas y pistas de audio validadas. Después se revisará el cuaderno de errores.")
+    Text("Este simulacro reúne 30 preguntas originales de las áreas N5. Es una herramienta de práctica de Nihongo Academy, no un examen oficial JLPT. Después revisá el cuaderno de errores.")
    }
   if(savedKanaMistakes.isNotEmpty())BoxCard{
    Text("Errores para repasar",style=MaterialTheme.typography.titleLarge)
@@ -437,8 +436,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
 @Composable private fun LessonPage(lesson:Lesson,showRomaji:Boolean,back:()->Unit,finish:(Set<String>,Boolean)->Unit){
 var index by remember{mutableIntStateOf(0)}
 var choice by remember{mutableIntStateOf(-1)}
-var correct by remember{mutableIntStateOf(0)}
-var answered by remember{mutableStateOf(false)}
+var correct by remember{mutableIntStateOf(0)}var answered by remember{mutableStateOf(false)}
 val wrong=remember{mutableStateListOf<String>()}
 val correctExercises=remember(lesson.id){mutableStateListOf<Int>()}
 val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
