@@ -18,6 +18,9 @@ internal data class N3KanjiEntry(
     val strokeCount: Int
 )
 
+/** Quita los marcadores editoriales de KANJIDIC2 para mostrar lecturas legibles. */
+internal fun displayN3KunYomi(reading: String): String = reading.replace(".", "").replace("-", "")
+
 internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "政",
