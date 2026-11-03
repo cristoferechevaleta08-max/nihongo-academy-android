@@ -348,12 +348,83 @@ internal val n3TimeExpressionsAssessment = listOf(
     KanaQuizQuestion("¿Qué expresión se usa para un suceso en medio de un trayecto?", listOf("途中で", "たびに", "うちに", "間に"), 0)
 )
 
+
+ 
+// Sexta unidad gramatical N3: causa, razón y resultado.
+internal val n3CauseReasonResultDays = listOf(
+    KanaDay(1, "から y ので: expresar una razón", "Distinguir una explicación más directa o subjetiva de una razón presentada de forma más suave.",
+        listOf(
+            "Usar forma simple + から para explicar una razón desde la perspectiva del hablante.",
+            "Practicar forma simple + ので y sustantivo/adjetivo な + なので.",
+            "Comparar 雨が降っているから、行きません y 雨が降っているので、行きません.",
+            "Observar que ので suele sonar más suave y explicativo, aunque el contexto y el registro importan."
+        )),
+    KanaDay(2, "ために: causa y motivo", "Reconocer ために como causa o motivo en contextos donde se explica una situación o resultado.",
+        listOf(
+            "Practicar 大雪のために、電車が遅れました.",
+            "Usar sustantivo + の + ために para indicar causa.",
+            "Distinguir el uso causal de ために del uso de propósito: 日本へ行くために勉強します.",
+            "Leer la oración completa para decidir si expresa motivo o finalidad."
+        )),
+    KanaDay(3, "おかげで: resultado favorable", "Atribuir un resultado positivo a una persona, circunstancia o ayuda.",
+        listOf(
+            "Practicar 先生のおかげで、合格できました.",
+            "Usar sustantivo + の + おかげで.",
+            "Reconocer el matiz de gratitud o valoración positiva.",
+            "Observar que puede usarse irónicamente en ciertos contextos, pero el sentido habitual es favorable."
+        )),
+    KanaDay(4, "せいで: resultado desfavorable", "Expresar que una causa se considera responsable de un resultado negativo.",
+        listOf(
+            "Practicar 雨のせいで、試合が中止になりました.",
+            "Usar sustantivo + の + せいで y formas simples + せいで.",
+            "Distinguir la atribución negativa de la valoración positiva de おかげで.",
+            "Evitar usar せいで para atribuir culpa sin considerar el impacto interpersonal."
+        )),
+    KanaDay(5, "そのため y その結果: conectar causa y consecuencia", "Organizar explicaciones y textos breves mostrando con claridad qué ocurrió como consecuencia.",
+        listOf(
+            "Usar そのため para introducir una consecuencia relacionada con lo anterior.",
+            "Usar その結果 para destacar el resultado obtenido.",
+            "Practicar 事故がありました。そのため、道が混んでいます.",
+            "Mantener clara la relación lógica entre la causa y la consecuencia."
+        )),
+    KanaDay(6, "により y によって: causa, medio y agente", "Reconocer usos frecuentes de により y によって en explicaciones más formales y textos informativos.",
+        listOf(
+            "Practicar 台風によって、多くの木が倒れました.",
+            "Reconocer によって para indicar causa o medio según el contexto.",
+            "Observar により como variante formal frecuente en avisos y textos escritos.",
+            "No asumir que によって siempre significa causa: también puede indicar medio o agente."
+        )),
+    KanaDay(7, "Repaso y evaluación de causa y resultado", "Elegir conectores y expresiones causales según el matiz y el registro.",
+        listOf(
+            "Comparar から y ので en explicaciones cotidianas.",
+            "Distinguir causa con ために, valoración positiva con おかげで y negativa con せいで.",
+            "Conectar ideas con そのため y その結果.",
+            "Completar la evaluación semanal y revisar los errores."
+        ))
+)
+
+internal val n3CauseReasonResultAssessment = listOf(
+    KanaQuizQuestion("¿Qué expresión suele presentar una razón de forma más suave?", listOf("ので", "せいで", "たびに", "途中で"), 0),
+    KanaQuizQuestion("¿Qué matiz suele tener から?", listOf("Explicación directa desde la perspectiva del hablante", "Resultado siempre positivo", "Repetición de una acción", "Acción en medio de un trayecto"), 0),
+    KanaQuizQuestion("En 大雪のために、電車が遅れました, ¿qué expresa ために?", listOf("La causa del retraso", "La finalidad de estudiar", "Una petición", "Una comparación"), 0),
+    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado favorable a una causa?", listOf("おかげで", "せいで", "のに", "ところで"), 0),
+    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado desfavorable?", listOf("せいで", "おかげで", "たびに", "うちに"), 0),
+    KanaQuizQuestion("¿Cuál es una frase natural para agradecer una ayuda?", listOf("先生のおかげで、合格できました", "先生のせいで、合格できました", "先生の途中で、合格できました", "先生のたびに、合格できました"), 0),
+    KanaQuizQuestion("¿Qué conector puede introducir una consecuencia de lo mencionado antes?", listOf("そのため", "あげる", "なら", "ながら"), 0),
+    KanaQuizQuestion("¿Qué expresión destaca el resultado que se obtuvo?", listOf("その結果", "その間", "そのたび", "そのうち"), 0),
+    KanaQuizQuestion("¿Qué puede indicar によって según el contexto?", listOf("Causa, medio o agente", "Solo una causa positiva", "Solo tiempo futuro", "Una condición hipotética"), 0),
+    KanaQuizQuestion("¿Cuál es una variante formal frecuente de によって?", listOf("により", "にくい", "にたい", "にても"), 0),
+    KanaQuizQuestion("¿Qué debes comprobar para distinguir el ために causal del de propósito?", listOf("La relación lógica y el contexto de la oración", "Solo si aparece un kanji", "El número de sílabas", "Si la frase está en pasado"), 0),
+    KanaQuizQuestion("¿Cuál es la diferencia habitual entre おかげで y せいで?", listOf("おかげで valora favorablemente; せいで atribuye algo desfavorable", "Ambos expresan siempre gratitud", "おかげで indica tiempo y せいで lugar", "No existe diferencia de matiz"), 0)
+)
+
 internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
     1 -> n3PassiveVoiceDays
     2 -> n3CausativeDays
     3 -> n3GivingReceivingDays
     4 -> n3ConditionalDays
     5 -> n3TimeExpressionsDays
+    6 -> n3CauseReasonResultDays
     else -> emptyList()
 }
 
@@ -363,5 +434,6 @@ internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = whe
     3 -> n3GivingReceivingAssessment
     4 -> n3ConditionalAssessment
     5 -> n3TimeExpressionsAssessment
+    6 -> n3CauseReasonResultAssessment
     else -> emptyList()
 }
