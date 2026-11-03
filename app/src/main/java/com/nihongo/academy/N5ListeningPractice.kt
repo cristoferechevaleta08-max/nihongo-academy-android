@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import java.util.Locale
+import java.util.concurrent.atomic.AtomicReference
 
 internal data class N5DialogueLine(val speaker: String, val japanese: String, val reading: String, val spanish: String)
 internal data class N5DialogueQuestion(val prompt: String, val options: List<String>, val answer: Int, val explanation: String)
@@ -91,18 +92,20 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
     val selected = n5ListeningDialogues.first { it.id == selectedId }
 
     DisposableEffect(context) {
-        lateinit var engine: TextToSpeech
-        engine = TextToSpeech(context) { status ->
-            if (status == TextToSpeech.SUCCESS) {
-                val languageResult = engine.setLanguage(Locale.JAPANESE)
+        val engineReference = AtomicReference<TextToSpeech?>()
+        val engine = TextToSpeech(context) { status ->
+            val readyEngine = engineReference.get()
+            if (status == TextToSpeech.SUCCESS && readyEngine != null) {
+                val languageResult = readyEngine.setLanguage(Locale.JAPANESE)
                 voiceReady = languageResult >= TextToSpeech.LANG_AVAILABLE
                 voiceMessage = if (voiceReady) "Voz japonesa disponible. La reproducción se realiza en el dispositivo." else "El dispositivo no tiene una voz japonesa instalada. Podés leer el diálogo; instalá una voz japonesa desde los ajustes de texto a voz para escucharla."
-                if (voiceReady) engine.setSpeechRate(0.82f)
+                if (voiceReady) readyEngine.setSpeechRate(0.82f)
             } else {
                 voiceReady = false
                 voiceMessage = "No se pudo iniciar el motor de voz del dispositivo."
             }
         }
+        engineReference.set(engine)
         tts = engine
         onDispose {
             engine.stop()
