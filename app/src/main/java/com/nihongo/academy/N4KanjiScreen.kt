@@ -50,7 +50,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   Column(modifier.fillMaxSize().padding(24.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
    Text("Kanji N4 bloqueados",style=MaterialTheme.typography.headlineSmall)
    Text("Primero completá el plan de 12 semanas N5. Tu progreso de N4 se conservará en este dispositivo.")
-   LinearProgressIndicator(progress={plan.completedDays.coerceIn(0,84)/84f},modifier=Modifier.fillMaxWidth())
+   LinearProgressIndicator(progress={plan.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
    Text("Semanas N5 aprobadas: ${plan.completedWeeks.size} / 12")
   }
   return
