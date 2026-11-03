@@ -37,9 +37,9 @@ internal fun buildN4KanjiQuiz(
     }
 
     val readingEntries = catalog.filter { it.onyomi.isNotEmpty() || it.kunyomi.isNotEmpty() }.shuffled(random).take(3)
-    val readingPool = catalog.flatMap { it.onyomi + it.kunyomi }
+    val readingPool = catalog.flatMap { entry -> entry.onyomi + entry.kunyomi.map { it.replace(".", "") } }
     val readings = readingEntries.map { entry ->
-        val correct = (entry.onyomi + entry.kunyomi).shuffled(random).first()
+        val correct = (entry.onyomi + entry.kunyomi.map { it.replace(".", "") }).shuffled(random).first()
         N4KanjiQuizQuestion(
             N4KanjiQuestionType.READING,
             "¿Cuál es una lectura de este kanji?",
