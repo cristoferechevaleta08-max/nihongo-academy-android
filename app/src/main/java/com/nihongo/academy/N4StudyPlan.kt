@@ -71,7 +71,8 @@ internal data class N4StudyProgress(
     val currentWeek: Int = 1,
     val completedWeeks: Set<Int> = emptySet(),
     val attemptsByWeek: Map<Int, Int> = emptyMap(),
-    val lastScoreByWeek: Map<Int, Int> = emptyMap()
+    val lastScoreByWeek: Map<Int, Int> = emptyMap(),
+    val paused: Boolean = false
 ) {
     init {
         require(currentWeek in 1..N4_PLAN_WEEKS)
@@ -81,6 +82,8 @@ internal data class N4StudyProgress(
     }
 
     val isComplete: Boolean get() = (1..N4_PLAN_WEEKS).all { it in completedWeeks }
+    fun pause(): N4StudyProgress = copy(paused = true)
+    fun resume(): N4StudyProgress = copy(paused = false)
 }
 
 /** Una semana N4 requiere 70%; si no, se repite sin desbloquear la siguiente. */
@@ -88,6 +91,7 @@ internal fun submitN4WeeklyAssessment(
     progress: N4StudyProgress,
     scorePercent: Int
 ): N4StudyProgress {
+    require(!progress.paused) { "Reanudá el plan antes de enviar la evaluación." }
     require(!progress.isComplete) { "El plan N4 ya está completo." }
     require(progress.currentWeek !in progress.completedWeeks) { "Esta semana N4 ya está aprobada." }
     require(isN4WeekUnlocked(progress.completedWeeks, progress.currentWeek)) {
