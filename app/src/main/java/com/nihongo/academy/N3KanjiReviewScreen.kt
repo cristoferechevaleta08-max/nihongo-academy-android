@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 private val n3KanjiReviewScheduleKey = stringSetPreferencesKey("n3_kanji_review_schedule")
+private val n3KanjiLearnedFromReviewKey = stringSetPreferencesKey("n3_kanji_learned")
 
 @Composable
 internal fun N3KanjiReviewScreen(
@@ -74,6 +75,9 @@ internal fun N3KanjiReviewScreen(
                                     prefs[n3KanjiReviewScheduleKey] = scheduleN3KanjiReview(
                                         old, entry.character, rating, LocalDate.now()
                                     )
+                                    val learned = prefs[n3KanjiLearnedFromReviewKey] ?: emptySet()
+                                    prefs[n3KanjiLearnedFromReviewKey] =
+                                        markN3KanjiLearned(learned, entry.character)
                                 }
                             }
                             revealed = false
