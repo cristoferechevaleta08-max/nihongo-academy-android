@@ -286,7 +286,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "似",
-        meaningEs = "parecerse a; parecerse; ser similar",
+        meaningEs = "parecerse; ser similar",
         onyomi = listOf("ジ"),
         kunyomi = listOf("に.る", "ひ.る"),
         strokeCount = 7
@@ -307,7 +307,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "逃",
-        meaningEs = "escape; huida; fuga",
+        meaningEs = "escapar; huir; fuga",
         onyomi = listOf("トウ"),
         kunyomi = listOf("に.げる", "に.がす", "のが.す", "のが.れる"),
         strokeCount = 9
@@ -363,21 +363,21 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "暮",
-        meaningEs = "anochecer; vivir; finalizar",
+        meaningEs = "anochecer; vivir; pasar el día",
         onyomi = listOf("ボ"),
         kunyomi = listOf("く.れる", "く.らす"),
         strokeCount = 14
     ),
     N3KanjiEntry(
         character = "酒",
-        meaningEs = "sake; alcohol; vino de arroz",
+        meaningEs = "sake; bebida alcohólica japonesa",
         onyomi = listOf("シュ"),
         kunyomi = listOf("さけ", "さか-"),
         strokeCount = 10
     ),
     N3KanjiEntry(
         character = "悲",
-        meaningEs = "tristeza; compasión; triste",
+        meaningEs = "tristeza; pena; estar triste",
         onyomi = listOf("ヒ"),
         kunyomi = listOf("かな.しい", "かな.しむ"),
         strokeCount = 12
@@ -398,7 +398,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "到",
-        meaningEs = "llegar; alcanzar; lograr",
+        meaningEs = "llegar; alcanzar",
         onyomi = listOf("トウ"),
         kunyomi = listOf("いた.る"),
         strokeCount = 8
@@ -608,7 +608,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "晩",
-        meaningEs = "tarde; noche; anochecer",
+        meaningEs = "noche; tarde-noche",
         onyomi = listOf("バン"),
         kunyomi = listOf(),
         strokeCount = 12
@@ -678,7 +678,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "誰",
-        meaningEs = "quién; quiénes",
+        meaningEs = "quién; quiénes (interrogativo)",
         onyomi = listOf("スイ"),
         kunyomi = listOf("だれ", "たれ", "た"),
         strokeCount = 15
