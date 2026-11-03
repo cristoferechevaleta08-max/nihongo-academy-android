@@ -3,20 +3,19 @@ package com.nihongo.academy
 /**
  * Semanas 9–10 del Anexo E del PDF.
  *
- * El documento define el objetivo (kanji frecuentes, escritura y lectura), pero no
- * proporciona un inventario de caracteres ni lecturas. Por eso esta capa contiene
- * únicamente la secuencia didáctica; no inventa kanji, vocabulario ni respuestas.
- * El banco de contenido y las pruebas se conectarán cuando se valide esa lista.
+ * El catálogo local de 100 kanji, sus lecturas, vocabulario y ejemplos está integrado
+ * en N5KanjiCatalog.kt. Estas semanas organizan la práctica y usan evaluaciones
+ * construidas desde ese catálogo curricular propio, no desde una lista oficial JLPT.
  */
 internal val n5KanjiWeeks = listOf(
     KanaDay(57, "Introducción a los kanji", "Reconocer qué son los kanji y cómo se trabajan en la ruta N5.", listOf(
         "Identificar los kanji como caracteres de origen chino usados en japonés.",
-        "Observar el modelo del carácter que se incorpore al banco validado.",
+        "Observar el modelo del carácter correspondiente del catálogo N5.",
         "Practicar la escritura siguiendo el modelo y respetando el orden de trazos disponible.",
-        "Leer en voz alta la lectura que acompañe al carácter validado."
+        "Leer en voz alta la lectura del catálogo N5."
     )),
     KanaDay(58, "Primer bloque de escritura", "Iniciar la práctica repetida de escritura de los kanji frecuentes seleccionados.", listOf(
-        "Copiar cada carácter del material validado varias veces.",
+        "Copiar cada carácter del catálogo N5 varias veces.",
         "Observar la forma general antes de escribir.",
         "Comparar la escritura propia con el modelo.",
         "Repasar la lectura asociada a cada carácter."
@@ -33,7 +32,7 @@ internal val n5KanjiWeeks = listOf(
         "Corregir la forma de los caracteres que no coincidan.",
         "Volver a leer las lecturas correspondientes."
     )),
-    KanaDay(61, "Repaso acumulativo", "Reforzar la lectura y escritura de todo el material validado de la semana.", listOf(
+    KanaDay(61, "Repaso acumulativo", "Reforzar la lectura y escritura de todos los caracteres del bloque semanal.", listOf(
         "Repasar todos los caracteres vistos desde el día 57.",
         "Leerlos en orden mezclado.",
         "Escribir varias veces los caracteres más difíciles.",
@@ -46,12 +45,12 @@ internal val n5KanjiWeeks = listOf(
         "Preparar el cuaderno de errores para la prueba."
     )),
     KanaDay(63, "Evaluación semanal de kanji", "Comprobar lectura y escritura de los kanji frecuentes estudiados.", listOf(
-        "Completar la prueba semanal cuando esté conectado el banco validado de kanji.",
+        "Completar la prueba semanal con el catálogo N5 integrado.",
         "Revisar cada respuesta incorrecta.",
         "Si los errores superan el 30%, repetir la semana con ejercicios adicionales."
     )),
     KanaDay(64, "Segundo bloque de kanji", "Ampliar el conjunto de kanji frecuentes del nivel N5 con lectura y escritura.", listOf(
-        "Incorporar el siguiente grupo del banco validado.",
+        "Incorporar el siguiente grupo del catálogo N5 integrado.",
         "Observar la forma de cada carácter y su lectura.",
         "Copiar cada carácter varias veces siguiendo el modelo.",
         "Repasar brevemente los caracteres de la semana anterior."
@@ -87,7 +86,7 @@ internal val n5KanjiWeeks = listOf(
         "Repetir lectura y escritura antes de la evaluación."
     )),
     KanaDay(70, "Evaluación semanal de kanji", "Comprobar lectura y escritura de los kanji frecuentes del bloque.", listOf(
-        "Completar la prueba semanal cuando esté conectado el banco validado de kanji.",
+        "Completar la prueba semanal con el catálogo N5 integrado.",
         "Revisar cada respuesta incorrecta.",
         "Si los errores superan el 30%, repetir la semana con ejercicios adicionales."
     ))
