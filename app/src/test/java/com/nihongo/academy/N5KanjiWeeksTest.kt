@@ -16,8 +16,8 @@ class N5KanjiWeeksTest {
         val combined = n5KanjiWeeks.joinToString(" ") { it.focus + " " + it.practice.joinToString(" ") }
         assertTrue(combined.contains("lectura", ignoreCase = true))
         assertTrue(combined.contains("escritura", ignoreCase = true))
-        assertTrue(combined.contains("banco validado", ignoreCase = true))
-        assertTrue(weeklyAssessmentForWeek(9).isEmpty())
-        assertTrue(weeklyAssessmentForWeek(10).isEmpty())
+        assertTrue(combined.contains("catálogo N5", ignoreCase = true))
+        assertEquals(10, weeklyAssessmentForWeek(9).size)
+        assertEquals(10, weeklyAssessmentForWeek(10).size)
     }
 }
