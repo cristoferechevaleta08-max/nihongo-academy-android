@@ -115,7 +115,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "全",
-        meaningEs = "completo; total; enteramente; completamente",
+        meaningEs = "todo; completo; entero",
         onyomi = listOf("ゼン"),
         kunyomi = listOf("まった.く", "すべ.て"),
         strokeCount = 6
@@ -136,14 +136,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "経",
-        meaningEs = "sutra; longitud; ley; pasar; dirigir; transcurrir; experimentar",
+        meaningEs = "pasar por; transcurrir; administrar; sutra",
         onyomi = listOf("ケイ", "キョウ", "キン"),
         kunyomi = listOf("へ.る", "た.つ", "たていと", "はか.る", "のり"),
         strokeCount = 11
     ),
     N3KanjiEntry(
         character = "最",
-        meaningEs = "prefijo para superlativo; más; sumamente; extremadamente",
+        meaningEs = "el más; máximo; superlativo",
         onyomi = listOf("サイ", "シュ"),
         kunyomi = listOf("もっと.も", "つま"),
         strokeCount = 12
@@ -157,7 +157,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "調",
-        meaningEs = "melodía; tono; investigar; comprobar; arreglar; poner en orden",
+        meaningEs = "tono; melodía; investigar; ajustar; poner en orden",
         onyomi = listOf("チョウ"),
         kunyomi = listOf("しら.べる", "しら.べ", "ととの.う", "ととの.える"),
         strokeCount = 15
@@ -171,14 +171,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "当",
-        meaningEs = "acertar; realizarse; tocar; ganar; adivinar",
+        meaningEs = "acertar; corresponder; tocar; apropiado",
         onyomi = listOf("トウ"),
         kunyomi = listOf("あ.たる", "あ.たり", "あ.てる", "あ.て", "まさ.に", "まさ.にべし"),
         strokeCount = 6
     ),
     N3KanjiEntry(
         character = "約",
-        meaningEs = "promesa; aproximadamente; encogerse; economizar",
+        meaningEs = "promesa; aproximadamente; resumir",
         onyomi = listOf("ヤク"),
         kunyomi = listOf("つづ.まる", "つづ.める", "つづま.やか"),
         strokeCount = 9
@@ -192,7 +192,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "性",
-        meaningEs = "sexo; género; naturaleza; temperamento",
+        meaningEs = "naturaleza; carácter; sexo",
         onyomi = listOf("セイ", "ショウ"),
         kunyomi = listOf("さが"),
         strokeCount = 8
@@ -213,28 +213,28 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "制",
-        meaningEs = "determinar; establecer; comprobar; cesar; poner fin; sistema; construir",
+        meaningEs = "sistema; control; regulación",
         onyomi = listOf("セイ"),
         kunyomi = listOf(),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "治",
-        meaningEs = "reinar; gobernar; política; curar; calmar; curarse",
+        meaningEs = "gobernar; administrar; curar; sanar",
         onyomi = listOf("ジ", "チ"),
         kunyomi = listOf("おさ.める", "おさ.まる", "なお.る", "なお.す"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "務",
-        meaningEs = "tarea; obligaciones; deber; cargo; servir; desempeñar un cargo",
+        meaningEs = "tarea; deber; servicio; desempeñar un cargo",
         onyomi = listOf("ム"),
         kunyomi = listOf("つと.める"),
         strokeCount = 11
     ),
     N3KanjiEntry(
         character = "成",
-        meaningEs = "convertirse en; resultar; consistir en; hacerse; llegar a ser; llevar a cabo; lograr",
+        meaningEs = "convertirse en; llegar a ser; lograr",
         onyomi = listOf("セイ", "ジョウ"),
         kunyomi = listOf("な.る", "な.す", "-な.す"),
         strokeCount = 6
@@ -262,14 +262,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "機",
-        meaningEs = "mecanismo; máquina; avión; ocasión; telar",
+        meaningEs = "máquina; mecanismo; oportunidad; ocasión",
         onyomi = listOf("キ"),
         kunyomi = listOf("はた"),
         strokeCount = 16
     ),
     N3KanjiEntry(
         character = "平",
-        meaningEs = "llanura; liso; llano; plano; sencillo",
+        meaningEs = "llano; plano; tranquilo; pacífico",
         onyomi = listOf("ヘイ", "ビョウ", "ヒョウ"),
         kunyomi = listOf("たい.ら", "たい.らげる", "ひら"),
         strokeCount = 5
@@ -283,7 +283,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "受",
-        meaningEs = "recipiente; acepción; aceptar; recibir; tomar; aprobar examen",
+        meaningEs = "recibir; aceptar; tomar; aprobar un examen",
         onyomi = listOf("ジュ"),
         kunyomi = listOf("う.ける", "-う.け", "う.かる"),
         strokeCount = 8
@@ -304,7 +304,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "記",
-        meaningEs = "crónica; narración; memorizar; anotar; consignar por escrito",
+        meaningEs = "registro; relato; anotar; consignar por escrito",
         onyomi = listOf("キ"),
         kunyomi = listOf("しる.す"),
         strokeCount = 10
