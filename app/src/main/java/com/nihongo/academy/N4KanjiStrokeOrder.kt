@@ -1,12 +1,14 @@
 package com.nihongo.academy
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -87,17 +89,16 @@ internal fun N4KanjiStrokeOrder(character: String, modifier: Modifier = Modifier
                         )
                     }
             ) {
-                drawContext.transform.scale(size.width / 109f, size.height / 109f, Offset.Zero)
-                val unitScale = size.width / 109f
-                drawContext.transform.scale(1f, size.height / size.width, Offset.Zero)
-                paths.forEach { drawPath(it, guideColor, style = Stroke(width = 2.4f)) }
+                withTransform({ scale(size.width / 109f, size.height / 109f, pivot = Offset.Zero) }) {
+                    paths.forEach { drawPath(it, guideColor, style = Stroke(width = 2.4f)) }
+                }
                 handwriting.forEach { line ->
                     line.zipWithNext().forEach { (start, end) ->
                         drawLine(
                             strokeColor,
-                            Offset(start.x / unitScale, start.y / unitScale),
-                            Offset(end.x / unitScale, end.y / unitScale),
-                            strokeWidth = 3.5f,
+                            start,
+                            end,
+                            strokeWidth = 7f,
                             cap = StrokeCap.Round
                         )
                     }
