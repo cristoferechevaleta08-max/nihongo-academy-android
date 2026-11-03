@@ -114,6 +114,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
    Text(e.character,style=MaterialTheme.typography.displayLarge)
    Text(e.meaningEs,style=MaterialTheme.typography.headlineSmall)
    Text("Trazos: ${e.strokeCount}")
+   N4KanjiStrokeOrder(e.character)
    HorizontalDivider()
    Text("Lectura On'yomi",style=MaterialTheme.typography.titleMedium)
    Text(e.onyomi.joinToString(" · ").ifBlank{"No incluida en esta ficha"})
