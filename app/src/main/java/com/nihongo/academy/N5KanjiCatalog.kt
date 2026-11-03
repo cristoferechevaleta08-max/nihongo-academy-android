@@ -62,8 +62,7 @@ internal val n5KanjiCatalog = listOf(
     N5KanjiEntry("学","estudio; aprender",listOf("ガク"),listOf("まな"),8,listOf(N5KanjiWord("学生","がくせい","estudiante"),N5KanjiWord("学校","がっこう","escuela"),N5KanjiWord("大学","だいがく","universidad")),"学校で日本語を学びます。","がっこうでにほんごをまなびます。","Aprendo japonés en la escuela."),
     N5KanjiEntry("校","escuela",listOf("コウ"),emptyList(),10,listOf(N5KanjiWord("学校","がっこう","escuela"),N5KanjiWord("高校","こうこう","bachillerato")),"学校は八時に始まります。","がっこうははちじにはじまります。","La escuela empieza a las ocho."),
     N5KanjiEntry("先","anterior; delante",listOf("セン"),listOf("さき"),6,listOf(N5KanjiWord("先生","せんせい","docente"),N5KanjiWord("先週","せんしゅう","la semana pasada"),N5KanjiWord("先月","せんげつ","el mes pasado")),"先生は日本人です。","せんせいはにほんじんです。","El docente es japonés."),
-    N5KanjiEntry("何","qué; cuál",listOf("カ"),listOf("なに","なん"),7,listOf(N5KanjiWord("何","なに","qué"),N5KanjiWord("何時","なんじ","qué hora"),N5KanjiWord("何人","なんにん","cuántas personas")),"これは何ですか。","これはなんですか。","¿Qué es esto?")
-
+    N5KanjiEntry("何","qué; cuál",listOf("カ"),listOf("なに","なん"),7,listOf(N5KanjiWord("何","なに","qué"),N5KanjiWord("何時","なんじ","qué hora"),N5KanjiWord("何人","なんにん","cuántas personas")),"これは何ですか。","これはなんですか。","¿Qué es esto?"),
     N5KanjiEntry("女","mujer",listOf("ジョ","ニョ"),listOf("おんな","め"),3,listOf(N5KanjiWord("女","おんな","mujer"),N5KanjiWord("女の人","おんなのひと","mujer"),N5KanjiWord("女の子","おんなのこ","niña")),"女の人は先生です。","おんなのひとはせんせいです。","La mujer es docente."),
     N5KanjiEntry("男","hombre",listOf("ダン","ナン"),listOf("おとこ"),7,listOf(N5KanjiWord("男","おとこ","hombre"),N5KanjiWord("男の人","おとこのひと","hombre"),N5KanjiWord("男の子","おとこのこ","niño")),"男の子がいます。","おとこのこがいます。","Hay un niño."),
     N5KanjiEntry("子","niño; hijo",listOf("シ","ス"),listOf("こ"),3,listOf(N5KanjiWord("子ども","こども","niño; niña"),N5KanjiWord("子どもたち","こどもたち","niños"),N5KanjiWord("女の子","おんなのこ","niña")),"子どもが三人います。","こどもがさんにんいます。","Hay tres niños."),
@@ -84,8 +83,7 @@ internal val n5KanjiCatalog = listOf(
     N5KanjiEntry("行","ir; realizar",listOf("コウ","ギョウ","アン"),listOf("い","ゆ","おこな"),6,listOf(N5KanjiWord("行く","いく","ir"),N5KanjiWord("銀行","ぎんこう","banco"),N5KanjiWord("旅行","りょこう","viaje")),"学校へ行きます。","がっこうへいきます。","Voy a la escuela."),
     N5KanjiEntry("来","venir; próximo",listOf("ライ"),listOf("く","き","こ"),7,listOf(N5KanjiWord("来る","くる","venir"),N5KanjiWord("来週","らいしゅう","la semana que viene"),N5KanjiWord("来年","らいねん","el año que viene")),"友だちが家に来ます。","ともだちがいえにきます。","Un amigo viene a casa."),
     N5KanjiEntry("帰","volver; regresar",listOf("キ"),listOf("かえ"),10,listOf(N5KanjiWord("帰る","かえる","volver a casa"),N5KanjiWord("帰国","きこく","regreso al país")),"家に帰ります。","いえにかえります。","Vuelvo a casa."),
-    N5KanjiEntry("休","descansar; día libre",listOf("キュウ"),listOf("やす"),6,listOf(N5KanjiWord("休む","やすむ","descansar"),N5KanjiWord("休日","きゅうじつ","día libre"),N5KanjiWord("夏休み","なつやすみ","vacaciones de verano")),"日曜日は休みます。","にちようびはやすみます。","Descanso los domingos.")
-
+    N5KanjiEntry("休","descansar; día libre",listOf("キュウ"),listOf("やす"),6,listOf(N5KanjiWord("休む","やすむ","descansar"),N5KanjiWord("休日","きゅうじつ","día libre"),N5KanjiWord("夏休み","なつやすみ","vacaciones de verano")),"日曜日は休みます。","にちようびはやすみます。","Descanso los domingos."),
     N5KanjiEntry("電","electricidad",listOf("デン"),emptyList(),13,listOf(N5KanjiWord("電気","でんき","electricidad"),N5KanjiWord("電車","でんしゃ","tren eléctrico"),N5KanjiWord("電話","でんわ","teléfono")),"電車で学校へ行きます。","でんしゃでがっこうへいきます。","Voy a la escuela en tren."),
     N5KanjiEntry("車","coche; vehículo",listOf("シャ"),listOf("くるま"),7,listOf(N5KanjiWord("車","くるま","coche"),N5KanjiWord("自転車","じてんしゃ","bicicleta"),N5KanjiWord("電車","でんしゃ","tren")),"車があります。","くるまがあります。","Hay un coche."),
     N5KanjiEntry("駅","estación",listOf("エキ"),emptyList(),14,listOf(N5KanjiWord("駅","えき","estación"),N5KanjiWord("駅前","えきまえ","frente a la estación"),N5KanjiWord("駅員","えきいん","personal de estación")),"駅で友だちを待ちます。","えきでともだちをまちます。","Espero a un amigo en la estación."),
