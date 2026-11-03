@@ -55,3 +55,7 @@ internal fun scheduleN3KanjiReview(
     records[character] = N3ReviewRecord(character, today.plusDays(nextInterval.toLong()), nextInterval)
     return serializeN3ReviewRecords(records)
 }
+
+/** Marca como aprendido el kanji que el estudiante acaba de repasar. */
+internal fun markN3KanjiLearned(learned: Set<String>, character: String): Set<String> =
+    learned + character
