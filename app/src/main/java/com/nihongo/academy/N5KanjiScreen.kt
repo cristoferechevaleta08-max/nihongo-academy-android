@@ -21,11 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 private val n5KanjiLearnedKey = stringSetPreferencesKey("n5_kanji_learned")
+private val n5KanjiBestExamKey = intPreferencesKey("n5_kanji_best_exam_score")
 private fun n5KanjiSrsKey(character: String) = stringPreferencesKey("n5_kanji_srs_$character")
 
 @Composable
@@ -36,6 +38,8 @@ internal fun N5KanjiScreen(
     val scope = rememberCoroutineScope()
     val learned by dataStore.data.map { it[n5KanjiLearnedKey] ?: emptySet() }
         .collectAsState(initial = emptySet())
+    val bestExamScore by dataStore.data.map { it[n5KanjiBestExamKey] ?: 0 }
+        .collectAsState(initial = 0)
     val reviewStates by dataStore.data.map { prefs ->
         n5KanjiCatalog.mapNotNull { entry ->
             prefs[n5KanjiSrsKey(entry.character)]?.let { stored ->
@@ -53,6 +57,11 @@ internal fun N5KanjiScreen(
     var selectedAnswer by remember { mutableStateOf<String?>(null) }
     var answerRevealed by remember { mutableStateOf(false) }
     var reviewFinished by remember { mutableStateOf(false) }
+    var examQuestions by remember { mutableStateOf<List<N5KanjiEntry>>(emptyList()) }
+    var examIndex by remember { mutableIntStateOf(0) }
+    var examScore by remember { mutableIntStateOf(0) }
+    var examChoice by remember { mutableStateOf<String?>(null) }
+    var examFinished by remember { mutableStateOf(false) }
 
     val now = System.currentTimeMillis()
     val dueEntries = n5KanjiCatalog.filter { entry ->
@@ -66,6 +75,91 @@ internal fun N5KanjiScreen(
         answerRevealed = false
         reviewFinished = entries.isEmpty()
         selected = null
+    }
+
+    if (examQuestions.isNotEmpty()) {
+        if (examFinished) {
+            Column(
+                modifier.fillMaxSize().padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(Modifier.height(32.dp))
+                Text("Examen N5 completado", style = MaterialTheme.typography.headlineMedium)
+                Text("$examScore / ${examQuestions.size}", style = MaterialTheme.typography.displayMedium)
+                Text(
+                    if (examScore >= 8) "¡Muy buen trabajo! Seguí repasando para consolidar los kanji."
+                    else "Buen intento. Revisá tus errores y volvé a practicar."
+                )
+                Text("Mejor resultado: $bestExamScore / 10", color = MaterialTheme.colorScheme.primary)
+                Button(onClick = {
+                    examQuestions = emptyList()
+                    examFinished = false
+                }) { Text("Volver a la biblioteca") }
+            }
+            return
+        }
+
+        val entry = examQuestions[examIndex]
+        val options = remember(entry.character, examQuestions.size) {
+            (n5KanjiCatalog.filter { it.character != entry.character && it.meaningEs != entry.meaningEs }
+                .shuffled().take(3).map { it.meaningEs } + entry.meaningEs).shuffled()
+        }
+        Column(
+            modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            TextButton(onClick = {
+                examQuestions = emptyList()
+                examFinished = false
+            }) { Text("← Salir del examen") }
+            Text("Evaluación de kanji N5", color = MaterialTheme.colorScheme.primary)
+            Text("Pregunta ${examIndex + 1} de ${examQuestions.size}")
+            LinearProgressIndicator(
+                progress = { (examIndex + 1).toFloat() / examQuestions.size },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(22.dp)) {
+                Column(
+                    Modifier.fillMaxWidth().padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(entry.character, style = MaterialTheme.typography.displayLarge)
+                    Text("Seleccioná el significado correcto.", style = MaterialTheme.typography.titleMedium)
+                }
+            }
+            options.forEach { option ->
+                OutlinedButton(
+                    onClick = { examChoice = option },
+                    enabled = examChoice == null,
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text(option) }
+            }
+            Button(
+                onClick = {
+                    val updatedScore = examScore + if (examChoice == entry.meaningEs) 1 else 0
+                    examScore = updatedScore
+                    examChoice = null
+                    if (examIndex + 1 < examQuestions.size) {
+                        examIndex++
+                    } else {
+                        examFinished = true
+                        scope.launch {
+                            dataStore.edit { prefs ->
+                                prefs[n5KanjiBestExamKey] = maxOf(
+                                    prefs[n5KanjiBestExamKey] ?: 0,
+                                    updatedScore
+                                )
+                            }
+                        }
+                    }
+                },
+                enabled = examChoice != null,
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(if (examIndex + 1 == examQuestions.size) "Finalizar examen" else "Siguiente pregunta") }
+        }
+        return
     }
 
     if (writingEntry != null) {
@@ -324,6 +418,17 @@ internal fun N5KanjiScreen(
             modifier = Modifier.fillMaxWidth()
         )
         Text("$learnedCount de ${n5KanjiCatalog.size} kanji marcados como aprendidos")
+        Text("Mejor examen: $bestExamScore / 10", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        OutlinedButton(
+            onClick = {
+                examQuestions = n5KanjiCatalog.shuffled().take(10)
+                examIndex = 0
+                examScore = 0
+                examChoice = null
+                examFinished = false
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) { Text("Realizar examen N5 · 10 preguntas") }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = { startReview(dueEntries) },
