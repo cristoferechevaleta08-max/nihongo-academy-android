@@ -65,6 +65,32 @@ class N4StudyPlanTest {
         assertEquals(N4_PLAN_WEEKS, result.currentWeek)
     }
 
+    @Test fun pausedPlanRejectsAssessmentUntilResumed() {
+        val paused = N4StudyProgress().pause()
+        assertTrue(paused.paused)
+        try {
+            submitN4WeeklyAssessment(paused, 90)
+            fail("A paused plan must reject an assessment.")
+        } catch (_: IllegalArgumentException) {
+            // Expected: no assessment can be submitted while paused.
+        }
+        val resumed = paused.resume()
+        assertFalse(resumed.paused)
+        assertEquals(2, submitN4WeeklyAssessment(resumed, 90).currentWeek)
+    }
+
+    @Test fun scoreAndAttemptHistoryAreRetainedAcrossWeeks() {
+        val weekTwo = submitN4WeeklyAssessment(N4StudyProgress(), 80)
+        val failed = submitN4WeeklyAssessment(weekTwo, 60)
+        assertEquals(2, failed.currentWeek)
+        assertEquals(1, failed.attemptsByWeek[2])
+        assertEquals(80, failed.lastScoreByWeek[1])
+        assertEquals(60, failed.lastScoreByWeek[2])
+        val passed = submitN4WeeklyAssessment(failed, 75)
+        assertEquals(3, passed.currentWeek)
+        assertEquals(1, passed.attemptsByWeek[2])
+    }
+
     @Test(expected = IllegalArgumentException::class)
     fun invalidScoreIsRejected() {
         submitN4WeeklyAssessment(N4StudyProgress(), 101)
