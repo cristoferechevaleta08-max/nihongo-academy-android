@@ -69,12 +69,12 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
   if (!progress.isPlanComplete) {
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
     Text("Evaluación bloqueada", style = MaterialTheme.typography.titleLarge)
-    Text("Primero completá y aprobá las 12 semanas del plan N5. Tu progreso actual es \${progress.completedWeeks.size} de 12 semanas.")
+    Text("Primero completá y aprobá las 12 semanas del plan N5. Tu progreso actual es ${progress.completedWeeks.size} de 12 semanas.")
    } }
   } else if (finished) {
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
     Text("Resultado final", style = MaterialTheme.typography.titleLarge)
-    Text("$score de \${n4FinalAssessment.size} respuestas correctas · \${score * 100 / n4FinalAssessment.size}%")
+    Text("$score de ${n4FinalAssessment.size} respuestas correctas · ${score * 100 / n4FinalAssessment.size}%")
     Text(if (score * 100 / n4FinalAssessment.size >= 70) "Evaluación aprobada." else "Todavía no está aprobada. Repasá las explicaciones y volvé a intentarlo.")
     Button(onClick = { index = 0; selected = -1; score = 0; finished = false; confirmed = false }, modifier = Modifier.fillMaxWidth()) { Text("Repetir evaluación") }
    } }
@@ -83,13 +83,13 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
    LinearProgressIndicator(progress = { (index + 1).toFloat() / n4FinalAssessment.size }, modifier = Modifier.fillMaxWidth())
    Text("Mejor resultado guardado: $bestScore%")
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-    Text("Pregunta \${index + 1} de \${n4FinalAssessment.size} · \${question.section}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+    Text("Pregunta ${index + 1} de ${n4FinalAssessment.size} · ${question.section}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
     Text(question.prompt, style = MaterialTheme.typography.titleMedium)
     question.options.forEachIndexed { optionIndex, option ->
      OutlinedButton(onClick = { selected = optionIndex }, enabled = selected < 0, modifier = Modifier.fillMaxWidth()) { Text((if (selected == optionIndex) "● " else "○ ") + option) }
     }
     if (confirmed) {
-     Text(if (selected == question.answer) "Correcto" else "Respuesta: \${question.options[question.answer]}", color = MaterialTheme.colorScheme.primary)
+     Text(if (selected == question.answer) "Correcto" else "Respuesta: ${question.options[question.answer]}", color = MaterialTheme.colorScheme.primary)
      Text(question.explanation, color = MaterialTheme.colorScheme.onSurfaceVariant)
      Button(onClick = {
       if (index == n4FinalAssessment.lastIndex) {
