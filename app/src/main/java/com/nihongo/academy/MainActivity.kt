@@ -230,7 +230,7 @@ when(tab){
 "Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
 "Escucha"->ListeningHub(ds,Modifier.padding(p))
 "Plan"->StudyPlanScreen(ds,Modifier.padding(p))
-"Exámenes"->Exam(ds,Modifier.padding(p))
+"Exámenes"->ExamHub(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
@@ -596,4 +596,16 @@ val context=LocalContext.current;var result by remember{mutableStateOf("Todavía
 val launcher=androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()){r->result=r.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()?:"No se reconoció una respuesta."}
 Button(onClick={val intent=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply{putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.JAPANESE.toLanguageTag());putExtra(RecognizerIntent.EXTRA_PROMPT,"Decí una frase en japonés")};runCatching{launcher.launch(intent)}.onFailure{result="No hay reconocedor de voz disponible."}}){Text("Practicar con voz")}
 Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fonética precisa requiere un motor especializado.")
+}
+
+@Composable private fun ExamHub(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
+ val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
+ var level by remember{mutableStateOf("N5")}
+ Column(m.fillMaxSize()){
+  Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
+   FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Examen N5")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=progress.isPlanComplete,label={Text(if(progress.isPlanComplete)"Examen N4" else "N4 bloqueado")})
+  }
+  if(level=="N4") N4AssessmentScreen(ds,Modifier.weight(1f)) else Exam(ds,Modifier.weight(1f))
+ }
 }
