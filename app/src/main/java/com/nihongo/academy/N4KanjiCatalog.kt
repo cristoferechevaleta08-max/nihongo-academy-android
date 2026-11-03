@@ -187,7 +187,6 @@ internal val n4KanjiCatalog = listOf(
  ,n4k("料","material; tarifa","リョウ","",10,"料理","りょうり","cocina; plato","日本料理を作ってみたいです。","にほんりょうりをつくってみたいです。","Quiero intentar preparar comida japonesa.")
  ,n4k("建","construir","ケン コン","た.てる た.つ",9,"建物","たてもの","edificio","あの建物は新しいです。","あのたてものはあたらしいです。","Aquel edificio es nuevo.")
  ,n4k("説","explicar; teoría","セツ ゼイ","と.く",14,"説明","せつめい","explicación","もう一度説明してください。","もういちどせつめいしてください。","Explícalo una vez más, por favor.")
- ,n4k("試","probar; examen","シ","こころ.みる ため.す",13,"試験","しけん","examen","来週、日本語の試験があります。","らいしゅう、にほんごのしけんがあります。","La semana que viene tengo un examen de japonés.")
  ,n4k("英","Inglaterra; inglés","エイ","はなぶさ",8,"英語","えいご","idioma inglés","英語と日本語を勉強しています。","えいごとにほんごをべんきょうしています。","Estudio inglés y japonés.")
  ,n4k("便","conveniencia; correo","ベン ビン","たよ.り",9,"便利","べんり","conveniente","このアプリはとても便利です。","このアプリはとてもべんりです。","Esta aplicación es muy práctica.")
  ,n4k("飯","arroz cocido; comida","ハン","めし",12,"ご飯","ごはん","arroz; comida","毎朝ご飯を食べます。","まいあさごはんをたべます。","Como arroz todas las mañanas.")
@@ -199,4 +198,5 @@ internal val n4KanjiCatalog = listOf(
  ,n4k("洗","lavar","セン","あら.う",9,"洗う","あらう","lavar","食事の前に手を洗います。","しょくじのまえにてをあらいます。","Me lavo las manos antes de comer.")
  ,n4k("申","decir humildemente; solicitar","シン","もう.す",5,"申し込む","もうしこむ","inscribirse; solicitar","日本語のクラスに申し込みました。","にほんごのクラスにもうしこみました。","Me inscribí en una clase de japonés.")
 
+ ,n4k("代","sustituir; generación","ダイ タイ","か.わる か.える",5,"代表","だいひょう","representante","クラスの代表に選ばれました。","クラスのだいひょうにえらばれました。","Fui elegido representante de la clase.")
 )
