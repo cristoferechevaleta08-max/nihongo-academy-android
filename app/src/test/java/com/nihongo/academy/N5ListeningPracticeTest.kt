@@ -22,6 +22,7 @@ class N5ListeningPracticeTest {
     @Test
     fun n5ListeningAndFinalMockAssessmentsAreAvailable() {
         assertEquals(18, weeklyAssessmentForWeek(11).size)
+        assertEquals(3, n5ReadingAssessment.size)
         assertEquals(30, weeklyAssessmentForWeek(12).size)
     }
 
