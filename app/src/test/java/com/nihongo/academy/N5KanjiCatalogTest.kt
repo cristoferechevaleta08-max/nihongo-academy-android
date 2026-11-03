@@ -18,7 +18,13 @@ class N5KanjiCatalogTest {
             assertTrue(entry.character.isNotBlank())
             assertTrue(entry.meaningEs.isNotBlank())
             assertTrue(entry.strokeCount > 0)
+            assertTrue(entry.onyomi.isNotEmpty() || entry.kunyomi.isNotEmpty())
             assertTrue(entry.vocabulary.isNotEmpty())
+            entry.vocabulary.forEach { word ->
+                assertTrue(word.word.isNotBlank())
+                assertTrue(word.reading.isNotBlank())
+                assertTrue(word.meaningEs.isNotBlank())
+            }
             assertTrue(entry.exampleJa.isNotBlank())
             assertTrue(entry.exampleReading.isNotBlank())
             assertTrue(entry.exampleEs.isNotBlank())
