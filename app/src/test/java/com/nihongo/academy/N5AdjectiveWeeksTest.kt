@@ -25,6 +25,6 @@ class N5AdjectiveWeeksTest {
     @Test fun assessmentRouterIncludesWeeksSevenAndEight() {
         assertEquals(10, weeklyAssessmentForWeek(7).size)
         assertEquals(10, weeklyAssessmentForWeek(8).size)
-        assertTrue(weeklyAssessmentForWeek(9).isEmpty())
+        assertEquals(10, weeklyAssessmentForWeek(9).size)
     }
 }
