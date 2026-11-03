@@ -45,4 +45,12 @@ class N3KanjiReviewTest {
     @Test fun malformedStoredRecordsAreIgnored() {
         assertTrue(parseN3ReviewRecords(setOf("政|bad|3", "議|1|0", "broken")).isEmpty())
     }
+
+    @Test fun reviewingMarksKanjiAsLearnedWithoutLosingExistingProgress() {
+        val existing = setOf("政", "議")
+        val updated = markN3KanjiLearned(existing, "連")
+        assertEquals(setOf("政", "議", "連"), updated)
+        assertEquals(updated, markN3KanjiLearned(updated, "連"))
+    }
+
 }
