@@ -1,5 +1,7 @@
 package com.nihongo.academy
 
+import android.content.Intent
+import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -126,7 +128,13 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("Audio del dispositivo", style = MaterialTheme.typography.titleMedium)
                 Text(voiceMessage, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                if (!voiceReady) Text("La app no descarga audios ni necesita conexión: utiliza el motor TTS local si hay una voz japonesa instalada.", style = MaterialTheme.typography.bodySmall)
+                if (!voiceReady) {
+                    Text("La app no descarga audios ni necesita conexión: utiliza el motor TTS local si hay una voz japonesa instalada.", style = MaterialTheme.typography.bodySmall)
+                    OutlinedButton(onClick = {
+                        runCatching { context.startActivity(Intent(Settings.ACTION_TEXT_TO_SPEECH_SETTINGS)) }
+                            .onFailure { voiceMessage = "No se pudieron abrir los ajustes de texto a voz de este dispositivo." }
+                    }, modifier = Modifier.fillMaxWidth()) { Text("Configurar voz japonesa") }
+                }
             }
         }
         Text("Elegí una situación", style = MaterialTheme.typography.titleLarge)
