@@ -35,7 +35,9 @@ class N3GivingReceivingTest {
         assertEquals(n3CausativeAssessment, n3GrammarAssessmentForWeek(2))
         assertEquals(n3PassiveVoiceDays, n3GrammarDaysForWeek(1))
         assertEquals(n3PassiveVoiceAssessment, n3GrammarAssessmentForWeek(1))
-        assertTrue(n3GrammarDaysForWeek(4).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(4).isEmpty())
+        assertEquals(n3ConditionalDays, n3GrammarDaysForWeek(4))
+        assertEquals(n3ConditionalAssessment, n3GrammarAssessmentForWeek(4))
+        assertTrue(n3GrammarDaysForWeek(5).isEmpty())
+        assertTrue(n3GrammarAssessmentForWeek(5).isEmpty())
     }
 }
