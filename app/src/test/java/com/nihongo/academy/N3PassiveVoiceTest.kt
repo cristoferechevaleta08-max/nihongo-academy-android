@@ -31,7 +31,7 @@ class N3PassiveVoiceTest {
     @Test fun firstWeekRoutesToItsOwnLessonsAndAssessment() {
         assertEquals(n3PassiveVoiceDays, n3GrammarDaysForWeek(1))
         assertEquals(n3PassiveVoiceAssessment, n3GrammarAssessmentForWeek(1))
-        assertTrue(n3GrammarDaysForWeek(2).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(2).isEmpty())
+        assertEquals(n3CausativeDays, n3GrammarDaysForWeek(2))
+        assertEquals(n3CausativeAssessment, n3GrammarAssessmentForWeek(2))
     }
 }
