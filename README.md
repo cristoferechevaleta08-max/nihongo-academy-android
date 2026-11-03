@@ -35,6 +35,15 @@ Aplicación Android nativa en desarrollo, con interfaz en español.
 - Práctica de escritura libre con el dedo; no se afirma que exista corrección automática del orden o la dirección de los trazos.
 - El acceso al bloque N4 se mantiene condicionado a completar el plan N5.
 
+### Plan N4
+- Recorrido pedagógico de 16 semanas integrado en la pestaña Plan.
+- Semanas 1–8: gramática de las ocho unidades N4.
+- Semanas 9–11: kanji, lecturas, vocabulario y repetición espaciada.
+- Semana 12: comprensión auditiva; semana 13: comprensión lectora.
+- Semanas 14–16: integración, recuperación de errores y cierre.
+- Requiere completar las 12 semanas N5 para habilitar la ruta.
+- La vista actual presenta el calendario y las actividades; la evaluación semanal y el guardado del avance N4 todavía deben integrarse antes de habilitar aprobaciones.
+
 ## Alcance y limitaciones
 - Los 181 kanji N4 constituyen una selección pedagógica de la aplicación, no una lista oficial cerrada publicada por JLPT.
 - El selector de idiomas no significa que todos esos cursos estén disponibles.
