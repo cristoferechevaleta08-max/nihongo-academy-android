@@ -134,7 +134,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
  val filtered=n4KanjiCatalog.filter{it.character.contains(query)||it.meaningEs.contains(query,true)||it.vocabulary.any{w->w.word.contains(query)||w.meaningEs.contains(query,true)}}
  Column(modifier.fillMaxSize().padding(horizontal=16.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)){
   Text("Biblioteca de kanji",style=MaterialTheme.typography.headlineMedium)
-  Text("N4 · Bloque inicial de 50 caracteres seleccionados para estudiar")
+  Text("N4 · 181 kanjis para estudiar")
   Text("Selección pedagógica propia; el JLPT no publica una lista oficial y cerrada de kanji por nivel.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
   OutlinedTextField(value=query,onValueChange={query=it},label={Text("Buscar kanji o significado")},modifier=Modifier.fillMaxWidth(),singleLine=true)
   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
