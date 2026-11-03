@@ -349,6 +349,7 @@ internal fun N5KanjiScreen(
             Text(entry.character, style = MaterialTheme.typography.displayLarge)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
+            N5KanjiStrokeOrder(entry)
             val srs = reviewStates[entry.character]
             if (srs != null) {
                 Text(
