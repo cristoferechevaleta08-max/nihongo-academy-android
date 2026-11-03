@@ -36,4 +36,11 @@ class N3KanjiBlock1Test {
             assertEquals(entry, n3KanjiByCharacter(entry.character))
         }
     }
+
+    @Test fun dictionarySpecialReadingsAreNotPresentedAsStandardOnyomi() {
+        assertTrue("メエトル" !in n3KanjiByCharacter("米")!!.onyomi)
+        assertTrue("フラン" !in n3KanjiByCharacter("法")!!.onyomi)
+        assertTrue("ダース" !in n3KanjiByCharacter("打")!!.onyomi)
+    }
+
 }
