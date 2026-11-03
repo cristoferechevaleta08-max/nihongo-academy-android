@@ -175,3 +175,20 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
     }
 }
 
+
+
+/** Banco de escucha: preguntas originales ligadas a los seis diálogos. */
+internal val n5ListeningAssessment: List<KanaQuizQuestion> =
+    n5ListeningDialogues.flatMap { dialogue ->
+        dialogue.questions.map { question ->
+            KanaQuizQuestion(question.prompt, question.options, question.answer)
+        }
+    }
+
+/** Simulacro breve e integrado de 30 ítems; no representa el examen oficial JLPT. */
+internal val n5FinalMockAssessment: List<KanaQuizQuestion> =
+    lessons.filter { it.level == "N5" }
+        .flatMap { lesson -> lesson.exercises.map { exercise ->
+            KanaQuizQuestion(exercise.prompt, exercise.options, exercise.answer)
+        } }
+        .take(18) + n5ListeningAssessment.take(12)
