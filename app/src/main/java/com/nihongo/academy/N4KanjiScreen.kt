@@ -51,7 +51,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
    Text("Kanji N4 bloqueados",style=MaterialTheme.typography.headlineSmall)
    Text("Primero completá el plan de 12 semanas N5. Tu progreso de N4 se conservará en este dispositivo.")
    LinearProgressIndicator(progress={plan.completedDays.coerceIn(0,84)/84f},modifier=Modifier.fillMaxWidth())
-   Text("Días N5 completados: ${plan.completedDays.coerceIn(0,84)} / 84")
+   Text("Semanas N5 aprobadas: ${plan.completedWeeks.size} / 12")
   }
   return
  }
@@ -138,8 +138,8 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   Text("Selección pedagógica propia; el JLPT no publica una lista oficial y cerrada de kanji por nivel.",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
   OutlinedTextField(value=query,onValueChange={query=it},label={Text("Buscar kanji o significado")},modifier=Modifier.fillMaxWidth(),singleLine=true)
   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
-   AssistChip(onClick={onClick@{queue=due;reviewIndex=0;answer=null;revealed=false}},label={Text("Repasar pendientes: ${due.size}")},enabled=due.isNotEmpty())
-   AssistChip(onClick={onClick@{exam=n4KanjiCatalog.shuffled().take(10);examIndex=0;examScore=0;examChoice=null;examDone=false}},label={Text("Prueba de 10")})
+   AssistChip(onClick={queue=due;reviewIndex=0;answer=null;revealed=false},label={Text("Repasar pendientes: ${due.size}")},enabled=due.isNotEmpty())
+   AssistChip(onClick={exam=n4KanjiCatalog.shuffled().take(10);examIndex=0;examScore=0;examChoice=null;examDone=false},label={Text("Prueba de 10")})
   }
   Text("Aprendidos: ${learned.intersect(n4KanjiCatalog.map{it.character}.toSet()).size} / ${n4KanjiCatalog.size} · Mejor prueba: $best/10")
   LazyColumn(verticalArrangement=Arrangement.spacedBy(8.dp),contentPadding=PaddingValues(bottom=12.dp)){
