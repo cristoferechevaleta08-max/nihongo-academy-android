@@ -15,7 +15,10 @@ Aplicación Android nativa en desarrollo, con interfaz en español.
 - Preferencia para mostrar romaji o kana.
 - Corrección de ejercicios y cuaderno de errores.
 - Plan de estudio N5 de doce semanas, con seguimiento del progreso.
-- La biblioteca inicial de kanji N5 está integrada en la navegación, con 43 fichas locales, lecturas, vocabulario, ejemplos y seguimiento básico de aprendizaje.\n- La animación/validación de trazos, el repaso espaciado y el examen de kanji siguen pendientes de implementación y revisión; no se presentan como terminados.\n- Las semanas de escucha y simulacro final permanecen pendientes de materiales originales y revisión; no se presentan como terminadas.
+- La biblioteca inicial de kanji N5 está integrada en la navegación, con 64 fichas locales, lecturas, vocabulario, ejemplos y seguimiento local.
+- El repaso de reconocimiento y la programación espaciada están implementados con DataStore local.
+- La práctica de escritura libre con el dedo está disponible; la animación de orden de trazos, la validación automática y el examen completo de kanji siguen pendientes de implementación y revisión.
+- Las semanas de escucha y simulacro final permanecen pendientes de materiales originales y revisión; no se presentan como terminadas.
 - N4 no se habilita como siguiente etapa hasta cerrar y validar N5.
 - El selector de idiomas no significa que todos esos cursos estén disponibles.
 - Las funciones que dependan de cuentas, sincronización o comunidad requieren una fase posterior.
