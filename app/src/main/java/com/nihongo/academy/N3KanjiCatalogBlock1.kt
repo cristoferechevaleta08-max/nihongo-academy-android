@@ -332,7 +332,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "支",
-        meaningEs = "soporte; apoyo; rama; pago; interferencia; soportar; sostener",
+        meaningEs = "apoyo; sostén; rama; pagar; sostener",
         onyomi = listOf("シ"),
         kunyomi = listOf("ささ.える", "つか.える", "か.う"),
         strokeCount = 4
@@ -346,14 +346,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "報",
-        meaningEs = "informar; recompensar; responder; compensar; reembolsar",
+        meaningEs = "informar; noticia; recompensa; responder",
         onyomi = listOf("ホウ"),
         kunyomi = listOf("むく.いる"),
         strokeCount = 12
     ),
     N3KanjiEntry(
         character = "済",
-        meaningEs = "ayudar; rescatar; terminar; finalizar; acabar; concluir; reembolsar; devolver",
+        meaningEs = "terminar; concluir; completar; ayudar",
         onyomi = listOf("サイ", "セイ"),
         kunyomi = listOf("す.む", "-ず.み", "-ずみ", "す.まない", "す.ます", "-す.ます", "すく.う", "な.す", "わたし", "わた.る"),
         strokeCount = 11
@@ -367,7 +367,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "原",
-        meaningEs = "origen; pradera; prado; campo",
+        meaningEs = "origen; pradera; campo",
         onyomi = listOf("ゲン"),
         kunyomi = listOf("はら"),
         strokeCount = 10
@@ -381,28 +381,28 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "得",
-        meaningEs = "ventaja; beneficio; provecho; conseguir; obtener",
+        meaningEs = "beneficio; ventaja; obtener; conseguir",
         onyomi = listOf("トク"),
         kunyomi = listOf("え.る", "う.る"),
         strokeCount = 11
     ),
     N3KanjiEntry(
         character = "解",
-        meaningEs = "desenredar; desatar; liberar; aclarar; resolver; peinarse; aflojar",
+        meaningEs = "resolver; aclarar; desatar; liberar",
         onyomi = listOf("カイ", "ゲ"),
         kunyomi = listOf("と.く", "と.かす", "と.ける", "ほど.く", "ほぐ.す", "わか.る", "さと.る"),
         strokeCount = 13
     ),
     N3KanjiEntry(
         character = "交",
-        meaningEs = "cambio; reemplazo; mezcla; asociación; cruzarse; mezclarse; cruzar; mezclar",
+        meaningEs = "cruzarse; intercambiar; mezclarse; relacionarse",
         onyomi = listOf("コウ"),
         kunyomi = listOf("まじ.わる", "まじ.える", "ま.じる", "まじ.る", "ま.ざる", "ま.ぜる", "-か.う", "か.わす", "かわ.す", "こもごも"),
         strokeCount = 6
     ),
     N3KanjiEntry(
         character = "資",
-        meaningEs = "recurso; capital; naturaleza; posición social",
+        meaningEs = "recursos; capital; medios",
         onyomi = listOf("シ"),
         kunyomi = listOf(),
         strokeCount = 13
@@ -416,14 +416,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "向",
-        meaningEs = "mirar hacia; volverse; hacer frente; oponerse",
+        meaningEs = "dirigirse hacia; mirar hacia; hacer frente",
         onyomi = listOf("コウ"),
         kunyomi = listOf("む.く", "む.い", "-む.き", "む.ける", "-む.け", "む.かう", "む.かい", "む.こう", "む.こう-", "むこ", "むか.い"),
         strokeCount = 6
     ),
     N3KanjiEntry(
         character = "際",
-        meaningEs = "límite; frontera; asociación; unión; ocasión",
+        meaningEs = "ocasión; límite; frontera",
         onyomi = listOf("サイ"),
         kunyomi = listOf("きわ", "-ぎわ"),
         strokeCount = 14
@@ -444,7 +444,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "告",
-        meaningEs = "revelación; contar; informar; anunciar",
+        meaningEs = "informar; anunciar; comunicar",
         onyomi = listOf("コク"),
         kunyomi = listOf("つ.げる"),
         strokeCount = 7
@@ -458,7 +458,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "判",
-        meaningEs = "diferenciar; distinguir; juzgar; sello; marca; señal; sufijo para tamaño (papel)",
+        meaningEs = "juzgar; distinguir; sello; marca",
         onyomi = listOf("ハン", "バン"),
         kunyomi = listOf("わか.る"),
         strokeCount = 7
@@ -500,7 +500,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "在",
-        meaningEs = "existir; pueblo natal; alrededores; ser",
+        meaningEs = "existir; estar; residir",
         onyomi = listOf("ザイ"),
         kunyomi = listOf("あ.る"),
         strokeCount = 6
@@ -528,7 +528,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "求",
-        meaningEs = "petición; demanda; buscar; pedir; demandar; reclamar; desear",
+        meaningEs = "buscar; pedir; solicitar; reclamar",
         onyomi = listOf("キュウ", "グ"),
         kunyomi = listOf("もと.める"),
         strokeCount = 7
@@ -556,7 +556,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "官",
-        meaningEs = "gobierno; gubernamental (lugar; persona); órgano del cuerpo",
+        meaningEs = "funcionario; autoridad; órgano del cuerpo",
         onyomi = listOf("カン"),
         kunyomi = listOf(),
         strokeCount = 8
