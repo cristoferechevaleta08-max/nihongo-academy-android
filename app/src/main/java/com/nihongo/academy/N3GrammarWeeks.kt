@@ -71,8 +71,83 @@ internal val n3PassiveVoiceAssessment = listOf(
     KanaQuizQuestion("¿Qué elemento identifica a la persona afectada en わたしは先生にほめられました?", listOf("わたしは", "先生に", "ほめ", "ました"), 0)
 )
 
-internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> =
-    if (week == 1) n3PassiveVoiceDays else emptyList()
 
-internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> =
-    if (week == 1) n3PassiveVoiceAssessment else emptyList()
+// Segunda unidad gramatical N3: causativa y causativa-pasiva.
+internal val n3CausativeDays = listOf(
+    KanaDay(1, "Significado de la causativa", "Expresar que alguien hace que otra persona realice una acción o le permite hacerlo.",
+        listOf(
+            "Distinguir causativa de una orden directa.",
+            "Reconocer los matices de obligación y permiso según el contexto.",
+            "Identificar quién causa la acción y quién la realiza.",
+            "Leer 母は子どもに野菜を食べさせました。"
+        )),
+    KanaDay(2, "Causativa de verbos del grupo 1", "Cambiar la última sílaba de la fila u a la fila a y añadir せる.",
+        listOf(
+            "Practicar 書く → 書かせる (kaku → kakaseru).",
+            "Practicar 読む → 読ませる (yomu → yomaseru).",
+            "Practicar 話す → 話させる (hanasu → hanasaseru).",
+            "Recordar う → わせる: 買う → 買わせる."
+        )),
+    KanaDay(3, "Causativa de verbos del grupo 2", "Sustituir る por させる en los verbos ichidan.",
+        listOf(
+            "Practicar 食べる → 食べさせる (taberu → tabesaseru).",
+            "Practicar 見る → 見させる (miru → misaseru).",
+            "Crear frases de permiso y obligación con verbos del grupo 2.",
+            "Comprobar quién realiza la acción en cada ejemplo."
+        )),
+    KanaDay(4, "Causativa de verbos irregulares", "Aprender las formas causativas de する y 来る.",
+        listOf(
+            "Estudiar する → させる (suru → saseru).",
+            "Estudiar 来る → 来させる (kuru → kosaseru).",
+            "Practicar las formas en frases completas.",
+            "No aplicar mecánicamente las reglas de los grupos regulares."
+        )),
+    KanaDay(5, "Quién causa y quién actúa", "Interpretar las funciones de las personas en una oración causativa.",
+        listOf(
+            "Separar la persona que da lugar a la acción de quien la ejecuta.",
+            "Observar el uso de に y を según el verbo y la construcción.",
+            "Comparar ejemplos con verbos transitivos e intransitivos.",
+            "Evitar traducir la causativa siempre como una orden: el contexto puede indicar permiso."
+        )),
+    KanaDay(6, "Forma causativa-pasiva", "Expresar que alguien se ve obligado o queda en la situación de realizar una acción.",
+        listOf(
+            "Practicar 書く → 書かせられる (kakaserareru).",
+            "Practicar 食べる → 食べさせられる (tabesaserareru).",
+            "Aprender する → させられる y 来る → 来させられる.",
+            "Distinguir causativa, pasiva y causativa-pasiva por su significado."
+        )),
+    KanaDay(7, "Repaso y evaluación de causativa", "Consolidar conjugación, perspectiva y diferencias de significado.",
+        listOf(
+            "Conjugar verbos de los tres grupos y los irregulares.",
+            "Transformar frases sencillas a causativa.",
+            "Reconocer situaciones expresadas con causativa-pasiva.",
+            "Completar la evaluación semanal y revisar los errores."
+        ))
+)
+
+internal val n3CausativeAssessment = listOf(
+    KanaQuizQuestion("¿Cuál es la forma causativa de 書く (kaku)?", listOf("書かせる (kakaseru)", "書かれる (kakareru)", "書ける (kakeru)", "書いた (kaita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 読む (yomu)?", listOf("読ませる (yomaseru)", "読まれる (yomareru)", "読める (yomeru)", "読んだ (yonda)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 買う (kau)?", listOf("買わせる (kawaseru)", "買われる (kawareru)", "買える (kaeru)", "買った (katta)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 食べる (taberu)?", listOf("食べさせる (tabesaseru)", "食べられる (taberareru)", "食べる (taberu)", "食べた (tabeta)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 見る (miru)?", listOf("見させる (misaseru)", "見られる (mirareru)", "見える (mieru)", "見た (mita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de する (suru)?", listOf("させる (saseru)", "される (sareru)", "できる (dekiru)", "した (shita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 来る (kuru)?", listOf("来させる (kosaseru)", "来られる (korareru)", "来れる (koreru)", "来た (kita)"), 0),
+    KanaQuizQuestion("¿Qué puede expresar una causativa según el contexto?", listOf("Hacer que alguien actúe o permitirle actuar", "Solo una acción pasada", "Una pregunta indirecta", "Una comparación"), 0),
+    KanaQuizQuestion("¿Quién realiza la acción en una oración causativa?", listOf("La persona a quien se hace actuar o se permite actuar", "Siempre quien habla", "Siempre el objeto", "Nadie"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa-pasiva de 食べる?", listOf("食べさせられる (tabesaserareru)", "食べられる (taberareru)", "食べさせる (tabesaseru)", "食べた (tabeta)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa-pasiva de する?", listOf("させられる (saserareru)", "される (sareru)", "させる (saseru)", "できる (dekiru)"), 0),
+    KanaQuizQuestion("¿La causativa-pasiva suele expresar qué matiz?", listOf("Que alguien se ve obligado o puesto en situación de hacer algo", "Que alguien recibe un elogio", "Que algo ocurrió espontáneamente", "Que una acción es posible"), 0)
+)
+
+internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
+    1 -> n3PassiveVoiceDays
+    2 -> n3CausativeDays
+    else -> emptyList()
+}
+
+internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = when (week) {
+    1 -> n3PassiveVoiceAssessment
+    2 -> n3CausativeAssessment
+    else -> emptyList()
+}
