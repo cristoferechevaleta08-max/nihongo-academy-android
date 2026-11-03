@@ -33,7 +33,9 @@ class N3TimeExpressionsTest {
         assertEquals(n3TimeExpressionsAssessment, n3GrammarAssessmentForWeek(5))
         assertEquals(n3CauseReasonResultDays, n3GrammarDaysForWeek(6))
         assertEquals(n3CauseReasonResultAssessment, n3GrammarAssessmentForWeek(6))
-        assertTrue(n3GrammarDaysForWeek(7).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(7).isEmpty())
+        assertEquals(n3ChangeDecisionHabitsDays, n3GrammarDaysForWeek(7))
+        assertEquals(n3ChangeDecisionHabitsAssessment, n3GrammarAssessmentForWeek(7))
+        assertTrue(n3GrammarDaysForWeek(8).isEmpty())
+        assertTrue(n3GrammarAssessmentForWeek(8).isEmpty())
     }
 }
