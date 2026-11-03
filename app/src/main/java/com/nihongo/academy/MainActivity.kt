@@ -323,7 +323,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
    }
    if(week==12)BoxCard{
     Text("Estructura del simulacro N5",style=MaterialTheme.typography.titleLarge)
-    Text("30 preguntas originales: 18 de vocabulario y gramática, más 12 de comprensión auditiva.")
+    Text("30 preguntas originales: 15 de vocabulario y gramática, 3 de lectura y 12 de comprensión auditiva.")
     Text("Es una práctica integrada de Nihongo Academy, no reproduce la duración ni la estructura completa del examen oficial JLPT. Después revisá el cuaderno de errores.")
    }
   if(savedKanaMistakes.isNotEmpty())BoxCard{
