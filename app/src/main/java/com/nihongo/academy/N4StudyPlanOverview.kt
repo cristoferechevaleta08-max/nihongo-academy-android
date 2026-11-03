@@ -84,7 +84,7 @@ internal fun N4StudyPlanOverview(
                             onClick = {
                                 scope.launch {
                                     ds.saveN4StudyProgress(if (progress.paused) progress.resume() else progress.pause())
-                                },
+                                }
                             },
                             enabled = !progress.isComplete && quizWeek == 0
                         ) { Text(if (progress.paused) "Reanudar plan" else "Pausar plan") }
