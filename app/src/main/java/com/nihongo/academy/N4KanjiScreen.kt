@@ -39,7 +39,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
  var reviewIndex by remember{mutableIntStateOf(0)}
  var answer by remember{mutableStateOf<String?>(null)}
  var revealed by remember{mutableStateOf(false)}
- var exam by remember{mutableStateOf<List<N4KanjiEntry>>(emptyList())}
+ var exam by remember{mutableStateOf<List<N4KanjiQuizQuestion>>(emptyList())}
  var examIndex by remember{mutableIntStateOf(0)}
  var examScore by remember{mutableIntStateOf(0)}
  var examChoice by remember{mutableStateOf<String?>(null)}
@@ -66,16 +66,15 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
    }
   }else{
    val e=exam[examIndex]
-   val options=remember(e.character){(n4KanjiCatalog.filter{it.character!=e.character}.shuffled().take(3).map{it.meaningEs}+e.meaningEs).shuffled()}
    Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
     TextButton(onClick={exam=emptyList();examDone=false}){Text("← Salir")}
     Text("Pregunta ${examIndex+1} de ${exam.size} · N4")
     LinearProgressIndicator(progress={(examIndex+1).toFloat()/exam.size},modifier=Modifier.fillMaxWidth())
-    Text(e.character,style=MaterialTheme.typography.displayLarge)
-    Text("Elegí el significado correcto.")
-    options.forEach{o->OutlinedButton(onClick={examChoice=o},enabled=examChoice==null,modifier=Modifier.fillMaxWidth()){Text(o)}}
+    Text(e.display,style=MaterialTheme.typography.displayLarge)
+    Text(e.prompt)
+    e.options.forEach{o->OutlinedButton(onClick={examChoice=o},enabled=examChoice==null,modifier=Modifier.fillMaxWidth()){Text(o)}}
     Button(enabled=examChoice!=null,onClick={
-     val score=examScore+if(examChoice==e.meaningEs)1 else 0
+     val score=examScore+if(examChoice==e.answer)1 else 0
      examScore=score;examChoice=null
      if(examIndex==exam.lastIndex){examDone=true;scope.launch{dataStore.edit{p->p[n4KanjiBestExamKey]=maxOf(p[n4KanjiBestExamKey]?:0,score)}}}
      else examIndex++
@@ -140,7 +139,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   OutlinedTextField(value=query,onValueChange={query=it},label={Text("Buscar kanji o significado")},modifier=Modifier.fillMaxWidth(),singleLine=true)
   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
    AssistChip(onClick={queue=due;reviewIndex=0;answer=null;revealed=false},label={Text("Repasar pendientes: ${due.size}")},enabled=due.isNotEmpty())
-   AssistChip(onClick={exam=n4KanjiCatalog.shuffled().take(10);examIndex=0;examScore=0;examChoice=null;examDone=false},label={Text("Prueba de 10")})
+   AssistChip(onClick={exam=buildN4KanjiQuiz();examIndex=0;examScore=0;examChoice=null;examDone=false},label={Text("Prueba de 10")})
   }
   Text("Aprendidos: ${learned.intersect(n4KanjiCatalog.map{it.character}.toSet()).size} / ${n4KanjiCatalog.size} · Mejor prueba: $best/10")
   LazyColumn(verticalArrangement=Arrangement.spacedBy(8.dp),contentPadding=PaddingValues(bottom=12.dp)){
