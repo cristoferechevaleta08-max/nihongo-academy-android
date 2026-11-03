@@ -98,3 +98,22 @@ internal fun kanjiDaysForWeek(week: Int): List<KanaDay> = when (week) {
     10 -> n5KanjiWeeks.drop(7).take(7)
     else -> emptyList()
 }
+
+
+/** Evaluaciones internas para los dos bloques de kanji ya incorporados al curso. */
+internal fun kanjiAssessmentForWeek(week: Int): List<KanaQuizQuestion> {
+    if (week !in 9..10 || n5KanjiCatalog.size < 20) return emptyList()
+    val block = n5KanjiCatalog.drop((week - 9) * 50).take(50)
+    return block.take(10).mapIndexed { index, entry ->
+        val distractors = (block.drop(index + 1).map { it.meaningEs } +
+            n5KanjiCatalog.map { it.meaningEs })
+            .filter { it != entry.meaningEs }
+            .distinct()
+            .take(3)
+        KanaQuizQuestion(
+            "¿Qué significado corresponde al kanji ${entry.character}?",
+            (listOf(entry.meaningEs) + distractors).take(4),
+            0
+        )
+    }
+}
