@@ -131,9 +131,9 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
                 if (!voiceReady) {
                     Text("La app no descarga audios ni necesita conexión: utiliza el motor TTS local si hay una voz japonesa instalada.", style = MaterialTheme.typography.bodySmall)
                     OutlinedButton(onClick = {
-                        runCatching { context.startActivity(Intent(Settings.ACTION_TEXT_TO_SPEECH_SETTINGS)) }
+                        runCatching { context.startActivity(Intent(Settings.ACTION_SETTINGS)) }
                             .onFailure { voiceMessage = "No se pudieron abrir los ajustes de texto a voz de este dispositivo." }
-                    }, modifier = Modifier.fillMaxWidth()) { Text("Configurar voz japonesa") }
+                    }, modifier = Modifier.fillMaxWidth()) { Text("Abrir ajustes del teléfono") }
                 }
             }
         }
