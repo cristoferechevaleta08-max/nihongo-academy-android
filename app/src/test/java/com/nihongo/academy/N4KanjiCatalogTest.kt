@@ -28,6 +28,16 @@ class N4KanjiCatalogTest {
    assertTrue(e.exampleEs.isNotBlank())
   }
  }
+ @Test fun everyN4KanjiHasOfflineStrokePathsMatchingItsStrokeCount(){
+  assertEquals(181,n4KanjiStrokePaths.size)
+  n4KanjiCatalog.forEach{entry->
+   val strokes=n4KanjiStrokePaths[entry.character]
+   assertTrue("Faltan rutas para ${entry.character}",!strokes.isNullOrEmpty())
+   assertEquals("Cantidad de trazos incorrecta para ${entry.character}",entry.strokeCount,strokes!!.size)
+   assertTrue(strokes.all{it.startsWith("M")&&it.length>5})
+  }
+ }
+
  @Test fun reviewSchedulerProducesValidFutureIntervals(){
   val first=scheduleKanjiReview(KanjiReviewState.initial,KanjiReviewGrade.GOOD,1_000L)
   assertEquals(1,first.intervalDays)
