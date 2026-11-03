@@ -570,7 +570,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "係",
-        meaningEs = "cargo; deber; concernir; afectar",
+        meaningEs = "encargado; relación; asunto",
         onyomi = listOf("ケイ"),
         kunyomi = listOf("かか.る", "かかり", "-がかり", "かか.わる"),
         strokeCount = 9
@@ -584,7 +584,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "情",
-        meaningEs = "sentimientos; emoción; simpatía",
+        meaningEs = "sentimiento; emoción; circunstancias",
         onyomi = listOf("ジョウ", "セイ"),
         kunyomi = listOf("なさ.け"),
         strokeCount = 11
@@ -605,7 +605,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "変",
-        meaningEs = "inusual; extraño; cambio; cambiar; alterar; modificar",
+        meaningEs = "cambio; cambiar; extraño; inusual",
         onyomi = listOf("ヘン"),
         kunyomi = listOf("か.わる", "か.わり", "か.える"),
         strokeCount = 9
@@ -619,7 +619,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "直",
-        meaningEs = "derecho; recto; correcto; de inmediato; arreglar; reparar; arreglarse; repararse",
+        meaningEs = "recto; correcto; corregir; reparar; directamente",
         onyomi = listOf("チョク", "ジキ", "ジカ"),
         kunyomi = listOf("ただ.ちに", "なお.す", "-なお.す", "なお.る", "なお.き", "す.ぐ"),
         strokeCount = 8
@@ -640,21 +640,21 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "確",
-        meaningEs = "seguro; cierto; genuino; capaz; asegurarse; afirmar",
+        meaningEs = "seguro; cierto; confirmar",
         onyomi = listOf("カク", "コウ"),
         kunyomi = listOf("たし.か", "たし.かめる"),
         strokeCount = 15
     ),
     N3KanjiEntry(
         character = "果",
-        meaningEs = "fruto; resultado; llevar a cabo; finalizar",
+        meaningEs = "fruto; resultado; lograr; completar",
         onyomi = listOf("カ"),
         kunyomi = listOf("は.たす", "はた.す", "-は.たす", "は.てる", "-は.てる", "は.て"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "容",
-        meaningEs = "contenido; figura; perdonar; fácil",
+        meaningEs = "contenido; apariencia; forma",
         onyomi = listOf("ヨウ"),
         kunyomi = listOf("い.れる"),
         strokeCount = 10
@@ -696,14 +696,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "能",
-        meaningEs = "habilidad; talento; capacidad; aptitud; teatro japonés",
+        meaningEs = "capacidad; talento; habilidad; teatro Nō",
         onyomi = listOf("ノウ"),
         kunyomi = listOf("よ.く", "あた.う"),
         strokeCount = 10
     ),
     N3KanjiEntry(
         character = "位",
-        meaningEs = "grado; posición; aproximadamente; trono",
+        meaningEs = "posición; rango; aproximadamente",
         onyomi = listOf("イ"),
         kunyomi = listOf("くらい", "ぐらい"),
         strokeCount = 7
@@ -724,7 +724,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "格",
-        meaningEs = "estado; rango; posición; regla; ley; aptitud; capacidad; carácter",
+        meaningEs = "categoría; rango; estándar; condición",
         onyomi = listOf("カク", "コウ", "キャク", "ゴウ"),
         kunyomi = listOf(),
         strokeCount = 10
@@ -738,7 +738,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "過",
-        meaningEs = "pasar; extralimitarse; exceder; fallo; error; traspasar; fallar",
+        meaningEs = "pasar; exceder; sobrepasar; error",
         onyomi = listOf("カ"),
         kunyomi = listOf("す.ぎる", "す.ごす", "あやま.ち", "あやま.つ", "よぎ.る", "よ.ぎる"),
         strokeCount = 12
@@ -759,14 +759,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "常",
-        meaningEs = "habitual; usual; ordinario; normal; siempre; interminable",
+        meaningEs = "habitual; normal; ordinario; siempre",
         onyomi = listOf("ジョウ"),
         kunyomi = listOf("つね", "とこ-"),
         strokeCount = 11
     ),
     N3KanjiEntry(
         character = "状",
-        meaningEs = "estado; condición; circunstancias; situación",
+        meaningEs = "estado; condición; situación",
         onyomi = listOf("ジョウ"),
         kunyomi = listOf(),
         strokeCount = 7
@@ -787,7 +787,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "与",
-        meaningEs = "otorgar; conceder; proveer; unir fuerzas",
+        meaningEs = "dar; otorgar; conceder",
         onyomi = listOf("ヨ"),
         kunyomi = listOf("あた.える", "あずか.る", "くみ.する", "ともに"),
         strokeCount = 3
@@ -808,14 +808,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "構",
-        meaningEs = "construir; ensamblar; preparación; preocupación; establecerse; montar; poner; interesarse por; preocuparse por",
+        meaningEs = "estructura; preparar; montar; preocuparse por",
         onyomi = listOf("コウ"),
         kunyomi = listOf("かま.える", "かま.う"),
         strokeCount = 14
     ),
     N3KanjiEntry(
         character = "割",
-        meaningEs = "dividir; distribuir; proporción; separar; fracturar",
+        meaningEs = "dividir; repartir; proporción",
         onyomi = listOf("カツ"),
         kunyomi = listOf("わ.る", "わり", "わ.り", "わ.れる", "さ.く"),
         strokeCount = 12
@@ -843,21 +843,21 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "由",
-        meaningEs = "razón; significado; causa",
+        meaningEs = "razón; motivo; causa",
         onyomi = listOf("ユ", "ユウ", "ユイ"),
         kunyomi = listOf("よし", "よ.る"),
         strokeCount = 5
     ),
     N3KanjiEntry(
         character = "難",
-        meaningEs = "desastre; dificultad; sufrimiento; ataque al punto débil; difícil; imposible",
+        meaningEs = "dificultad; problema; difícil",
         onyomi = listOf("ナン"),
         kunyomi = listOf("かた.い", "-がた.い", "むずか.しい", "むづか.しい", "むつか.しい", "-にく.い"),
         strokeCount = 18
     ),
     N3KanjiEntry(
         character = "優",
-        meaningEs = "excelente; sobresaliente; especial; papel; función; elegante; tierno; amable; cariñoso; sobrepasar; dejar atrás; sobresalir",
+        meaningEs = "excelente; superior; amable; gentil",
         onyomi = listOf("ユウ", "ウ"),
         kunyomi = listOf("やさ.しい", "すぐ.れる", "まさ.る"),
         strokeCount = 17
@@ -871,14 +871,14 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "収",
-        meaningEs = "ingresar; obtener; recibir; almacenar; aceptar; ser obtenido; ser pagado",
+        meaningEs = "recoger; almacenar; obtener; recibir",
         onyomi = listOf("シュウ"),
         kunyomi = listOf("おさ.める", "おさ.まる"),
         strokeCount = 4
     ),
     N3KanjiEntry(
         character = "断",
-        meaningEs = "cortar; interrumpir; rehusar; declinar; rechazar",
+        meaningEs = "cortar; interrumpir; rechazar; negarse",
         onyomi = listOf("ダン"),
         kunyomi = listOf("た.つ", "ことわ.る", "さだ.める"),
         strokeCount = 11
