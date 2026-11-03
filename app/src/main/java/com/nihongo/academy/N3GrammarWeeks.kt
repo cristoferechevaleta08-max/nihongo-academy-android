@@ -278,11 +278,82 @@ internal val n3ConditionalAssessment = listOf(
     KanaQuizQuestion("¿Qué debes considerar para elegir entre ば, たら, なら y と?", listOf("El contexto y la relación entre condición y resultado", "Solo la longitud de la frase", "Únicamente el tiempo pasado", "El número de kanji"), 0)
 )
 
+
+ 
+// Quinta unidad gramatical N3: tiempo, simultaneidad y oportunidades.
+internal val n3TimeExpressionsDays = listOf(
+    KanaDay(1, "間: durante todo un periodo", "Usar 間 para indicar que una situación continúa durante el intervalo completo.",
+        listOf(
+            "Reconocer la estructura: verbo en forma diccionario o ている + 間.",
+            "Practicar 母が料理をしている間、私は勉強しました.",
+            "Entender que la acción principal ocurre a lo largo del periodo indicado.",
+            "Comparar 間 con 間に: duración completa frente a un hecho dentro del intervalo."
+        )),
+    KanaDay(2, "間に: algo sucede dentro del intervalo", "Usar 間に cuando una acción o cambio ocurre en algún momento del periodo.",
+        listOf(
+            "Practicar 母が出かけている間に、部屋を掃除しました.",
+            "Identificar el evento delimitado que sucede dentro del intervalo.",
+            "Distinguir 間に de 間: no se afirma que el evento dure todo el periodo.",
+            "Crear ejemplos con vacaciones, ausencia y tiempo libre."
+        )),
+    KanaDay(3, "うちに: mientras aún se puede", "Expresar que conviene actuar antes de que cambie una condición o se pierda una oportunidad.",
+        listOf(
+            "Practicar 若いうちに、いろいろな経験をしたいです.",
+            "Usar verbo en forma diccionario, ない o ている + うちに según el sentido.",
+            "Reconocer cambios graduales o una ventana de oportunidad.",
+            "Comparar うちに con 間に: うちに destaca actuar antes de que la situación cambie."
+        )),
+    KanaDay(4, "たびに: cada vez que", "Expresar que un hecho se repite cada vez que ocurre otro.",
+        listOf(
+            "Practicar この写真を見るたびに、旅行を思い出します.",
+            "Usar verbo en forma diccionario + たびに.",
+            "Practicar sustantivo + の + たびに.",
+            "Distinguir una repetición sistemática de un solo evento ocurrido durante un intervalo."
+        )),
+    KanaDay(5, "途中で y 途中に: en medio de", "Situar un evento durante el desarrollo de una actividad, trayecto o proceso.",
+        listOf(
+            "Practicar 学校へ行く途中で、友だちに会いました.",
+            "Usar verbo en forma diccionario + 途中で para un proceso en curso.",
+            "Reconocer sustantivo + の + 途中で.",
+            "Observar que 途中に puede señalar un punto o momento intermedio, según el contexto."
+        )),
+    KanaDay(6, "Comparar expresiones temporales", "Elegir la estructura según duración, evento interno, oportunidad, repetición o proceso interrumpido.",
+        listOf(
+            "Contrastar 間 y 間に con ejemplos de una misma situación.",
+            "Elegir うちに cuando importa actuar antes de un cambio.",
+            "Elegir たびに para una relación repetida cada vez.",
+            "Usar 途中で para un encuentro o suceso durante un trayecto o actividad."
+        )),
+    KanaDay(7, "Repaso y evaluación de expresiones temporales", "Integrar las cinco construcciones y explicar sus diferencias.",
+        listOf(
+            "Identificar el intervalo completo expresado por 間.",
+            "Localizar un evento dentro de un intervalo con 間に.",
+            "Distinguir oportunidad con うちに y repetición con たびに.",
+            "Completar la evaluación semanal y revisar los errores."
+        ))
+)
+
+internal val n3TimeExpressionsAssessment = listOf(
+    KanaQuizQuestion("¿Qué expresa 間 en 母が料理をしている間?", listOf("Durante todo el periodo en que cocina", "Cada vez que cocina", "Antes de que cocine", "En medio del camino"), 0),
+    KanaQuizQuestion("¿Qué matiz aporta 間に?", listOf("Un hecho ocurre en algún momento del intervalo", "La acción dura necesariamente todo el intervalo", "Una acción se repite cada vez", "Una condición ya terminó"), 0),
+    KanaQuizQuestion("¿Qué expresa うちに en 若いうちに?", listOf("Mientras aún se es joven, antes de que cambie la situación", "Cada vez que se es joven", "En medio de un viaje", "Durante todo el día sin excepción"), 0),
+    KanaQuizQuestion("¿Qué estructura significa cada vez que?", listOf("たびに", "間", "途中で", "うちに"), 0),
+    KanaQuizQuestion("¿Cuál es una forma correcta con たびに?", listOf("見るたびに", "見た間", "見て途中", "見るうち"), 0),
+    KanaQuizQuestion("¿Qué expresa 学校へ行く途中で友だちに会いました?", listOf("Me encontré con un amigo de camino a la escuela", "Vi a un amigo cada vez que fui", "Estuve con un amigo durante todo el día", "Vi a un amigo antes de salir de casa"), 0),
+    KanaQuizQuestion("¿Qué construcción destaca actuar antes de que una condición cambie?", listOf("うちに", "たびに", "途中で", "間"), 0),
+    KanaQuizQuestion("¿Qué opción expresa un evento puntual dentro del tiempo en que alguien está fuera?", listOf("出かけている間に", "出かけているたびに", "出かけている途中", "出かけている間から"), 0),
+    KanaQuizQuestion("¿Cómo se conecta un sustantivo con たびに?", listOf("Sustantivo + の + たびに", "Sustantivo + を + たびに", "Sustantivo + が + たびに", "Sustantivo + で + たびに"), 0),
+    KanaQuizQuestion("¿Qué diferencia principal hay entre 間 y 間に?", listOf("間 indica el periodo; 間に sitúa un hecho dentro de él", "Son siempre intercambiables", "間 solo se usa en futuro", "間に solo se usa con sustantivos"), 0),
+    KanaQuizQuestion("¿Qué expresión encaja con 'cada vez que veo esta foto'?", listOf("この写真を見るたびに", "この写真を見る間", "この写真を見る途中で", "この写真を見る間に"), 0),
+    KanaQuizQuestion("¿Qué expresión se usa para un suceso en medio de un trayecto?", listOf("途中で", "たびに", "うちに", "間に"), 0)
+)
+
 internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
     1 -> n3PassiveVoiceDays
     2 -> n3CausativeDays
     3 -> n3GivingReceivingDays
     4 -> n3ConditionalDays
+    5 -> n3TimeExpressionsDays
     else -> emptyList()
 }
 
@@ -291,5 +362,6 @@ internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = whe
     2 -> n3CausativeAssessment
     3 -> n3GivingReceivingAssessment
     4 -> n3ConditionalAssessment
+    5 -> n3TimeExpressionsAssessment
     else -> emptyList()
 }
