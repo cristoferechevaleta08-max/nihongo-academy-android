@@ -212,10 +212,11 @@ var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
 var tab by remember{mutableStateOf("Inicio")}
 val scheme=if(dark)darkColorScheme(primary=androidx.compose.ui.graphics.Color(0xFFE7A8B8),secondary=androidx.compose.ui.graphics.Color(0xFFD6B56D),background=androidx.compose.ui.graphics.Color(0xFF101014),surface=androidx.compose.ui.graphics.Color(0xFF1B1B22))else lightColorScheme(primary=androidx.compose.ui.graphics.Color(0xFF9E5268),secondary=androidx.compose.ui.graphics.Color(0xFF856B34))
-MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
+MaterialTheme(colorScheme=scheme){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Kanji","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Kanji"->"漢";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
 when(tab){
 "Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
+"Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
 "Plan"->StudyPlanScreen(ds,Modifier.padding(p))
 "Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
