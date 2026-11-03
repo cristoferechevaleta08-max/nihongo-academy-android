@@ -88,7 +88,7 @@ class N4StudyPlanTest {
         assertEquals(60, failed.lastScoreByWeek[2])
         val passed = submitN4WeeklyAssessment(failed, 75)
         assertEquals(3, passed.currentWeek)
-        assertEquals(1, passed.attemptsByWeek[2])
+        assertEquals(2, passed.attemptsByWeek[2])
     }
 
     @Test(expected = IllegalArgumentException::class)
