@@ -1,6 +1,9 @@
 package com.nihongo.academy
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
@@ -39,6 +45,7 @@ internal fun N5KanjiScreen(
     }.collectAsState(initial = emptyMap())
 
     var selected by remember { mutableStateOf<N5KanjiEntry?>(null) }
+    var writingEntry by remember { mutableStateOf<N5KanjiEntry?>(null) }
     var query by remember { mutableStateOf("") }
     var onlyPending by remember { mutableStateOf(false) }
     var reviewQueue by remember { mutableStateOf<List<N5KanjiEntry>>(emptyList()) }
@@ -59,6 +66,74 @@ internal fun N5KanjiScreen(
         answerRevealed = false
         reviewFinished = entries.isEmpty()
         selected = null
+    }
+
+    if (writingEntry != null) {
+        val entry = writingEntry!!
+        var strokes by remember(entry.character) {
+            mutableStateOf<List<List<Offset>>>(emptyList())
+        }
+        Column(
+            modifier.fillMaxSize().padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            TextButton(onClick = { writingEntry = null }) { Text("← Volver a la ficha") }
+            Text("Escritura de kanji N5", color = MaterialTheme.colorScheme.primary)
+            Text(entry.character, style = MaterialTheme.typography.headlineMedium)
+            Text("Trazá el carácter siguiendo el modelo.")
+            Box(
+                Modifier.fillMaxWidth()
+                    .weight(1f)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp))
+                    .pointerInput(entry.character) {
+                        detectDragGestures(
+                            onDragStart = { point -> strokes = strokes + listOf(listOf(point)) },
+                            onDrag = { change, _ ->
+                                change.consume()
+                                if (strokes.isNotEmpty()) {
+                                    strokes = strokes.dropLast(1) + listOf(strokes.last() + change.position)
+                                }
+                            }
+                        )
+                    }
+            ) {
+                Text(
+                    entry.character,
+                    modifier = Modifier.align(Alignment.Center),
+                    style = MaterialTheme.typography.displayLarge,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
+                )
+                Canvas(Modifier.fillMaxSize()) {
+                    strokes.forEach { line ->
+                        line.zipWithNext().forEach { (start, end) ->
+                            drawLine(
+                                color = MaterialTheme.colorScheme.primary,
+                                start = start,
+                                end = end,
+                                strokeWidth = 12f,
+                                cap = StrokeCap.Round
+                            )
+                        }
+                    }
+                }
+            }
+            Text(
+                "Práctica de trazado libre. La evaluación automática del orden exacto de los trazos se incorporará después.",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                OutlinedButton(
+                    onClick = { strokes = emptyList() },
+                    modifier = Modifier.weight(1f)
+                ) { Text("Borrar") }
+                Button(
+                    onClick = { writingEntry = null },
+                    modifier = Modifier.weight(1f)
+                ) { Text("Terminar") }
+            }
+        }
+        return
     }
 
     if (reviewQueue.isNotEmpty() || reviewFinished) {
@@ -225,6 +300,10 @@ internal fun N5KanjiScreen(
                 onClick = { startReview(listOf(entry)) },
                 modifier = Modifier.fillMaxWidth()
             ) { Text("Practicar este kanji") }
+            OutlinedButton(
+                onClick = { writingEntry = entry },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text("Practicar escritura") }
         }
         return
     }
