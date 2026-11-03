@@ -140,14 +140,85 @@ internal val n3CausativeAssessment = listOf(
     KanaQuizQuestion("¿La causativa-pasiva suele expresar qué matiz?", listOf("Que alguien se ve obligado o puesto en situación de hacer algo", "Que alguien recibe un elogio", "Que algo ocurrió espontáneamente", "Que una acción es posible"), 0)
 )
 
+
+// Tercera unidad gramatical N3: dar, recibir y expresar consideración.
+internal val n3GivingReceivingDays = listOf(
+    KanaDay(1, "Perspectiva de dar y recibir", "Elegir la expresión según quién ofrece, quién recibe y desde qué punto de vista se habla.",
+        listOf(
+            "Distinguir あげる (ageru), くれる (kureru) y もらう (morau).",
+            "Identificar al dador y al receptor antes de elegir el verbo.",
+            "Observar cómo cambia la perspectiva cuando el receptor es el hablante o alguien cercano.",
+            "Comparar 友だちに本をあげました y 友だちが本をくれました."
+        )),
+    KanaDay(2, "あげる y くれる", "Expresar que alguien da algo, con especial atención a la perspectiva del hablante.",
+        listOf(
+            "Usar あげる cuando el hablante describe dar algo a otra persona.",
+            "Usar くれる cuando otra persona da algo al hablante o a alguien de su entorno.",
+            "Practicar el orden persona + に + objeto + を + verbo.",
+            "Evitar intercambiar あげる y くれる sin revisar quién recibe."
+        )),
+    KanaDay(3, "もらう y la persona de quien se recibe", "Describir la recepción de algo y señalar su origen.",
+        listOf(
+            "Practicar 友だちにプレゼントをもらいました.",
+            "Reconocer に y から como marcadores posibles del origen según el contexto.",
+            "Comparar la misma situación desde la perspectiva de quien da y quien recibe.",
+            "Crear ejemplos con objetos cotidianos."
+        )),
+    KanaDay(4, "Acciones realizadas por otros: てあげる", "Expresar que uno hace algo por otra persona.",
+        listOf(
+            "Formar verbo en て + あげる.",
+            "Practicar 妹に宿題を教えてあげました.",
+            "Reconocer que puede sonar paternalista si se usa sin cuidado con superiores o desconocidos.",
+            "Elegir expresiones más neutrales o respetuosas cuando la relación lo requiera."
+        )),
+    KanaDay(5, "Acciones recibidas: てくれる y てもらう", "Expresar ayuda o beneficio recibido desde dos perspectivas.",
+        listOf(
+            "Usar てくれる para destacar que alguien hace algo por el hablante o su grupo.",
+            "Usar てもらう para destacar que el hablante recibe el favor o consigue que se haga algo.",
+            "Comparar 友だちが手伝ってくれた y 友だちに手伝ってもらった.",
+            "Identificar el matiz de gratitud y beneficio en el contexto."
+        )),
+    KanaDay(6, "Peticiones, favores y consideración", "Usar las construcciones de beneficio con tacto y adecuación interpersonal.",
+        listOf(
+            "Distinguir una descripción de un favor de una petición directa.",
+            "Reconocer てくれませんか y てもらえませんか como formas de pedir ayuda.",
+            "Practicar respuestas de aceptación y agradecimiento.",
+            "Evitar usar てあげる para ofrecer ayuda a un superior si puede resultar condescendiente."
+        )),
+    KanaDay(7, "Repaso y evaluación de dar y recibir", "Integrar perspectiva, partículas y expresiones de beneficio.",
+        listOf(
+            "Identificar dador, receptor y beneficiario en cada oración.",
+            "Transformar ejemplos entre あげる, くれる y もらう.",
+            "Distinguir てあげる, てくれる y てもらう.",
+            "Completar la evaluación semanal y revisar los errores."
+        ))
+)
+
+internal val n3GivingReceivingAssessment = listOf(
+    KanaQuizQuestion("¿Qué verbo suele usarse cuando el hablante da algo a otra persona?", listOf("あげる (ageru)", "くれる (kureru)", "もらう (morau)", "なる (naru)"), 0),
+    KanaQuizQuestion("¿Qué verbo suele usarse cuando alguien da algo al hablante?", listOf("くれる (kureru)", "あげる (ageru)", "もらう (morau)", "する (suru)"), 0),
+    KanaQuizQuestion("¿Qué verbo expresa recibir algo?", listOf("もらう (morau)", "あげる (ageru)", "くれる (kureru)", "行く (iku)"), 0),
+    KanaQuizQuestion("En 友だちが本をくれました, ¿quién recibe el libro?", listOf("El hablante o alguien de su entorno", "El amigo", "Una tercera persona desconocida", "Nadie"), 0),
+    KanaQuizQuestion("¿Qué construcción expresa hacer algo por otra persona?", listOf("てあげる", "てくれる", "てもらう", "てしまう"), 0),
+    KanaQuizQuestion("¿Qué construcción destaca que alguien hace algo por el hablante?", listOf("てくれる", "てあげる", "てしまう", "ておく"), 0),
+    KanaQuizQuestion("¿Qué construcción destaca que el hablante recibe el favor?", listOf("てもらう", "てあげる", "てしまう", "てみる"), 0),
+    KanaQuizQuestion("¿Qué partícula puede marcar a la persona de quien se recibe algo?", listOf("に", "を", "で", "へ"), 0),
+    KanaQuizQuestion("¿Cuál es una forma de pedir ayuda con respeto?", listOf("手伝ってもらえませんか", "手伝ってあげました", "手伝ってしまいました", "手伝っておきます"), 0),
+    KanaQuizQuestion("¿Por qué conviene evitar てあげる con superiores en ciertos contextos?", listOf("Puede sonar condescendiente", "Siempre es gramaticalmente incorrecto", "Solo se usa en pasado", "Indica obligación"), 0),
+    KanaQuizQuestion("¿Qué debes identificar antes de elegir あげる, くれる o もらう?", listOf("Quién da, quién recibe y la perspectiva", "Solo el tiempo verbal", "El número de sílabas", "El lugar de la acción"), 0),
+    KanaQuizQuestion("¿Qué expresa 手伝ってくれてありがとう?", listOf("Gracias por ayudarme", "Voy a ayudarte", "Te obligué a ayudar", "Recibí un objeto"), 0)
+)
+
 internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
     1 -> n3PassiveVoiceDays
     2 -> n3CausativeDays
+    3 -> n3GivingReceivingDays
     else -> emptyList()
 }
 
 internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = when (week) {
     1 -> n3PassiveVoiceAssessment
     2 -> n3CausativeAssessment
+    3 -> n3GivingReceivingAssessment
     else -> emptyList()
 }
