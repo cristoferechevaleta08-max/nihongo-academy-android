@@ -209,10 +209,80 @@ internal val n3GivingReceivingAssessment = listOf(
     KanaQuizQuestion("¿Qué expresa 手伝ってくれてありがとう?", listOf("Gracias por ayudarme", "Voy a ayudarte", "Te obligué a ayudar", "Recibí un objeto"), 0)
 )
 
+
+// Cuarta unidad gramatical N3: condiciones y supuestos.
+internal val n3ConditionalDays = listOf(
+    KanaDay(1, "Panorama de las cuatro condiciones", "Distinguir ば, たら, なら y と según el tipo de relación entre condición y resultado.",
+        listOf(
+            "Identificar la condición y el resultado en una oración.",
+            "Reconocer ば como condición lógica o general en muchos contextos.",
+            "Reconocer たら como condición o situación que se cumple primero.",
+            "Relacionar なら con un tema o supuesto ya planteado y と con resultados naturales o habituales."
+        )),
+    KanaDay(2, "Formación de ば", "Conjugar verbos y adjetivos para expresar una condición.",
+        listOf(
+            "Practicar verbos godan: 書く → 書けば y 読む → 読めば.",
+            "Practicar verbos ichidan: 食べる → 食べれば y 見る → 見れば.",
+            "Aprender las formas irregulares する → すれば y 来る → くれば.",
+            "Reconocer adjetivos い: 安い → 安ければ; y sustantivos/adjetivos な con なら."
+        )),
+    KanaDay(3, "Formación y uso de たら", "Usar la forma pasada informal más ら para condiciones y acciones previas.",
+        listOf(
+            "Formar 書いたら, 読んだら y 買ったら.",
+            "Formar 食べたら, したら y 来たら.",
+            "Practicar instrucciones y propuestas después de una condición cumplida.",
+            "Distinguir たら condicional de una secuencia temporal según el contexto."
+        )),
+    KanaDay(4, "Uso de なら", "Presentar una condición basada en información, tema o supuesto previo.",
+        listOf(
+            "Practicar 日本へ行くなら、京都もおすすめです.",
+            "Usar sustantivo + なら y adjetivo な + なら.",
+            "Observar que なら suele tomar como punto de partida algo mencionado o supuesto.",
+            "Comparar consejos con なら frente a condiciones generales con ば."
+        )),
+    KanaDay(5, "Uso de と", "Expresar resultados naturales, automáticos o habituales cuando se cumple una condición.",
+        listOf(
+            "Practicar 春になると、花が咲きます.",
+            "Usar la forma diccionario o negativa antes de と.",
+            "Reconocer instrucciones de uso y relaciones causa-resultado habituales.",
+            "Evitar usar と normalmente para órdenes, invitaciones o decisiones voluntarias del hablante en la cláusula principal."
+        )),
+    KanaDay(6, "Comparación en diálogos", "Elegir la condición adecuada según intención, contexto y tipo de resultado.",
+        listOf(
+            "Comparar 雨が降れば, 雨が降ったら, 雨なら y 雨が降ると.",
+            "Identificar cuándo se da un consejo, una secuencia o un resultado natural.",
+            "Completar diálogos breves con la forma condicional adecuada.",
+            "Explicar por qué una opción no encaja con la intención comunicativa."
+        )),
+    KanaDay(7, "Repaso y evaluación de condiciones", "Consolidar la formación y los matices de las cuatro estructuras.",
+        listOf(
+            "Conjugar verbos en ば y たら.",
+            "Distinguir el supuesto contextual de なら y el resultado natural de と.",
+            "Revisar restricciones frecuentes en la cláusula principal.",
+            "Completar la evaluación semanal y corregir los errores."
+        ))
+)
+
+internal val n3ConditionalAssessment = listOf(
+    KanaQuizQuestion("¿Cuál es la forma ば de 書く?", listOf("書けば", "書いたら", "書くと", "書いて"), 0),
+    KanaQuizQuestion("¿Cuál es la forma ば de 食べる?", listOf("食べれば", "食べたら", "食べると", "食べて"), 0),
+    KanaQuizQuestion("¿Cuál es la forma ば de する?", listOf("すれば", "したら", "すると", "して"), 0),
+    KanaQuizQuestion("¿Cómo se forma normalmente たら a partir de 読む?", listOf("読んだら", "読めば", "読むと", "読んで"), 0),
+    KanaQuizQuestion("¿Qué matiz suele tener なら?", listOf("Parte de un tema o supuesto planteado", "Siempre indica una consecuencia automática", "Solo expresa pasado", "Siempre indica una orden"), 0),
+    KanaQuizQuestion("¿Qué relación suele expresar と?", listOf("Un resultado natural o habitual", "Una petición cortés", "Una acción recibida como favor", "Una experiencia pasada aislada"), 0),
+    KanaQuizQuestion("¿Cuál es una frase natural para un resultado habitual?", listOf("春になると、花が咲きます", "春になると、いっしょに行きませんか", "春になると、手伝ってください", "春になると、行きましょう"), 0),
+    KanaQuizQuestion("¿Qué forma condicional se usa en 日本へ行くなら、京都もおすすめです?", listOf("なら", "ば", "と", "たら"), 0),
+    KanaQuizQuestion("¿Cuál es la forma たら de 来る?", listOf("来たら", "くれば", "来ると", "来て"), 0),
+    KanaQuizQuestion("¿Qué estructura suele evitarse con と en la cláusula principal?", listOf("Una orden o invitación del hablante", "Un resultado natural", "Un hecho habitual", "Una consecuencia automática"), 0),
+    KanaQuizQuestion("¿Cuál es la forma ば de 安い?", listOf("安ければ", "安かったら", "安いと", "安くて"), 0),
+    KanaQuizQuestion("¿Qué debes considerar para elegir entre ば, たら, なら y と?", listOf("El contexto y la relación entre condición y resultado", "Solo la longitud de la frase", "Únicamente el tiempo pasado", "El número de kanji"), 0)
+)
+
 internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
     1 -> n3PassiveVoiceDays
     2 -> n3CausativeDays
     3 -> n3GivingReceivingDays
+    4 -> n3ConditionalDays
     else -> emptyList()
 }
 
@@ -220,5 +290,6 @@ internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = whe
     1 -> n3PassiveVoiceAssessment
     2 -> n3CausativeAssessment
     3 -> n3GivingReceivingAssessment
+    4 -> n3ConditionalAssessment
     else -> emptyList()
 }
