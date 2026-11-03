@@ -3,7 +3,7 @@ package com.nihongo.academy
 /**
  * Semanas 11–12 del Anexo E del PDF.
  *
- * El documento pide diálogos cortos N5 y un simulacro completo cronometrado.
+ * El plan incorpora diálogos N5 originales y una evaluación integrada breve de práctica.
  * Los guiones y preguntas de escucha son originales y se integran en la pestaña Escucha.
  * La voz se genera mediante el motor TTS japonés local si está instalado en el dispositivo.
  */
@@ -27,7 +27,7 @@ internal val n5FinalWeeks = listOf(
         "Repetir los audios que necesiten más práctica."
     )),
     KanaDay(74, "Comprensión de diálogos", "Practicar la comprensión general de diálogos cortos del nivel N5.", listOf(
-        "Escuchar un diálogo corto nuevo del banco validado.",
+        "Escuchar un diálogo nuevo de los seis diálogos originales.",
         "Intentar comprenderlo sin detener el audio.",
         "Volver a escucharlo y comprobar la comprensión con el material asociado.",
         "Guardar los errores para repasarlos."
@@ -52,7 +52,7 @@ internal val n5FinalWeeks = listOf(
     KanaDay(78, "Preparación del simulacro completo", "Organizar el repaso final de las áreas N5 antes del examen completo.", listOf(
         "Repasar vocabulario estudiado en las semanas anteriores.",
         "Repasar gramática y lectura de las unidades completadas.",
-        "Repasar kanji y sus lecturas cuando el banco validado esté disponible.",
+        "Repasar el catálogo N5 de kanji y sus lecturas.",
         "Revisar el cuaderno de errores."
     )),
     KanaDay(79, "Repaso de vocabulario", "Preparar la sección de vocabulario del simulacro N5.", listOf(
@@ -73,19 +73,19 @@ internal val n5FinalWeeks = listOf(
         "Revisar las dudas guardadas durante la semana 11.",
         "Preparar el examen sin consultar el material durante la prueba."
     )),
-    KanaDay(82, "Preparación cronometrada", "Preparar el simulacro completo con los tiempos oficiales de referencia.", listOf(
+    KanaDay(82, "Preparación cronometrada", "Preparar la evaluación integrada breve de práctica N5.", listOf(
         "Revisar la distribución de tiempo de las secciones N5.",
         "Preparar un entorno sin interrupciones ni consultas.",
-        "Comprobar que el material de las tres secciones esté disponible.",
+        "Comprobar que el material de vocabulario, gramática, lectura y escucha esté disponible.",
         "Revisar las instrucciones antes de comenzar."
     )),
-    KanaDay(83, "Simulacro integrado de práctica N5", "Realizar la práctica integrada de 30 preguntas con la práctica integrada de 30 preguntas disponible.", listOf(
+    KanaDay(83, "Simulacro integrado de práctica N5", "Realizar la evaluación integrada breve de 30 preguntas.", listOf(
         "Completar vocabulario en el tiempo asignado.",
         "Completar gramática y lectura en el tiempo asignado.",
         "Completar comprensión auditiva con los audios correspondientes.",
         "Finalizar el simulacro sin consultar el material."
     )),
-    KanaDay(84, "Revisión del cuaderno de errores", "Revisar los errores del simulacro completo y definir qué reforzar.", listOf(
+    KanaDay(84, "Revisión del cuaderno de errores", "Revisar los errores de la evaluación integrada y definir qué reforzar.", listOf(
         "Revisar las respuestas incorrectas del simulacro.",
         "Clasificar los errores por sección.",
         "Repasar los contenidos que presentaron dificultad.",
