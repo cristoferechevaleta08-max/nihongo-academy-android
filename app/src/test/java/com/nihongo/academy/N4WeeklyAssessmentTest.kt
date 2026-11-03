@@ -8,7 +8,7 @@ import kotlin.random.Random
 
 class N4WeeklyAssessmentTest {
     @Test fun everyWeekHasARealAssessmentWithValidQuestions() {
-        val expectedCounts = listOf(8, 8, 8, 8, 8, 6, 8, 8, 10, 10, 10, 18, 9, 15, 20, 30)
+        val expectedCounts = listOf(8, 8, 8, 8, 8, 6, 8, 7, 10, 10, 10, 18, 9, 15, 20, 30)
         (1..N4_PLAN_WEEKS).forEach { week ->
             val questions = buildN4WeeklyAssessment(week, Random(week))
             assertEquals("week $week question count", expectedCounts[week - 1], questions.size)
