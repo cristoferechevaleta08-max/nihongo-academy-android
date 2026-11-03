@@ -29,7 +29,6 @@ private fun n4KanjiSrsKey(c:String)=stringPreferencesKey("n4_kanji_srs_$c")
 @Composable
 internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Modifier){
  val scope= rememberCoroutineScope()
- val plan by dataStore.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
  val learned by dataStore.data.map{it[n4KanjiLearnedKey]?:emptySet()}.collectAsState(initial=emptySet())
  val best by dataStore.data.map{it[n4KanjiBestExamKey]?:0}.collectAsState(initial=0)
  val states by dataStore.data.map{p->n4KanjiCatalog.mapNotNull{e->p[n4KanjiSrsKey(e.character)]?.let{v->KanjiReviewState.decode(v)?.let{e.character to it}}}.toMap()}.collectAsState(initial=emptyMap())
@@ -46,15 +45,6 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
  var examDone by remember{mutableStateOf(false)}
  val now=System.currentTimeMillis()
  val due=n4KanjiCatalog.filter{states[it.character]?.nextReviewAt?.let{x->x<=now} ?: (it.character !in learned)}
- if(!plan.isPlanComplete){
-  Column(modifier.fillMaxSize().padding(24.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
-   Text("Kanji N4 bloqueados",style=MaterialTheme.typography.headlineSmall)
-   Text("Primero completá el plan de 12 semanas N5. Tu progreso de N4 se conservará en este dispositivo.")
-   LinearProgressIndicator(progress={plan.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
-   Text("Semanas N5 aprobadas: ${plan.completedWeeks.size} / 12")
-  }
-  return
- }
  if(exam.isNotEmpty()){
   if(examDone){
    Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement=Arrangement.spacedBy(14.dp),horizontalAlignment=Alignment.CenterHorizontally){
