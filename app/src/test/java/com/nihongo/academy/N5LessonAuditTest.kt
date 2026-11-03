@@ -121,14 +121,12 @@ class N5LessonAuditTest {
     }
 
     @Test
-    fun lessonsUnlockOnlyAfterTheImmediatelyPreviousLessonIsCompleted() {
+    fun testEditionUnlocksEveryPublishedLessonRegardlessOfProgress() {
         assertTrue(isLessonUnlocked("n5-u01", emptySet()))
-        assertFalse(isLessonUnlocked("n5-u02", emptySet()))
-        assertTrue(isLessonUnlocked("n5-u02", setOf("n5-u01")))
-        assertFalse(isLessonUnlocked("n5-u03", setOf("n5-u01")))
-        assertTrue(isLessonUnlocked("n5-u03", setOf("n5-u01", "n5-u02")))
-        assertFalse(isLessonUnlocked("n4-u01", (1..9).map { "n5-u%02d".format(it) }.toSet()))
-        assertTrue(isLessonUnlocked("n4-u01", (1..10).map { "n5-u%02d".format(it) }.toSet()))
+        assertTrue(isLessonUnlocked("n5-u02", emptySet()))
+        assertTrue(isLessonUnlocked("n5-u03", emptySet()))
+        assertTrue(isLessonUnlocked("n4-u01", emptySet()))
+        assertFalse(isLessonUnlocked("lesson-not-published", emptySet()))
     }
 
     @Test
