@@ -436,9 +436,12 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
 @Composable private fun LessonPage(lesson:Lesson,showRomaji:Boolean,back:()->Unit,finish:(Set<String>,Boolean)->Unit){
 var index by remember{mutableIntStateOf(0)}
 var choice by remember{mutableIntStateOf(-1)}
-var correct by remember{mutableIntStateOf(0)}var answered by remember{mutableStateOf(false)}
-val wrong=remember{mutableStateListOf<String>()}val correctExercises=remember(lesson.id){mutableStateListOf<Int>()}
-val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
+var correct by remember{mutableIntStateOf(0)}
+var answered by remember{mutableStateOf(false)}
+val wrong=remember{mutableStateListOf<String>()}
+val correctExercises=remember(lesson.id){mutableStateListOf<Int>()}
+val exerciseOrder=remember(lesson.id){mutableStateListOf<Int>().apply{addAll(lesson.exercises.indices)}}
+val repeatedExercises=remember(lesson.id){mutableSetOf<Int>()}
 val currentExerciseIndex=exerciseOrder[index]
 val q=lesson.exercises[currentExerciseIndex]
 val optionOrder=remember(lesson.id,currentExerciseIndex){q.options.indices.shuffled()}
