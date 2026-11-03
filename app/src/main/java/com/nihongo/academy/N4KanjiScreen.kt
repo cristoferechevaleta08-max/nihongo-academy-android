@@ -73,6 +73,10 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
     Text(e.display,style=MaterialTheme.typography.displayLarge)
     Text(e.prompt)
     e.options.forEach{o->OutlinedButton(onClick={examChoice=o},enabled=examChoice==null,modifier=Modifier.fillMaxWidth()){Text(o)}}
+    if(examChoice!=null){
+     Text(if(examChoice==e.answer)"¡Correcto!" else "Respuesta correcta: ${e.answer}",color=MaterialTheme.colorScheme.primary)
+     Text(e.explanation,color=MaterialTheme.colorScheme.onSurfaceVariant)
+    }
     Button(enabled=examChoice!=null,onClick={
      val score=examScore+if(examChoice==e.answer)1 else 0
      examScore=score;examChoice=null
