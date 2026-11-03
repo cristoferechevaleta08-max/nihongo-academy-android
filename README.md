@@ -42,7 +42,9 @@ Aplicación Android nativa en desarrollo, con interfaz en español.
 - Semana 12: comprensión auditiva; semana 13: comprensión lectora.
 - Semanas 14–16: integración, recuperación de errores y cierre.
 - Requiere completar las 12 semanas N5 para habilitar la ruta.
-- La vista actual presenta el calendario y las actividades; la evaluación semanal y el guardado del avance N4 todavía deben integrarse antes de habilitar aprobaciones.
+- Evaluaciones semanales reales: unidades N4 (semanas 1–8), tres bloques de kanji (9–11), escucha (12), lectura (13) y evaluaciones integradas (14–16).
+- Se aprueba cada semana con 70% o más; los intentos y resultados se guardan localmente con DataStore, con opción de pausar y reanudar.
+- El acceso al plan N4 y sus evaluaciones requiere completar las 12 semanas N5.
 
 ## Alcance y limitaciones
 - Los 181 kanji N4 constituyen una selección pedagógica de la aplicación, no una lista oficial cerrada publicada por JLPT.
