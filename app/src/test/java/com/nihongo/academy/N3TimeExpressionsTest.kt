@@ -28,10 +28,12 @@ class N3TimeExpressionsTest {
         }
     }
 
-    @Test fun fifthWeekRoutesCorrectlyAndSixthWeekRemainsEmpty() {
+    @Test fun fifthWeekRoutesCorrectlyAndSixthWeekRoutesToCauseLessons() {
         assertEquals(n3TimeExpressionsDays, n3GrammarDaysForWeek(5))
         assertEquals(n3TimeExpressionsAssessment, n3GrammarAssessmentForWeek(5))
-        assertTrue(n3GrammarDaysForWeek(6).isEmpty())
-        assertTrue(n3GrammarAssessmentForWeek(6).isEmpty())
+        assertEquals(n3CauseReasonResultDays, n3GrammarDaysForWeek(6))
+        assertEquals(n3CauseReasonResultAssessment, n3GrammarAssessmentForWeek(6))
+        assertTrue(n3GrammarDaysForWeek(7).isEmpty())
+        assertTrue(n3GrammarAssessmentForWeek(7).isEmpty())
     }
 }
