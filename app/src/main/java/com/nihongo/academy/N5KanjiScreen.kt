@@ -40,13 +40,13 @@ internal fun N5KanjiScreen(
         .collectAsState(initial = emptySet())
     val bestExamScore by dataStore.data.map { it[n5KanjiBestExamKey] ?: 0 }
         .collectAsState(initial = 0)
-    val reviewStates by dataStore.data.map { prefs ->
+    val reviewStates: Map<String, KanjiReviewState> by dataStore.data.map { prefs ->
         n5KanjiCatalog.mapNotNull { entry ->
             prefs[n5KanjiSrsKey(entry.character)]?.let { stored ->
                 KanjiReviewState.decode(stored)?.let { entry.character to it }
             }
         }.toMap()
-    }.collectAsState(initial = emptyMap())
+    }.collectAsState(initial = emptyMap<String, KanjiReviewState>())
 
     var selected by remember { mutableStateOf<N5KanjiEntry?>(null) }
     var writingEntry by remember { mutableStateOf<N5KanjiEntry?>(null) }
@@ -175,6 +175,8 @@ internal fun N5KanjiScreen(
             Text("Escritura de kanji N5", color = MaterialTheme.colorScheme.primary)
             Text(entry.character, style = MaterialTheme.typography.headlineMedium)
             Text("Trazá el carácter siguiendo el modelo.")
+            val writingGuideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
+            val writingStrokeColor = MaterialTheme.colorScheme.primary
             Box(
                 Modifier.fillMaxWidth()
                     .weight(1f)
@@ -195,13 +197,13 @@ internal fun N5KanjiScreen(
                     entry.character,
                     modifier = Modifier.align(Alignment.Center),
                     style = MaterialTheme.typography.displayLarge,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
+                    color = writingGuideColor
                 )
                 Canvas(Modifier.fillMaxSize()) {
                     strokes.forEach { line ->
                         line.zipWithNext().forEach { (start, end) ->
                             drawLine(
-                                color = MaterialTheme.colorScheme.primary,
+                                color = writingStrokeColor,
                                 start = start,
                                 end = end,
                                 strokeWidth = 12f,
