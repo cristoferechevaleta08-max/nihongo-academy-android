@@ -17,7 +17,8 @@ Aplicación Android nativa en desarrollo, con interfaz en español.
 - Plan de estudio N5 de doce semanas, con seguimiento del progreso.
 - La biblioteca inicial de kanji N5 está integrada en la navegación, con 100 fichas locales, lecturas, vocabulario, ejemplos y seguimiento local.
 - El repaso de reconocimiento y la programación espaciada están implementados con DataStore local.
-- La práctica de escritura libre con el dedo está disponible; la animación de orden de trazos, la validación automática y el examen completo de kanji siguen pendientes de implementación y revisión.
+- La práctica de escritura libre con el dedo y el examen N5 de diez preguntas están disponibles; el mejor resultado se guarda localmente.
+- La animación de orden de trazos y la validación automática de escritura siguen pendientes de implementación y revisión.
 - Las semanas de escucha y simulacro final permanecen pendientes de materiales originales y revisión; no se presentan como terminadas.
 - N4 no se habilita como siguiente etapa hasta cerrar y validar N5.
 - El selector de idiomas no significa que todos esos cursos estén disponibles.
