@@ -191,10 +191,7 @@ internal val lessons=listOf(
   ex("¿Qué significa tsukarete iru?",listOf("Estar cansado","Estar contento","Estar ocupado","Estar enfermo"),0,"tsukarete iru significa estar cansado."),
   ex("¿Cuál es una condición natural apropiada con ~to?",listOf("Haru ni naru to sakura ga sakimasu","Hima da to eiga o mimashou","Ame ga furu to kaerimashou","Taberu to kudasai"),0,"~to se usa para resultados naturales o habituales, no para invitaciones u órdenes."))
 )
-internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean{
- val index=lessons.indexOfFirst{it.id==lessonId}
- return index>=0&&(index==0||lessons[index-1].id in completed)
-}
+internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean = lessons.any{it.id==lessonId}
 private val examQuestions=listOf(
 Question("Vocabulario","¿Qué significa みず?",listOf("Agua","Fuego","Tierra","Viento"),0),
 Question("Vocabulario","¿Qué significa ねこ?",listOf("Perro","Gato","Pájaro","Pez"),1),
@@ -241,9 +238,9 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  Column(m.fillMaxSize()) {
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp, vertical=8.dp), horizontalArrangement=Arrangement.spacedBy(8.dp)) {
    FilterChip(selected=level=="N5", onClick={level="N5"}, label={Text("Plan N5")})
-   FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=n5Progress.isPlanComplete, label={Text(if(n5Progress.isPlanComplete)"Plan N4" else "N4 bloqueado")})
+   FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=true, label={Text("Plan N4 · prueba")})
   }
-  if(level=="N4") N4StudyPlanOverview(ds=ds, n5Unlocked=n5Progress.isPlanComplete, modifier=Modifier.weight(1f))
+  if(level=="N4") N4StudyPlanOverview(ds=ds, n5Unlocked=true, modifier=Modifier.weight(1f))
   else N5StudyPlanScreen(ds, Modifier.weight(1f))
  }
 }
@@ -421,8 +418,8 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    if(pair.first=="N4"&&!weeklyProgress.isPlanComplete)Text("N4 se habilita cuando completes las 12 semanas del plan N5.")
-    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done)&&(l.level!="N4"||isN4Unlocked(weeklyProgress.isPlanComplete));OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
+    if(pair.first=="N4")Text("MODO DE PRUEBA: contenido N4 accesible sin completar N5.",color=MaterialTheme.colorScheme.primary)
+    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done);OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
    }
   }
  }else BoxCard{
@@ -617,7 +614,7 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
  Column(m.fillMaxSize()){
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
    FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Examen N5")})
-   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=progress.isPlanComplete,label={Text(if(progress.isPlanComplete)"Examen N4" else "N4 bloqueado")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=true,label={Text("Examen N4 · prueba")})
   }
   if(level=="N4") N4AssessmentScreen(ds,Modifier.weight(1f)) else Exam(ds,Modifier.weight(1f))
  }
