@@ -7,7 +7,7 @@ import org.junit.Test
 class N4KanjiCatalogTest {
  @Test fun catalogContainsFiftyUniqueCuratedCharacters(){
   val chars=n4KanjiCatalog.map{it.character}
-  assertEquals(50,chars.size)
+  assertEquals(100,chars.size)
   assertEquals(chars.size,chars.toSet().size)
  }
  @Test fun n4CatalogDoesNotDuplicateTheN5KanjiCatalog(){
