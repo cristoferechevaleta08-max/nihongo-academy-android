@@ -45,7 +45,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
  var examChoice by remember{mutableStateOf<String?>(null)}
  var examDone by remember{mutableStateOf(false)}
  val now=System.currentTimeMillis()
- val due=n4KanjiCatalog.filter{states[it.character]?.nextReviewAt?.let{x->x<=now}==true}
+ val due=n4KanjiCatalog.filter{states[it.character]?.nextReviewAt?.let{x->x<=now} ?: (it.character !in learned)}
  if(!plan.isPlanComplete){
   Column(modifier.fillMaxSize().padding(24.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
    Text("Kanji N4 bloqueados",style=MaterialTheme.typography.headlineSmall)
