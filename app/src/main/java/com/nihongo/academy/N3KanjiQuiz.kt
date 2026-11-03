@@ -39,9 +39,9 @@ internal fun buildN3KanjiQuiz(
 
     val readable = catalog.filter { it.onyomi.isNotEmpty() || it.kunyomi.isNotEmpty() }
     require(readable.size >= 4) { "No hay suficientes kanji con lecturas." }
-    val readingPool = readable.flatMap { it.onyomi + it.kunyomi.map { reading -> reading.replace(".", "") } }
+    val readingPool = readable.flatMap { it.onyomi + it.kunyomi.map { reading -> displayN3KunYomi(reading) } }
     val readingQuestions = readable.shuffled(random).take(4).map { entry ->
-        val correct = (entry.onyomi + entry.kunyomi.map { it.replace(".", "") }).shuffled(random).first()
+        val correct = (entry.onyomi + entry.kunyomi.map { displayN3KunYomi(it) }).shuffled(random).first()
         N3KanjiQuizQuestion(
             type = N3KanjiQuestionType.READING,
             prompt = "¿Cuál es una lectura de este kanji?",
