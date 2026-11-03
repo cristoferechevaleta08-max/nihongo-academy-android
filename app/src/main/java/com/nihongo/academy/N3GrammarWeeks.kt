@@ -57,18 +57,18 @@ internal val n3PassiveVoiceDays = listOf(
 )
 
 internal val n3PassiveVoiceAssessment = listOf(
-    KanaQuizQuestion("¿Cuál es la forma pasiva de 書く (kaku)?", listOf("書かれる (kakareru)", "書ける (kakeru)", "書かせる (kakaseru)", "書いた (kaita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma pasiva de 書く (kaku)?", listOf("書ける (kakeru)", "書かせる (kakaseru)", "書かれる (kakareru)", "書いた (kaita)"), 2),
     KanaQuizQuestion("¿Cuál es la forma pasiva de 読む (yomu)?", listOf("読まれる (yomareru)", "読める (yomeru)", "読ませる (yomaseru)", "読んだ (yonda)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma pasiva de 買う (kau)?", listOf("買われる (kawareru)", "買える (kaeru)", "買わせる (kawaseru)", "買った (katta)"), 0),
-    KanaQuizQuestion("¿Cómo se forma normalmente la pasiva de 食べる (taberu)?", listOf("食べられる (taberareru)", "食べれる (taberu)", "食べさせる (tabesaseru)", "食べた (tabeta)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma pasiva de 見る (miru)?", listOf("見られる (mirareru)", "見させる (misaseru)", "見える (mieru)", "見た (mita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma pasiva de 買う (kau)?", listOf("買える (kaeru)", "買わせる (kawaseru)", "買った (katta)", "買われる (kawareru)"), 3),
+    KanaQuizQuestion("¿Cómo se forma normalmente la pasiva de 食べる (taberu)?", listOf("食べれる (taberu)", "食べられる (taberareru)", "食べさせる (tabesaseru)", "食べた (tabeta)"), 1),
+    KanaQuizQuestion("¿Cuál es la forma pasiva de 見る (miru)?", listOf("見させる (misaseru)", "見える (mieru)", "見られる (mirareru)", "見た (mita)"), 2),
     KanaQuizQuestion("¿Cuál es la forma pasiva de する (suru)?", listOf("される (sareru)", "させる (saseru)", "できる (dekiru)", "した (shita)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma pasiva de 来る (kuru)?", listOf("来られる (korareru)", "来させる (kosaseru)", "来れる (koreru)", "来た (kita)"), 0),
-    KanaQuizQuestion("En わたしは先生にほめられました, ¿quién realizó la acción?", listOf("El profesor", "Yo", "Un amigo", "Nadie"), 0),
-    KanaQuizQuestion("En una pasiva típica, ¿qué función suele marcar に?", listOf("El agente que realiza la acción", "El objeto directo", "El lugar de destino", "El tiempo"), 0),
+    KanaQuizQuestion("¿Cuál es la forma pasiva de 来る (kuru)?", listOf("来させる (kosaseru)", "来れる (koreru)", "来た (kita)", "来られる (korareru)"), 3),
+    KanaQuizQuestion("En わたしは先生にほめられました, ¿quién realizó la acción?", listOf("Yo", "El profesor", "Un amigo", "Nadie"), 1),
+    KanaQuizQuestion("En una pasiva típica, ¿qué función suele marcar に?", listOf("El objeto directo", "El lugar de destino", "El agente que realiza la acción", "El tiempo"), 2),
     KanaQuizQuestion("¿Qué expresa 雨に降られました en un contexto de pasiva de perjuicio?", listOf("Me afectó que lloviera / me agarró la lluvia", "Hice que lloviera", "Dejé de llover", "Voy a hacer que llueva"), 0),
-    KanaQuizQuestion("¿Toda oración pasiva japonesa expresa necesariamente algo negativo?", listOf("No, depende del contexto", "Sí, siempre", "Solo si aparece に", "Solo en pasado"), 0),
-    KanaQuizQuestion("¿Qué elemento identifica a la persona afectada en わたしは先生にほめられました?", listOf("わたしは", "先生に", "ほめ", "ました"), 0)
+    KanaQuizQuestion("¿Toda oración pasiva japonesa expresa necesariamente algo negativo?", listOf("Sí, siempre", "Solo si aparece に", "Solo en pasado", "No, depende del contexto"), 3),
+    KanaQuizQuestion("¿Qué elemento identifica a la persona afectada en わたしは先生にほめられました?", listOf("先生に", "わたしは", "ほめ", "ました"), 1)
 )
 
 
@@ -126,18 +126,18 @@ internal val n3CausativeDays = listOf(
 )
 
 internal val n3CausativeAssessment = listOf(
-    KanaQuizQuestion("¿Cuál es la forma causativa de 書く (kaku)?", listOf("書かせる (kakaseru)", "書かれる (kakareru)", "書ける (kakeru)", "書いた (kaita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 書く (kaku)?", listOf("書かれる (kakareru)", "書ける (kakeru)", "書かせる (kakaseru)", "書いた (kaita)"), 2),
     KanaQuizQuestion("¿Cuál es la forma causativa de 読む (yomu)?", listOf("読ませる (yomaseru)", "読まれる (yomareru)", "読める (yomeru)", "読んだ (yonda)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma causativa de 買う (kau)?", listOf("買わせる (kawaseru)", "買われる (kawareru)", "買える (kaeru)", "買った (katta)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma causativa de 食べる (taberu)?", listOf("食べさせる (tabesaseru)", "食べられる (taberareru)", "食べる (taberu)", "食べた (tabeta)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma causativa de 見る (miru)?", listOf("見させる (misaseru)", "見られる (mirareru)", "見える (mieru)", "見た (mita)"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 買う (kau)?", listOf("買われる (kawareru)", "買える (kaeru)", "買った (katta)", "買わせる (kawaseru)"), 3),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 食べる (taberu)?", listOf("食べられる (taberareru)", "食べさせる (tabesaseru)", "食べる (taberu)", "食べた (tabeta)"), 1),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 見る (miru)?", listOf("見られる (mirareru)", "見える (mieru)", "見させる (misaseru)", "見た (mita)"), 2),
     KanaQuizQuestion("¿Cuál es la forma causativa de する (suru)?", listOf("させる (saseru)", "される (sareru)", "できる (dekiru)", "した (shita)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma causativa de 来る (kuru)?", listOf("来させる (kosaseru)", "来られる (korareru)", "来れる (koreru)", "来た (kita)"), 0),
-    KanaQuizQuestion("¿Qué puede expresar una causativa según el contexto?", listOf("Hacer que alguien actúe o permitirle actuar", "Solo una acción pasada", "Una pregunta indirecta", "Una comparación"), 0),
-    KanaQuizQuestion("¿Quién realiza la acción en una oración causativa?", listOf("La persona a quien se hace actuar o se permite actuar", "Siempre quien habla", "Siempre el objeto", "Nadie"), 0),
+    KanaQuizQuestion("¿Cuál es la forma causativa de 来る (kuru)?", listOf("来られる (korareru)", "来れる (koreru)", "来た (kita)", "来させる (kosaseru)"), 3),
+    KanaQuizQuestion("¿Qué puede expresar una causativa según el contexto?", listOf("Solo una acción pasada", "Hacer que alguien actúe o permitirle actuar", "Una pregunta indirecta", "Una comparación"), 1),
+    KanaQuizQuestion("¿Quién realiza la acción en una oración causativa?", listOf("Siempre quien habla", "Siempre el objeto", "La persona a quien se hace actuar o se permite actuar", "Nadie"), 2),
     KanaQuizQuestion("¿Cuál es la forma causativa-pasiva de 食べる?", listOf("食べさせられる (tabesaserareru)", "食べられる (taberareru)", "食べさせる (tabesaseru)", "食べた (tabeta)"), 0),
-    KanaQuizQuestion("¿Cuál es la forma causativa-pasiva de する?", listOf("させられる (saserareru)", "される (sareru)", "させる (saseru)", "できる (dekiru)"), 0),
-    KanaQuizQuestion("¿La causativa-pasiva suele expresar qué matiz?", listOf("Que alguien se ve obligado o puesto en situación de hacer algo", "Que alguien recibe un elogio", "Que algo ocurrió espontáneamente", "Que una acción es posible"), 0)
+    KanaQuizQuestion("¿Cuál es la forma causativa-pasiva de する?", listOf("される (sareru)", "させる (saseru)", "できる (dekiru)", "させられる (saserareru)"), 3),
+    KanaQuizQuestion("¿La causativa-pasiva suele expresar qué matiz?", listOf("Que alguien recibe un elogio", "Que alguien se ve obligado o puesto en situación de hacer algo", "Que algo ocurrió espontáneamente", "Que una acción es posible"), 1)
 )
 
 
@@ -195,18 +195,18 @@ internal val n3GivingReceivingDays = listOf(
 )
 
 internal val n3GivingReceivingAssessment = listOf(
-    KanaQuizQuestion("¿Qué verbo suele usarse cuando el hablante da algo a otra persona?", listOf("あげる (ageru)", "くれる (kureru)", "もらう (morau)", "なる (naru)"), 0),
+    KanaQuizQuestion("¿Qué verbo suele usarse cuando el hablante da algo a otra persona?", listOf("くれる (kureru)", "もらう (morau)", "あげる (ageru)", "なる (naru)"), 2),
     KanaQuizQuestion("¿Qué verbo suele usarse cuando alguien da algo al hablante?", listOf("くれる (kureru)", "あげる (ageru)", "もらう (morau)", "する (suru)"), 0),
-    KanaQuizQuestion("¿Qué verbo expresa recibir algo?", listOf("もらう (morau)", "あげる (ageru)", "くれる (kureru)", "行く (iku)"), 0),
-    KanaQuizQuestion("En 友だちが本をくれました, ¿quién recibe el libro?", listOf("El hablante o alguien de su entorno", "El amigo", "Una tercera persona desconocida", "Nadie"), 0),
-    KanaQuizQuestion("¿Qué construcción expresa hacer algo por otra persona?", listOf("てあげる", "てくれる", "てもらう", "てしまう"), 0),
+    KanaQuizQuestion("¿Qué verbo expresa recibir algo?", listOf("あげる (ageru)", "くれる (kureru)", "行く (iku)", "もらう (morau)"), 3),
+    KanaQuizQuestion("En 友だちが本をくれました, ¿quién recibe el libro?", listOf("El amigo", "El hablante o alguien de su entorno", "Una tercera persona desconocida", "Nadie"), 1),
+    KanaQuizQuestion("¿Qué construcción expresa hacer algo por otra persona?", listOf("てくれる", "てもらう", "てあげる", "てしまう"), 2),
     KanaQuizQuestion("¿Qué construcción destaca que alguien hace algo por el hablante?", listOf("てくれる", "てあげる", "てしまう", "ておく"), 0),
-    KanaQuizQuestion("¿Qué construcción destaca que el hablante recibe el favor?", listOf("てもらう", "てあげる", "てしまう", "てみる"), 0),
-    KanaQuizQuestion("¿Qué partícula puede marcar a la persona de quien se recibe algo?", listOf("に", "を", "で", "へ"), 0),
-    KanaQuizQuestion("¿Cuál es una forma de pedir ayuda con respeto?", listOf("手伝ってもらえませんか", "手伝ってあげました", "手伝ってしまいました", "手伝っておきます"), 0),
+    KanaQuizQuestion("¿Qué construcción destaca que el hablante recibe el favor?", listOf("てあげる", "てしまう", "てみる", "てもらう"), 3),
+    KanaQuizQuestion("¿Qué partícula puede marcar a la persona de quien se recibe algo?", listOf("を", "に", "で", "へ"), 1),
+    KanaQuizQuestion("¿Cuál es una forma de pedir ayuda con respeto?", listOf("手伝ってあげました", "手伝ってしまいました", "手伝ってもらえませんか", "手伝っておきます"), 2),
     KanaQuizQuestion("¿Por qué conviene evitar てあげる con superiores en ciertos contextos?", listOf("Puede sonar condescendiente", "Siempre es gramaticalmente incorrecto", "Solo se usa en pasado", "Indica obligación"), 0),
-    KanaQuizQuestion("¿Qué debes identificar antes de elegir あげる, くれる o もらう?", listOf("Quién da, quién recibe y la perspectiva", "Solo el tiempo verbal", "El número de sílabas", "El lugar de la acción"), 0),
-    KanaQuizQuestion("¿Qué expresa 手伝ってくれてありがとう?", listOf("Gracias por ayudarme", "Voy a ayudarte", "Te obligué a ayudar", "Recibí un objeto"), 0)
+    KanaQuizQuestion("¿Qué debes identificar antes de elegir あげる, くれる o もらう?", listOf("Solo el tiempo verbal", "El número de sílabas", "El lugar de la acción", "Quién da, quién recibe y la perspectiva"), 3),
+    KanaQuizQuestion("¿Qué expresa 手伝ってくれてありがとう?", listOf("Voy a ayudarte", "Gracias por ayudarme", "Te obligué a ayudar", "Recibí un objeto"), 1)
 )
 
 
@@ -264,18 +264,18 @@ internal val n3ConditionalDays = listOf(
 )
 
 internal val n3ConditionalAssessment = listOf(
-    KanaQuizQuestion("¿Cuál es la forma ば de 書く?", listOf("書けば", "書いたら", "書くと", "書いて"), 0),
+    KanaQuizQuestion("¿Cuál es la forma ば de 書く?", listOf("書いたら", "書くと", "書けば", "書いて"), 2),
     KanaQuizQuestion("¿Cuál es la forma ば de 食べる?", listOf("食べれば", "食べたら", "食べると", "食べて"), 0),
-    KanaQuizQuestion("¿Cuál es la forma ば de する?", listOf("すれば", "したら", "すると", "して"), 0),
-    KanaQuizQuestion("¿Cómo se forma normalmente たら a partir de 読む?", listOf("読んだら", "読めば", "読むと", "読んで"), 0),
-    KanaQuizQuestion("¿Qué matiz suele tener なら?", listOf("Parte de un tema o supuesto planteado", "Siempre indica una consecuencia automática", "Solo expresa pasado", "Siempre indica una orden"), 0),
+    KanaQuizQuestion("¿Cuál es la forma ば de する?", listOf("したら", "すると", "して", "すれば"), 3),
+    KanaQuizQuestion("¿Cómo se forma normalmente たら a partir de 読む?", listOf("読めば", "読んだら", "読むと", "読んで"), 1),
+    KanaQuizQuestion("¿Qué matiz suele tener なら?", listOf("Siempre indica una consecuencia automática", "Solo expresa pasado", "Parte de un tema o supuesto planteado", "Siempre indica una orden"), 2),
     KanaQuizQuestion("¿Qué relación suele expresar と?", listOf("Un resultado natural o habitual", "Una petición cortés", "Una acción recibida como favor", "Una experiencia pasada aislada"), 0),
-    KanaQuizQuestion("¿Cuál es una frase natural para un resultado habitual?", listOf("春になると、花が咲きます", "春になると、いっしょに行きませんか", "春になると、手伝ってください", "春になると、行きましょう"), 0),
-    KanaQuizQuestion("¿Qué forma condicional se usa en 日本へ行くなら、京都もおすすめです?", listOf("なら", "ば", "と", "たら"), 0),
-    KanaQuizQuestion("¿Cuál es la forma たら de 来る?", listOf("来たら", "くれば", "来ると", "来て"), 0),
+    KanaQuizQuestion("¿Cuál es una frase natural para un resultado habitual?", listOf("春になると、いっしょに行きませんか", "春になると、手伝ってください", "春になると、行きましょう", "春になると、花が咲きます"), 3),
+    KanaQuizQuestion("¿Qué forma condicional se usa en 日本へ行くなら、京都もおすすめです?", listOf("ば", "なら", "と", "たら"), 1),
+    KanaQuizQuestion("¿Cuál es la forma たら de 来る?", listOf("くれば", "来ると", "来たら", "来て"), 2),
     KanaQuizQuestion("¿Qué estructura suele evitarse con と en la cláusula principal?", listOf("Una orden o invitación del hablante", "Un resultado natural", "Un hecho habitual", "Una consecuencia automática"), 0),
-    KanaQuizQuestion("¿Cuál es la forma ば de 安い?", listOf("安ければ", "安かったら", "安いと", "安くて"), 0),
-    KanaQuizQuestion("¿Qué debes considerar para elegir entre ば, たら, なら y と?", listOf("El contexto y la relación entre condición y resultado", "Solo la longitud de la frase", "Únicamente el tiempo pasado", "El número de kanji"), 0)
+    KanaQuizQuestion("¿Cuál es la forma ば de 安い?", listOf("安かったら", "安いと", "安くて", "安ければ"), 3),
+    KanaQuizQuestion("¿Qué debes considerar para elegir entre ば, たら, なら y と?", listOf("Solo la longitud de la frase", "El contexto y la relación entre condición y resultado", "Únicamente el tiempo pasado", "El número de kanji"), 1)
 )
 
 
@@ -334,18 +334,18 @@ internal val n3TimeExpressionsDays = listOf(
 )
 
 internal val n3TimeExpressionsAssessment = listOf(
-    KanaQuizQuestion("¿Qué expresa 間 en 母が料理をしている間?", listOf("Durante todo el periodo en que cocina", "Cada vez que cocina", "Antes de que cocine", "En medio del camino"), 0),
+    KanaQuizQuestion("¿Qué expresa 間 en 母が料理をしている間?", listOf("Cada vez que cocina", "Antes de que cocine", "Durante todo el periodo en que cocina", "En medio del camino"), 2),
     KanaQuizQuestion("¿Qué matiz aporta 間に?", listOf("Un hecho ocurre en algún momento del intervalo", "La acción dura necesariamente todo el intervalo", "Una acción se repite cada vez", "Una condición ya terminó"), 0),
-    KanaQuizQuestion("¿Qué expresa うちに en 若いうちに?", listOf("Mientras aún se es joven, antes de que cambie la situación", "Cada vez que se es joven", "En medio de un viaje", "Durante todo el día sin excepción"), 0),
-    KanaQuizQuestion("¿Qué estructura significa cada vez que?", listOf("たびに", "間", "途中で", "うちに"), 0),
-    KanaQuizQuestion("¿Cuál es una forma correcta con たびに?", listOf("見るたびに", "見た間", "見て途中", "見るうち"), 0),
+    KanaQuizQuestion("¿Qué expresa うちに en 若いうちに?", listOf("Cada vez que se es joven", "En medio de un viaje", "Durante todo el día sin excepción", "Mientras aún se es joven, antes de que cambie la situación"), 3),
+    KanaQuizQuestion("¿Qué estructura significa cada vez que?", listOf("間", "たびに", "途中で", "うちに"), 1),
+    KanaQuizQuestion("¿Cuál es una forma correcta con たびに?", listOf("見た間", "見て途中", "見るたびに", "見るうち"), 2),
     KanaQuizQuestion("¿Qué expresa 学校へ行く途中で友だちに会いました?", listOf("Me encontré con un amigo de camino a la escuela", "Vi a un amigo cada vez que fui", "Estuve con un amigo durante todo el día", "Vi a un amigo antes de salir de casa"), 0),
-    KanaQuizQuestion("¿Qué construcción destaca actuar antes de que una condición cambie?", listOf("うちに", "たびに", "途中で", "間"), 0),
-    KanaQuizQuestion("¿Qué opción expresa un evento puntual dentro del tiempo en que alguien está fuera?", listOf("出かけている間に", "出かけているたびに", "出かけている途中", "出かけている間から"), 0),
-    KanaQuizQuestion("¿Cómo se conecta un sustantivo con たびに?", listOf("Sustantivo + の + たびに", "Sustantivo + を + たびに", "Sustantivo + が + たびに", "Sustantivo + で + たびに"), 0),
+    KanaQuizQuestion("¿Qué construcción destaca actuar antes de que una condición cambie?", listOf("たびに", "途中で", "間", "うちに"), 3),
+    KanaQuizQuestion("¿Qué opción expresa un evento puntual dentro del tiempo en que alguien está fuera?", listOf("出かけているたびに", "出かけている間に", "出かけている途中", "出かけている間から"), 1),
+    KanaQuizQuestion("¿Cómo se conecta un sustantivo con たびに?", listOf("Sustantivo + を + たびに", "Sustantivo + が + たびに", "Sustantivo + の + たびに", "Sustantivo + で + たびに"), 2),
     KanaQuizQuestion("¿Qué diferencia principal hay entre 間 y 間に?", listOf("間 indica el periodo; 間に sitúa un hecho dentro de él", "Son siempre intercambiables", "間 solo se usa en futuro", "間に solo se usa con sustantivos"), 0),
-    KanaQuizQuestion("¿Qué expresión encaja con 'cada vez que veo esta foto'?", listOf("この写真を見るたびに", "この写真を見る間", "この写真を見る途中で", "この写真を見る間に"), 0),
-    KanaQuizQuestion("¿Qué expresión se usa para un suceso en medio de un trayecto?", listOf("途中で", "たびに", "うちに", "間に"), 0)
+    KanaQuizQuestion("¿Qué expresión encaja con 'cada vez que veo esta foto'?", listOf("この写真を見る間", "この写真を見る途中で", "この写真を見る間に", "この写真を見るたびに"), 3),
+    KanaQuizQuestion("¿Qué expresión se usa para un suceso en medio de un trayecto?", listOf("たびに", "途中で", "うちに", "間に"), 1)
 )
 
 
@@ -404,18 +404,18 @@ internal val n3CauseReasonResultDays = listOf(
 )
 
 internal val n3CauseReasonResultAssessment = listOf(
-    KanaQuizQuestion("¿Qué expresión suele presentar una razón de forma más suave?", listOf("ので", "せいで", "たびに", "途中で"), 0),
+    KanaQuizQuestion("¿Qué expresión suele presentar una razón de forma más suave?", listOf("せいで", "たびに", "ので", "途中で"), 2),
     KanaQuizQuestion("¿Qué matiz suele tener から?", listOf("Explicación directa desde la perspectiva del hablante", "Resultado siempre positivo", "Repetición de una acción", "Acción en medio de un trayecto"), 0),
-    KanaQuizQuestion("En 大雪のために、電車が遅れました, ¿qué expresa ために?", listOf("La causa del retraso", "La finalidad de estudiar", "Una petición", "Una comparación"), 0),
-    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado favorable a una causa?", listOf("おかげで", "せいで", "のに", "ところで"), 0),
-    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado desfavorable?", listOf("せいで", "おかげで", "たびに", "うちに"), 0),
+    KanaQuizQuestion("En 大雪のために、電車が遅れました, ¿qué expresa ために?", listOf("La finalidad de estudiar", "Una petición", "Una comparación", "La causa del retraso"), 3),
+    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado favorable a una causa?", listOf("せいで", "おかげで", "のに", "ところで"), 1),
+    KanaQuizQuestion("¿Qué expresión atribuye normalmente un resultado desfavorable?", listOf("おかげで", "たびに", "せいで", "うちに"), 2),
     KanaQuizQuestion("¿Cuál es una frase natural para agradecer una ayuda?", listOf("先生のおかげで、合格できました", "先生のせいで、合格できました", "先生の途中で、合格できました", "先生のたびに、合格できました"), 0),
-    KanaQuizQuestion("¿Qué conector puede introducir una consecuencia de lo mencionado antes?", listOf("そのため", "あげる", "なら", "ながら"), 0),
-    KanaQuizQuestion("¿Qué expresión destaca el resultado que se obtuvo?", listOf("その結果", "その間", "そのたび", "そのうち"), 0),
-    KanaQuizQuestion("¿Qué puede indicar によって según el contexto?", listOf("Causa, medio o agente", "Solo una causa positiva", "Solo tiempo futuro", "Una condición hipotética"), 0),
+    KanaQuizQuestion("¿Qué conector puede introducir una consecuencia de lo mencionado antes?", listOf("あげる", "なら", "ながら", "そのため"), 3),
+    KanaQuizQuestion("¿Qué expresión destaca el resultado que se obtuvo?", listOf("その間", "その結果", "そのたび", "そのうち"), 1),
+    KanaQuizQuestion("¿Qué puede indicar によって según el contexto?", listOf("Solo una causa positiva", "Solo tiempo futuro", "Causa, medio o agente", "Una condición hipotética"), 2),
     KanaQuizQuestion("¿Cuál es una variante formal frecuente de によって?", listOf("により", "にくい", "にたい", "にても"), 0),
-    KanaQuizQuestion("¿Qué debes comprobar para distinguir el ために causal del de propósito?", listOf("La relación lógica y el contexto de la oración", "Solo si aparece un kanji", "El número de sílabas", "Si la frase está en pasado"), 0),
-    KanaQuizQuestion("¿Cuál es la diferencia habitual entre おかげで y せいで?", listOf("おかげで valora favorablemente; せいで atribuye algo desfavorable", "Ambos expresan siempre gratitud", "おかげで indica tiempo y せいで lugar", "No existe diferencia de matiz"), 0)
+    KanaQuizQuestion("¿Qué debes comprobar para distinguir el ために causal del de propósito?", listOf("Solo si aparece un kanji", "El número de sílabas", "Si la frase está en pasado", "La relación lógica y el contexto de la oración"), 3),
+    KanaQuizQuestion("¿Cuál es la diferencia habitual entre おかげで y せいで?", listOf("Ambos expresan siempre gratitud", "おかげで valora favorablemente; せいで atribuye algo desfavorable", "おかげで indica tiempo y せいで lugar", "No existe diferencia de matiz"), 1)
 )
 
 internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
