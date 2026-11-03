@@ -21,7 +21,7 @@ Este documento describe lo que está integrado en la rama de trabajo. No se pres
 
 ## Evaluación final de práctica (semana 12)
 
-- Evaluación integrada de 30 preguntas: 18 preguntas extraídas de los contenidos de las unidades N5 y 12 preguntas de comprensión auditiva.
+- Evaluación integrada de 30 preguntas: 15 preguntas extraídas de las unidades N5, tres preguntas sobre lecturas breves originales y 12 preguntas de comprensión auditiva.
 - El banco es original y local. La evaluación guarda resultado y errores mediante el mecanismo del plan semanal.
 - Es un simulacro breve de práctica de Nihongo Academy; no reproduce la duración ni toda la estructura del examen oficial JLPT y no debe presentarse como examen oficial.
 
