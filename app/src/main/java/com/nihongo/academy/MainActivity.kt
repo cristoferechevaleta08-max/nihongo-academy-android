@@ -236,6 +236,19 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
 }
 @Composable private fun StudyPlanScreen(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
+ val n5Progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
+ var level by remember { mutableStateOf("N5") }
+ Column(m.fillMaxSize()) {
+  Row(Modifier.fillMaxWidth().padding(horizontal=16.dp, vertical=8.dp), horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+   FilterChip(selected=level=="N5", onClick={level="N5"}, label={Text("Plan N5")})
+   FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=n5Progress.isPlanComplete, label={Text(if(n5Progress.isPlanComplete)"Plan N4" else "N4 bloqueado")})
+  }
+  if(level=="N4") N4StudyPlanOverview(n5Unlocked=n5Progress.isPlanComplete, modifier=Modifier.weight(1f))
+  else N5StudyPlanScreen(ds, Modifier.weight(1f))
+ }
+}
+
+@Composable private fun N5StudyPlanScreen(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
  val scope=rememberCoroutineScope()
  val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
  val savedKanaMistakes by ds.weeklyKanaMistakes().collectAsState(initial=emptySet())
