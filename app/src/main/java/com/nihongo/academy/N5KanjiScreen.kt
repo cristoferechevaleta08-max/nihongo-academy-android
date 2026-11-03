@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringSetPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 private val n5KanjiLearnedKey = stringSetPreferencesKey("n5_kanji_learned")
+private fun n5KanjiSrsKey(character: String) = stringPreferencesKey("n5_kanji_srs_$character")
 
 @Composable
 internal fun N5KanjiScreen(
@@ -29,9 +30,141 @@ internal fun N5KanjiScreen(
     val scope = rememberCoroutineScope()
     val learned by dataStore.data.map { it[n5KanjiLearnedKey] ?: emptySet() }
         .collectAsState(initial = emptySet())
+    val reviewStates by dataStore.data.map { prefs ->
+        n5KanjiCatalog.mapNotNull { entry ->
+            prefs[n5KanjiSrsKey(entry.character)]?.let { stored ->
+                KanjiReviewState.decode(stored)?.let { entry.character to it }
+            }
+        }.toMap()
+    }.collectAsState(initial = emptyMap())
+
     var selected by remember { mutableStateOf<N5KanjiEntry?>(null) }
     var query by remember { mutableStateOf("") }
     var onlyPending by remember { mutableStateOf(false) }
+    var reviewQueue by remember { mutableStateOf<List<N5KanjiEntry>>(emptyList()) }
+    var reviewIndex by remember { mutableIntStateOf(0) }
+    var selectedAnswer by remember { mutableStateOf<String?>(null) }
+    var answerRevealed by remember { mutableStateOf(false) }
+    var reviewFinished by remember { mutableStateOf(false) }
+
+    val now = System.currentTimeMillis()
+    val dueEntries = n5KanjiCatalog.filter { entry ->
+        reviewStates[entry.character]?.nextReviewAt?.let { it <= now } == true
+    }
+
+    fun startReview(entries: List<N5KanjiEntry>) {
+        reviewQueue = entries
+        reviewIndex = 0
+        selectedAnswer = null
+        answerRevealed = false
+        reviewFinished = entries.isEmpty()
+        selected = null
+    }
+
+    if (reviewQueue.isNotEmpty() || reviewFinished) {
+        if (reviewFinished) {
+            Column(
+                modifier.fillMaxSize().padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(Modifier.height(36.dp))
+                Text("¡Sesión completada!", style = MaterialTheme.typography.headlineMedium)
+                Text("Terminaste esta tanda de kanji. Tu progreso quedó guardado en este dispositivo.")
+                Button(onClick = {
+                    reviewQueue = emptyList()
+                    reviewFinished = false
+                }) { Text("Volver a la biblioteca") }
+            }
+            return
+        }
+
+        val entry = reviewQueue[reviewIndex.coerceAtMost(reviewQueue.lastIndex)]
+        val options = remember(entry.character) {
+            (n5KanjiCatalog.filter { it.character != entry.character && it.meaningEs != entry.meaningEs }
+                .shuffled().take(3).map { it.meaningEs } + entry.meaningEs).shuffled()
+        }
+        Column(
+            modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            TextButton(onClick = {
+                reviewQueue = emptyList()
+                reviewFinished = false
+            }) { Text("← Salir del repaso") }
+            Text("Repaso de kanji N5 · ${reviewIndex + 1} de ${reviewQueue.size}",
+                color = MaterialTheme.colorScheme.primary)
+            LinearProgressIndicator(
+                progress = { (reviewIndex + 1).toFloat() / reviewQueue.size.coerceAtLeast(1) },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(22.dp)) {
+                Column(
+                    Modifier.fillMaxWidth().padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(entry.character, style = MaterialTheme.typography.displayLarge)
+                    Text("¿Qué significa este kanji?", style = MaterialTheme.typography.titleMedium)
+                }
+            }
+            options.forEach { option ->
+                OutlinedButton(
+                    onClick = { if (!answerRevealed) selectedAnswer = option },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = !answerRevealed,
+                    colors = if (answerRevealed && option == entry.meaningEs) {
+                        ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+                    } else ButtonDefaults.outlinedButtonColors()
+                ) {
+                    Text(option)
+                }
+            }
+            if (answerRevealed) {
+                val correct = selectedAnswer == entry.meaningEs
+                Text(
+                    if (correct) "¡Correcto!" else "La respuesta correcta es: ${entry.meaningEs}",
+                    color = if (correct) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text("¿Qué tan bien lo recordaste?")
+                listOf(
+                    KanjiReviewGrade.AGAIN to "Otra vez",
+                    KanjiReviewGrade.HARD to "Difícil",
+                    KanjiReviewGrade.GOOD to "Bien",
+                    KanjiReviewGrade.EASY to "Fácil"
+                ).forEach { (grade, label) ->
+                    OutlinedButton(
+                        onClick = {
+                            scope.launch {
+                                val previous = reviewStates[entry.character] ?: KanjiReviewState.initial
+                                val next = scheduleKanjiReview(previous, grade, System.currentTimeMillis())
+                                dataStore.edit { prefs ->
+                                    prefs[n5KanjiSrsKey(entry.character)] = next.encode()
+                                }
+                            }
+                            if (reviewIndex + 1 < reviewQueue.size) {
+                                reviewIndex++
+                                selectedAnswer = null
+                                answerRevealed = false
+                            } else {
+                                reviewQueue = emptyList()
+                                reviewFinished = true
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text(label) }
+                }
+            } else {
+                Button(
+                    onClick = { answerRevealed = true },
+                    enabled = selectedAnswer != null,
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text("Comprobar respuesta") }
+            }
+        }
+        return
+    }
 
     if (selected != null) {
         val entry = selected!!
@@ -44,6 +177,14 @@ internal fun N5KanjiScreen(
             Text(entry.character, style = MaterialTheme.typography.displayLarge)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
+            val srs = reviewStates[entry.character]
+            if (srs != null) {
+                Text(
+                    if (srs.nextReviewAt <= now) "Repaso pendiente" else "Próximo repaso: " +
+                        java.text.DateFormat.getDateInstance().format(java.util.Date(srs.nextReviewAt)),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
             HorizontalDivider()
             Text("Lectura On'yomi", style = MaterialTheme.typography.titleMedium)
             Text(entry.onyomi.joinToString(" · ").ifBlank { "Sin lectura On'yomi registrada" })
@@ -80,10 +221,15 @@ internal fun N5KanjiScreen(
             ) {
                 Text(if (entry.character in learned) "Marcar como pendiente" else "Marcar como aprendido")
             }
+            OutlinedButton(
+                onClick = { startReview(listOf(entry)) },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text("Practicar este kanji") }
         }
         return
     }
 
+    val learnedCount = learned.intersect(n5KanjiCatalog.map { it.character }.toSet()).size
     val filtered = n5KanjiCatalog.filter { entry ->
         (!onlyPending || entry.character !in learned) &&
             (query.isBlank() || entry.character.contains(query) ||
@@ -95,10 +241,21 @@ internal fun N5KanjiScreen(
         Text("N5 · Primer bloque de contenido", color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
-            progress = { if (n5KanjiCatalog.isEmpty()) 0f else learned.intersect(n5KanjiCatalog.map { it.character }.toSet()).size.toFloat() / n5KanjiCatalog.size },
+            progress = { if (n5KanjiCatalog.isEmpty()) 0f else learnedCount.toFloat() / n5KanjiCatalog.size },
             modifier = Modifier.fillMaxWidth()
         )
-        Text("${learned.intersect(n5KanjiCatalog.map { it.character }.toSet()).size} de ${n5KanjiCatalog.size} kanji de este bloque aprendidos")
+        Text("$learnedCount de ${n5KanjiCatalog.size} kanji marcados como aprendidos")
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = { startReview(dueEntries) },
+                enabled = dueEntries.isNotEmpty(),
+                modifier = Modifier.weight(1f)
+            ) { Text("Repasar · ${dueEntries.size}") }
+            OutlinedButton(
+                onClick = { startReview(n5KanjiCatalog) },
+                modifier = Modifier.weight(1f)
+            ) { Text("Practicar todos") }
+        }
         OutlinedTextField(
             value = query,
             onValueChange = { query = it },
