@@ -218,7 +218,8 @@ when(tab){
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
 "Kanji"->N5KanjiScreen(ds,Modifier.padding(p))
 "Escucha"->N5ListeningPractice(Modifier.padding(p))
-"Plan"->StudyPlanScreen(ds,Modifier.padding(p))"Exámenes"->Exam(ds,Modifier.padding(p))
+"Plan"->StudyPlanScreen(ds,Modifier.padding(p))
+"Exámenes"->Exam(ds,Modifier.padding(p))
 "Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
