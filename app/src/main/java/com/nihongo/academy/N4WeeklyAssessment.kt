@@ -19,9 +19,17 @@ internal fun buildN4WeeklyAssessment(
 
     fun question(section: String, prompt: String, options: List<String>, answer: Int, explanation: String): N4WeeklyQuestion {
         require(options.size >= 2 && answer in options.indices)
-        val shuffled = options.mapIndexed { index, value -> index to value }.shuffled(random)
-        return N4WeeklyQuestion(section, prompt, shuffled.map { it.second },
-            shuffled.indexOfFirst { it.first == answer }, explanation)
+        val correctValue = options[answer]
+        val completeOptions = options.distinct().toMutableList()
+        val distractorPool = n4FinalAssessment.flatMap { it.options } +
+            n4ListeningDialogues.flatMap { dialogue -> dialogue.questions.flatMap { it.options } } +
+            n4ReadingPassages.flatMap { passage -> passage.questions.flatMap { it.options } }
+        distractorPool.filter { it.isNotBlank() && it !in completeOptions }
+            .distinct().shuffled(random).take((4 - completeOptions.size).coerceAtLeast(0))
+            .forEach(completeOptions::add)
+        require(completeOptions.size >= 4) { "No hay suficientes opciones únicas para completar la pregunta." }
+        val shuffled = completeOptions.take(4).shuffled(random)
+        return N4WeeklyQuestion(section, prompt, shuffled, shuffled.indexOf(correctValue), explanation)
     }
 
     fun fromLesson(unit: Int): List<N4WeeklyQuestion> {
