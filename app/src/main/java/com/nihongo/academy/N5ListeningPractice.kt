@@ -52,7 +52,7 @@ internal val n5ListeningDialogues = listOf(
     N5Dialogue("weather", "Planes para el domingo", "Hablar del clima y cambiar planes", listOf(
         N5DialogueLine("A", "日曜日、何をしますか。", "Nichiyoubi, nani o shimasu ka.", "¿Qué vas a hacer el domingo?"),
         N5DialogueLine("B", "公園へ行きたいです。", "Kouen e ikitai desu.", "Quiero ir al parque."),
-        N5DialogueLine("A", "でも、明日は雨ですよ。", "Demo, ashita wa ame desu yo.", "Pero mañana va a llover."),
+        N5DialogueLine("A", "でも、日曜日は雨ですよ。", "Demo. Nichiyoubi wa ame desu yo.", "Pero el domingo va a llover."),
         N5DialogueLine("B", "そうですか。じゃ、家で映画を見ます。", "Sou desu ka. Ja, ie de eiga o mimasu.", "¿Ah, sí? Entonces veré una película en casa.")
     ), listOf(
         N5DialogueQuestion("¿A dónde quiere ir B?", listOf("A la escuela","Al parque","A la estación"), 1, "Kouen significa parque."),
