@@ -91,11 +91,13 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
     val selected = n5ListeningDialogues.first { it.id == selectedId }
 
     DisposableEffect(context) {
-        val engine = TextToSpeech(context) { status ->
+        lateinit var engine: TextToSpeech
+        engine = TextToSpeech(context) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                val result = engineLanguagePlaceholder()
-                voiceReady = result
+                val languageResult = engine.setLanguage(Locale.JAPANESE)
+                voiceReady = languageResult >= TextToSpeech.LANG_AVAILABLE
                 voiceMessage = if (voiceReady) "Voz japonesa disponible. La reproducción se realiza en el dispositivo." else "El dispositivo no tiene una voz japonesa instalada. Podés leer el diálogo; instalá una voz japonesa desde los ajustes de texto a voz para escucharla."
+                if (voiceReady) engine.setSpeechRate(0.82f)
             } else {
                 voiceReady = false
                 voiceMessage = "No se pudo iniciar el motor de voz del dispositivo."
@@ -173,4 +175,3 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
     }
 }
 
-private fun engineLanguagePlaceholder(): Boolean = false
