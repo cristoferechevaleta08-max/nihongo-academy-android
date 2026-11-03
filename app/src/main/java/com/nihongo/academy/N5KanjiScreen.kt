@@ -16,6 +16,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 private val n5KanjiLearnedKey = stringSetPreferencesKey("n5_kanji_learned")
