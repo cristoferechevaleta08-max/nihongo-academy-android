@@ -580,7 +580,7 @@ internal val n3KanjiBlock3: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "眠",
-        meaningEs = "somnoliento; tener sueño; sonmoliento",
+        meaningEs = "somnoliento; tener sueño; somnoliento",
         onyomi = listOf("ミン"),
         kunyomi = listOf("ねむ.る", "ねむ.い"),
         strokeCount = 10
