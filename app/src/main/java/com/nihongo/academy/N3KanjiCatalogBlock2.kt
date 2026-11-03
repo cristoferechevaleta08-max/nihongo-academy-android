@@ -41,14 +41,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "番",
-        meaningEs = "turno; orden; observar",
+        meaningEs = "turno; número; orden",
         onyomi = listOf("バン"),
         kunyomi = listOf("つが.い"),
         strokeCount = 12
     ),
     N3KanjiEntry(
         character = "規",
-        meaningEs = "compás; regla; medida",
+        meaningEs = "regla; norma; estándar",
         onyomi = listOf("キ"),
         kunyomi = listOf(),
         strokeCount = 11
@@ -97,7 +97,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "育",
-        meaningEs = "educar; criar; ser educado",
+        meaningEs = "criar; educar; crecer",
         onyomi = listOf("イク"),
         kunyomi = listOf("そだ.つ", "そだ.ち", "そだ.てる", "はぐく.む"),
         strokeCount = 8
@@ -118,7 +118,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "残",
-        meaningEs = "resto; balance; quedar",
+        meaningEs = "resto; quedar; permanecer",
         onyomi = listOf("ザン", "サン"),
         kunyomi = listOf("のこ.る", "のこ.す", "そこな.う", "のこ.り"),
         strokeCount = 10
@@ -209,7 +209,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "落",
-        meaningEs = "caer; ser inferior; ser omitido",
+        meaningEs = "caer; dejar caer; omitir",
         onyomi = listOf("ラク"),
         kunyomi = listOf("お.ちる", "お.ち", "お.とす"),
         strokeCount = 12
@@ -251,21 +251,21 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "末",
-        meaningEs = "aún; punta; extremo",
+        meaningEs = "final; extremo; punta",
         onyomi = listOf("マツ", "バツ"),
         kunyomi = listOf("すえ", "うら", "うれ"),
         strokeCount = 5
     ),
     N3KanjiEntry(
         character = "守",
-        meaningEs = "guardar proteger; defender; guardar",
+        meaningEs = "proteger; defender; guardar",
         onyomi = listOf("シュ", "ス"),
         kunyomi = listOf("まも.る", "まも.り", "もり", "-もり", "かみ"),
         strokeCount = 6
     ),
     N3KanjiEntry(
         character = "若",
-        meaningEs = "joven; algunos; posiblemente",
+        meaningEs = "joven; poco; algunos",
         onyomi = listOf("ジャク", "ニャク", "ニャ"),
         kunyomi = listOf("わか.い", "わか-", "も.しくわ", "も.し", "も.しくは", "ごと.し"),
         strokeCount = 8
@@ -286,7 +286,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "命",
-        meaningEs = "orden; mandato; vida",
+        meaningEs = "vida; destino; orden",
         onyomi = listOf("メイ", "ミョウ"),
         kunyomi = listOf("いのち"),
         strokeCount = 8
@@ -307,14 +307,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "非",
-        meaningEs = "negativo; equivocado; culpar",
+        meaningEs = "no; negativo; incorrecto",
         onyomi = listOf("ヒ"),
         kunyomi = listOf("あら.ず"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "観",
-        meaningEs = "punto de vista; mirar cuidadosamente; mostrar",
+        meaningEs = "observación; punto de vista; contemplar",
         onyomi = listOf("カン"),
         kunyomi = listOf("み.る", "しめ.す"),
         strokeCount = 18
@@ -370,14 +370,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "識",
-        meaningEs = "discernir; distinguir; símbolo",
+        meaningEs = "conocimiento; discernimiento; distinguir",
         onyomi = listOf("シキ"),
         kunyomi = listOf("し.る", "しる.す"),
         strokeCount = 19
     ),
     N3KanjiEntry(
         character = "呼",
-        meaningEs = "llamar; aspirar",
+        meaningEs = "llamar; convocar",
         onyomi = listOf("コ"),
         kunyomi = listOf("よ.ぶ"),
         strokeCount = 8
@@ -398,14 +398,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "阪",
-        meaningEs = "cuesta; pendiente; abreviación de Osaka",
+        meaningEs = "cuesta; pendiente (también aparece en el nombre de Osaka)",
         onyomi = listOf("ハン"),
         kunyomi = listOf("さか"),
         strokeCount = 7
     ),
     N3KanjiEntry(
         character = "候",
-        meaningEs = "clima; tiempo; explorar",
+        meaningEs = "clima; estación; esperar (uso clásico)",
         onyomi = listOf("コウ"),
         kunyomi = listOf("そうろう"),
         strokeCount = 10
@@ -454,7 +454,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "科",
-        meaningEs = "departamento; curso; materia",
+        meaningEs = "asignatura; materia; departamento",
         onyomi = listOf("カ"),
         kunyomi = listOf(),
         strokeCount = 9
@@ -524,7 +524,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "存",
-        meaningEs = "existir; proteger; conocer",
+        meaningEs = "existir; estar presente; conservar",
         onyomi = listOf("ソン", "ゾン"),
         kunyomi = listOf("ながら.える", "あ.る", "たも.つ", "と.う"),
         strokeCount = 6
@@ -580,7 +580,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "完",
-        meaningEs = "perfección; conclusión; final",
+        meaningEs = "completar; terminar; conclusión",
         onyomi = listOf("カン"),
         kunyomi = listOf(),
         strokeCount = 7
@@ -594,7 +594,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "責",
-        meaningEs = "condena; censura; obligación",
+        meaningEs = "responsabilidad; reproche; censura",
         onyomi = listOf("セキ"),
         kunyomi = listOf("せ.める"),
         strokeCount = 11
@@ -622,7 +622,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "苦",
-        meaningEs = "sufrimiento; pena; doloroso",
+        meaningEs = "sufrimiento; dolor; difícil",
         onyomi = listOf("ク"),
         kunyomi = listOf("くる.しい", "-ぐる.しい", "くる.しむ", "くる.しめる", "にが.い", "にが.る"),
         strokeCount = 8
@@ -650,14 +650,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "辞",
-        meaningEs = "renuncia; dimisión; palabra",
+        meaningEs = "renunciar; dimisión; palabra",
         onyomi = listOf("ジ"),
         kunyomi = listOf("や.める", "いな.む"),
         strokeCount = 13
     ),
     N3KanjiEntry(
         character = "因",
-        meaningEs = "causa; origen; depender de",
+        meaningEs = "causa; origen; motivo",
         onyomi = listOf("イン"),
         kunyomi = listOf("よ.る", "ちな.む"),
         strokeCount = 6
@@ -685,14 +685,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "彼",
-        meaningEs = "eso; aquello; otra persona",
+        meaningEs = "él; esa persona; aquel",
         onyomi = listOf("ヒ"),
         kunyomi = listOf("かれ", "かの", "か.の"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "未",
-        meaningEs = "aún no; todavía; hasta ahora",
+        meaningEs = "todavía no; aún no",
         onyomi = listOf("ミ", "ビ"),
         kunyomi = listOf("いま.だ", "ま.だ", "ひつじ"),
         strokeCount = 5
@@ -706,7 +706,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "亡",
-        meaningEs = "desaparecer; perecer; difunto",
+        meaningEs = "morir; fallecer; desaparecer",
         onyomi = listOf("ボウ", "モウ"),
         kunyomi = listOf("な.い", "な.き-", "ほろ.びる", "ほろ.ぶ", "ほろ.ぼす"),
         strokeCount = 3
@@ -720,21 +720,21 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "適",
-        meaningEs = "adecuado; apropiado; adaptarse",
+        meaningEs = "adecuado; apropiado; apto",
         onyomi = listOf("テキ"),
         kunyomi = listOf("かな.う"),
         strokeCount = 14
     ),
     N3KanjiEntry(
         character = "婦",
-        meaningEs = "señora; mujer; esposa",
+        meaningEs = "mujer; esposa",
         onyomi = listOf("フ"),
         kunyomi = listOf("よめ"),
         strokeCount = 11
     ),
     N3KanjiEntry(
         character = "寄",
-        meaningEs = "colaborar; apoyarse en; acercarse",
+        meaningEs = "acercarse; apoyarse en; visitar",
         onyomi = listOf("キ"),
         kunyomi = listOf("よ.る", "-よ.り", "よ.せる"),
         strokeCount = 11
@@ -762,7 +762,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "王",
-        meaningEs = "rey; regla; magnate",
+        meaningEs = "rey; monarca",
         onyomi = listOf("オウ", "-ノウ"),
         kunyomi = listOf(),
         strokeCount = 4
@@ -783,7 +783,7 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "背",
-        meaningEs = "espalda; detrás; estatura",
+        meaningEs = "espalda; detrás; altura",
         onyomi = listOf("ハイ"),
         kunyomi = listOf("せ", "せい", "そむ.く", "そむ.ける"),
         strokeCount = 9
@@ -811,14 +811,14 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "頼",
-        meaningEs = "solicitud; petición; solicitar",
+        meaningEs = "confiar; pedir; depender de",
         onyomi = listOf("ライ"),
         kunyomi = listOf("たの.む", "たの.もしい", "たよ.る"),
         strokeCount = 16
     ),
     N3KanjiEntry(
         character = "覚",
-        meaningEs = "memorizar; recordar; despertarse",
+        meaningEs = "recordar; memorizar; despertar",
         onyomi = listOf("カク"),
         kunyomi = listOf("おぼ.える", "さ.ます", "さ.める", "さと.る"),
         strokeCount = 12
@@ -846,28 +846,28 @@ internal val n3KanjiBlock2: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "抜",
-        meaningEs = "omitir; echar; extraer",
+        meaningEs = "extraer; sacar; omitir",
         onyomi = listOf("バツ", "ハツ", "ハイ"),
         kunyomi = listOf("ぬ.く", "-ぬ.く", "ぬ.き", "ぬ.ける", "ぬ.かす", "ぬ.かる"),
         strokeCount = 7
     ),
     N3KanjiEntry(
         character = "留",
-        meaningEs = "quedarse; permanecer; parar",
+        meaningEs = "quedarse; permanecer; detener",
         onyomi = listOf("リュウ", "ル"),
         kunyomi = listOf("と.める", "と.まる", "とど.める", "とど.まる", "るうぶる"),
         strokeCount = 10
     ),
     N3KanjiEntry(
         character = "罪",
-        meaningEs = "culpabilidad; pecado; delito",
+        meaningEs = "culpa; pecado; delito",
         onyomi = listOf("ザイ"),
         kunyomi = listOf("つみ"),
         strokeCount = 13
     ),
     N3KanjiEntry(
         character = "努",
-        meaningEs = "esfuerzo; esforzarse; hacer un esfuerzo",
+        meaningEs = "esforzarse; hacer un esfuerzo",
         onyomi = listOf("ド"),
         kunyomi = listOf("つと.める"),
         strokeCount = 7
