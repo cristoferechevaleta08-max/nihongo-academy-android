@@ -4,12 +4,12 @@ package com.nihongo.academy
  * Semanas 11–12 del Anexo E del PDF.
  *
  * El documento pide diálogos cortos N5 y un simulacro completo cronometrado.
- * No se incluyen guiones, audios ni preguntas inventadas: los recursos de audio
- * y el banco de examen deben incorporarse y validarse antes de habilitar pruebas.
+ * Los guiones y preguntas de escucha son originales y se integran en la pestaña Escucha.
+ * La voz se genera mediante el motor TTS japonés local si está instalado en el dispositivo.
  */
 internal val n5FinalWeeks = listOf(
     KanaDay(71, "Primera escucha de diálogos N5", "Iniciar la comprensión auditiva con diálogos cortos del nivel N5.", listOf(
-        "Escuchar un diálogo corto del material N5 validado cuando el audio esté disponible.",
+        "Escuchar un diálogo corto del material N5 validado desde la pestaña Escucha.",
         "Volver a escuchar el mismo diálogo para reconocer la información principal.",
         "Anotar qué partes del diálogo resultaron difíciles.",
         "Guardar las dudas para el repaso."
@@ -32,20 +32,20 @@ internal val n5FinalWeeks = listOf(
         "Volver a escucharlo y comprobar la comprensión con el material asociado.",
         "Guardar los errores para repasarlos."
     )),
-    KanaDay(75, "Repaso de escucha", "Consolidar la comprensión auditiva de los diálogos N5 disponibles.", listOf(
+    KanaDay(75, "Repaso de escucha", "Consolidar la comprensión auditiva de los seis diálogos de la pestaña Escucha.", listOf(
         "Repetir los diálogos que hayan presentado más dificultad.",
         "Escuchar cada diálogo completo más de una vez.",
         "Revisar las dudas registradas.",
         "Preparar el simulacro de escucha."
     )),
     KanaDay(76, "Preparación del simulacro", "Preparar la escucha de diálogos cortos antes de la prueba semanal.", listOf(
-        "Repasar los audios N5 disponibles.",
+        "Repasar los seis diálogos de la pestaña Escucha.",
         "Practicar la escucha sin consultar las respuestas durante la reproducción.",
         "Revisar las dudas y errores anteriores.",
         "Dejar listo el cuaderno de errores."
     )),
     KanaDay(77, "Simulacro de escucha", "Comprobar la comprensión auditiva mediante un simulacro N5.", listOf(
-        "Completar el simulacro cuando estén integrados los audios y preguntas verificadas.",
+        "Completar el simulacro con los seis diálogos de la pestaña Escucha.",
         "Revisar las respuestas incorrectas.",
         "Guardar los errores en el cuaderno para repasarlos."
     )),
@@ -68,7 +68,7 @@ internal val n5FinalWeeks = listOf(
         "Anotar las dudas que queden pendientes."
     )),
     KanaDay(81, "Repaso de comprensión auditiva", "Preparar la sección de escucha del simulacro N5.", listOf(
-        "Escuchar los diálogos N5 disponibles.",
+        "Escuchar los seis diálogos de la pestaña Escucha.",
         "Repetir los audios que hayan resultado difíciles.",
         "Revisar las dudas guardadas durante la semana 11.",
         "Preparar el examen sin consultar el material durante la prueba."
@@ -79,7 +79,7 @@ internal val n5FinalWeeks = listOf(
         "Comprobar que el material de las tres secciones esté disponible.",
         "Revisar las instrucciones antes de comenzar."
     )),
-    KanaDay(83, "Simulacro completo N5", "Realizar el examen de práctica completo con tiempo real cuando el banco esté validado.", listOf(
+    KanaDay(83, "Simulacro integrado de práctica N5", "Realizar la práctica integrada de 30 preguntas con la práctica integrada de 30 preguntas disponible.", listOf(
         "Completar vocabulario en el tiempo asignado.",
         "Completar gramática y lectura en el tiempo asignado.",
         "Completar comprensión auditiva con los audios correspondientes.",
