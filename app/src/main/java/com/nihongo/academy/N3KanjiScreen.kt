@@ -50,7 +50,7 @@ internal fun N3KanjiScreen(
                 style = MaterialTheme.typography.labelLarge
             )
             LinearProgressIndicator(
-                progress = { learnedSet.size.toFloat() / n3KanjiCharacters.size.toFloat() },
+                progress = learnedSet.size.toFloat() / n3KanjiCharacters.size.toFloat(),
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
             Spacer(Modifier.height(12.dp))
