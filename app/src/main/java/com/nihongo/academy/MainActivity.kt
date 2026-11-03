@@ -625,12 +625,11 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
 
 
 @Composable private fun KanjiHub(ds:androidx.datastore.core.DataStore<Preferences>,m:Modifier){
- val progress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
  var level by remember{mutableStateOf("N5")}
  Column(m.fillMaxSize()){
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
    FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Kanji N5")})
-   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=progress.isPlanComplete,label={Text(if(progress.isPlanComplete)"Kanji N4" else "N4 bloqueado")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},label={Text("Kanji N4 · desbloqueado")})
   }
   if(level=="N4") N4KanjiScreen(ds,Modifier.weight(1f)) else N5KanjiScreen(ds,Modifier.weight(1f))
  }
