@@ -425,6 +425,7 @@ internal fun n3GrammarDaysForWeek(week: Int): List<KanaDay> = when (week) {
     4 -> n3ConditionalDays
     5 -> n3TimeExpressionsDays
     6 -> n3CauseReasonResultDays
+    7 -> n3ChangeDecisionHabitsDays
     else -> emptyList()
 }
 
@@ -435,5 +436,6 @@ internal fun n3GrammarAssessmentForWeek(week: Int): List<KanaQuizQuestion> = whe
     4 -> n3ConditionalAssessment
     5 -> n3TimeExpressionsAssessment
     6 -> n3CauseReasonResultAssessment
+    7 -> n3ChangeDecisionHabitsAssessment
     else -> emptyList()
 }
