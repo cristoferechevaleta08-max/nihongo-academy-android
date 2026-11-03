@@ -131,7 +131,8 @@ internal fun N3KanjiScreen(
             Text("Lectura On'yomi", style = MaterialTheme.typography.titleMedium)
             Text(entry.onyomi.joinToString(" · ").ifBlank { "No incluida en esta ficha" })
             Text("Lectura Kun'yomi", style = MaterialTheme.typography.titleMedium)
-            Text(entry.kunyomi.joinToString(" · ").ifBlank { "No incluida en esta ficha" })
+            Text(entry.kunyomi.joinToString(" · ") { it.replace(".", "") }.ifBlank { "No incluida en esta ficha" })
+            Text("Las lecturas se muestran sin las marcas técnicas del diccionario.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(
                 "Las lecturas se muestran en su forma de diccionario; los puntos indican separación de okurigana.",
                 style = MaterialTheme.typography.bodySmall,
@@ -243,7 +244,7 @@ internal fun N3KanjiScreen(
                         Column(Modifier.weight(1f)) {
                             Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall)
                             Text("On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
-                            Text("Kun: ${entry.kunyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
+                            Text("Kun: ${entry.kunyomi.joinToString("、") { it.replace(".", "") }.ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
                             Text("${entry.strokeCount} trazos", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         if (isLearned) Text("✓", color = MaterialTheme.colorScheme.primary)
