@@ -276,7 +276,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "加",
-        meaningEs = "agregar; añadir; incrementar; Canadá; sumar; unirse",
+        meaningEs = "añadir; agregar; unirse; Canadá (abreviatura)",
         onyomi = listOf("カ"),
         kunyomi = listOf("くわ.える", "くわ.わる"),
         strokeCount = 5
@@ -374,7 +374,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "共",
-        meaningEs = "ambos; conjuntamente; juntos; también",
+        meaningEs = "ambos; juntos; en común; también",
         onyomi = listOf("キョウ"),
         kunyomi = listOf("とも", "とも.に", "-ども"),
         strokeCount = 6
@@ -472,7 +472,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "参",
-        meaningEs = "visita; asistencia; consulta; derrota; ir; venir; visitar [humilde]; asistir; ser derrotado",
+        meaningEs = "visitar; asistir; participar (forma humilde); ser derrotado",
         onyomi = listOf("サン", "シン"),
         kunyomi = listOf("まい.る", "まい-", "まじわる", "みつ"),
         strokeCount = 8
@@ -654,7 +654,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "容",
-        meaningEs = "contenido; apariencia; forma",
+        meaningEs = "contenido; apariencia; permitir",
         onyomi = listOf("ヨウ"),
         kunyomi = listOf("い.れる"),
         strokeCount = 10
@@ -794,7 +794,7 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "供",
-        meaningEs = "ofrecer; entregar; expresar; mencionar; acompañante",
+        meaningEs = "ofrecer; acompañar; servir",
         onyomi = listOf("キョウ", "ク", "クウ", "グ"),
         kunyomi = listOf("そな.える", "とも", "-ども"),
         strokeCount = 8
