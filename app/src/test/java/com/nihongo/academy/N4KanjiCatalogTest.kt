@@ -5,9 +5,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class N4KanjiCatalogTest {
- @Test fun catalogContainsFiftyUniqueCuratedCharacters(){
+ @Test fun catalogContainsOneHundredFortyUniqueCuratedCharacters(){
   val chars=n4KanjiCatalog.map{it.character}
-  assertEquals(100,chars.size)
+  assertEquals(140,chars.size)
   assertEquals(chars.size,chars.toSet().size)
  }
  @Test fun n4CatalogDoesNotDuplicateTheN5KanjiCatalog(){
