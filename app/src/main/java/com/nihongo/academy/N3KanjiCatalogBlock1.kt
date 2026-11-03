@@ -882,5 +882,8 @@ internal val n3KanjiBlock1: List<N3KanjiEntry> = listOf(
     )
 )
 
+internal val n3KanjiCatalog: List<N3KanjiEntry> =
+    n3KanjiBlock1 + n3KanjiBlock2 + n3KanjiBlock3
+
 internal fun n3KanjiByCharacter(character: String): N3KanjiEntry? =
-    n3KanjiBlock1.firstOrNull { it.character == character }
+    n3KanjiCatalog.firstOrNull { it.character == character }
