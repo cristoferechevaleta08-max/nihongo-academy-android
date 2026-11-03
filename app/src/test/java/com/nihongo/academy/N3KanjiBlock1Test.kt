@@ -23,7 +23,7 @@ class N3KanjiBlock1Test {
     }
 
     @Test fun blockOneDoesNotDuplicateN4OrN5() {
-        val lowerLevels = (n4KanjiCatalog + n5KanjiCatalog).map { it.character }.toSet()
+        val lowerLevels = n4KanjiCatalog.map { it.character }.toSet() + n5KanjiCatalog.map { it.character }.toSet()
         assertTrue(n3KanjiBlock1.none { it.character in lowerLevels })
     }
 
