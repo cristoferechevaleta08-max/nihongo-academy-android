@@ -60,16 +60,16 @@ internal val n3AppearanceInformationProbabilityDays = listOf(
 )
 
 internal val n3AppearanceInformationProbabilityAssessment = listOf(
-    KanaQuizQuestion("¿Qué significa おいしそうです?", listOf("Parece delicioso", "Dicen que es delicioso", "Debe ser delicioso según una regla", "No puede ser delicioso"), 0),
+    KanaQuizQuestion("¿Qué significa おいしそうです?", listOf("Dicen que es delicioso", "Debe ser delicioso según una regla", "Parece delicioso", "No puede ser delicioso"), 2),
     KanaQuizQuestion("¿Qué forma transmite información o rumor en 雨が降るそうです?", listOf("Forma simple + そうだ", "Raíz del verbo + そうだ", "Forma て + そうだ", "Sustantivo + のそうだ"), 0),
-    KanaQuizQuestion("¿Qué significa 雨が降りそうです?", listOf("Parece que va a llover", "Dicen que lloverá", "Es imposible que llueva", "Siempre llueve"), 0),
-    KanaQuizQuestion("¿Qué estructura puede expresar una inferencia basada en indicios?", listOf("ようだ", "あげる", "ておく", "たびに"), 0),
-    KanaQuizQuestion("¿Cuál es la construcción correcta con un sustantivo antes de ようだ?", listOf("学生のようだ", "学生なようだ", "学生ようだ", "学生だのようだ"), 0),
+    KanaQuizQuestion("¿Qué significa 雨が降りそうです?", listOf("Dicen que lloverá", "Es imposible que llueva", "Siempre llueve", "Parece que va a llover"), 3),
+    KanaQuizQuestion("¿Qué estructura puede expresar una inferencia basada en indicios?", listOf("あげる", "ようだ", "ておく", "たびに"), 1),
+    KanaQuizQuestion("¿Cuál es la construcción correcta con un sustantivo antes de ようだ?", listOf("学生なようだ", "学生ようだ", "学生のようだ", "学生だのようだ"), 2),
     KanaQuizQuestion("¿Qué matiz suele tener みたいだ frente a ようだ?", listOf("Es más coloquial", "Es siempre más formal", "Solo expresa tiempo pasado", "Solo se usa con verbos"), 0),
-    KanaQuizQuestion("En 子どもらしい考え方, ¿qué expresa らしい?", listOf("Una característica típica de un niño", "Una apariencia observada en ese instante", "Una imposibilidad", "Una acción futura obligatoria"), 0),
-    KanaQuizQuestion("¿Qué puede expresar 来週は休みらしいです?", listOf("Información indirecta: parece que la semana que viene hay descanso", "Una apariencia visual", "Una orden", "Una decisión personal"), 0),
-    KanaQuizQuestion("¿Qué estructura se usa para una expectativa razonada?", listOf("はずだ", "てあげる", "間に", "ようとする"), 0),
+    KanaQuizQuestion("En 子どもらしい考え方, ¿qué expresa らしい?", listOf("Una apariencia observada en ese instante", "Una imposibilidad", "Una acción futura obligatoria", "Una característica típica de un niño"), 3),
+    KanaQuizQuestion("¿Qué puede expresar 来週は休みらしいです?", listOf("Una apariencia visual", "Información indirecta: parece que la semana que viene hay descanso", "Una orden", "Una decisión personal"), 1),
+    KanaQuizQuestion("¿Qué estructura se usa para una expectativa razonada?", listOf("てあげる", "間に", "はずだ", "ようとする"), 2),
     KanaQuizQuestion("¿Cuál es la forma adecuada con un adjetivo な antes de はずだ?", listOf("静かなはずだ", "静かのはずだ", "静かそうはずだ", "静かにはずだ"), 0),
-    KanaQuizQuestion("¿Qué expresa はずがない?", listOf("Que algo se considera imposible o muy improbable según el contexto", "Que algo parece delicioso", "Que se recibió un rumor", "Que una acción se prepara de antemano"), 0),
-    KanaQuizQuestion("¿Cuál es la diferencia entre ようだ y そうだ de transmisión?", listOf("ようだ suele expresar inferencia; そうだ de transmisión comunica información recibida", "Ambos solo describen apariencia visual", "そうだ siempre expresa imposibilidad", "ようだ solo se usa para rumores"), 0)
+    KanaQuizQuestion("¿Qué expresa はずがない?", listOf("Que algo parece delicioso", "Que se recibió un rumor", "Que una acción se prepara de antemano", "Que algo se considera imposible o muy improbable según el contexto"), 3),
+    KanaQuizQuestion("¿Cuál es la diferencia entre ようだ y そうだ de transmisión?", listOf("Ambos solo describen apariencia visual", "ようだ suele expresar inferencia; そうだ de transmisión comunica información recibida", "そうだ siempre expresa imposibilidad", "ようだ solo se usa para rumores"), 1)
 )
