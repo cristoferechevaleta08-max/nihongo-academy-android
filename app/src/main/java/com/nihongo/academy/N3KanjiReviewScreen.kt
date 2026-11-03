@@ -58,7 +58,7 @@ internal fun N3KanjiReviewScreen(
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             HorizontalDivider()
             Text("On'yomi: " + entry.onyomi.joinToString(" · ").ifBlank { "—" })
-            Text("Kun'yomi: " + entry.kunyomi.joinToString(" · ") { it.replace(".", "") }.ifBlank { "—" })
+            Text("Kun'yomi: " + entry.kunyomi.joinToString(" · ") { displayN3KunYomi(it) }.ifBlank { "—" })
             Text("¿Cómo te resultó esta ficha?", style = MaterialTheme.typography.titleMedium)
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
