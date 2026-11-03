@@ -25,6 +25,15 @@ class N4KanjiQuizTest {
         }
     }
 
+    @Test fun readingAnswersDoNotExposeDictionaryOkuriganaSeparators() {
+        buildN4KanjiQuiz(random = Random(19))
+            .filter { it.type == N4KanjiQuestionType.READING }
+            .forEach { question ->
+                assertTrue(!question.answer.contains("."))
+                assertTrue(question.options.none { it.contains(".") })
+            }
+    }
+
     @Test fun quizCanBeGeneratedRepeatedlyWithoutInvalidAnswers() {
         repeat(30) { seed ->
             val quiz = buildN4KanjiQuiz(random = Random(seed))
