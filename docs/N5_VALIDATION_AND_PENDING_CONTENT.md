@@ -1,66 +1,47 @@
-# N5: validación y contenido pendiente
+# N5: contenido implementado y alcance real
 
-Este documento evita declarar N5 terminado mientras falten materiales o revisiones que el PDF exige.
+Este documento describe lo que está integrado en la rama de trabajo. No se presenta como certificación oficial JLPT.
 
-## Contenido implementado en las lecciones
+## Kanji (semanas 9–10)
 
-- Diez unidades N5 en el orden del PDF.
-- Entre cinco y ocho ejercicios por unidad.
-- Consignas prácticas alineadas con la prueba de cada unidad.
-- Umbral de aprobación de lecciones: 70%.
-- Las preguntas falladas se repiten una vez; si se responden correctamente en el repaso, se eliminan del cuaderno de errores.
-- La unidad 2 contiene cinco preguntas sobre wa, ga, o, ni, de y mo.
-- La unidad 3 practica las seis formas masu indicadas.
-- La unidad 5 practica cuatro negativos de adjetivos i.
-- La unidad 6 practica formas afirmativas y negativas de adjetivos na.
-- Las tareas escritas se autoevalúan: la app no afirma corregir texto libre automáticamente.
-- La tarea oral de la unidad 7 se confirma manualmente; no se afirma evaluar pronunciación.
+- Catálogo local de 100 kanji con significado, lecturas, vocabulario y ejemplos.
+- Fichas de estudio, repaso espaciado local, práctica de escritura libre y animación del orden de trazos cuando existe el dato correspondiente.
+- Dos evaluaciones semanales de 10 preguntas generadas desde el catálogo integrado.
+- La selección es curricular de Nihongo Academy; no se denomina lista oficial JLPT. El JLPT dejó de publicar listas fijas de kanji, vocabulario y gramática tras la revisión de 2010.
+- Los datos de orden de trazos derivados de KanjiVG conservan su atribución y licencia en THIRD_PARTY_NOTICES.md.
 
-## Contenido pendiente para cerrar el plan N5 de 12 semanas
+## Comprensión auditiva (semana 11)
 
-### Semanas 9 y 10: kanji
+- Seis diálogos originales: cafetería, estación, escuela, planes y clima, tienda e invitación.
+- Cada diálogo contiene cuatro intervenciones, texto japonés, lectura en romaji, traducción y tres preguntas de comprensión.
+- Total: 24 intervenciones y 18 preguntas originales.
+- La aplicación utiliza Android TextToSpeech con Locale.JAPANESE para generar voz en el propio dispositivo. No descarga audios ni incorpora grabaciones protegidas.
+- La reproducción depende de que el dispositivo tenga un motor TTS y una voz japonesa instalada. Si no la tiene, los guiones, lecturas y preguntas siguen disponibles; la app informa de la limitación y no finge reproducir audio.
+- La pestaña Escucha permite reproducir el diálogo completo o cada intervención, ocultar/mostrar romaji y traducción, y comprobar la comprensión.
 
-El PDF pide kanji frecuentes, lectura, escritura y una prueba semanal. Indica aproximadamente 100 kanji para N5, pero no incluye un inventario completo de esos caracteres ni lecturas revisadas. Por eso, no se inventa una lista ni se habilita una prueba vacía. Falta incorporar un banco aprobado y revisar sus lecturas, significados y trazos.
+## Evaluación final de práctica (semana 12)
 
-### Semana 11: comprensión auditiva
+- Evaluación integrada de 30 preguntas: 18 preguntas extraídas de los contenidos de las unidades N5 y 12 preguntas de comprensión auditiva.
+- El banco es original y local. La evaluación guarda resultado y errores mediante el mecanismo del plan semanal.
+- Es un simulacro breve de práctica de Nihongo Academy; no reproduce la duración ni toda la estructura del examen oficial JLPT y no debe presentarse como examen oficial.
 
-El PDF pide diálogos cortos N5 y un simulacro de escucha. Faltan diálogos propios revisados por una persona competente en japonés, archivos de audio, preguntas y respuestas verificadas.
+## Contenido N5 y criterios
 
-El PDF menciona los recursos oficiales de JLPT como referencia y exige revisar sus condiciones de uso. La página oficial de JLPT indica que los audios de escucha de N1 a N5 incluidos en los Official Practice Workbooks contienen obras de terceros y que su reproducción está prohibida sin permiso, salvo excepciones de la política del sitio. No se copian esos audios al repositorio sin autorización.
+- Diez unidades N5 en el orden del plan, con ejercicios y tareas prácticas.
+- Las respuestas libres se autoevalúan: la app no afirma corregir texto libre automáticamente.
+- La práctica de pronunciación mediante reconocimiento de voz devuelve texto reconocido; no equivale a una evaluación fonética profesional.
+- El progreso, las tarjetas y el repaso se guardan localmente.
 
-### Semana 12: simulacro completo
+## Derechos y privacidad del material
 
-El PDF pide un simulacro N5 cronometrado y revisión del cuaderno de errores. Falta un banco original completo, validado y equilibrado por sección. Los tiempos configurados son 20 minutos para vocabulario, 40 para gramática/lectura y 30 para escucha (90 minutos en total), conforme a la tabla oficial JLPT consultada.
+- Los diálogos y preguntas de escucha son originales de Nihongo Academy.
+- No se copian páginas de libros, cursos comerciales, bancos de preguntas ni audios oficiales.
+- No se generan documentos o cuadernillos descargables como parte de estas semanas: el material se presenta dentro de la app.
+- La referencia al JLPT describe el nivel y sirve como orientación de diseño; no implica afiliación, aprobación ni certificación por parte del JLPT.
 
-## Criterios oficiales que afectan al contenido pendiente
+## Verificaciones antes de publicar
 
-El PDF del proyecto propone aproximadamente 100 kanji para N5. Esa cifra se conserva como orientación del documento del proyecto, no como una lista oficial cerrada del JLPT. El propio JLPT explica que dejó de publicar especificaciones de contenido con listas de vocabulario, kanji y gramática después de la revisión de 2010. Por lo tanto, el banco futuro deberá identificarse como una selección curricular de Nihongo Academy, documentar sus fuentes y pasar revisión lingüística; no se etiquetará como "lista oficial JLPT".
-
-Para que las evaluaciones de práctica se parezcan mejor a las competencias del N5, el JLPT publica tipos de ítems para:
-- Vocabulario: lectura de kanji, escritura/ortografía, expresiones definidas por contexto y paráfrasis.
-- Gramática: selección de forma, composición de oraciones y gramática de texto.
-- Lectura: comprensión de textos cortos y medianos e identificación de información.
-- Escucha: comprensión de tareas, puntos clave, expresiones verbales y respuesta rápida.
-
-La aplicación debe usar esos tipos como referencia de diseño, no copiar preguntas protegidas ni afirmar que una prueba breve reproduce el examen oficial.
-
-## Fuentes externas consultadas para verificar el formato
-
-- JLPT, composición de secciones y tiempos: https://www.jlpt.jp/e/guideline/testsections.html
-- JLPT, por qué dejó de publicar listas fijas de kanji/vocabulario/gramática y muestra de ítems: https://www.jlpt.jp/e/faq/
-- JLPT, propósitos de los tipos de ítems N5: https://www.jlpt.jp/e/guideline/pdf/n5_e_revised.pdf
-- JLPT, Official Practice Workbook y aviso de copyright: https://ns2.jlpt.jp/e/samples/sampleindex.html
-- JLPT, preguntas frecuentes sobre muestras y audio: https://www.jlpt.jp/e/faq/
-
-
-## Política de publicación y derechos del contenido
-
-- El material de estudio se mostrará dentro de Nihongo Academy; no se generarán cuadernillos ni documentos descargables para el usuario como parte de las semanas 9–10.
-- El futuro banco de kanji se integrará como datos internos de la aplicación, con explicaciones, ejemplos y ejercicios propios, revisados antes de publicarse.
-- Cada recurso externo deberá tener una fuente y una licencia/permiso compatible con su uso. No copiar páginas de libros, cursos comerciales, bancos de preguntas, audios ni materiales de preparación protegidos.
-- Las referencias al JLPT describen el nivel y el formato de práctica; no implican afiliación, aprobación ni certificación por parte del JLPT.
-- Esta política reduce riesgos, pero no constituye una garantía legal ni sustituye la revisión de licencias y permisos antes de publicar la app o la web.
-
-## Regla de cierre
-
-No pasar al desarrollo curricular N4 hasta que las diez unidades N5 y los bloques de las semanas 9–12 estén completos, revisados y validados. No declarar como terminado un simulacro, audio, banco de kanji o corrección automática que todavía no exista.
+- Ejecutar `:app:assembleDebug` y `:app:testDebugUnitTest` en CI.
+- Probar la reproducción TTS en un dispositivo real Huawei/Android sin Google Play Services, confirmar si tiene voz japonesa y documentar la ruta de instalación de datos de voz si fuera necesario.
+- Revisar los guiones y lecturas japonesas con una persona competente/nativa antes de considerar el contenido lingüísticamente definitivo.
+- Comprobar que las semanas 9–12 se pueden aprobar y que N4 se habilita únicamente al completar las doce semanas.
