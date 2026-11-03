@@ -3,7 +3,7 @@ package com.nihongo.academy
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,17 +22,21 @@ internal fun N3KanjiScreen(
     modifier: Modifier = Modifier
 ) {
     val learnedKey = remember { stringSetPreferencesKey("n3_kanji_learned") }
-    val learned by ds.data.collectAsState(initial = androidx.datastore.preferences.core.emptyPreferences())
-    val learnedSet = learned[learnedKey] ?: emptySet()
+    val preferences by ds.data.collectAsState(initial = androidx.datastore.preferences.core.emptyPreferences())
+    val learnedSet = preferences[learnedKey] ?: emptySet()
     val scope = rememberCoroutineScope()
     var blockIndex by remember { mutableIntStateOf(0) }
     var query by remember { mutableStateOf("") }
 
     val visibleEntries = remember(blockIndex, query) {
-        val source = if (query.isBlank()) n3KanjiBlocks[blockIndex]
-            else n3KanjiCharacters
-        source.withIndex().filter { (_, character) ->
-            character.contains(query.trim())
+        if (query.isNotBlank()) {
+            n3KanjiCatalog.filter { it.character.contains(query.trim()) || it.meaningEs.contains(query.trim(), ignoreCase = true) }
+        } else {
+            when (blockIndex) {
+                0 -> n3KanjiBlock1
+                1 -> n3KanjiBlock2
+                else -> n3KanjiBlock3
+            }
         }
     }
 
@@ -59,7 +63,7 @@ internal fun N3KanjiScreen(
                 onValueChange = { query = it },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                label = { Text("Buscar kanji") }
+                label = { Text("Buscar kanji o significado") }
             )
             Spacer(Modifier.height(10.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -85,16 +89,15 @@ internal fun N3KanjiScreen(
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(visibleEntries, key = { _, entry -> entry.value }) { index, entry ->
-                val character = entry.value
+            items(visibleEntries, key = { it.character }) { entry ->
+                val character = entry.character
                 val isLearned = character in learnedSet
                 Surface(
                     modifier = Modifier.fillMaxWidth().clickable {
                         scope.launch {
                             ds.edit { prefs ->
                                 val current = prefs[learnedKey] ?: emptySet()
-                                prefs[learnedKey] = if (character in current) current - character
-                                    else current + character
+                                prefs[learnedKey] = if (character in current) current - character else current + character
                             }
                         }
                     },
@@ -102,29 +105,37 @@ internal fun N3KanjiScreen(
                     color = MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     Row(
-                        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+                        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             character,
-                            style = MaterialTheme.typography.headlineMedium,
+                            style = MaterialTheme.typography.headlineLarge,
                             modifier = Modifier.width(64.dp)
                         )
                         Column(Modifier.weight(1f)) {
-                            Text("Kanji N3", style = MaterialTheme.typography.titleSmall)
+                            Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall)
                             Text(
-                                if (isLearned) "Marcado como aprendido" else "Tocá para marcar como aprendido",
-                                style = MaterialTheme.typography.bodySmall,
+                                "On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}",
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                            Text(
+                                "Kun: ${entry.kunyomi.joinToString("、").ifBlank { "—" }}",
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                            Text(
+                                "${entry.strokeCount} trazos",
+                                style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                         Checkbox(
                             checked = isLearned,
-                            onCheckedChange = {
+                            onCheckedChange = { checked ->
                                 scope.launch {
                                     ds.edit { prefs ->
                                         val current = prefs[learnedKey] ?: emptySet()
-                                        prefs[learnedKey] = if (it) current + character else current - character
+                                        prefs[learnedKey] = if (checked) current + character else current - character
                                     }
                                 }
                             }
