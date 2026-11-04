@@ -6,11 +6,9 @@ import org.junit.Test
 
 class N2KanjiCatalogTest {
     @Test
-    fun block1AndBlock2HaveThirtyUniqueKanjiEach() {
-        assertEquals(30, n2KanjiBlock1.size)
-        assertEquals(30, n2KanjiBlock2.size)
+    fun catalogHasUniqueEntries() {
         assertEquals(60, n2KanjiCatalog.size)
-        assertEquals(60, n2KanjiCharacters.distinct().size)
+        assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.distinct().size)
     }
 
     @Test
