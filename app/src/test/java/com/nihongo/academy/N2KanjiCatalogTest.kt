@@ -7,7 +7,7 @@ import org.junit.Test
 class N2KanjiCatalogTest {
     @Test
     fun catalogHasUniqueEntries() {
-        assertEquals(390, n2KanjiCatalog.size)
+        assertEquals(400, n2KanjiCatalog.size)
         assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.distinct().size)
     }
 
