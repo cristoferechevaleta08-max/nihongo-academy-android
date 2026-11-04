@@ -12,12 +12,22 @@ package com.nihongo.academy
  * KANJIDIC2 © Electronic Dictionary Research and Development Group (EDRDG).
  * https://github.com/jkindrix/japanese-language-data
  */
+internal data class N2KanjiWord(
+    val word: String,
+    val reading: String,
+    val meaningEs: String
+)
+
 internal data class N2KanjiEntry(
     val character: String,
     val meaningEs: String,
     val onyomi: List<String>,
     val kunyomi: List<String>,
-    val strokeCount: Int
+    val strokeCount: Int,
+    val vocabulary: List<N2KanjiWord> = emptyList(),
+    val exampleJa: String = "",
+    val exampleReading: String = "",
+    val exampleEs: String = ""
 )
 
 internal fun displayN2KunYomi(reading: String): String =
