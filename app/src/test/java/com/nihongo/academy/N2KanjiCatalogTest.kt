@@ -7,7 +7,7 @@ import org.junit.Test
 class N2KanjiCatalogTest {
     @Test
     fun catalogHasUniqueEntries() {
-        assertEquals(90, n2KanjiCatalog.size)
+        assertEquals(120, n2KanjiCatalog.size)
         assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.distinct().size)
     }
 
@@ -20,6 +20,14 @@ class N2KanjiCatalogTest {
             ).toSet()
         val duplicates = n2KanjiCharacters.filter { it in lowerLevel }
         assertTrue("N2 repite kanji de N3/N4/N5: $duplicates", duplicates.isEmpty())
+    }
+
+    @Test
+    fun everyEntryHasMeaningReadingsVocabularyAndExample() {
+        n2KanjiCatalog.forEach { entry ->
+            assertTrue("Falta vocabulario para ${entry.character}", entry.vocabulary.size >= 2)
+            assertTrue("Falta ejemplo para ${entry.character}", entry.exampleJa.isNotBlank() && entry.exampleReading.isNotBlank() && entry.exampleEs.isNotBlank())
+        }
     }
 
     @Test
