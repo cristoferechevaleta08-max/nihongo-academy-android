@@ -86,7 +86,7 @@ internal fun N2KanjiScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(Modifier.height(32.dp))
-                Text("Examen N5 completado", style = MaterialTheme.typography.headlineMedium)
+                Text("Examen N2 completado", style = MaterialTheme.typography.headlineMedium)
                 Text("$examScore / ${examQuestions.size}", style = MaterialTheme.typography.displayMedium)
                 Text(
                     if (examScore >= 8) "¡Muy buen trabajo! Seguí repasando para consolidar los kanji."
@@ -114,7 +114,7 @@ internal fun N2KanjiScreen(
                 examQuestions = emptyList()
                 examFinished = false
             }) { Text("← Salir del examen") }
-            Text("Evaluación de kanji N5", color = MaterialTheme.colorScheme.primary)
+            Text("Evaluación de kanji N2", color = MaterialTheme.colorScheme.primary)
             Text("Pregunta ${examIndex + 1} de ${examQuestions.size}")
             LinearProgressIndicator(
                 progress = { (examIndex + 1).toFloat() / examQuestions.size },
@@ -173,7 +173,7 @@ internal fun N2KanjiScreen(
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             TextButton(onClick = { writingEntry = null }) { Text("← Volver a la ficha") }
-            Text("Escritura de kanji N5", color = MaterialTheme.colorScheme.primary)
+            Text("Escritura de kanji N2", color = MaterialTheme.colorScheme.primary)
             Text(entry.character, style = MaterialTheme.typography.headlineMedium)
             Text("Trazá el carácter siguiendo el modelo.")
             val writingGuideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
@@ -264,7 +264,7 @@ internal fun N2KanjiScreen(
                 reviewQueue = emptyList()
                 reviewFinished = false
             }) { Text("← Salir del repaso") }
-            Text("Repaso de kanji N5 · ${reviewIndex + 1} de ${reviewQueue.size}",
+            Text("Repaso de kanji N2 · ${reviewIndex + 1} de ${reviewQueue.size}",
                 color = MaterialTheme.colorScheme.primary)
             LinearProgressIndicator(
                 progress = { (reviewIndex + 1).toFloat() / reviewQueue.size.coerceAtLeast(1) },
@@ -344,8 +344,8 @@ internal fun N2KanjiScreen(
             modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            TextButton(onClick = { selected = null }) { Text("← Biblioteca N5") }
-            Text("N5 · Kanji", color = MaterialTheme.colorScheme.primary)
+            TextButton(onClick = { selected = null }) { Text("← Biblioteca N2") }
+            Text("N2 · Kanji", color = MaterialTheme.colorScheme.primary)
             Text(entry.character, style = MaterialTheme.typography.displayLarge)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
@@ -363,22 +363,26 @@ internal fun N2KanjiScreen(
             Text(entry.onyomi.joinToString(" · ").ifBlank { "Sin lectura On'yomi registrada" })
             Text("Lectura Kun'yomi", style = MaterialTheme.typography.titleMedium)
             Text(entry.kunyomi.joinToString(" · ").ifBlank { "Sin lectura Kun'yomi registrada" })
-            HorizontalDivider()
-            Text("Vocabulario", style = MaterialTheme.typography.titleMedium)
-            entry.vocabulary.forEach { word ->
-                Card(Modifier.fillMaxWidth()) {
-                    Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
-                        Text(word.word, style = MaterialTheme.typography.titleLarge)
-                        Text(word.reading, color = MaterialTheme.colorScheme.primary)
-                        Text(word.meaningEs)
+            if (entry.vocabulary.isNotEmpty()) {
+                HorizontalDivider()
+                Text("Vocabulario", style = MaterialTheme.typography.titleMedium)
+                entry.vocabulary.forEach { word ->
+                    Card(Modifier.fillMaxWidth()) {
+                        Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                            Text(word.word, style = MaterialTheme.typography.titleLarge)
+                            Text(word.reading, color = MaterialTheme.colorScheme.primary)
+                            Text(word.meaningEs)
+                        }
                     }
                 }
             }
-            HorizontalDivider()
-            Text("Ejemplo", style = MaterialTheme.typography.titleMedium)
-            Text(entry.exampleJa, style = MaterialTheme.typography.titleLarge)
-            Text(entry.exampleReading, color = MaterialTheme.colorScheme.primary)
-            Text(entry.exampleEs)
+            if (entry.exampleJa.isNotBlank()) {
+                HorizontalDivider()
+                Text("Ejemplo", style = MaterialTheme.typography.titleMedium)
+                Text(entry.exampleJa, style = MaterialTheme.typography.titleLarge)
+                Text(entry.exampleReading, color = MaterialTheme.colorScheme.primary)
+                Text(entry.exampleEs)
+            }
             Button(
                 onClick = {
                     scope.launch {
@@ -415,7 +419,7 @@ internal fun N2KanjiScreen(
     }
     Column(modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp)) {
         Text("Biblioteca de kanji", style = MaterialTheme.typography.headlineMedium)
-        Text("N5 · Primer bloque de contenido", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("N2 · Catálogo pedagógico en desarrollo", color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
             progress = { if (n2KanjiCatalog.isEmpty()) 0f else learnedCount.toFloat() / n2KanjiCatalog.size },
@@ -432,7 +436,7 @@ internal fun N2KanjiScreen(
                 examFinished = false
             },
             modifier = Modifier.fillMaxWidth()
-        ) { Text("Realizar examen N5 · 10 preguntas") }
+        ) { Text("Realizar examen N2 · 10 preguntas") }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = { startReview(dueEntries) },
