@@ -13,8 +13,8 @@ ENTRY = re.compile(r'^\s*N2KanjiEntry\("([^"]+)",.*?,\s*(\d+)(?:,|\))', re.MULTI
 
 entries = [(character, int(count)) for character, count in ENTRY.findall(CATALOG.read_text(encoding="utf-8"))]
 characters = [character for character, _ in entries]
-if len(entries) != 120 or len(set(characters)) != len(entries):
-    raise SystemExit(f"Expected 120 unique N2 kanji, found {len(entries)} entries / {len(set(characters))} unique")
+if len(entries) != 150 or len(set(characters)) != len(entries):
+    raise SystemExit(f"Expected 150 unique N2 kanji, found {len(entries)} entries / {len(set(characters))} unique")
 
 def check(entry):
     character, expected = entry
