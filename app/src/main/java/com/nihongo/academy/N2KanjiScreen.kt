@@ -15,12 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.launch
 
 private val n2KanjiLearnedKey = stringSetPreferencesKey("n2_kanji_learned")
-private val n2KanjiBestQuizKey = intPreferencesKey("n2_kanji_best_quiz")
 
 @Composable
 internal fun N2KanjiScreen(
@@ -29,7 +27,6 @@ internal fun N2KanjiScreen(
 ) {
     val preferences by ds.data.collectAsState(initial = androidx.datastore.preferences.core.emptyPreferences())
     val learned = preferences[n2KanjiLearnedKey] ?: emptySet()
-    val bestQuiz = preferences[n2KanjiBestQuizKey] ?: 0
     val scope = rememberCoroutineScope()
     var query by remember { mutableStateOf("") }
     var selected by remember { mutableStateOf<N2KanjiEntry?>(null) }
@@ -88,10 +85,9 @@ internal fun N2KanjiScreen(
             Spacer(Modifier.height(8.dp))
             Text("Progreso: ${learned.size} / ${n2KanjiBlock1.size}", style = MaterialTheme.typography.labelLarge)
             LinearProgressIndicator(
-                progress = { learned.intersect(n2KanjiCharacters.toSet()).size.toFloat() / n2KanjiBlock1.size.toFloat() },
+                progress = learned.intersect(n2KanjiCharacters.toSet()).size.toFloat() / n2KanjiBlock1.size.toFloat(),
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
-            Text("Mejor resultado: $bestQuiz/10", style = MaterialTheme.typography.labelMedium)
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
