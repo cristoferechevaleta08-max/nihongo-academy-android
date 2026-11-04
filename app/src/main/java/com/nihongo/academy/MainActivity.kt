@@ -628,10 +628,12 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
    FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Kanji N5")})
    FilterChip(selected=level=="N4",onClick={level="N4"},label={Text("Kanji N4 · desbloqueado")})
    FilterChip(selected=level=="N3",onClick={level="N3"},label={Text("Kanji N3")})
+   FilterChip(selected=level=="N2",onClick={level="N2"},label={Text("Kanji N2 · inicial")})
   }
   when(level){
    "N4" -> N4KanjiScreen(ds,Modifier.weight(1f))
    "N3" -> N3KanjiScreen(ds,Modifier.weight(1f))
+   "N2" -> N2KanjiScreen(ds,Modifier.weight(1f))
    else -> N5KanjiScreen(ds,Modifier.weight(1f))
   }
  }
