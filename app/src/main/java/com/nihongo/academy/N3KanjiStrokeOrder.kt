@@ -46,7 +46,12 @@ private suspend fun loadN3KanjiStrokePaths(context: Context, character: String):
             return List(array.length()) { index -> array.getString(index) }
         }
         try {
-            if (cached.exists()) return@withContext decode(cached.readText())
+            if (cached.exists()) {
+                val cachedPaths = runCatching { decode(cached.readText()) }.getOrNull()
+                if (!cachedPaths.isNullOrEmpty()) return@withContext cachedPaths
+                // A damaged or incomplete cache must not permanently block a fresh download.
+                cached.delete()
+            }
             val connection = (URL("https://raw.githubusercontent.com/boomtakalaka/kanjivg-json/master/kanji_json/$code.json").openConnection() as HttpURLConnection).apply {
                 connectTimeout = 10000
                 readTimeout = 10000
