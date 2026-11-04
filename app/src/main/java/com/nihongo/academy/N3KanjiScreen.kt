@@ -33,7 +33,7 @@ internal fun N3KanjiScreen(
     val learnedSet = preferences[n3KanjiLearnedKey] ?: emptySet()
     val bestScore = preferences[n3KanjiBestQuizKey] ?: 0
     val reviewSchedule = preferences[n3KanjiReviewScheduleKey] ?: emptySet()
-    val dueReviewCount = n3KanjiDueForReview(n3KanjiCatalog, reviewSchedule, LocalDate.now()).size
+    val dueReviewCount = n3KanjiDueForReview(n3KanjiCatalog, learnedSet, reviewSchedule, LocalDate.now()).size
     val scope = rememberCoroutineScope()
     var blockIndex by remember { mutableIntStateOf(0) }
     var query by remember { mutableStateOf("") }
