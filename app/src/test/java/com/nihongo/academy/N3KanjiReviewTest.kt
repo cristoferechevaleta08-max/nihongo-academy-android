@@ -37,7 +37,7 @@ class N3KanjiReviewTest {
         val stored = scheduleN3KanjiReview(emptySet(), "政", N3ReviewRating.GOOD, today)
         val dueToday = n3KanjiDueForReview(n3KanjiCatalog, setOf("政"), stored, today)
         assertTrue(dueToday.none { it.character == "政" })
-        val dueLater = n3KanjiDueForReview(n3KanjiCatalog, stored, today.plusDays(3))
+        val dueLater = n3KanjiDueForReview(n3KanjiCatalog, setOf("政"), stored, today.plusDays(3))
         assertTrue(dueLater.any { it.character == "政" })
     }
 
