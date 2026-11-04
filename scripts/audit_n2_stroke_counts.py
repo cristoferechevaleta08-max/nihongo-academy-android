@@ -9,12 +9,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = "https://raw.githubusercontent.com/boomtakalaka/kanjivg-json/master/kanji_json/{}.json"
 CATALOG = ROOT / "app/src/main/java/com/nihongo/academy/N2KanjiCatalog.kt"
-ENTRY = re.compile(r'N2KanjiEntry\("([^"]+)",.*?,\s*(\d+)\),?')
+ENTRY = re.compile(r'^\s*N2KanjiEntry\("([^"]+)",.*?,\s*(\d+)(?:,|\))', re.MULTILINE)
 
 entries = [(character, int(count)) for character, count in ENTRY.findall(CATALOG.read_text(encoding="utf-8"))]
 characters = [character for character, _ in entries]
 if len(entries) != 120 or len(set(characters)) != len(entries):
-    raise SystemExit(f"Expected 90 unique N2 kanji, found {len(entries)} entries / {len(set(characters))} unique")
+    raise SystemExit(f"Expected 120 unique N2 kanji, found {len(entries)} entries / {len(set(characters))} unique")
 
 def check(entry):
     character, expected = entry
