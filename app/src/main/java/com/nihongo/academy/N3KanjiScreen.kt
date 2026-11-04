@@ -184,7 +184,7 @@ internal fun N3KanjiScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 AssistChip(
                     onClick = {
-                        reviewEntries = n3KanjiDueForReview(n3KanjiCatalog, reviewSchedule, LocalDate.now()).take(20)
+                        reviewEntries = n3KanjiDueForReview(n3KanjiCatalog, learnedSet, reviewSchedule, LocalDate.now()).take(20)
                         reviewMode = true
                     },
                     label = { Text("Repasar hoy · $dueReviewCount") },
