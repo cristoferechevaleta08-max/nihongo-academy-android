@@ -8,9 +8,14 @@ import org.junit.Test
 class N3KanjiReviewTest {
     private val today = LocalDate.of(2026, 11, 3)
 
-    @Test fun unseenKanjiAreDueImmediately() {
-        val due = n3KanjiDueForReview(n3KanjiCatalog, emptySet(), today)
-        assertEquals(n3KanjiCatalog.size, due.size)
+    @Test fun unseenKanjiAreNotDueUntilMarkedAsLearned() {
+        val due = n3KanjiDueForReview(n3KanjiCatalog, emptySet(), emptySet(), today)
+        assertTrue(due.isEmpty())
+    }
+
+    @Test fun learnedKanjiWithoutScheduleAreDueImmediately() {
+        val due = n3KanjiDueForReview(n3KanjiCatalog, setOf("政"), emptySet(), today)
+        assertEquals(listOf("政"), due.map { it.character })
     }
 
     @Test fun goodAndEasyScheduleIncreasingIntervals() {
@@ -30,7 +35,7 @@ class N3KanjiReviewTest {
 
     @Test fun futureReviewsAreHiddenUntilDueDate() {
         val stored = scheduleN3KanjiReview(emptySet(), "政", N3ReviewRating.GOOD, today)
-        val dueToday = n3KanjiDueForReview(n3KanjiCatalog, stored, today)
+        val dueToday = n3KanjiDueForReview(n3KanjiCatalog, setOf("政"), stored, today)
         assertTrue(dueToday.none { it.character == "政" })
         val dueLater = n3KanjiDueForReview(n3KanjiCatalog, stored, today.plusDays(3))
         assertTrue(dueLater.any { it.character == "政" })
