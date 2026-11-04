@@ -66,8 +66,8 @@ internal fun N2KanjiScreen(
     }
 
     val visible = remember(query) {
-        if (query.isBlank()) n2KanjiBlock1
-        else n2KanjiBlock1.filter {
+        if (query.isBlank()) n2KanjiCatalog
+        else n2KanjiCatalog.filter {
             it.character.contains(query.trim()) ||
                 it.meaningEs.contains(query.trim(), ignoreCase = true) ||
                 it.onyomi.any { reading -> reading.contains(query.trim(), ignoreCase = true) } ||
@@ -79,14 +79,14 @@ internal fun N2KanjiScreen(
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp)) {
             Text("Kanji N2", style = MaterialTheme.typography.headlineSmall)
             Text(
-                "Selección pedagógica · ${n2KanjiBlock1.size} caracteres en el bloque inicial",
+                "Selección pedagógica · ${n2KanjiCatalog.size} de 400 kanjis · ${n2KanjiBlocks.size} bloques",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(8.dp))
-            Text("Progreso: ${learned.size} / ${n2KanjiBlock1.size}", style = MaterialTheme.typography.labelLarge)
+            Text("Progreso: ${learned.intersect(n2KanjiCharacters.toSet()).size} / 400", style = MaterialTheme.typography.labelLarge)
             LinearProgressIndicator(
-                progress = learned.intersect(n2KanjiCharacters.toSet()).size.toFloat() / n2KanjiBlock1.size.toFloat(),
+                progress = (learned.intersect(n2KanjiCharacters.toSet()).size.toFloat() / 400f).coerceAtMost(1f),
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
             OutlinedTextField(
@@ -97,7 +97,11 @@ internal fun N2KanjiScreen(
                 label = { Text("Buscar kanji, lectura o significado") }
             )
             Spacer(Modifier.height(8.dp))
-            AssistChip(onClick = { query = "" }, label = { Text("Bloque 1 · ${n2KanjiBlock1.size}") })
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                n2KanjiBlocks.forEachIndexed { index, block ->
+                    AssistChip(onClick = { query = "" }, label = { Text("Bloque ${index + 1} · ${block.size}") })
+                }
+            }
         }
         LazyColumn(
             modifier = Modifier.weight(1f),
