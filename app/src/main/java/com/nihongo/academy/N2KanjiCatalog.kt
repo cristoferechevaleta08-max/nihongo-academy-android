@@ -69,7 +69,6 @@ internal val n2KanjiCatalog: List<N2KanjiEntry> = listOf(
     N2KanjiEntry("菓", "dulce; golosina; confitería", listOf("カ"), listOf(), 11, listOf(N2KanjiWord("菓子", "かし", "dulces; golosinas"), N2KanjiWord("和菓子", "わがし", "dulces tradicionales japoneses")), "日本のお菓子が好きです。", "にほんのおかしがすきです。", "Me gustan los dulces japoneses."),
     N2KanjiEntry("暇", "tiempo libre; ocio; descanso", listOf("カ"), listOf("ひま"), 13, listOf(N2KanjiWord("暇", "ひま", "tiempo libre"), N2KanjiWord("暇つぶし", "ひまつぶし", "pasatiempo; forma de matar el tiempo")), "暇なときに本を読みます。", "ひまなときにほんをよみます。", "Leo libros cuando tengo tiempo libre."),
     N2KanjiEntry("禍", "desgracia; calamidad; desastre", listOf("カ"), listOf("わざわい"), 13, listOf(N2KanjiWord("災禍", "さいか", "calamidad; desastre"), N2KanjiWord("禍根", "かこん", "causa de un problema futuro; semilla de discordia")), "小さな誤解が大きな禍根を残しました。", "ちいさなごかいがおおきなかこんをのこしました。", "Un pequeño malentendido dejó un gran problema para el futuro."),
-,
 
     N2KanjiEntry("壊", "romper; destruir; deteriorarse", listOf("カイ"), listOf("こわ.す", "こわ.れる"), 16, listOf(N2KanjiWord("破壊", "はかい", "destrucción"), N2KanjiWord("壊れる", "こわれる", "romperse; estropearse")), "この時計は壊れています。", "このとけいはこわれています。", "Este reloj está roto."),
     N2KanjiEntry("懐", "nostalgia; bolsillo; añorar", listOf("カイ"), listOf("ふところ", "なつ.かしい", "なつ.く"), 16, listOf(N2KanjiWord("懐かしい", "なつかしい", "nostálgico; añorado"), N2KanjiWord("懐中電灯", "かいちゅうでんとう", "linterna")), "子供のころが懐かしいです。", "こどものころがなつかしいです。", "Extraño los tiempos de mi infancia."),
@@ -101,7 +100,6 @@ internal val n2KanjiCatalog: List<N2KanjiEntry> = listOf(
     N2KanjiEntry("勘", "intuición; percepción; presentimiento", listOf("カン"), listOf(), 11, listOf(N2KanjiWord("勘違い", "かんちがい", "malentendido; equivocación"), N2KanjiWord("勘定", "かんじょう", "cuenta; cálculo")), "私は時間を勘違いしていました。", "わたしはじかんをかんちがいしていました。", "Me había equivocado con la hora."),
     N2KanjiEntry("堪", "soportar; resistir; aguantar", listOf("カン", "タン"), listOf("た.える", "こら.える", "こた.える"), 12, listOf(N2KanjiWord("堪える", "たえる", "soportar; resistir"), N2KanjiWord("堪忍", "かんにん", "paciencia; tolerancia")), "この暑さには堪えられません。", "このあつさにはたえられません。", "No puedo soportar este calor."),
     N2KanjiEntry("喚", "llamar; convocar; gritar", listOf("カン"), listOf("わめ.く"), 12, listOf(N2KanjiWord("召喚", "しょうかん", "convocatoria; citación"), N2KanjiWord("喚起", "かんき", "despertar; suscitar; llamar la atención")), "その事件は注意を喚起しました。", "そのじけんはちゅういをかんきしました。", "Ese incidente llamó la atención."),
-,
 // Continuación del catálogo único: selección contrastada con la fuente N2 y sin
     // caracteres repetidos en N5, N4, N3 ni en las fichas anteriores.
     N2KanjiEntry("党", "partido político; facción", listOf("トウ"), listOf("なかま", "むら"), 10, listOf(N2KanjiWord("政党", "せいとう", "partido político"), N2KanjiWord("与党", "よとう", "partido gobernante")), "この国には多くの政党があります。", "このくににはおおくのせいとうがあります。", "En este país hay muchos partidos políticos."),
@@ -134,7 +132,6 @@ internal val n2KanjiCatalog: List<N2KanjiEntry> = listOf(
     N2KanjiEntry("武", "militar; marcial; guerrero", listOf("ブ", "ム"), listOf("たけ", "たけ.し"), 8, listOf(N2KanjiWord("武道", "ぶどう", "artes marciales"), N2KanjiWord("武器", "ぶき", "arma")), "彼は子供のころから武道を習っています。", "かれはこどものころからぶどうをならっています。", "Él practica artes marciales desde niño."),
     N2KanjiEntry("象", "elefante; imagen; fenómeno", listOf("ショウ", "ゾウ"), listOf("かたど.る"), 12, listOf(N2KanjiWord("象徴", "しょうちょう", "símbolo"), N2KanjiWord("現象", "げんしょう", "fenómeno")), "桜は日本を象徴する花です。", "さくらはにほんをしょうちょうするはなです。", "El cerezo es una flor que simboliza Japón."),
     N2KanjiEntry("欧", "Europa; europeo", listOf("オウ"), listOf("うた.う", "は.く"), 8, listOf(N2KanjiWord("欧州", "おうしゅう", "Europa"), N2KanjiWord("欧米", "おうべい", "Europa y América")), "欧州の歴史を学んでいます。", "おうしゅうのれきしをまなんでいます。", "Estoy estudiando la historia de Europa."),
-,
     N2KanjiEntry("担", "asumir; cargar; responsabilizarse", listOf("タン"), listOf("かつ.ぐ", "にな.う"), 8, listOf(N2KanjiWord("担当", "たんとう", "encargarse; estar a cargo"), N2KanjiWord("担う", "になう", "asumir; llevar sobre los hombros")), "私がこの仕事を担当します。", "わたしがこのしごとをたんとうします。", "Yo me encargo de este trabajo."),
     N2KanjiEntry("準", "preparación; estándar; corresponder", listOf("ジュン"), listOf("じゅん.じる", "じゅん.ずる", "なぞら.える", "のり", "ひと.しい", "みずもり"), 13, listOf(N2KanjiWord("準備", "じゅんび", "preparación"), N2KanjiWord("基準", "きじゅん", "criterio; estándar")), "試験の準備をしています。", "しけんのじゅんびをしています。", "Estoy preparando el examen."),
     N2KanjiEntry("賞", "premio; recompensa; elogio", listOf("ショウ"), listOf("ほ.める"), 15, listOf(N2KanjiWord("賞金", "しょうきん", "premio en dinero"), N2KanjiWord("賞品", "しょうひん", "premio; artículo premiado")), "彼は作文で賞をもらいました。", "かれはさくぶんでしょうをもらいました。", "Él recibió un premio por su redacción."),
