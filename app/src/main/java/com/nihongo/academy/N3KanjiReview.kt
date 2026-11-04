@@ -29,11 +29,13 @@ internal fun serializeN3ReviewRecords(records: Map<String, N3ReviewRecord>): Set
 
 internal fun n3KanjiDueForReview(
     catalog: List<N3KanjiEntry>,
+    learned: Set<String>,
     stored: Set<String>,
     today: LocalDate
 ): List<N3KanjiEntry> {
     val records = parseN3ReviewRecords(stored)
     return catalog.filter { entry ->
+        if (entry.character !in learned) return@filter false
         val record = records[entry.character]
         record == null || !record.dueDate.isAfter(today)
     }
