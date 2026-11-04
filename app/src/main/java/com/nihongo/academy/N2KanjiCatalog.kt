@@ -11,6 +11,10 @@ package com.nihongo.academy
  * Lecturas y trazos: referencia KANJIDIC2 / Japanese Language Data.
  * KANJIDIC2 © Electronic Dictionary Research and Development Group (EDRDG).
  * https://github.com/jkindrix/japanese-language-data
+ * Datos de lectura/trazos contrastados también con OpenJLPT (evanclan/OpenJLPT),
+ * data/json/kanji/n2.json. Ese conjunto se distribuye bajo CC BY-SA 4.0:
+ * https://github.com/evanclan/OpenJLPT
+ * Las traducciones al español son adaptaciones editoriales propias.
  */
 internal data class N2KanjiWord(
     val word: String,
