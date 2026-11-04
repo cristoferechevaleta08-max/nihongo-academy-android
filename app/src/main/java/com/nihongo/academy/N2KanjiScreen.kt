@@ -43,6 +43,7 @@ internal fun N2KanjiScreen(
             Text(entry.character, style = MaterialTheme.typography.displayLarge)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
+            N2KanjiStrokeOrder(entry.character, entry.strokeCount)
             HorizontalDivider()
             Text("Lectura On'yomi", style = MaterialTheme.typography.titleMedium)
             Text(entry.onyomi.joinToString(" · ").ifBlank { "No incluida en esta ficha" })
