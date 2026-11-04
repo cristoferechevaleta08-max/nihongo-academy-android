@@ -26,6 +26,8 @@ jobs:
           curl -fsSL https://services.gradle.org/distributions/gradle-8.9-bin.zip -o /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /tmp
           echo "/tmp/gradle-8.9/bin" >> "$GITHUB_PATH"
+      - name: Audit N3 stroke data against KanjiVG
+        run: python3 scripts/audit_n3_stroke_counts.py
       - name: Assemble debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload debug APK
