@@ -7,7 +7,7 @@ import org.junit.Test
 class N2KanjiCatalogTest {
     @Test
     fun catalogHasUniqueEntries() {
-        assertEquals(60, n2KanjiCatalog.size)
+        assertEquals(90, n2KanjiCatalog.size)
         assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.distinct().size)
     }
 
@@ -30,4 +30,16 @@ class N2KanjiCatalogTest {
             assertTrue("Falta lectura para ${entry.character}", entry.onyomi.isNotEmpty() || entry.kunyomi.isNotEmpty())
         }
     }
+    @Test
+    fun noCharacterIsRepeatedInsideN2Catalog() {
+        val duplicates = n2KanjiCharacters.groupBy { it }.filterValues { it.size > 1 }.keys
+        assertTrue("N2 contiene caracteres duplicados: $duplicates", duplicates.isEmpty())
+    }
+
+    @Test
+    fun catalogProgressMatchesUniqueEntries() {
+        assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.size)
+        assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.toSet().size)
+    }
+
 }
