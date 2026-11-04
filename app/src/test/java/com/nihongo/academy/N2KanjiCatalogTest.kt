@@ -24,7 +24,7 @@ class N2KanjiCatalogTest {
 
     @Test
     fun everyEntryHasMeaningReadingsVocabularyAndExample() {
-        n2KanjiCatalog.takeLast(30).forEach { entry ->
+        n2KanjiCatalog.forEach { entry ->
             assertTrue("Falta vocabulario para ${entry.character}", entry.vocabulary.size >= 2)
             assertTrue("Falta ejemplo para ${entry.character}", entry.exampleJa.isNotBlank() && entry.exampleReading.isNotBlank() && entry.exampleEs.isNotBlank())
         }
@@ -48,14 +48,6 @@ class N2KanjiCatalogTest {
     fun catalogProgressMatchesUniqueEntries() {
         assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.size)
         assertEquals(n2KanjiCatalog.size, n2KanjiCharacters.toSet().size)
-    }
-
-    @Test
-    fun firstThirtyCardsHaveVocabularyAndExamples() {
-        n2KanjiCatalog.take(30).forEach { entry ->
-            assertTrue("Falta vocabulario para ${entry.character}", entry.vocabulary.size >= 2)
-            assertTrue("Falta ejemplo para ${entry.character}", entry.exampleJa.isNotBlank() && entry.exampleReading.isNotBlank() && entry.exampleEs.isNotBlank())
-        }
     }
 
 }
