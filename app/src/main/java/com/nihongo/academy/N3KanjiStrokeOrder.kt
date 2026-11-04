@@ -74,6 +74,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
     var rawPaths by remember(character) { mutableStateOf<List<String>>(emptyList()) }
     var loading by remember(character) { mutableStateOf(true) }
     var replayKey by remember(character) { mutableIntStateOf(0) }
+    var loadKey by remember(character) { mutableIntStateOf(0) }
     var activeStroke by remember(character) { mutableIntStateOf(0) }
     var practiceMode by remember(character) { mutableStateOf(false) }
     var handwriting by remember(character) { mutableStateOf<List<List<Offset>>>(emptyList()) }
@@ -84,7 +85,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
     val strokeColor = MaterialTheme.colorScheme.primary
     val guideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
 
-    LaunchedEffect(character) {
+    LaunchedEffect(character, loadKey) {
         loading = true
         rawPaths = loadN3KanjiStrokePaths(context, character)
         loading = false
@@ -185,7 +186,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
                 Text("La práctica es libre; todavía no evalúa automáticamente la dirección ni el orden.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else if (!loading) {
-            OutlinedButton(onClick = { replayKey++; loading = true }, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(onClick = { loadKey++ }, modifier = Modifier.fillMaxWidth()) {
                 Text("Reintentar carga")
             }
         }
