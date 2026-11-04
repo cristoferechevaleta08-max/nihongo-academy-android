@@ -57,8 +57,11 @@ internal val n2KanjiBlock1: List<N2KanjiEntry> = listOf(
     N2KanjiEntry("禍", "desgracia; calamidad; desastre", listOf("カ"), listOf("わざわい"), 13)
 )
 
-internal val n2KanjiCharacters: List<String> =
-    n2KanjiBlock1.map { it.character }
+internal val n2KanjiBlocks: List<List<N2KanjiEntry>> =
+    listOf(n2KanjiBlock1, n2KanjiBlock2)
 
-internal val n2KanjiBlocks: List<List<String>> =
-    listOf(n2KanjiCharacters)
+internal val n2KanjiCatalog: List<N2KanjiEntry> =
+    n2KanjiBlocks.flatten()
+
+internal val n2KanjiCharacters: List<String> =
+    n2KanjiCatalog.map { it.character }
