@@ -29,8 +29,9 @@ class N3KanjiSelectionTest {
         assertTrue(n3KanjiCuratedSubstitutions.none { it in n3KanjiReferenceCharacters })
     }
 
-    @Test fun studySelectionIsSplitIntoThreeOrderedBlocks() {
-        assertEquals(listOf(123, 123, 124), n3KanjiBlocks.map { it.size })
-        assertEquals(n3KanjiCharacters, n3KanjiBlocks.flatten())
+    @Test fun catalogIsOneContinuousListInTheSelectedOrder() {
+        assertEquals(370, n3KanjiCatalog.size)
+        assertEquals(n3KanjiCharacters, n3KanjiCatalog.map { it.character })
+        assertEquals(370, n3KanjiCatalog.map { it.character }.toSet().size)
     }
 }
