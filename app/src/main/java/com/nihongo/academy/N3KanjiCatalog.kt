@@ -1190,7 +1190,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "観",
         meaningEs = "observación; punto de vista; contemplar",
         onyomi = listOf("カン"),
-        kunyomi = listOf("み.る", "しめ.す"),
+        kunyomi = listOf("み.る"),
         strokeCount = 18
     ),
     N3KanjiEntry(
