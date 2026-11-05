@@ -1141,7 +1141,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "若",
         meaningEs = "joven; poco; algunos",
         onyomi = listOf("ジャク", "ニャク", "ニャ"),
-        kunyomi = listOf("わか.い", "わか-", "も.しくわ", "も.し", "も.しくは", "ごと.し"),
+        kunyomi = listOf("わか.い", "わか-", "も.しくは", "も.し", "ごと.し"),
         strokeCount = 8
     ),
     N3KanjiEntry(
