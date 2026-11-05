@@ -2360,7 +2360,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "忙",
         meaningEs = "ocupado; atareado",
         onyomi = listOf("ボウ", "モウ"),
-        kunyomi = listOf("いそが.しい", "せわ.しい", "おそ.れる", "うれえるさま"),
+        kunyomi = listOf("いそが.しい", "せわ.しい"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -2423,7 +2423,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "圧",
         meaningEs = "presión; apretar",
         onyomi = listOf("アツ", "エン", "オウ"),
-        kunyomi = listOf("お.す", "へ.す", "おさ.える", "お.さえる"),
+        kunyomi = listOf("お.す", "へ.す", "おさ.える"),
         strokeCount = 5
     ),
     N3KanjiEntry(
