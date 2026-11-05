@@ -33,9 +33,9 @@ internal fun N3KanjiScreen(
     val learnedSet = preferences[n3KanjiLearnedKey] ?: emptySet()
     val bestScore = preferences[n3KanjiBestQuizKey] ?: 0
     val reviewSchedule = preferences[n3KanjiReviewScheduleKey] ?: emptySet()
+    val learnedCount = n3KanjiCatalog.count { it.character in learnedSet }
     val dueReviewCount = n3KanjiDueForReview(n3KanjiCatalog, learnedSet, reviewSchedule, LocalDate.now()).size
     val scope = rememberCoroutineScope()
-    var blockIndex by remember { mutableIntStateOf(0) }
     var query by remember { mutableStateOf("") }
     var selected by remember { mutableStateOf<N3KanjiEntry?>(null) }
     var quiz by remember { mutableStateOf<List<N3KanjiQuizQuestion>>(emptyList()) }
@@ -153,17 +153,10 @@ internal fun N3KanjiScreen(
         return
     }
 
-    val visibleEntries = remember(blockIndex, query) {
-        if (query.isNotBlank()) {
-            n3KanjiCatalog.filter {
-                it.character.contains(query.trim()) || it.meaningEs.contains(query.trim(), ignoreCase = true)
-            }
-        } else {
-            when (blockIndex) {
-                0 -> n3KanjiBlock1
-                1 -> n3KanjiBlock2
-                else -> n3KanjiBlock3
-            }
+    val visibleEntries = remember(query) {
+        val search = query.trim()
+        if (search.isBlank()) n3KanjiCatalog else n3KanjiCatalog.filter {
+            it.character.contains(search) || it.meaningEs.contains(search, ignoreCase = true)
         }
     }
 
@@ -176,9 +169,9 @@ internal fun N3KanjiScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(10.dp))
-            Text("Progreso: ${learnedSet.size} / ${n3KanjiCharacters.size}", style = MaterialTheme.typography.labelLarge)
+            Text("Progreso: $learnedCount / ${n3KanjiCatalog.size}", style = MaterialTheme.typography.labelLarge)
             LinearProgressIndicator(
-                progress = learnedSet.size.toFloat() / n3KanjiCharacters.size.toFloat(),
+                progress = learnedCount.toFloat() / n3KanjiCatalog.size.toFloat(),
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
             Spacer(Modifier.height(8.dp))
@@ -210,18 +203,8 @@ internal fun N3KanjiScreen(
                 singleLine = true,
                 label = { Text("Buscar kanji o significado") }
             )
-            Spacer(Modifier.height(10.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                n3KanjiBlocks.forEachIndexed { index, block ->
-                    FilterChip(
-                        selected = blockIndex == index && query.isBlank(),
-                        onClick = { blockIndex = index; query = "" },
-                        label = { Text("Bloque ${index + 1} · ${block.size}") }
-                    )
-                }
-            }
             if (query.isNotBlank()) {
-                Text("Resultados en los 3 bloques", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Resultados en los 370 kanjis", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
