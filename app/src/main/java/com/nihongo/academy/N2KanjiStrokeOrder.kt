@@ -84,8 +84,14 @@ internal fun N2KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
     var practiceMode by remember(character) { mutableStateOf(false) }
     var handwriting by remember(character) { mutableStateOf<List<List<Offset>>>(emptyList()) }
     val progress = remember(character) { Animatable(0f) }
+    // No mostrar una secuencia parcial: si un path está dañado, se descarta la guía completa.
     val paths = remember(character, rawPaths) {
-        rawPaths.mapNotNull { data -> runCatching { PathParser().parsePathString(data).toPath() }.getOrNull() }
+        runCatching {
+            rawPaths.map { data ->
+                require(data.isNotBlank()) { "Empty KanjiVG path" }
+                PathParser().parsePathString(data).toPath()
+            }
+        }.getOrElse { emptyList() }
     }
     val strokeColor = MaterialTheme.colorScheme.primary
     val guideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
