@@ -10,20 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = "https://raw.githubusercontent.com/boomtakalaka/kanjivg-json/master/kanji_json/{}.json"
 ENTRY = re.compile(
-    r'N3KanjiEntry\s*\(\s*character\s*=\s*"([^"]+)"[\s\S]*?strokeCount\s*=\s*(\d+)',
+    r'N3KanjiEntry\\s*\\(\\s*character\\s*=\\s*"([^"]+)"[\\s\\S]*?strokeCount\\s*=\\s*(\\d+)',
     re.MULTILINE,
 )
-
-entries = []
-for block in range(1, 4):
-    source = ROOT / "app/src/main/java/com/nihongo/academy" / f"N3KanjiCatalogBlock{block}.kt"
-    matches = ENTRY.findall(source.read_text(encoding="utf-8"))
-    if len(matches) != 123 and block != 3:
-        raise SystemExit(f"Block {block}: expected 123 entries, found {len(matches)}")
-    if block == 3 and len(matches) != 124:
-        raise SystemExit(f"Block 3: expected 124 entries, found {len(matches)}")
-    entries.extend((character, int(count)) for character, count in matches)
-
+source = ROOT / "app/src/main/java/com/nihongo/academy/N3KanjiCatalog.kt"
+matches = ENTRY.findall(source.read_text(encoding="utf-8"))
+entries = [(character, int(count)) for character, count in matches]
 characters = [character for character, _ in entries]
 if len(entries) != 370 or len(set(characters)) != 370:
     raise SystemExit(f"Expected 370 unique N3 kanji, found {len(entries)} entries / {len(set(characters))} unique")
