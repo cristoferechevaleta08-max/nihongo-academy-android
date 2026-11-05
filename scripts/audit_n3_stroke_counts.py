@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = "https://raw.githubusercontent.com/boomtakalaka/kanjivg-json/master/kanji_json/{}.json"
 ENTRY = re.compile(
-    r'N3KanjiEntry\\s*\\(\\s*character\\s*=\\s*"([^"]+)"[\\s\\S]*?strokeCount\\s*=\\s*(\\d+)',
+    r'N3KanjiEntry\s*\(\s*character\s*=\s*"([^"]+)"[\s\S]*?strokeCount\s*=\s*(\d+)',
     re.MULTILINE,
 )
 source = ROOT / "app/src/main/java/com/nihongo/academy/N3KanjiCatalog.kt"
