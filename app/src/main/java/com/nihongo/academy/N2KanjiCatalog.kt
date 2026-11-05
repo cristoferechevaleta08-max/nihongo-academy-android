@@ -1,12 +1,11 @@
 package com.nihongo.academy
 
 /**
- * Bloque 1 del catálogo pedagógico de kanji N2.
+ * Catálogo pedagógico de 400 kanji N2, presentado como una lista continua.
  *
  * Selección de estudio propia: el JLPT no publica una lista oficial y definitiva
- * de kanji por nivel. Los caracteres de este bloque se comprobaron contra los
- * catálogos N5 (100), N4 (181) y N3 (370) existentes en esta aplicación para
- * evitar repetir kanji ya enseñados.
+ * de kanji por nivel. Los caracteres se comprobaron contra los catálogos N5,
+ * N4 y N3 existentes en esta aplicación para evitar repetir kanji ya enseñados.
  *
  * Lecturas y trazos: referencia KANJIDIC2 / Japanese Language Data.
  * KANJIDIC2 © Electronic Dictionary Research and Development Group (EDRDG).
@@ -37,7 +36,7 @@ internal data class N2KanjiEntry(
 internal fun displayN2KunYomi(reading: String): String =
     reading.replace(".", "").replace("-", "")
 
-/** Primer bloque: 30 caracteres nuevos, sin solapamiento con N5/N4/N3. */
+/** Lista única de 400 caracteres N2, sin solapamiento con N5/N4/N3. */
 internal val n2KanjiCatalog: List<N2KanjiEntry> = listOf(
     N2KanjiEntry("曖", "ambiguo; poco claro", listOf("アイ"), listOf(), 17, listOf(N2KanjiWord("曖昧", "あいまい", "ambiguo; poco claro"), N2KanjiWord("曖昧さ", "あいまいさ", "ambigüedad")), "彼の説明は曖昧です。", "かれのせつめいはあいまいです。", "Su explicación es ambigua."),
     N2KanjiEntry("握", "agarrar; sujetar; empuñar", listOf("アク"), listOf("にぎ.る"), 12, listOf(N2KanjiWord("握手", "あくしゅ", "apretón de manos"), N2KanjiWord("握る", "にぎる", "agarrar; empuñar")), "私たちは握手をしました。", "わたしたちはあくしゅをしました。", "Nos dimos la mano."),
