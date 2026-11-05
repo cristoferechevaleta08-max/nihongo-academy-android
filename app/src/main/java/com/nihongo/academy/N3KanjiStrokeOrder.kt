@@ -66,7 +66,7 @@ private suspend fun loadN3KanjiStrokePaths(context: Context, character: String):
             try {
                 val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
                 val paths = decodeN3KanjiStrokePaths(body)
-                if (paths.isNotEmpty()) {
+                if (strokeDataValid) {
                     directory.mkdirs()
                     cached.writeText(body)
                 }
@@ -98,6 +98,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
             }
         }.getOrElse { emptyList() }
     }
+    val strokeDataValid = paths.isNotEmpty() && paths.size == expectedStrokeCount
     val strokeColor = MaterialTheme.colorScheme.primary
     val guideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
 
@@ -106,8 +107,8 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
         rawPaths = loadN3KanjiStrokePaths(context, character)
         loading = false
     }
-    LaunchedEffect(character, replayKey, paths.size) {
-        if (paths.isEmpty()) return@LaunchedEffect
+    LaunchedEffect(character, replayKey, paths.size, expectedStrokeCount, strokeDataValid) {
+        if (!strokeDataValid) return@LaunchedEffect
         activeStroke = 0
         paths.indices.forEach { index ->
             activeStroke = index
@@ -124,6 +125,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
             when {
                 loading -> "Cargando guía de escritura…"
                 paths.isEmpty() -> "No se pudo cargar la guía. Comprobá tu conexión e intentá de nuevo."
+                paths.size != expectedStrokeCount -> "La guía tiene ${paths.size} trazos y la ficha espera ${expectedStrokeCount}. No se mostrará una guía incorrecta."
                 else -> "Trazo ${activeStroke.coerceAtMost(paths.size)} de ${paths.size}"
             },
             style = MaterialTheme.typography.bodySmall,
