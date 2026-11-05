@@ -8,7 +8,7 @@ import org.junit.Test
 class N3KanjiBlock1Test {
     @Test fun blockOneContainsExactlyTheFirst123SelectedCharactersInOrder() {
         assertEquals(123, n3KanjiBlock1.size)
-        assertEquals(n3KanjiBlocks.first(), n3KanjiBlock1.map { it.character })
+        assertEquals(n3KanjiCharacters.take(123), n3KanjiBlock1.map { it.character })
     }
 
     @Test fun everyEntryHasSpanishMeaningReadingsAndValidStrokeCount() {
