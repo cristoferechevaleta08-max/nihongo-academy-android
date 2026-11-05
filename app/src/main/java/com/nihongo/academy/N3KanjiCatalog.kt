@@ -2143,7 +2143,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "寝",
         meaningEs = "acostarse; dormir",
         onyomi = listOf("シン"),
-        kunyomi = listOf("ね.る", "ね.かす", "い.ぬ", "みたまや", "や.める"),
+        kunyomi = listOf("ね.る", "ね.かす", "い.ぬ"),
         strokeCount = 13
     ),
     N3KanjiEntry(
@@ -2178,7 +2178,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "歯",
         meaningEs = "diente; diente de engranaje",
         onyomi = listOf("シ"),
-        kunyomi = listOf("よわい", "は", "よわ.い", "よわい.する"),
+        kunyomi = listOf("よわい", "は", "よわ.い"),
         strokeCount = 12
     ),
     N3KanjiEntry(
