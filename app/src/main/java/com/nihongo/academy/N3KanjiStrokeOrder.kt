@@ -36,18 +36,24 @@ import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
 
+internal fun decodeN3KanjiStrokePaths(json: String): List<String> {
+    val array = JSONObject(json).getJSONArray("strokes")
+    require(array.length() > 0) { "Missing or empty KanjiVG strokes array" }
+    return List(array.length()) { index ->
+        array.getString(index).also { path ->
+            require(path.isNotBlank()) { "Empty KanjiVG stroke path at index $index" }
+        }
+    }
+}
+
 private suspend fun loadN3KanjiStrokePaths(context: Context, character: String): List<String> =
     withContext(Dispatchers.IO) {
         val code = character.codePointAt(0).toString(16).padStart(5, '0')
         val directory = File(context.filesDir, "kanji-strokes")
         val cached = File(directory, "$code.json")
-        fun decode(json: String): List<String> {
-            val array = JSONObject(json).getJSONArray("strokes")
-            return List(array.length()) { index -> array.getString(index) }
-        }
         try {
             if (cached.exists()) {
-                val cachedPaths = runCatching { decode(cached.readText()) }.getOrNull()
+                val cachedPaths = runCatching { decodeN3KanjiStrokePaths(cached.readText()) }.getOrNull()
                 if (!cachedPaths.isNullOrEmpty()) return@withContext cachedPaths
                 // A damaged or incomplete cache must not permanently block a fresh download.
                 cached.delete()
@@ -59,7 +65,7 @@ private suspend fun loadN3KanjiStrokePaths(context: Context, character: String):
             }
             try {
                 val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-                val paths = decode(body)
+                val paths = decodeN3KanjiStrokePaths(body)
                 if (paths.isNotEmpty()) {
                     directory.mkdirs()
                     cached.writeText(body)
@@ -85,7 +91,12 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
     var handwriting by remember(character) { mutableStateOf<List<List<Offset>>>(emptyList()) }
     val progress = remember(character) { Animatable(0f) }
     val paths = remember(character, rawPaths) {
-        rawPaths.mapNotNull { data -> runCatching { PathParser().parsePathString(data).toPath() }.getOrNull() }
+        runCatching {
+            rawPaths.map { data ->
+                require(data.isNotBlank()) { "Empty KanjiVG path" }
+                PathParser().parsePathString(data).toPath()
+            }
+        }.getOrElse { emptyList() }
     }
     val strokeColor = MaterialTheme.colorScheme.primary
     val guideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
