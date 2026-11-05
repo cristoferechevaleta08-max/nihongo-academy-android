@@ -839,7 +839,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "付",
         meaningEs = "adherir; pegar; adjuntar; unir; atar",
         onyomi = listOf("フ"),
-        kunyomi = listOf("つ.ける", "-つ.ける", "-づ.ける", "つ.け", "つ.け-", "-つ.け", "-づ.け", "-づけ", "つ.く", "-づ.く", "つ.き", "-つ.き", "-つき", "-づ.き", "-づき"),
+        kunyomi = listOf("つ.ける", "つ.く", "つ.き", "-づ.ける", "-づ.く"),
         strokeCount = 5
     ),
     N3KanjiEntry(
