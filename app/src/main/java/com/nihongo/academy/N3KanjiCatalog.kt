@@ -27,7 +27,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "政",
         meaningEs = "política; gobierno; reglas",
         onyomi = listOf("セイ", "ショウ"),
-        kunyomi = listOf("まつりごと", "まん"),
+        kunyomi = listOf("まつりごと"),
         strokeCount = 9
     ),
     N3KanjiEntry(
@@ -95,9 +95,9 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "実",
-        meaningEs = "realidad; verdad; fruta; nuez; semilla; contenido; buen resultado; dar frutos; madurar",
-        onyomi = listOf("ジツ", "シツ"),
-        kunyomi = listOf("み", "みの.る", "まこと", "みの", "みち.る"),
+        meaningEs = "realidad; verdad; fruto; contenido; sustancia; dar frutos; madurar",
+        onyomi = listOf("ジツ"),
+        kunyomi = listOf("み", "みの.る", "まこと", "みち.る"),
         strokeCount = 8
     ),
     N3KanjiEntry(
@@ -130,15 +130,15 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "戦",
-        meaningEs = "guerra; batalla; lucha; pelear; batallar; combatir; luchar",
+        meaningEs = "guerra; batalla; lucha; combatir",
         onyomi = listOf("セン"),
-        kunyomi = listOf("いくさ", "たたか.う", "おのの.く", "そよ.ぐ", "わなな.く"),
+        kunyomi = listOf("いくさ", "たたか.う"),
         strokeCount = 13
     ),
     N3KanjiEntry(
         character = "経",
         meaningEs = "pasar por; transcurrir; administrar; sutra",
-        onyomi = listOf("ケイ", "キョウ", "キン"),
+        onyomi = listOf("ケイ", "キョウ"),
         kunyomi = listOf("へ.る", "た.つ", "たていと", "はか.る", "のり"),
         strokeCount = 11
     ),
@@ -174,7 +174,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "当",
         meaningEs = "acertar; corresponder; tocar; apropiado",
         onyomi = listOf("トウ"),
-        kunyomi = listOf("あ.たる", "あ.たり", "あ.てる", "あ.て", "まさ.に", "まさ.にべし"),
+        kunyomi = listOf("あ.たる", "あ.たり", "あ.てる", "あ.て", "まさ.に"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -293,14 +293,14 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "続",
         meaningEs = "continuación; serie; secuela; continuar; seguir",
         onyomi = listOf("ゾク", "ショク", "コウ", "キョウ"),
-        kunyomi = listOf("つづ.く", "つづ.ける", "つぐ.ない"),
+        kunyomi = listOf("つづ.く", "つづ.ける"),
         strokeCount = 13
     ),
     N3KanjiEntry(
         character = "数",
         meaningEs = "número; cifra; contar",
-        onyomi = listOf("スウ", "ス", "サク", "ソク", "シュ"),
-        kunyomi = listOf("かず", "かぞ.える", "しばしば", "せ.める", "わずらわ.しい"),
+        onyomi = listOf("スウ", "ス"),
+        kunyomi = listOf("かず", "かぞ.える"),
         strokeCount = 13
     ),
     N3KanjiEntry(
@@ -398,7 +398,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "交",
         meaningEs = "cruzarse; intercambiar; mezclarse; relacionarse",
         onyomi = listOf("コウ"),
-        kunyomi = listOf("まじ.わる", "まじ.える", "ま.じる", "まじ.る", "ま.ざる", "ま.ぜる", "-か.う", "か.わす", "かわ.す", "こもごも"),
+        kunyomi = listOf("まじ.わる", "まじ.える", "ま.じる", "まじ.る", "ま.ざる", "ま.ぜる", "か.わす", "かわ.す"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -475,7 +475,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "参",
         meaningEs = "visitar; asistir; participar (forma humilde); ser derrotado",
         onyomi = listOf("サン", "シン"),
-        kunyomi = listOf("まい.る", "まい-", "まじわる", "みつ"),
+        kunyomi = listOf("まい.る"),
         strokeCount = 8
     ),
     N3KanjiEntry(
