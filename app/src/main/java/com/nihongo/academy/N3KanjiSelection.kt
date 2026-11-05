@@ -26,9 +26,3 @@ internal val n3KanjiCharacters: List<String> =
         .filterNot { it in n3KanjiExcludedForLowerLevelOverlap } +
         n3KanjiCuratedSubstitutions
 
-/** Tres bloques consecutivos: 123 + 123 + 124 kanji. */
-internal val n3KanjiBlocks: List<List<String>> = listOf(
-    n3KanjiCharacters.take(123),
-    n3KanjiCharacters.drop(123).take(123),
-    n3KanjiCharacters.drop(246)
-)
