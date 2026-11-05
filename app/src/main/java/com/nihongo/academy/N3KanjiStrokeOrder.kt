@@ -66,7 +66,7 @@ private suspend fun loadN3KanjiStrokePaths(context: Context, character: String):
             try {
                 val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
                 val paths = decodeN3KanjiStrokePaths(body)
-                if (strokeDataValid) {
+                if (paths.isNotEmpty()) {
                     directory.mkdirs()
                     cached.writeText(body)
                 }
