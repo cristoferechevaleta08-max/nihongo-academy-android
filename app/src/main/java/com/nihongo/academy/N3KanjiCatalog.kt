@@ -104,14 +104,14 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "関",
         meaningEs = "barrera; puesto de control; relación",
         onyomi = listOf("カン"),
-        kunyomi = listOf("せき", "-ぜき", "かか.わる", "からくり", "かんぬき"),
+        kunyomi = listOf("せき", "-ぜき", "かか.わる", "かんぬき"),
         strokeCount = 14
     ),
     N3KanjiEntry(
         character = "決",
         meaningEs = "decidir; fijar; quedar decidido",
         onyomi = listOf("ケツ"),
-        kunyomi = listOf("き.める", "-ぎ.め", "き.まる", "さ.く"),
+        kunyomi = listOf("き.める", "-ぎ.め", "き.まる"),
         strokeCount = 7
     ),
     N3KanjiEntry(
@@ -123,7 +123,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "表",
-        meaningEs = "superficie; tabla; diagrama; expresar; mostrar",
+        meaningEs = "superficie; exterior; tabla; expresar; mostrar",
         onyomi = listOf("ヒョウ"),
         kunyomi = listOf("おもて", "-おもて", "あらわ.す", "あらわ.れる", "あら.わす"),
         strokeCount = 8
@@ -145,15 +145,15 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "最",
         meaningEs = "el más; máximo; superlativo",
-        onyomi = listOf("サイ", "シュ"),
+        onyomi = listOf("サイ"),
         kunyomi = listOf("もっと.も", "つま"),
         strokeCount = 12
     ),
     N3KanjiEntry(
         character = "現",
-        meaningEs = "presente; actual; real; aparecer; hacerse visible; mostrarse; manifestar; expresar",
+        meaningEs = "actual; presente; real; aparecer; hacerse visible",
         onyomi = listOf("ゲン"),
-        kunyomi = listOf("あらわ.れる", "あらわ.す", "うつつ", "うつ.つ"),
+        kunyomi = listOf("あらわ.れる", "あらわ.す"),
         strokeCount = 11
     ),
     N3KanjiEntry(
@@ -167,7 +167,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "化",
         meaningEs = "cambiar; transformarse; modificarse; disfrazarse",
         onyomi = listOf("カ", "ケ"),
-        kunyomi = listOf("ば.ける", "ば.かす", "ふ.ける", "け.する"),
+        kunyomi = listOf("ば.ける", "ば.かす"),
         strokeCount = 4
     ),
     N3KanjiEntry(
@@ -181,13 +181,13 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "約",
         meaningEs = "promesa; aproximadamente; resumir",
         onyomi = listOf("ヤク"),
-        kunyomi = listOf("つづ.まる", "つづ.める", "つづま.やか"),
+        kunyomi = listOf("つづ.める"),
         strokeCount = 9
     ),
     N3KanjiEntry(
         character = "法",
         meaningEs = "método; ley; doctrina",
-        onyomi = listOf("ホウ", "ハッ", "ホッ"),
+        onyomi = listOf("ホウ"),
         kunyomi = listOf("のり"),
         strokeCount = 8
     ),
@@ -257,7 +257,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "和",
         meaningEs = "armonía; paz; estilo japonés; suavizar; calmar; tranquilo; armonioso",
-        onyomi = listOf("ワ", "オ", "カ"),
+        onyomi = listOf("ワ", "オ"),
         kunyomi = listOf("やわ.らぐ", "やわ.らげる", "なご.む", "なご.やか", "あ.える"),
         strokeCount = 8
     ),
@@ -326,9 +326,9 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "権",
-        meaningEs = "derechos; autoridad; poder; establecer temporalmente",
+        meaningEs = "derechos; autoridad; poder",
         onyomi = listOf("ケン", "ゴン"),
-        kunyomi = listOf("おもり", "かり", "はか.る"),
+        kunyomi = listOf("はか.る"),
         strokeCount = 15
     ),
     N3KanjiEntry(
@@ -342,7 +342,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "点",
         meaningEs = "punto; marca",
         onyomi = listOf("テン"),
-        kunyomi = listOf("つ.ける", "つ.く", "た.てる", "さ.す", "とぼ.す", "とも.す", "ぼち"),
+        kunyomi = listOf("つ.ける", "つ.く", "た.てる", "さ.す", "とも.す"),
         strokeCount = 9
     ),
     N3KanjiEntry(
@@ -356,7 +356,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "済",
         meaningEs = "terminar; concluir; completar; ayudar",
         onyomi = listOf("サイ", "セイ"),
-        kunyomi = listOf("す.む", "-ず.み", "-ずみ", "す.まない", "す.ます", "-す.ます", "すく.う", "な.す", "わたし", "わた.る"),
+        kunyomi = listOf("す.む", "-ず.み", "-ずみ", "す.まない", "す.ます", "すく.う"),
         strokeCount = 11
     ),
     N3KanjiEntry(
@@ -375,7 +375,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "共",
-        meaningEs = "ambos; juntos; en común; también",
+        meaningEs = "juntos; en común; ambos",
         onyomi = listOf("キョウ"),
         kunyomi = listOf("とも", "とも.に", "-ども"),
         strokeCount = 6
@@ -391,7 +391,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "解",
         meaningEs = "resolver; aclarar; desatar; liberar",
         onyomi = listOf("カイ", "ゲ"),
-        kunyomi = listOf("と.く", "と.かす", "と.ける", "ほど.く", "ほぐ.す", "わか.る", "さと.る"),
+        kunyomi = listOf("と.く", "と.かす", "と.ける", "ほど.く", "ほぐ.す", "わか.る"),
         strokeCount = 13
     ),
     N3KanjiEntry(
@@ -411,7 +411,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "予",
         meaningEs = "de antemano; previo",
-        onyomi = listOf("ヨ", "シャ"),
+        onyomi = listOf("ヨ"),
         kunyomi = listOf("あらかじ.め"),
         strokeCount = 4
     ),
@@ -419,7 +419,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "向",
         meaningEs = "dirigirse hacia; mirar hacia; hacer frente",
         onyomi = listOf("コウ"),
-        kunyomi = listOf("む.く", "む.い", "-む.き", "む.ける", "-む.け", "む.かう", "む.かい", "む.こう", "む.こう-", "むこ", "むか.い"),
+        kunyomi = listOf("む.く", "む.い", "-む.き", "む.ける", "-む.け", "む.かう", "む.かい", "む.こう"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -433,7 +433,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "勝",
         meaningEs = "ganar; sobresalir",
         onyomi = listOf("ショウ"),
-        kunyomi = listOf("か.つ", "-が.ち", "まさ.る", "すぐ.れる", "かつ"),
+        kunyomi = listOf("か.つ", "-が.ち", "まさ.る"),
         strokeCount = 12
     ),
     N3KanjiEntry(
