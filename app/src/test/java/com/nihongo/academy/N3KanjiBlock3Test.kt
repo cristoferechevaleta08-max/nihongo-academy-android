@@ -22,7 +22,7 @@ class N3KanjiBlock3Test {
     }
 
     @Test fun blockDoesNotDuplicateEarlierN3Blocks() {
-        val previous = n3KanjiBlocks.take(2).flatten().toSet()
+        val previous = n3KanjiCharacters.take(246).toSet()
         assertTrue(n3KanjiBlock3.none { it.character in previous })
     }
 
