@@ -1477,7 +1477,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "捕",
         meaningEs = "atrapar; capturar; coger",
         onyomi = listOf("ホ"),
-        kunyomi = listOf("と.らえる", "と.らわれる", "と.る", "とら.える", "とら.われる", "つか.まえる", "つか.まる"),
+        kunyomi = listOf("と.らえる", "と.らわれる", "と.る", "つか.まえる", "つか.まる"),
         strokeCount = 10
     ),
     N3KanjiEntry(
