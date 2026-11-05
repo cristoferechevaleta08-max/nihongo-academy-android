@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = "https://raw.githubusercontent.com/boomtakalaka/kanjivg-json/master/kanji_json/{}.json"
 CATALOG = ROOT / "app/src/main/java/com/nihongo/academy/N2KanjiCatalog.kt"
-ENTRY = re.compile(r'^\\s*N2KanjiEntry\\("([^"]+)",.*?,\\s*(\\d+)(?:,|\\))', re.MULTILINE)
+ENTRY = re.compile(r'^\s*N2KanjiEntry\("([^"]+)",.*?,\s*(\d+)(?:,|\))', re.MULTILINE)
 EXPECTED_TOTAL = 400
 MAX_ATTEMPTS = 3
 
