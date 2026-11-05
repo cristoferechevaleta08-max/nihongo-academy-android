@@ -1729,7 +1729,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "留",
         meaningEs = "quedarse; permanecer; detener",
         onyomi = listOf("リュウ", "ル"),
-        kunyomi = listOf("と.める", "と.まる", "とど.める", "とど.まる", "るうぶる"),
+        kunyomi = listOf("と.める", "と.まる", "とど.める", "とど.まる"),
         strokeCount = 10
     ),
     N3KanjiEntry(
@@ -1807,7 +1807,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "押",
         meaningEs = "empujar; presionar; forzar",
         onyomi = listOf("オウ"),
-        kunyomi = listOf("お.す", "お.し-", "お.っ-", "お.さえる", "おさ.える"),
+        kunyomi = listOf("お.す", "お.し-", "お.っ-", "お.さえる"),
         strokeCount = 8
     ),
     N3KanjiEntry(
