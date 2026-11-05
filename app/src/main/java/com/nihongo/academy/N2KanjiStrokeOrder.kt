@@ -43,7 +43,12 @@ private suspend fun loadN2KanjiStrokePaths(context: Context, character: String):
         val cached = File(directory, "$code.json")
         fun decode(json: String): List<String> {
             val array = JSONObject(json).getJSONArray("strokes")
-            return List(array.length()) { index -> array.getString(index) }
+            require(array.length() > 0) { "Missing or empty KanjiVG strokes array" }
+            return List(array.length()) { index ->
+                array.getString(index).also { path ->
+                    require(path.isNotBlank()) { "Empty KanjiVG stroke path at index $index" }
+                }
+            }
         }
         try {
             if (cached.exists()) {
