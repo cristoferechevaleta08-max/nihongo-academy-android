@@ -452,9 +452,9 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     ),
     N3KanjiEntry(
         character = "反",
-        meaningEs = "anti-; opuesto; devolver; reflejar; curvarse",
-        onyomi = listOf("ハン", "ホン", "タン", "ホ"),
-        kunyomi = listOf("そ.る", "そ.らす", "かえ.す", "かえ.る", "-かえ.る"),
+        meaningEs = "opuesto; contrario; devolver; reflejarse; curvarse",
+        onyomi = listOf("ハン"),
+        kunyomi = listOf("そ.る", "そ.らす", "かえ.す", "かえ.る"),
         strokeCount = 4
     ),
     N3KanjiEntry(
@@ -468,13 +468,13 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "認",
         meaningEs = "reconocer; admitir; consentir",
         onyomi = listOf("ニン"),
-        kunyomi = listOf("みと.める", "したた.める"),
+        kunyomi = listOf("みと.める"),
         strokeCount = 14
     ),
     N3KanjiEntry(
         character = "参",
         meaningEs = "visitar; asistir; participar (forma humilde); ser derrotado",
-        onyomi = listOf("サン", "シン"),
+        onyomi = listOf("サン"),
         kunyomi = listOf("まい.る"),
         strokeCount = 8
     ),
@@ -586,7 +586,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "情",
         meaningEs = "sentimiento; emoción; circunstancias",
-        onyomi = listOf("ジョウ", "セイ"),
+        onyomi = listOf("ジョウ"),
         kunyomi = listOf("なさ.け"),
         strokeCount = 11
     ),
@@ -621,15 +621,15 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "直",
         meaningEs = "recto; correcto; corregir; reparar; directamente",
-        onyomi = listOf("チョク", "ジキ", "ジカ"),
-        kunyomi = listOf("ただ.ちに", "なお.す", "-なお.す", "なお.る", "なお.き", "す.ぐ"),
+        onyomi = listOf("チョク", "ジキ"),
+        kunyomi = listOf("なお.す", "-なお.す", "なお.る", "ただ.ちに"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "両",
         meaningEs = "ambos; contador de vehículos",
         onyomi = listOf("リョウ"),
-        kunyomi = listOf("てる", "ふたつ"),
+        kunyomi = listOf("ふたつ"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -642,7 +642,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
     N3KanjiEntry(
         character = "確",
         meaningEs = "seguro; cierto; confirmar",
-        onyomi = listOf("カク", "コウ"),
+        onyomi = listOf("カク"),
         kunyomi = listOf("たし.か", "たし.かめる"),
         strokeCount = 15
     ),
@@ -650,7 +650,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "果",
         meaningEs = "fruto; resultado; lograr; completar",
         onyomi = listOf("カ"),
-        kunyomi = listOf("は.たす", "はた.す", "-は.たす", "は.てる", "-は.てる", "は.て"),
+        kunyomi = listOf("は.たす", "は.てる", "は.て"),
         strokeCount = 8
     ),
     N3KanjiEntry(
@@ -685,7 +685,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "争",
         meaningEs = "pelear; disputar; discutir; competir",
         onyomi = listOf("ソウ"),
-        kunyomi = listOf("あらそ.う", "いか.でか"),
+        kunyomi = listOf("あらそ.う"),
         strokeCount = 6
     ),
     N3KanjiEntry(
@@ -699,7 +699,7 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "能",
         meaningEs = "capacidad; talento; habilidad; teatro Nō",
         onyomi = listOf("ノウ"),
-        kunyomi = listOf("よ.く", "あた.う"),
+        kunyomi = listOf("よ.く"),
         strokeCount = 10
     ),
     N3KanjiEntry(
@@ -720,13 +720,13 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "流",
         meaningEs = "corriente; derramar; verter",
         onyomi = listOf("リュウ", "ル"),
-        kunyomi = listOf("なが.れる", "なが.れ", "なが.す", "-なが.す"),
+        kunyomi = listOf("なが.れる", "なが.れ", "なが.す"),
         strokeCount = 10
     ),
     N3KanjiEntry(
         character = "格",
         meaningEs = "categoría; rango; estándar; condición",
-        onyomi = listOf("カク", "コウ", "キャク", "ゴウ"),
+        onyomi = listOf("カク", "コウ"),
         kunyomi = listOf(),
         strokeCount = 10
     ),
@@ -755,14 +755,14 @@ internal val n3KanjiCatalog: List<N3KanjiEntry> = listOf(
         character = "放",
         meaningEs = "dejar libre; soltar; liberar; emitir; separarse; abandonar",
         onyomi = listOf("ホウ"),
-        kunyomi = listOf("はな.す", "-っぱな.し", "はな.つ", "はな.れる", "こ.く", "ほう.る"),
+        kunyomi = listOf("はな.す", "-っぱな.し", "はな.つ", "はな.れる", "ほう.る"),
         strokeCount = 8
     ),
     N3KanjiEntry(
         character = "常",
         meaningEs = "habitual; normal; ordinario; siempre",
         onyomi = listOf("ジョウ"),
-        kunyomi = listOf("つね", "とこ-"),
+        kunyomi = listOf("つね"),
         strokeCount = 11
     ),
     N3KanjiEntry(
