@@ -131,7 +131,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        if (paths.isNotEmpty()) {
+        if (strokeDataValid) {
             Canvas(
                 Modifier.fillMaxWidth().aspectRatio(1f)
                     .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp))
