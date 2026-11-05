@@ -7,7 +7,7 @@ import org.junit.Test
 class N3KanjiBlock3Test {
     @Test fun blockHasExpectedSizeAndExactSelectedOrder() {
         assertEquals(124, n3KanjiBlock3.size)
-        assertEquals(n3KanjiBlocks[2], n3KanjiBlock3.map { it.character })
+        assertEquals(n3KanjiCharacters.drop(246), n3KanjiBlock3.map { it.character })
     }
 
     @Test fun allEntriesHaveValidSpanishMeaningReadingsAndStrokeCounts() {
