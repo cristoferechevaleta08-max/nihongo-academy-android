@@ -51,7 +51,7 @@ internal fun N3KanjiReviewScreen(
         TextButton(onClick = onExit, modifier = Modifier.align(Alignment.Start)) { Text("← Salir del repaso") }
         Text("Repaso N3 · " + (index + 1) + " de " + entries.size, style = MaterialTheme.typography.titleMedium)
         LinearProgressIndicator(
-            progress = (index + 1).toFloat() / entries.size.coerceAtLeast(1),
+            progress = { (index + 1).toFloat() / entries.size.coerceAtLeast(1) },
             modifier = Modifier.fillMaxWidth()
         )
         Text(entry.character, style = MaterialTheme.typography.displayLarge)
