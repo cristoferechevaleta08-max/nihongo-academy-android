@@ -36,23 +36,24 @@ import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
 
+internal fun decodeN2KanjiStrokePaths(json: String): List<String> {
+    val array = JSONObject(json).getJSONArray("strokes")
+    require(array.length() > 0) { "Missing or empty KanjiVG strokes array" }
+    return List(array.length()) { index ->
+        array.getString(index).also { path ->
+            require(path.isNotBlank()) { "Empty KanjiVG stroke path at index $index" }
+        }
+    }
+}
+
 private suspend fun loadN2KanjiStrokePaths(context: Context, character: String): List<String> =
     withContext(Dispatchers.IO) {
         val code = character.codePointAt(0).toString(16).padStart(5, '0')
         val directory = File(context.filesDir, "kanji-strokes")
         val cached = File(directory, "$code.json")
-        fun decode(json: String): List<String> {
-            val array = JSONObject(json).getJSONArray("strokes")
-            require(array.length() > 0) { "Missing or empty KanjiVG strokes array" }
-            return List(array.length()) { index ->
-                array.getString(index).also { path ->
-                    require(path.isNotBlank()) { "Empty KanjiVG stroke path at index $index" }
-                }
-            }
-        }
         try {
             if (cached.exists()) {
-                val cachedPaths = runCatching { decode(cached.readText()) }.getOrNull()
+                val cachedPaths = runCatching { decodeN2KanjiStrokePaths(cached.readText()) }.getOrNull()
                 if (!cachedPaths.isNullOrEmpty()) return@withContext cachedPaths
                 // A damaged or incomplete cache must not permanently block a fresh download.
                 cached.delete()
@@ -64,7 +65,7 @@ private suspend fun loadN2KanjiStrokePaths(context: Context, character: String):
             }
             try {
                 val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-                val paths = decode(body)
+                val paths = decodeN2KanjiStrokePaths(body)
                 if (paths.isNotEmpty()) {
                     directory.mkdirs()
                     cached.writeText(body)
