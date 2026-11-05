@@ -76,7 +76,7 @@ internal fun N3KanjiScreen(
                 TextButton(onClick = { quiz = emptyList(); quizDone = false }) { Text("← Salir") }
                 Text("Pregunta ${quizIndex + 1} de ${quiz.size} · N3")
                 LinearProgressIndicator(
-                    progress = (quizIndex + 1).toFloat() / quiz.size,
+                    progress = { (quizIndex + 1).toFloat() / quiz.size },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(question.display, style = MaterialTheme.typography.displayLarge)
