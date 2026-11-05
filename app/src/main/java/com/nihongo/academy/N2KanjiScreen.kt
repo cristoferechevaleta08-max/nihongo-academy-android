@@ -419,7 +419,7 @@ internal fun N2KanjiScreen(
     }
     Column(modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 12.dp)) {
         Text("Biblioteca de kanji", style = MaterialTheme.typography.headlineMedium)
-        Text("N2 · Catálogo pedagógico en desarrollo", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("N2 · 400 kanji · lista continua", color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
             progress = { if (n2KanjiCatalog.isEmpty()) 0f else learnedCount.toFloat() / n2KanjiCatalog.size },
