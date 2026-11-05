@@ -171,7 +171,7 @@ internal fun N3KanjiScreen(
             Spacer(Modifier.height(10.dp))
             Text("Progreso: $learnedCount / ${n3KanjiCatalog.size}", style = MaterialTheme.typography.labelLarge)
             LinearProgressIndicator(
-                progress = learnedCount.toFloat() / n3KanjiCatalog.size.toFloat(),
+                progress = { learnedCount.toFloat() / n3KanjiCatalog.size.toFloat() },
                 modifier = Modifier.fillMaxWidth().padding(top = 5.dp)
             )
             Spacer(Modifier.height(8.dp))
