@@ -209,7 +209,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
                     .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp)),
                 contentAlignment = androidx.compose.ui.Alignment.Center
             ) {
-                Text(character, style = MaterialTheme.typography.displayLarge)
+                Text(character, style = JapaneseGlyphStyle)
             }
             OutlinedButton(onClick = { loadKey++ }, modifier = Modifier.fillMaxWidth()) {
                 Text("Reintentar carga")
