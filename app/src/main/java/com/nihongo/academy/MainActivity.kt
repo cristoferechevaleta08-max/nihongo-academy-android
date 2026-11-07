@@ -246,7 +246,7 @@ MaterialTheme(colorScheme=scheme,typography=AcademyTypography,shapes=AcademyShap
  }
 }){p->
 when(tab){
-"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar";studyDestination="Lecciones"},{tab="Estudiar";studyDestination="Exámenes"},{tab="Estudiar";studyDestination="Colección"},Modifier.padding(p))
+"Inicio"->Home(name,xp,done.size,mistakes.size,owned.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar";studyDestination="Lecciones"},{tab="Estudiar";studyDestination="Exámenes"},{tab="Estudiar";studyDestination="Colección"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,studyDestination,{studyDestination=it},owned,dailySeconds,Modifier.padding(p))
 "Kanji"->KanjiHub(ds,Modifier.padding(p))
 "Escucha"->ListeningHub(ds,Modifier.padding(p))
@@ -389,7 +389,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
-@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,collection:()->Unit,m:Modifier){
+@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,ownedCount:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,collection:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
 AcademyMotif()
@@ -397,7 +397,7 @@ BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifi
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
 BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
-BoxCard{Text("Tu colección",style=MaterialTheme.typography.titleLarge);Text("Revisa las cartas que has conseguido y abre tu sobre diario.");OutlinedButton(onClick=collection,modifier=Modifier.fillMaxWidth()){Text("Ver colección · "+owned.size+" cartas")}}
+BoxCard{Text("Tu colección",style=MaterialTheme.typography.titleLarge);Text("Revisa las cartas que has conseguido y abre tu sobre diario.");OutlinedButton(onClick=collection,modifier=Modifier.fillMaxWidth()){Text("Ver colección · "+ownedCount+" cartas")}}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,destination:String,onDestinationChange:(String)->Unit,owned:Set<String>,dailySeconds:Int,m:Modifier){
 val scope=rememberCoroutineScope()
