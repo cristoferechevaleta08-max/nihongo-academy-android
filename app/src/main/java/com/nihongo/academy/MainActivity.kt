@@ -203,7 +203,7 @@ internal val lessons=listOf(
   ex("¿Qué significa tsukarete iru?",listOf("Estar cansado","Estar contento","Estar ocupado","Estar enfermo"),0,"tsukarete iru significa estar cansado."),
   ex("¿Cuál es una condición natural apropiada con ~to?",listOf("Haru ni naru to sakura ga sakimasu","Hima da to eiga o mimashou","Ame ga furu to kaerimashou","Taberu to kudasai"),0,"~to se usa para resultados naturales o habituales, no para invitaciones u órdenes."))
 )
-internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean { val index=lessons.indexOfFirst{it.id==lessonId}; return index>=0 && (index==0 || lessons[index-1].id in completed) }
+internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean = lessons.any{it.id==lessonId}
 private val examQuestions=listOf(
 Question("Vocabulario","¿Qué significa みず?",listOf("Agua","Fuego","Tierra","Viento"),0),
 Question("Vocabulario","¿Qué significa ねこ?",listOf("Perro","Gato","Pájaro","Pez"),1),
