@@ -210,6 +210,14 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
         }
         if (paths.isNotEmpty() && paths.size != expectedStrokeCount) {
             Text("La guía contiene ${paths.size} trazos; la ficha indica ${expectedStrokeCount}.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+        } else {
+            androidx.compose.foundation.layout.Box(
+                Modifier.fillMaxWidth().aspectRatio(1f)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp)),
+                contentAlignment = androidx.compose.ui.Alignment.Center
+            ) {
+                Text(character, style = MaterialTheme.typography.displayLarge)
+            }
         }
     }
 }
