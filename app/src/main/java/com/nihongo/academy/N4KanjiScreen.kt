@@ -50,7 +50,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
    Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement=Arrangement.spacedBy(14.dp),horizontalAlignment=Alignment.CenterHorizontally){
     Text("Evaluación de kanji N4",style=MaterialTheme.typography.headlineSmall)
     Text("$examScore / ${exam.size}",style=MaterialTheme.typography.displayMedium)
-    Text(if(examScore>=8)"¡Buen trabajo! Seguí repasando." else "Revisá las fichas y volvé a intentarlo.")
+    Text(if(examScore>=8)"¡Buen trabajo! Sigue repasando." else "Revisa las fichas y vuelve a intentarlo.")
     Text("Mejor resultado: $best / 10")
     Button(onClick={exam=emptyList();examDone=false}){Text("Volver a la biblioteca")}
    }
