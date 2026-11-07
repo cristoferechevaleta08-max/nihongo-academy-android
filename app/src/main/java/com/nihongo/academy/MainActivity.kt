@@ -50,13 +50,13 @@ private fun lesson(id:String,level:String,title:String,vararg exercises:Exercise
 internal val lessons=listOf(
  lesson("n5-u01","N5","Saludos y presentación",
   ex("¿Qué significa watashi?",listOf("Yo","Tú","Maestro","Estudiante"),0,"watashi significa yo."),
-  ex("Completá: Watashi ___ Sakura desu.",listOf("wa","o","ni","de"),0,"wa marca el tema de la frase."),
+  ex("Completa: Watashi ___ Sakura desu.",listOf("wa","o","ni","de"),0,"wa marca el tema de la frase."),
   ex("¿Qué significa hajimemashite?",listOf("Encantado de conocerte","Gracias","Disculpe","Hasta mañana"),0,"Se usa al conocer a alguien."),
   ex("¿Cuál es la palabra para estudiante?",listOf("gakusei","sensei","anata","sumimasen"),0,"gakusei significa estudiante."),
   ex("¿Qué expresión se usa para pedir algo con cortesía?",listOf("onegaishimasu","arigatou","hajimemashite","anata"),0,"onegaishimasu se usa al pedir algo, como por favor.")),
  lesson("n5-u02","N5","Partículas básicas",
   ex("¿Qué partículas marcan el tema y expresan también, respectivamente?",listOf("wa y mo","ga y o","ni y de","o y wa"),0,"wa marca el tema y mo expresa también."),
-  ex("Completá: Neko ___ imasu.",listOf("ga","o","de","mo"),0,"ga marca el sujeto en esta frase."),
+  ex("Completa: Neko ___ imasu.",listOf("ga","o","de","mo"),0,"ga marca el sujeto en esta frase."),
   ex("¿Qué partícula marca el objeto directo?",listOf("o","wa","ni","mo"),0,"o marca el objeto directo."),
   ex("¿Qué partícula indica el lugar donde ocurre una acción?",listOf("de","wa","o","ga"),0,"de indica el lugar de la acción."),
   ex("¿Qué partícula indica destino o dirección?",listOf("ni","wa","o","ga"),0,"ni puede marcar destino, como en gakkou ni ikimasu.")),
@@ -65,7 +65,7 @@ internal val lessons=listOf(
   ex("Forma masu de nomu (beber)",listOf("nomimasu","nomitai","nomimasen","nomimashita"),0,"nomu cambia a nomimasu."),
   ex("Forma masu de iku (ir)",listOf("ikimasu","kimasu","shimasu","mimasu"),0,"iku cambia a ikimasu."),
   ex("Forma masu de kuru (venir)",listOf("kimasu","kimasen","kita","kite"),0,"kuru cambia irregularmente a kimasu."),
-  ex("Completá: Mainichi gohan o ___.",listOf("tabemasu","ikimasu","mimasu","kimasu"),0,"tabemasu significa comer en forma cortés."),
+  ex("Completa: Mainichi gohan o ___.",listOf("tabemasu","ikimasu","mimasu","kimasu"),0,"tabemasu significa comer en forma cortés."),
   ex("Forma masu de suru (hacer)",listOf("shimasu","mimasu","kimasu","ikimasu"),0,"suru cambia a shimasu."),
   ex("Forma masu de miru (ver)",listOf("mimasu","shimasu","nomimasu","kimasu"),0,"miru cambia a mimasu.")),
  lesson("n5-u04","N5","Pasado y negativo de masu",
@@ -73,7 +73,7 @@ internal val lessons=listOf(
   ex("¿Qué significa kinou?",listOf("Ayer","Hoy","Mañana","Ahora"),0,"kinou significa ayer."),
   ex("Negativo cortés de nomimasu",listOf("nomimasen","nomimashita","nomimasu","nomitai"),0,"nomimasen significa no bebo."),
   ex("¿Qué significa ikimashita?",listOf("Fui","Voy","No voy","Quiero ir"),0,"ikimashita es el pasado de ikimasu."),
-  ex("Completá: Kyou wa benkyou ___.",listOf("shimasen","shimashita","shimasu ka","shitai"),0,"shimasen expresa la forma negativa cortés.")),
+  ex("Completa: Kyou wa benkyou ___.",listOf("shimasen","shimashita","shimasu ka","shitai"),0,"shimasen expresa la forma negativa cortés.")),
  lesson("n5-u05","N5","Adjetivos en i",
   ex("¿Qué significa ookii?",listOf("Grande","Pequeño","Caro","Frío"),0,"ookii significa grande."),
   ex("Negativo de chiisai",listOf("chiisakunai desu","chiisai desu","chiisana desu","chiishimasen"),0,"chiisai cambia a chiisakunai desu."),
@@ -95,7 +95,7 @@ internal val lessons=listOf(
   ex("¿Qué número es roku?",listOf("Seis","Siete","Ocho","Nueve"),0,"roku significa seis."),
   ex("¿Qué significa ji al indicar la hora?",listOf("Hora","Minuto","Día","Semana"),0,"ji se usa para indicar la hora."),
   ex("¿Qué significa nichiyoubi?",listOf("Domingo","Lunes","Miércoles","Viernes"),0,"nichiyoubi significa domingo."),
-  ex("Completá: Ima san ___ desu.",listOf("ji","fun","nichi","getsu"),0,"san ji significa las tres."),
+  ex("Completa: Ima san ___ desu.",listOf("ji","fun","nichi","getsu"),0,"san ji significa las tres."),
   ex("¿Cómo se dice diez?",listOf("juu","kyuu","nana","yon"),0,"juu significa diez.")),
  lesson("n5-u08","N5","Lugares y direcciones",
   ex("¿Qué significa eki?",listOf("Estación","Hospital","Biblioteca","Parque"),0,"eki significa estación."),
@@ -118,7 +118,7 @@ internal val lessons=listOf(
   ex("¿Qué verbo se usa para existencia de seres vivos?",listOf("iru","aru","iku","miru"),0,"iru se usa para seres vivos."),
   ex("¿Qué significa kuruma?",listOf("Coche","Persona","Escritorio","Boleto"),0,"kuruma significa coche."),
   ex("¿Qué significa arimasen?",listOf("No hay","Hay","Está aquí","Quiero"),0,"arimasen es la forma negativa de arimasu."),
-  ex("Completá: Heya ni hito ga ___.",listOf("imasu","arimasu","ikimasu","kimasu"),0,"imasu expresa que hay una persona en la habitación."),
+  ex("Completa: Heya ni hito ga ___.",listOf("imasu","arimasu","ikimasu","kimasu"),0,"imasu expresa que hay una persona en la habitación."),
   ex("¿Qué significa tsukue?",listOf("Escritorio","Boleto","Coche","Persona"),0,"tsukue significa escritorio."),
   ex("¿Qué significa kippu?",listOf("Boleto","Escritorio","Persona","Coche"),0,"kippu significa boleto.")),
  lesson("n4-u01","N4","Forma te y te iru",
@@ -126,7 +126,7 @@ internal val lessons=listOf(
   ex("Forma te de yomu (leer)",listOf("yonde","yomimasu","yomanai","yomashita"),0,"yomu cambia a yonde."),
   ex("Forma te de kaku (escribir)",listOf("kaite","kakimasu","kakanai","kaita"),0,"kaku cambia a kaite."),
   ex("¿Qué significa matte?",listOf("Esperando / espera","Leyendo","Escribiendo","Comiendo"),0,"matte es la forma te de matsu."),
-  ex("Completá: Ima hon o ___ imasu.",listOf("yonde","yomu","yomimasu","yomanai"),0,"yonde imasu significa estoy leyendo."),
+  ex("Completa: Ima hon o ___ imasu.",listOf("yonde","yomu","yomimasu","yomanai"),0,"yonde imasu significa estoy leyendo."),
   ex("¿Qué significa tabete?",listOf("Comiendo / y comer","Leyendo","Escribiendo","Esperando"),0,"tabete es la forma te de taberu."),
   ex("¿Qué expresa kekkon shite imasu?",listOf("Está casado/a","Se está casando ahora mismo","No se casó","Quiere casarse"),0,"Con kekkon, ~te imasu describe un estado resultante: estar casado."),
   ex("Forma te de suru (hacer)",listOf("shite","shiteiru","suru","shita"),0,"El verbo irregular suru forma shite.")),
@@ -178,7 +178,7 @@ internal val lessons=listOf(
   ex("¿Qué significa tabun?",listOf("Probablemente","Seguramente","Quizá","Ayer"),0,"tabun significa probablemente."),
   ex("¿Qué significa kitto?",listOf("Seguramente","Quizá","Poco","Rápido"),0,"kitto significa seguramente."),
   ex("¿Qué expresa kamo shiremasen?",listOf("Quizá","Siempre","Nunca","También"),0,"kamo shiremasen expresa posibilidad."),
-  ex("Completá: Kanojo wa kuru ___ shiremasen.",listOf("kamo","yori","naka","te"),0,"kamo shiremasen significa quizá."),
+  ex("Completa: Kanojo wa kuru ___ shiremasen.",listOf("kamo","yori","naka","te"),0,"kamo shiremasen significa quizá."),
   ex("¿Qué expresa ~deshou?",listOf("Probablemente","También","No hace falta","Más que"),0,"deshou expresa una probabilidad o suposición."),
   ex("¿Qué significa shitte imasu?",listOf("Sé / conozco","Pienso","Quizá","Seguramente"),0,"shitte imasu significa sé o conozco."),
   ex("¿Qué expresa 'kono machi wa shizuka da to omoimasu'?",listOf("Pienso que esta ciudad es tranquila","Quizá esta ciudad sea ruidosa","Esta ciudad es más tranquila","Tengo que ir a esta ciudad"),0,"Con un adjetivo na en forma simple se usa da antes de to omoimasu.")),
@@ -195,7 +195,7 @@ internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean = l
 private val examQuestions=listOf(
 Question("Vocabulario","¿Qué significa みず?",listOf("Agua","Fuego","Tierra","Viento"),0),
 Question("Vocabulario","¿Qué significa ねこ?",listOf("Perro","Gato","Pájaro","Pez"),1),
-Question("Gramática","Elegí la partícula de tema",listOf("は","を","が","で"),0),
+Question("Gramática","Elige la partícula de tema",listOf("は","を","が","で"),0),
 Question("Gramática","がくせい ___ です。",listOf("は","を","に","へ"),0),
 Question("Lectura","¿Qué significa おはよう?",listOf("Buenas noches","Buenos días","Gracias","Adiós"),1),
 Question("Comprensión","わたしは学生です significa…",listOf("Soy estudiante","Soy profesor","Voy a casa","Tengo agua"),0))
@@ -286,7 +286,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
    Text(if(progress.paused)"Plan pausado" else "Semana $week · "+(if(week==1)"Hiragana" else if(week==2)"Katakana" else if(week==3)"Saludos y presentación" else if(week==4)"Partículas básicas" else if(week==5)"Verbos en forma masu" else if(week==6)"Pasado y negativo" else if(week==7)"Adjetivos i" else if(week==8)"Adjetivos na" else if(week==9)"Kanji básicos · primer bloque" else if(week==10)"Kanji básicos · segundo bloque y repaso" else if(week==11)"Comprensión auditiva · diálogos N5" else if(week==12)"Simulacro integrado de práctica N5" else "Próximo bloque"),style=MaterialTheme.typography.titleLarge)
-   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practicá saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practicá su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else if(week==11)"Escuchá diálogos cortos del nivel N5 y prepará el simulacro de escucha." else if(week==12)"Completá una práctica integrada de 30 preguntas y revisá el cuaderno de errores." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
+   Text(if(progress.paused)"Tu avance se conserva. Reanudá cuando quieras." else if(week<=2)"Aprendé a reconocer, leer y escribir los caracteres del silabario de esta semana." else if(week==3)"Practica saludos, presentaciones y expresiones de cortesía." else if(week==4)"Aprendé a distinguir wa, ga, o, ni y de en frases sencillas." else if(week==5)"Conjugá verbos comunes en forma masu para expresar acciones en presente cortés." else if(week==6)"Usá mashita para el pasado y masen para el negativo cortés." else if(week==7)"Describí cosas con adjetivos i y practica su forma negativa ~kunai desu." else if(week==8)"Usá adjetivos na con las formas ~desu y ~ja arimasen." else if(week==9)"Iniciá la práctica de kanji frecuentes mediante lectura, escritura repetida y repaso." else if(week==10)"Consolidá la lectura y escritura de los kanji frecuentes y prepará la prueba semanal." else if(week==11)"Escuchá diálogos cortos del nivel N5 y prepará el simulacro de escucha." else if(week==12)"Completa una práctica integrada de 30 preguntas y revisa el cuaderno de errores." else "El siguiente bloque del PDF se habilitará al completar las semanas anteriores.")
    if(week==11) Text("Seis diálogos originales y 18 preguntas de comprensión están disponibles en la pestaña Escucha.")
    if(week==12) Text("Simulacro final de práctica: 30 preguntas originales de vocabulario, gramática, lectura y escucha.")
    Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
@@ -314,7 +314,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
        if(quizIndex==assessment.lastIndex){
         scope.launch{
          val saved=ds.recordWeeklyAssessment(correct,assessment.size,wrongKana.toSet())
-         resultText=if(saved.lastAssessment?.passed==true)"¡Semana aprobada! Se desbloqueó la siguiente semana." else "Semana no aprobada. Repasá los errores y volvé a intentarlo."
+         resultText=if(saved.lastAssessment?.passed==true)"¡Semana aprobada! Se desbloqueó la siguiente semana." else "Semana no aprobada. Repasá los errores y vuelve a intentarlo."
          submitted=true
         }
        }else{quizIndex++;selectedAnswer=-1}
@@ -338,7 +338,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
       }}
      }
     }
-    Text("El romaji sirve de apoyo inicial. Intentá leer primero el kana y usá la transliteración para comprobar.")
+    Text("El romaji sirve de apoyo inicial. Intenta leer primero el kana y usá la transliteración para comprobar.")
    }
    Text("Rutina diaria",style=MaterialTheme.typography.titleLarge)
    weekDays.forEach{day->BoxCard{
@@ -361,12 +361,12 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   }
   if(week==11)BoxCard{
     Text("Comprensión auditiva N5",style=MaterialTheme.typography.titleLarge)
-    Text("Ya tenés seis diálogos originales con voz japonesa local cuando el dispositivo la tenga instalada. Escuchalos desde la pestaña Escucha y luego completá la evaluación de esta semana.")
+    Text("Ya tienes seis diálogos originales con voz japonesa local cuando el dispositivo la tenga instalada. Escuchalos desde la pestaña Escucha y luego completa la evaluación de esta semana.")
    }
    if(week==12)BoxCard{
     Text("Estructura del simulacro N5",style=MaterialTheme.typography.titleLarge)
     Text("30 preguntas originales: 15 de vocabulario y gramática, 3 de lectura y 12 de comprensión auditiva.")
-    Text("Es una práctica integrada de Nihongo Academy, no reproduce la duración ni la estructura completa del examen oficial JLPT. Después revisá el cuaderno de errores.")
+    Text("Es una práctica integrada de Nihongo Academy, no reproduce la duración ni la estructura completa del examen oficial JLPT. Después revisa el cuaderno de errores.")
    }
   if(savedKanaMistakes.isNotEmpty())BoxCard{
    Text("Errores para repasar",style=MaterialTheme.typography.titleLarge)
@@ -376,8 +376,8 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   BoxCard{
    Text("Reglas del plan",style=MaterialTheme.typography.titleLarge)
    Text("• Si los errores superan el 30%, repetís la semana con práctica adicional.")
-   Text("• Con 30% de errores o menos, aprobás y se desbloquea la semana siguiente.")
-   Text("• Podés pausar y reanudar; el progreso se guarda localmente.")
+   Text("• Con 30% de errores o menos, apruebas y se desbloquea la semana siguiente.")
+   Text("• Puedes pausar y reanudar; el progreso se guarda localmente.")
    Text("• Cada semana está limitada a 30 minutos diarios como propone el PDF.")
   }
   BoxCard{
@@ -395,8 +395,8 @@ Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こん�
 AcademyMotif()
 BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};val completedLessons=done.coerceIn(0,lessons.size);Text("$completedLessons de ${lessons.size} lecciones completadas",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant);LinearProgressIndicator(progress={if(lessons.isEmpty())0f else completedLessons.toFloat()/lessons.size.toFloat()},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
-BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
-BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
+BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practica vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
+BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambias de pantalla.")}
 BoxCard{Text("Tu colección",style=MaterialTheme.typography.titleLarge);Text("Revisa las cartas que has conseguido y abre tu sobre diario.");OutlinedButton(onClick=collection,modifier=Modifier.fillMaxWidth()){Text("Ver colección · "+ownedCount+" cartas")}}
 }}
 @Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,destination:String,onDestinationChange:(String)->Unit,owned:Set<String>,dailySeconds:Int,m:Modifier){
@@ -436,7 +436,7 @@ Column(m.fillMaxSize()){
  OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
  if(picker) AlertDialog(
   onDismissRequest={picker=false},
-  title={Text("Elegí un idioma")},
+  title={Text("Elige un idioma")},
   text={Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState())){
    languages.forEach{item->TextButton(onClick={lang=item.code;picker=false;scope.launch{ds.edit{prefs->prefs[langKey]=item.code}}},modifier=Modifier.fillMaxWidth()){Text(item.flag+" "+item.name+" ("+item.native+")")}}
   }},
@@ -458,7 +458,7 @@ Column(m.fillMaxSize()){
  }
  if(mistakes.isNotEmpty())BoxCard{
   Text("Cuaderno de errores",style=MaterialTheme.typography.titleLarge)
-  Text("Tenés "+mistakes.size+" respuestas falladas guardadas para revisar.")
+  Text("Tienes "+mistakes.size+" respuestas falladas guardadas para revisar.")
   Button(onClick={reviewing=true},modifier=Modifier.fillMaxWidth()){Text("Repasar mis errores")}
  }
 }
@@ -467,8 +467,8 @@ Column(m.fillMaxSize()){
 @Composable private fun MistakeReview(mistakes:Set<String>,remove:(String)->Unit,back:()->Unit){
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver a las lecciones")}
- Heading("Cuaderno de errores","Revisá qué fallaste, cuál era la respuesta correcta y la explicación.")
- if(mistakes.isEmpty())Text("No tenés errores pendientes. ¡Buen trabajo!")
+ Heading("Cuaderno de errores","Revisa qué fallaste, cuál era la respuesta correcta y la explicación.")
+ if(mistakes.isEmpty())Text("No tienes errores pendientes. ¡Buen trabajo!")
  mistakes.sorted().forEach{key->
   val split=key.lastIndexOf('-')
   val lessonId=if(split>0)key.substring(0,split) else ""
@@ -552,7 +552,7 @@ Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.d
    val percentage=correctExercises.size*100/lesson.exercises.size
    Text("Resultado: "+percentage+"%. Se requiere 70% para completar.")
    if(percentage<70)Text("La lección no se marcará como completada. Tus errores quedarán guardados para repasarlos.")
-   if(requiresPracticalTask&&!taskConfirmed)Text("También tenés que completar y confirmar la tarea práctica de esta unidad antes de aprobar.")
+   if(requiresPracticalTask&&!taskConfirmed)Text("También tienes que completar y confirmar la tarea práctica de esta unidad antes de aprobar.")
   }
  }
 }
@@ -620,7 +620,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 Heading("Colección","Sobres diarios con tres cartas coleccionables.")
 AcademyEnvelope()
 AcademyMotif()
-BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Podés reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completá la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)}
+BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Puedes reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completa la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)}
 Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())BoxCard{androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.CollectionsBookmark,contentDescription=null,tint=MaterialTheme.colorScheme.primary);Text("Tu colección está vacía",style=MaterialTheme.typography.titleMedium);Text("Abre tu primer sobre diario para conseguir cartas.");OutlinedButton(onClick=onStudy,modifier=Modifier.fillMaxWidth()){Text("Ir a estudiar")}}
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
