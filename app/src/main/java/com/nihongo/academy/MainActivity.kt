@@ -44,7 +44,7 @@ internal data class Lesson(val id:String,val level:String,val title:String,val e
 internal fun requiresPracticalAssessment(lesson:Lesson)=lesson.level=="N5"&&lesson.id!="n5-u02"
 private data class Question(val section:String,val prompt:String,val options:List<String>,val answer:Int)
 private val languages=listOf(
-Language("en","Inglés","English","🇬🇧"),Language("zh","Mandarín","中文","🇨🇳"),Language("es","Español","Español","🇪🇸"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("ar","Árabe","العربية","🇸🇦"),Language("fr","Francés","Français","🇫🇷"),Language("pt","Portugués","Português","🇧🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("ru","Ruso","Русский","🇷🇺"),Language("de","Alemán","Deutsch","🇩🇪"),Language("ja","Japonés","日本語","🇯🇵"),Language("ko","Coreano","한국어","🇰🇷"),Language("it","Italiano","Italiano","🇮🇹"),Language("tr","Turco","Türkçe","🇹🇷"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
+Language("en","Inglés","English","🇬🇧"),Language("zh","Mandarín","中文","🇨🇳"),Language("es","Español","Español","🇪🇸"),Language("hi","Hindi","हिन्दी","🇮🇳"),Language("ar","Árabe","العربية","🇸🇦"),Language("fr","Francés","Français","🇫🇷"),Language("pt","Portugués","Português","🇧🇷"),Language("bn","Bengalí","বাংলা","🇧🇩"),Language("ru","Ruso","Русский","🇷🇺"),Language("de","Alemán","Deutsch","🇩🇪"),Language("ja","Japons","日本語","🇯🇵"),Language("ko","Coreano","한국어","🇰🇷"),Language("it","Italiano","Italiano","🇮🇹"),Language("tr","Turco","Türkçe","🇹🇷"),Language("id","Indonesio","Bahasa Indonesia","🇮🇩"))
 private fun ex(p:String,o:List<String>,a:Int,n:String)=Exercise(p,o,a,n)
 private fun lesson(id:String,level:String,title:String,vararg exercises:Exercise)=Lesson(id,level,title,exercises.toList())
 internal val lessons=listOf(
@@ -342,7 +342,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
       }}
      }
     }
-    Text("El romaji sirve de apoyo inicial. Intenta leer primero el kana y usá la transliteración para comprobar.")
+    Text("El romaji sirve de apoyo inicial. Intenta leer primero el kana y usa la transliteración para comprobar.")
    }
    Text("Rutina diaria",style=MaterialTheme.typography.titleLarge)
    weekDays.forEach{day->BoxCard{
@@ -464,7 +464,7 @@ Column(m.fillMaxSize()){
   }
  }else BoxCard{
   Text("Ruta de "+languages.first{it.code==lang}.name,style=MaterialTheme.typography.titleLarge)
-  Text("El catálogo de 15 idiomas está configurado. Por ahora, solo están publicadas las lecciones de japonés; los demás cursos se incorporarán con contenido revisado.")
+  Text("El catálogo de 15 idiomas está configurado. Por ahora, solo están publicadas las lecciones de japons; los demás cursos se incorporarán con contenido revisado.")
  }
  if(mistakes.isNotEmpty())BoxCard{
   Text("Cuaderno de errores",style=MaterialTheme.typography.titleLarge)
@@ -647,7 +647,7 @@ BoxCard{Text("Pronunciación",style=MaterialTheme.typography.titleLarge);VoicePr
 @Composable private fun VoicePractice(){
 val context=LocalContext.current;var result by remember{mutableStateOf("Todavía no se realizó una práctica.")}
 val launcher=androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()){r->result=r.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()?:"No se reconoció una respuesta."}
-Button(onClick={val intent=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply{putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.JAPANESE.toLanguageTag());putExtra(RecognizerIntent.EXTRA_PROMPT,"Decí una frase en japonés")};runCatching{launcher.launch(intent)}.onFailure{result="No hay reconocedor de voz disponible."}}){Text("Practicar con voz")}
+Button(onClick={val intent=Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply{putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);putExtra(RecognizerIntent.EXTRA_LANGUAGE,Locale.JAPANESE.toLanguageTag());putExtra(RecognizerIntent.EXTRA_PROMPT,"Decí una frase en japons")};runCatching{launcher.launch(intent)}.onFailure{result="No hay reconocedor de voz disponible."}}){Text("Practicar con voz")}
 Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fonética precisa requiere un motor especializado.")
 }
 
