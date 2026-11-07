@@ -588,9 +588,10 @@ val claimedToday by ds.data.map{it[rewardKey]==today}.collectAsState(initial=fal
 val goalReached=isDailyStudyGoalReached(dailySeconds)
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
 Heading("Colección","Sobres diarios con tres cartas coleccionables.")
+AcademyEnvelope()
 AcademyMotif()
 BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Podés reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completá la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)Text("MODO DE PRUEBA: el sobre diario no requiere completar la meta de 30 minutos.")}
-Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium);Text(c.second)}};if(owned.isEmpty())Text("Todavía no tenés cartas.")
+Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())Text("Todavía no tenés cartas.")
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
 val scope=rememberCoroutineScope();val dark by ds.data.map{it[darkKey]?:true}.collectAsState(initial=true);val showRomaji by ds.data.map{it[romajiKey]?:true}.collectAsState(initial=true);var edit by remember(name){mutableStateOf(name)}
