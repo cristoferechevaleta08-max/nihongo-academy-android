@@ -191,14 +191,18 @@ internal val lessons=listOf(
   ex("¿Qué significa tsukarete iru?",listOf("Estar cansado","Estar contento","Estar ocupado","Estar enfermo"),0,"tsukarete iru significa estar cansado."),
   ex("¿Cuál es una condición natural apropiada con ~to?",listOf("Haru ni naru to sakura ga sakimasu","Hima da to eiga o mimashou","Ame ga furu to kaerimashou","Taberu to kudasai"),0,"~to se usa para resultados naturales o habituales, no para invitaciones u órdenes."))
 )
-internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean = lessons.any{it.id==lessonId}
+internal fun isLessonUnlocked(lessonId:String,completed:Set<String>):Boolean { val index=lessons.indexOfFirst{it.id==lessonId}; return index>=0 && (index==0 || lessons[index-1].id in completed) }
 private val examQuestions=listOf(
 Question("Vocabulario","¿Qué significa みず?",listOf("Agua","Fuego","Tierra","Viento"),0),
 Question("Vocabulario","¿Qué significa ねこ?",listOf("Perro","Gato","Pájaro","Pez"),1),
 Question("Gramática","Elige la partícula de tema",listOf("は","を","が","で"),0),
 Question("Gramática","がくせい ___ です。",listOf("は","を","に","へ"),0),
 Question("Lectura","¿Qué significa おはよう?",listOf("Buenas noches","Buenos días","Gracias","Adiós"),1),
-Question("Comprensión","わたしは学生です significa…",listOf("Soy estudiante","Soy profesor","Voy a casa","Tengo agua"),0))
+Question("Comprensión","わたしは学生です significa…",listOf("Soy estudiante","Soy profesor","Voy a casa","Tengo agua"),0),
+Question("Vocabulario","¿Qué significa ともだち?",listOf("Amigo","Hermano","Maestro","Vecino"),0),
+Question("Vocabulario","¿Qué significa せんせい?",listOf("Estudiante","Profesor","Médico","Compañero"),1),
+Question("Gramática","わたし ___ 学生です。",listOf("は","を","に","で"),0),
+Question("Lectura","きょうは学校へ行きます。 ¿Adónde va la persona?",listOf("A la escuela","A casa","Al trabajo","A la tienda"),0))
 private val cards=mapOf("sakura" to ("桜" to "Sakura · flor de cerezo"),"fuji" to ("富士山" to "Monte Fuji"),"neko" to ("猫" to "Gato"),"tsuki" to ("月" to "Luna"),"yume" to ("夢" to "Sueño"))
 
 class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);setContent{Root()}}}
@@ -591,7 +595,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
  }
  else if(finished)BoxCard{
   Text("Resultado",style=MaterialTheme.typography.headlineSmall)
-  Text(score.toString()+" de "+examQuestions.size+" respuestas correctas · "+(score*100/examQuestions.size)+"%")
+  Text(score.toString()+" / "+examQuestions.size+" respuestas correctas · "+(score*100/examQuestions.size)+"%")
   examQuestions.map{it.section}.distinct().forEach{section->
    val total=examQuestions.count{it.section==section}
    val correctInSection=sectionCorrect[section]?:0
@@ -626,7 +630,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 Heading("Colección","Sobres diarios con tres cartas coleccionables.")
 AcademyEnvelope()
 AcademyMotif()
-BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Puedes reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completa la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)}
+BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Puedes reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completa la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);}
 Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())BoxCard{androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.CollectionsBookmark,contentDescription=null,tint=MaterialTheme.colorScheme.primary);Text("Tu colección está vacía",style=MaterialTheme.typography.titleMedium);Text("Abre tu primer sobre diario para conseguir cartas.");OutlinedButton(onClick=onStudy,modifier=Modifier.fillMaxWidth()){Text("Ir a estudiar")}}
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
