@@ -63,7 +63,7 @@ internal fun N4KanjiStrokeOrder(character: String, modifier: Modifier = Modifier
                 }
             }
         }
-        if (paths.isEmpty()) Text(character, style = MaterialTheme.typography.displayLarge)
+        if (paths.isEmpty()) Text(character, style = JapaneseGlyphStyle)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedButton(onClick = { replayKey++ }, modifier = Modifier.weight(1f)) {
                 Text("Repetir animación")
