@@ -192,10 +192,10 @@ internal fun N3KanjiScreen(
                         quizChoice = null
                         quizDone = false
                     },
-                    label = { Text("Prueba de 10") }
+                    label = { Text("Examen · 10 preguntas") }
                 )
             }
-            Text("Mejor resultado: $bestScore/10", style = MaterialTheme.typography.labelMedium)
+            Text("Mejor resultado: $bestScore / 10", style = MaterialTheme.typography.labelMedium)
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
