@@ -464,6 +464,14 @@ internal fun N2KanjiScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(bottom = 20.dp)
         ) {
+            if (filtered.isEmpty()) item {
+                Column(Modifier.fillMaxWidth().padding(28.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.SearchOff, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text("No se encontraron kanji", style = MaterialTheme.typography.titleMedium)
+                    Text("Prueba con otro término.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    OutlinedButton(onClick = { query = "" }) { Text("Mostrar todos los kanji") }
+                }
+            }
             items(filtered, key = { it.character }) { entry ->
                 Card(
                     Modifier.fillMaxWidth().clickable { selected = entry },
@@ -474,7 +482,7 @@ internal fun N2KanjiScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(14.dp)
                     ) {
-                        Text(entry.character, style = MaterialTheme.typography.displaySmall)
+                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = MaterialTheme.typography.displaySmall, maxLines = 1) }
                         Column(Modifier.weight(1f)) {
                             Text(entry.meaningEs, style = MaterialTheme.typography.titleMedium)
                             Text("On: ${entry.onyomi.joinToString(" · ").ifBlank { "—" }}")
