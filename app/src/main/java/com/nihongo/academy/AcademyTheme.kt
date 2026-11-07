@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
@@ -200,5 +201,68 @@ internal fun AcademyMotif(modifier: Modifier = Modifier) {
         listOf(Offset(w * 0.22f, h * 0.20f), Offset(w * 0.72f, h * 0.20f), Offset(w * 0.93f, h * 0.13f)).forEach {
             drawCircle(AcademyPalette.Sakura.copy(alpha = 0.7f), radius = h * 0.025f, center = it)
         }
+    }
+}
+
+/** Sobre ilustrado de la colección; es solo presentación y no altera la recompensa diaria. */
+@Composable
+internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
+    Canvas(modifier = modifier.fillMaxWidth().height(126.dp)) {
+        val left = size.width * 0.27f
+        val top = size.height * 0.10f
+        val width = size.width * 0.46f
+        val height = size.height * 0.78f
+        val right = left + width
+        val bottom = top + height
+
+        drawRoundRect(
+            brush = Brush.linearGradient(
+                listOf(AcademyPalette.SakuraDeep, AcademyPalette.Sakura, AcademyPalette.SakuraLight),
+                start = Offset(left, top),
+                end = Offset(right, bottom)
+            ),
+            topLeft = Offset(left, top),
+            size = Size(width, height),
+            cornerRadius = androidx.compose.ui.geometry.CornerRadius(18.dp.toPx(), 18.dp.toPx())
+        )
+        val flap = Path().apply {
+            moveTo(left, top + height * 0.08f)
+            lineTo(left + width * 0.5f, top + height * 0.62f)
+            lineTo(right, top + height * 0.08f)
+            close()
+        }
+        drawPath(flap, AcademyPalette.SakuraLight.copy(alpha = 0.9f))
+        drawLine(
+            Color.White.copy(alpha = 0.55f),
+            Offset(left + width * 0.04f, bottom - height * 0.34f),
+            Offset(left + width * 0.5f, bottom - height * 0.02f),
+            strokeWidth = 1.5.dp.toPx()
+        )
+        drawLine(
+            Color.White.copy(alpha = 0.55f),
+            Offset(right - width * 0.04f, bottom - height * 0.34f),
+            Offset(left + width * 0.5f, bottom - height * 0.02f),
+            strokeWidth = 1.5.dp.toPx()
+        )
+        drawCircle(
+            color = AcademyPalette.ScarfRed,
+            radius = height * 0.105f,
+            center = Offset(left + width * 0.5f, top + height * 0.61f)
+        )
+        drawCircle(
+            color = Color.White.copy(alpha = 0.85f),
+            radius = height * 0.035f,
+            center = Offset(left + width * 0.5f, top + height * 0.61f)
+        )
+        drawPath(
+            Path().apply {
+                moveTo(left + width * 0.15f, bottom - height * 0.13f)
+                lineTo(left + width * 0.27f, bottom - height * 0.25f)
+                lineTo(left + width * 0.35f, bottom - height * 0.13f)
+                lineTo(left + width * 0.27f, bottom - height * 0.02f)
+                close()
+            },
+            Color.White.copy(alpha = 0.28f)
+        )
     }
 }
