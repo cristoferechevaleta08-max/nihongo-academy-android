@@ -83,7 +83,7 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
   } else {
    val question = assessmentQuestions[index]
    LinearProgressIndicator(progress = { (index + 1).toFloat() / n4FinalAssessment.size }, modifier = Modifier.fillMaxWidth())
-   Text("Mejor resultado guardado: $bestScore%")
+   Text("Mejor resultado guardado: ${bestScore / 10} / 10 (${bestScore}%)")
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
     Text("Pregunta ${index + 1} de ${n4FinalAssessment.size} · ${question.section}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
     Text(question.prompt, style = MaterialTheme.typography.titleMedium)
