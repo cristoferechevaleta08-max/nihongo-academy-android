@@ -219,16 +219,37 @@ var sessionRunning by remember{mutableStateOf(false)}
 var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
 var tab by remember{mutableStateOf("Inicio")}
+var studyDestination by remember{mutableStateOf("Lecciones")}
 val scheme=academyColorScheme(dark)
-MaterialTheme(colorScheme=scheme,typography=AcademyTypography,shapes=AcademyShapes){Scaffold(bottomBar={NavigationBar{listOf("Inicio","Estudiar","Kanji","Escucha","Plan","Exámenes","Colección","Perfil").forEach{t->NavigationBarItem(selected=tab==t,onClick={tab=t},icon={Text(when(t){"Inicio"->"⌂";"Estudiar"->"文";"Kanji"->"漢";"Escucha"->"♫";"Exámenes"->"✓";"Colección"->"✧";else->"○"})},label={Text(t)})}}}){p->
+MaterialTheme(colorScheme=scheme,typography=AcademyTypography,shapes=AcademyShapes){Scaffold(bottomBar={
+ NavigationBar {
+  val destinations=listOf("Inicio","Estudiar","Kanji","Escucha","Perfil")
+  destinations.forEach { destination ->
+   val selected=tab==destination
+   NavigationBarItem(
+    selected=selected,
+    onClick={tab=destination;if(destination=="Estudiar")studyDestination="Lecciones"},
+    icon={
+     val icon=when(destination){
+      "Inicio"->if(selected) androidx.compose.material.icons.Icons.Filled.Home else androidx.compose.material.icons.Icons.Outlined.Home
+      "Estudiar"->if(selected) androidx.compose.material.icons.Icons.Filled.MenuBook else androidx.compose.material.icons.Icons.Outlined.MenuBook
+      "Kanji"->if(selected) androidx.compose.material.icons.Icons.Filled.Translate else androidx.compose.material.icons.Icons.Outlined.Translate
+      "Escucha"->if(selected) androidx.compose.material.icons.Icons.Filled.Headphones else androidx.compose.material.icons.Icons.Outlined.Headphones
+      else->if(selected) androidx.compose.material.icons.Icons.Filled.Person else androidx.compose.material.icons.Icons.Outlined.Person
+     }
+     androidx.compose.material3.Icon(icon,contentDescription=destination)
+    },
+    label={Text(destination,maxLines=1,softWrap=false,style=MaterialTheme.typography.labelSmall)},
+    alwaysShowLabel=true
+   )
+  }
+ }
+}){p->
 when(tab){
-"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar"},{tab="Exámenes"},{tab="Plan"},Modifier.padding(p))
-"Estudiar"->Study(ds,lang,done,mistakes,showRomaji,Modifier.padding(p))
+"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar";studyDestination="Lecciones"},{tab="Estudiar";studyDestination="Exámenes"},{tab="Estudiar";studyDestination="Plan"},{tab="Estudiar";studyDestination="Colección"},Modifier.padding(p))
+"Estudiar"->Study(ds,lang,done,mistakes,showRomaji,studyDestination,{studyDestination=it},owned,dailySeconds,Modifier.padding(p))
 "Kanji"->KanjiHub(ds,Modifier.padding(p))
 "Escucha"->ListeningHub(ds,Modifier.padding(p))
-"Plan"->StudyPlanScreen(ds,Modifier.padding(p))
-"Exámenes"->ExamHub(ds,Modifier.padding(p))
-"Colección"->CollectionScreen(ds,owned,dailySeconds,Modifier.padding(p))
 else->Profile(ds,name,lang,Modifier.padding(p))
 }}}
 }
@@ -238,7 +259,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  Column(m.fillMaxSize()) {
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp, vertical=8.dp), horizontalArrangement=Arrangement.spacedBy(8.dp)) {
    FilterChip(selected=level=="N5", onClick={level="N5"}, label={Text("Plan N5")})
-   FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=true, label={Text("Plan N4 · prueba")})
+   FilterChip(selected=level=="N4", onClick={level="N4"}, enabled=true, label={Text("Plan N4")})
   }
   if(level=="N4") N4StudyPlanOverview(ds=ds, n5Unlocked=true, modifier=Modifier.weight(1f))
   else N5StudyPlanScreen(ds, Modifier.weight(1f))
@@ -368,17 +389,17 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
-@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,plan:()->Unit,m:Modifier){
+@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,plan:()->Unit,collection:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
-Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Text("TEST EDITION · CONTENIDOS DESBLOQUEADOS",color=MaterialTheme.colorScheme.secondary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
+Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
 AcademyMotif()
 BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/18f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
 BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
-BoxCard{Text("Plan de 12 semanas",style=MaterialTheme.typography.titleLarge);Text("Ruta N5 del PDF: 30 minutos diarios, pruebas semanales y repaso de errores.");Button(onClick=plan,modifier=Modifier.fillMaxWidth()){Text("Ver plan completo")}}
+BoxCard{Text("Tu colección",style=MaterialTheme.typography.titleLarge);Text("Revisa las cartas que has conseguido y abre tu sobre diario.");OutlinedButton(onClick=collection,modifier=Modifier.fillMaxWidth()){Text("Ver colección · "+owned.size+" cartas")}}
 }}
-@Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,m:Modifier){
+@Composable private fun Study(ds:androidx.datastore.core.DataStore<Preferences>,language:String,done:Set<String>,mistakes:Set<String>,showRomaji:Boolean,destination:String,onDestinationChange:(String)->Unit,owned:Set<String>,dailySeconds:Int,m:Modifier){
 val scope=rememberCoroutineScope()
 val weeklyProgress by ds.weeklyStudyProgress().collectAsState(initial=WeeklyStudyProgress())
 var selected by remember{mutableStateOf<Lesson?>(null)}
@@ -402,8 +423,16 @@ if(reviewing){
  MistakeReview(mistakes,{key->scope.launch{ds.edit{p->p[mistakesKey]=(p[mistakesKey]?:emptySet())-key}}},{reviewing=false})
  return
 }
-Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
- Heading("Tu ruta de estudio","Elegí idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
+if(destination=="Plan"){StudyPlanScreen(ds,m);return}
+if(destination=="Exámenes"){Column(m.fillMaxSize()){TextButton(onClick={onDestinationChange("Lecciones")}){Text("← Volver a Estudiar")};ExamHub(ds,Modifier.weight(1f))};return}
+if(destination=="Colección"){Column(m.fillMaxSize()){TextButton(onClick={onDestinationChange("Lecciones")}){Text("← Volver a Estudiar")};CollectionScreen(ds,owned,dailySeconds,Modifier.weight(1f))};return}
+Column(m.fillMaxSize()){
+ Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
+  FilterChip(selected=true,onClick={onDestinationChange("Lecciones")},label={Text("Lecciones")})
+  FilterChip(selected=false,onClick={onDestinationChange("Plan")},label={Text("Plan")})
+ }
+ Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+ Heading("Tu ruta de estudio","Elige idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
  OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
  if(picker) AlertDialog(
   onDismissRequest={picker=false},
@@ -419,7 +448,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    if(pair.first=="N4")Text("MODO DE PRUEBA: contenido N4 accesible sin completar N5.",color=MaterialTheme.colorScheme.primary)
+    
     items.forEach{l->val unlocked=isLessonUnlocked(l.id,done);OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
    }
   }
@@ -590,7 +619,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
 Heading("Colección","Sobres diarios con tres cartas coleccionables.")
 AcademyEnvelope()
 AcademyMotif()
-BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Podés reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completá la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)Text("MODO DE PRUEBA: el sobre diario no requiere completar la meta de 30 minutos.")}
+BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Podés reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completá la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)}
 Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())Text("Todavía no tenés cartas.")
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
@@ -617,7 +646,7 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
  Column(m.fillMaxSize()){
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
    FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Examen N5")})
-   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=true,label={Text("Examen N4 · prueba")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},enabled=true,label={Text("Examen N4")})
   }
   if(level=="N4") N4AssessmentScreen(ds,Modifier.weight(1f)) else Exam(ds,Modifier.weight(1f))
  }
@@ -629,9 +658,9 @@ Text(result);Text("El dispositivo devuelve texto reconocido. La evaluación fon�
  Column(m.fillMaxSize()){
   Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
    FilterChip(selected=level=="N5",onClick={level="N5"},label={Text("Kanji N5")})
-   FilterChip(selected=level=="N4",onClick={level="N4"},label={Text("Kanji N4 · desbloqueado")})
+   FilterChip(selected=level=="N4",onClick={level="N4"},label={Text("Kanji N4")})
    FilterChip(selected=level=="N3",onClick={level="N3"},label={Text("Kanji N3")})
-   FilterChip(selected=level=="N2",onClick={level="N2"},label={Text("Kanji N2 · inicial")})
+   FilterChip(selected=level=="N2",onClick={level="N2"},label={Text("Kanji N2")})
   }
   when(level){
    "N4" -> N4KanjiScreen(ds,Modifier.weight(1f))
