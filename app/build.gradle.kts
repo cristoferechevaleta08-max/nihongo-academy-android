@@ -6,7 +6,7 @@ plugins {
 android {
  namespace = "com.nihongo.academy"
  compileSdk = 35
- defaultConfig { applicationId = "com.nihongo.academy"; minSdk = 26; targetSdk = 35; versionCode = 3; versionName = "1.0.3" }
+ defaultConfig { applicationId = "com.nihongo.academy"; minSdk = 26; targetSdk = 35; versionCode = 4; versionName = "1.0.3" }
  buildFeatures { compose = true }
  compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
  kotlinOptions { jvmTarget = "17" }
