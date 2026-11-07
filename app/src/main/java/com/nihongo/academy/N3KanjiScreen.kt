@@ -64,7 +64,7 @@ internal fun N3KanjiScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("Evaluación de kanji N3", style = MaterialTheme.typography.headlineSmall)
-                Text("$quizScore / ${quiz.size}", style = MaterialTheme.typography.displayMedium)
+                Text("$quizScore / ${quiz.size}", style = MaterialTheme.typography.headlineLarge)
                 Text(if (quizScore >= 8) "¡Buen trabajo! Sigue repasando." else "Revisa las fichas y vuelve a intentarlo.")
                 Text("Mejor resultado: $bestScore / 10")
                 Button(onClick = { quiz = emptyList(); quizDone = false }) { Text("Volver a la biblioteca") }
@@ -233,7 +233,7 @@ internal fun N3KanjiScreen(
                         Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = MaterialTheme.typography.headlineLarge, maxLines = 1) }
+                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = JapaneseGlyphStyle, maxLines = 1) }
                         Column(Modifier.weight(1f)) {
                             Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall)
                             Text("On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
