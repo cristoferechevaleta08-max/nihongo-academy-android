@@ -463,6 +463,7 @@ Column(m.fillMaxSize()){
  }
 }
 }
+}
 @Composable private fun MistakeReview(mistakes:Set<String>,remove:(String)->Unit,back:()->Unit){
 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
  TextButton(onClick=back){Text("← Volver a las lecciones")}
