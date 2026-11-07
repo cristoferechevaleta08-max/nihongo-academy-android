@@ -59,6 +59,7 @@ internal fun N5KanjiStrokeOrder(entry: N5KanjiEntry) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
         Text("Orden de trazos", style = MaterialTheme.typography.titleMedium)
         if (paths.isEmpty()) {
+            Text(entry.character, style = MaterialTheme.typography.displayLarge)
             Text("La guía de trazos todavía no está disponible para este kanji.")
         } else {
             Text(
