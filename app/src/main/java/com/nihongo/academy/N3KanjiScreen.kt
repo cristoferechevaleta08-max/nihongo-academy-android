@@ -63,7 +63,7 @@ internal fun N3KanjiScreen(
             ) {
                 Text("Evaluación de kanji N3", style = MaterialTheme.typography.headlineSmall)
                 Text("$quizScore / ${quiz.size}", style = MaterialTheme.typography.displayMedium)
-                Text(if (quizScore >= 8) "¡Buen trabajo! Seguí repasando." else "Revisá las fichas y volvé a intentarlo.")
+                Text(if (quizScore >= 8) "¡Buen trabajo! Sigue repasando." else "Revisa las fichas y vuelve a intentarlo.")
                 Text("Mejor resultado: $bestScore / 10")
                 Button(onClick = { quiz = emptyList(); quizDone = false }) { Text("Volver a la biblioteca") }
             }
