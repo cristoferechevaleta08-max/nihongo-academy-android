@@ -422,7 +422,7 @@ internal fun N5KanjiScreen(
             modifier = Modifier.fillMaxWidth()
         )
         Text("$learnedCount de ${n5KanjiCatalog.size} kanji marcados como aprendidos")
-        Text("Mejor examen: $bestExamScore / 10", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("Mejor resultado: $bestExamScore / 10", color = MaterialTheme.colorScheme.onSurfaceVariant)
         OutlinedButton(
             onClick = {
                 examQuestions = n5KanjiCatalog.shuffled().take(10)
@@ -432,7 +432,7 @@ internal fun N5KanjiScreen(
                 examFinished = false
             },
             modifier = Modifier.fillMaxWidth()
-        ) { Text("Realizar examen N5 · 10 preguntas") }
+        ) { Text("Examen N5 · 10 preguntas") }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
             Button(
                 onClick = { startReview(dueEntries) },
