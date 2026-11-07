@@ -133,9 +133,9 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   OutlinedTextField(value=query,onValueChange={query=it},label={Text("Buscar kanji o significado")},modifier=Modifier.fillMaxWidth(),singleLine=true)
   Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
    AssistChip(onClick={queue=due;reviewIndex=0;answer=null;revealed=false},label={Text("Repasar pendientes: ${due.size}")},enabled=due.isNotEmpty())
-   AssistChip(onClick={exam=buildN4KanjiQuiz();examIndex=0;examScore=0;examChoice=null;examDone=false},label={Text("Prueba de 10")})
+   AssistChip(onClick={exam=buildN4KanjiQuiz();examIndex=0;examScore=0;examChoice=null;examDone=false},label={Text("Examen · 10 preguntas")})
   }
-  Text("Aprendidos: ${learned.intersect(n4KanjiCatalog.map{it.character}.toSet()).size} / ${n4KanjiCatalog.size} · Mejor prueba: $best/10")
+  Text("Aprendidos: ${learned.intersect(n4KanjiCatalog.map{it.character}.toSet()).size} / ${n4KanjiCatalog.size} · Mejor resultado: $best / 10")
   LazyColumn(verticalArrangement=Arrangement.spacedBy(8.dp),contentPadding=PaddingValues(bottom=12.dp)){
    if(filtered.isEmpty()) item {
     Column(Modifier.fillMaxWidth().padding(28.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(10.dp)){
