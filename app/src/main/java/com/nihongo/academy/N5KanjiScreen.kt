@@ -89,7 +89,7 @@ internal fun N5KanjiScreen(
             ) {
                 Spacer(Modifier.height(32.dp))
                 Text("Examen N5 completado", style = MaterialTheme.typography.headlineMedium)
-                Text("$examScore / ${examQuestions.size}", style = MaterialTheme.typography.displayMedium)
+                Text("$examScore / ${examQuestions.size}", style = MaterialTheme.typography.headlineLarge)
                 Text(
                     if (examScore >= 8) "¡Muy buen trabajo! Sigue repasando para consolidar los kanji."
                     else "Buen intento. Revisa tus errores y vuelve a practicar."
@@ -480,7 +480,7 @@ internal fun N5KanjiScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(14.dp)
                     ) {
-                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = MaterialTheme.typography.displaySmall, maxLines = 1) }
+                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = JapaneseGlyphStyle, maxLines = 1) }
                         Column(Modifier.weight(1f)) {
                             Text(entry.meaningEs, style = MaterialTheme.typography.titleMedium)
                             Text("On: ${entry.onyomi.joinToString(" · ").ifBlank { "—" }}")
