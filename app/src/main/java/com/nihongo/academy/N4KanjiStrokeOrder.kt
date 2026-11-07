@@ -72,7 +72,7 @@ internal fun N4KanjiStrokeOrder(character: String, modifier: Modifier = Modifier
             }
         }
         if (practiceMode) {
-            Text("Dibujá el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
+            Text("Dibuja el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
             Canvas(
                 Modifier.fillMaxWidth()
                     .aspectRatio(1f)
