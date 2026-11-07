@@ -79,7 +79,7 @@ internal fun N3KanjiScreen(
                     progress = { (quizIndex + 1).toFloat() / quiz.size },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Text(question.display, style = MaterialTheme.typography.displayLarge)
+                Text(question.display, style = JapaneseGlyphStyle)
                 Text(question.prompt)
                 question.options.forEach { option ->
                     OutlinedButton(
@@ -124,7 +124,7 @@ internal fun N3KanjiScreen(
         ) {
             TextButton(onClick = { selected = null }) { Text("← Biblioteca N3") }
             Text("N3 · Kanji", color = MaterialTheme.colorScheme.primary)
-            Text(entry.character, style = MaterialTheme.typography.displayLarge)
+            Text(entry.character, style = JapaneseGlyphStyle)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
             N3KanjiStrokeOrder(entry.character, entry.strokeCount)
