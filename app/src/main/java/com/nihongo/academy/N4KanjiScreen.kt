@@ -51,7 +51,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   if(examDone){
    Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),verticalArrangement=Arrangement.spacedBy(14.dp),horizontalAlignment=Alignment.CenterHorizontally){
     Text("Evaluación de kanji N4",style=MaterialTheme.typography.headlineSmall)
-    Text("$examScore / ${exam.size}",style=MaterialTheme.typography.displayMedium)
+    Text("$examScore / ${exam.size}",style=MaterialTheme.typography.headlineLarge)
     Text(if(examScore>=8)"¡Buen trabajo! Sigue repasando." else "Revisa las fichas y vuelve a intentarlo.")
     Text("Mejor resultado: $best / 10")
     Button(onClick={exam=emptyList();examDone=false}){Text("Volver a la biblioteca")}
@@ -62,7 +62,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
     TextButton(onClick={exam=emptyList();examDone=false}){Text("← Salir")}
     Text("Pregunta ${examIndex+1} de ${exam.size} · N4")
     LinearProgressIndicator(progress={(examIndex+1).toFloat()/exam.size},modifier=Modifier.fillMaxWidth())
-    Text(e.display,style=MaterialTheme.typography.displayLarge)
+    Text(e.display,style=JapaneseGlyphStyle)
     Text(e.prompt)
     e.options.forEach{o->OutlinedButton(onClick={examChoice=o},enabled=examChoice==null,modifier=Modifier.fillMaxWidth()){Text(o)}}
     if(examChoice!=null){
@@ -85,7 +85,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
    TextButton(onClick={queue=emptyList();revealed=false;answer=null}){Text("← Salir del repaso")}
    Text("Repaso N4 · ${reviewIndex+1} de ${queue.size}")
-   Text(e.character,style=MaterialTheme.typography.displayLarge)
+   Text(e.character,style=JapaneseGlyphStyle)
    Text("¿Qué significa este kanji?")
    options.forEach{o->OutlinedButton(onClick={if(!revealed)answer=o},enabled=!revealed,modifier=Modifier.fillMaxWidth()){Text(o)}}
    if(revealed){
@@ -106,7 +106,7 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(12.dp)){
    TextButton(onClick={selected=null}){Text("← Biblioteca N4")}
    Text("N4 · Kanji",color=MaterialTheme.colorScheme.primary)
-   Text(e.character,style=MaterialTheme.typography.displayLarge)
+   Text(e.character,style=JapaneseGlyphStyle)
    Text(e.meaningEs,style=MaterialTheme.typography.headlineSmall)
    Text("Trazos: ${e.strokeCount}")
    N4KanjiStrokeOrder(e.character)
