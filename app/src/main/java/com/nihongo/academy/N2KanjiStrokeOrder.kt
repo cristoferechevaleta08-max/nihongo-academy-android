@@ -203,13 +203,6 @@ internal fun N2KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
                 Text("La práctica es libre; todavía no evalúa automáticamente la dirección ni el orden.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else if (!loading) {
-            OutlinedButton(onClick = { loadKey++ }, modifier = Modifier.fillMaxWidth()) {
-                Text("Reintentar carga")
-            }
-        }
-        if (paths.isNotEmpty() && paths.size != expectedStrokeCount) {
-            Text("La guía contiene ${paths.size} trazos; la ficha indica ${expectedStrokeCount}.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
-        } else {
             androidx.compose.foundation.layout.Box(
                 Modifier.fillMaxWidth().aspectRatio(1f)
                     .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp)),
@@ -217,6 +210,12 @@ internal fun N2KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
             ) {
                 Text(character, style = MaterialTheme.typography.displayLarge)
             }
+            OutlinedButton(onClick = { loadKey++ }, modifier = Modifier.fillMaxWidth()) {
+                Text("Reintentar carga")
+            }
+        }
+        if (paths.isNotEmpty() && paths.size != expectedStrokeCount) {
+            Text("La guía contiene ${paths.size} trazos; la ficha indica ${expectedStrokeCount}.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
         }
     }
 }
