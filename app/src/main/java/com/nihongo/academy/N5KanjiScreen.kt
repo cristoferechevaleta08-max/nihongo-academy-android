@@ -462,13 +462,13 @@ internal fun N5KanjiScreen(
         ) {
             if (filtered.isEmpty()) item {
                 Column(Modifier.fillMaxWidth().padding(28.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.SearchOff, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Text("No se encontraron kanji", style = MaterialTheme.typography.titleMedium)
                     Text("Prueba con otro término o quita los filtros.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     OutlinedButton(onClick = { query = ""; onlyPending = false }) { Text("Mostrar todos los kanji") }
                 }
             }
-            items(filtered, key = { it.character }) {
+            items(filtered, key = { it.character }) { entry ->
                 Card(
                     Modifier.fillMaxWidth().clickable { selected = entry },
                     shape = RoundedCornerShape(16.dp)
