@@ -246,7 +246,7 @@ MaterialTheme(colorScheme=scheme,typography=AcademyTypography,shapes=AcademyShap
  }
 }){p->
 when(tab){
-"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar";studyDestination="Lecciones"},{tab="Estudiar";studyDestination="Exámenes"},{tab="Estudiar";studyDestination="Plan"},{tab="Estudiar";studyDestination="Colección"},Modifier.padding(p))
+"Inicio"->Home(name,xp,done.size,mistakes.size,dailySeconds,streak,sessionRunning,sessionElapsed,{sessionElapsed=0;sessionRunning=true},{val elapsed=sessionElapsed;sessionRunning=false;sessionElapsed=0;scope.launch{ds.edit{prefs->val date=LocalDate.now().toString();val previous=if(prefs[dailyDateKey]==date)prefs[dailySecondsKey]?:0 else 0;val total=previous+elapsed;prefs[dailyDateKey]=date;prefs[dailySecondsKey]=total;if(isDailyStudyGoalReached(total)&&prefs[lastGoalDateKey]!=date){prefs[streakKey]=nextDailyStreak(prefs[streakKey]?:0,prefs[lastGoalDateKey],date);prefs[lastGoalDateKey]=date}}}},{tab="Estudiar";studyDestination="Lecciones"},{tab="Estudiar";studyDestination="Exámenes"},{tab="Estudiar";studyDestination="Colección"},Modifier.padding(p))
 "Estudiar"->Study(ds,lang,done,mistakes,showRomaji,studyDestination,{studyDestination=it},owned,dailySeconds,Modifier.padding(p))
 "Kanji"->KanjiHub(ds,Modifier.padding(p))
 "Escucha"->ListeningHub(ds,Modifier.padding(p))
@@ -389,11 +389,11 @@ else->Profile(ds,name,lang,Modifier.padding(p))
 }
 @Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
 @Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
-@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,plan:()->Unit,collection:()->Unit,m:Modifier){
+@Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,collection:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
 AcademyMotif()
-BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};LinearProgressIndicator(progress={(done/18f).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth())}
+BoxCard{Text("Tu progreso",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(xp.toString()+" XP");Text(done.toString()+" lecciones");Text(mistakes.toString()+" para repasar")};val completedLessons=done.coerceIn(0,lessons.size);Text("$completedLessons de ${lessons.size} lecciones completadas",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant);LinearProgressIndicator(progress={if(lessons.isEmpty())0f else completedLessons.toFloat()/lessons.size.toFloat()},modifier=Modifier.fillMaxWidth())}
 BoxCard{Text("Continuar aprendiendo",style=MaterialTheme.typography.titleLarge);Text("Lecciones breves con ejercicios y corrección inmediata.");Button(onClick=study,modifier=Modifier.fillMaxWidth()){Text("Ir a mis lecciones")}}
 BoxCard{Text("Simulacro de examen",style=MaterialTheme.typography.titleLarge);Text("Practicá vocabulario, gramática, lectura y comprensión.");OutlinedButton(onClick=exam,modifier=Modifier.fillMaxWidth()){Text("Preparar examen")}}
 BoxCard{Text("Meta diaria · 30 minutos",style=MaterialTheme.typography.titleLarge);val totalSeconds=dailySeconds+if(sessionRunning)sessionElapsed else 0;Text((totalSeconds/60).toString()+" / 30 minutos");Text("Racha: "+streak+" días");LinearProgressIndicator(progress={(totalSeconds/N5_DAILY_STUDY_SECONDS.toFloat()).coerceIn(0f,1f)},modifier=Modifier.fillMaxWidth());Button(onClick=if(sessionRunning)stopSession else startSession,modifier=Modifier.fillMaxWidth()){Text(if(sessionRunning)"Finalizar sesión" else "Iniciar sesión de estudio")};Text("El tiempo se acumula mientras la sesión está activa, incluso si cambiás de pantalla.")}
@@ -425,7 +425,7 @@ if(reviewing){
 }
 if(destination=="Plan"){StudyPlanScreen(ds,m);return}
 if(destination=="Exámenes"){Column(m.fillMaxSize()){TextButton(onClick={onDestinationChange("Lecciones")}){Text("← Volver a Estudiar")};ExamHub(ds,Modifier.weight(1f))};return}
-if(destination=="Colección"){Column(m.fillMaxSize()){TextButton(onClick={onDestinationChange("Lecciones")}){Text("← Volver a Estudiar")};CollectionScreen(ds,owned,dailySeconds,Modifier.weight(1f))};return}
+if(destination=="Colección"){Column(m.fillMaxSize()){TextButton(onClick={onDestinationChange("Lecciones")}){Text("← Volver a Estudiar")};CollectionScreen(ds,owned,dailySeconds,{onDestinationChange("Lecciones")},Modifier.weight(1f))};return}
 Column(m.fillMaxSize()){
  Row(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=8.dp),horizontalArrangement=Arrangement.spacedBy(8.dp)){
   FilterChip(selected=true,onClick={onDestinationChange("Lecciones")},label={Text("Lecciones")})
@@ -611,7 +611,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
  }
 }
 }
-@Composable private fun CollectionScreen(ds:androidx.datastore.core.DataStore<Preferences>,owned:Set<String>,dailySeconds:Int,m:Modifier){
+@Composable private fun CollectionScreen(ds:androidx.datastore.core.DataStore<Preferences>,owned:Set<String>,dailySeconds:Int,onStudy:()->Unit,m:Modifier){
 val scope=rememberCoroutineScope();var message by remember{mutableStateOf("")}
 val today=LocalDate.now().toString()
 val claimedToday by ds.data.map{it[rewardKey]==today}.collectAsState(initial=false)
@@ -621,7 +621,7 @@ Heading("Colección","Sobres diarios con tres cartas coleccionables.")
 AcademyEnvelope()
 AcademyMotif()
 BoxCard{Text("Sobre diario",style=MaterialTheme.typography.titleLarge);Text("Podés reclamar un sobre por día.");Button(onClick={scope.launch{var got=false;ds.edit{p->if(p[rewardKey]!=today){p[rewardKey]=today;val picks=cards.keys.shuffled().take(3).toSet();p[cardsKey]=(p[cardsKey]?:emptySet())+picks;p[xpKey]=(p[xpKey]?:0)+10;got=true}};message=if(got)"¡Sobre abierto! Se agregaron tres cartas." else "Completá la meta diaria de 30 minutos para desbloquear el sobre."}},enabled=!claimedToday,modifier=Modifier.fillMaxWidth()){Text(if(claimedToday)"Sobre de hoy reclamado" else if(goalReached)"Abrir sobre" else "Desbloquear al completar 30 min")};if(message.isNotBlank())Text(message);if(!goalReached)}
-Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())Text("Todavía no tenés cartas.")
+Text("Cartas obtenidas: "+owned.size,style=MaterialTheme.typography.titleMedium);cards.filterKeys{it in owned}.values.forEach{c->BoxCard{Text(c.first,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.primary);Text(c.second,color=MaterialTheme.colorScheme.onSurfaceVariant)}};if(owned.isEmpty())BoxCard{androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.CollectionsBookmark,contentDescription=null,tint=MaterialTheme.colorScheme.primary);Text("Tu colección está vacía",style=MaterialTheme.typography.titleMedium);Text("Abre tu primer sobre diario para conseguir cartas.");OutlinedButton(onClick=onStudy,modifier=Modifier.fillMaxWidth()){Text("Ir a estudiar")}}
 }}
 @Composable private fun Profile(ds:androidx.datastore.core.DataStore<Preferences>,name:String,lang:String,m:Modifier){
 val scope=rememberCoroutineScope();val dark by ds.data.map{it[darkKey]?:true}.collectAsState(initial=true);val showRomaji by ds.data.map{it[romajiKey]?:true}.collectAsState(initial=true);var edit by remember(name){mutableStateOf(name)}
