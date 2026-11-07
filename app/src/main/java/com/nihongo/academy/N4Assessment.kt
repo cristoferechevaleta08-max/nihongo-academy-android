@@ -26,7 +26,7 @@ internal val n4FinalAssessment = listOf(
  N4AssessmentQuestion("Gramática","¿Qué frase expresa deseo de realizar una acción?",listOf("水がほしいです","日本へ行きたいです","水があります","日本へ行きました"),1,"〜たい se une a la raíz verbal para expresar deseo de realizar una acción."),
  N4AssessmentQuestion("Gramática","¿Qué estructura significa «más barato que»?",listOf("AはBより安いです","AはBほど安いです","Aの中で安いです","AとBが安いです"),0,"より introduce el término de comparación."),
  N4AssessmentQuestion("Gramática","田中さんは私に本をくれました significa:",listOf("Le di un libro a Tanaka","Tanaka me dio un libro","Tanaka compró un libro","Recibí un libro de un desconocido"),1,"くれる describe algo que otra persona da al hablante o a su grupo."),
- N4AssessmentQuestion("Gramática","Completá: 彼は親切だ ___ 思います。",listOf("を","と","に","で"),1,"Antes de と思います se usa と para marcar el contenido del pensamiento."),
+ N4AssessmentQuestion("Gramática","Completa: 彼は親切だ ___ 思います。",listOf("を","と","に","で"),1,"Antes de と思います se usa と para marcar el contenido del pensamiento."),
  N4AssessmentQuestion("Gramática","¿Qué expresa かもしれません?",listOf("Certeza","Posibilidad o quizá","Obligación","Prohibición"),1,"かもしれません indica posibilidad, sin afirmar que algo sea seguro."),
  N4AssessmentQuestion("Gramática","¿Qué condicional sirve para «si llueve, me quedaré en casa»?",listOf("雨が降ったら、家にいます","雨が降ると、家にいてください","雨が降って、家にいます","雨が降るたい、家にいます"),0,"〜たら permite expresar una condición para una decisión o acción posterior."),
  N4AssessmentQuestion("Gramática","¿Qué uso de 〜と es más natural?",listOf("春になると、桜が咲きます","春になると、一緒に行きましょう","春になると、窓を開けてください","春になると、映画を見たいです"),0,"〜と se usa con resultados naturales o habituales, no para invitaciones u órdenes."),
@@ -63,9 +63,11 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
  var score by remember { mutableIntStateOf(0) }
  var finished by remember { mutableStateOf(false) }
  var confirmed by remember { mutableStateOf(false) }
+ var attempt by remember { mutableIntStateOf(0) }
+ val assessmentQuestions = remember(attempt) { n4FinalAssessment.shuffled().take(10) }
  Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
   Text("Evaluación integrada N4", style = MaterialTheme.typography.headlineMedium)
-  Text("30 preguntas: gramática, vocabulario, lectura y comprensión de los diálogos. Se aprueba con al menos 70%.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+  Text("10 preguntas: gramática, vocabulario, lectura y comprensión de los diálogos. Se aprueba con al menos 70%.", color = MaterialTheme.colorScheme.onSurfaceVariant)
   if (!progress.isPlanComplete) {
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
     Text("Evaluación bloqueada", style = MaterialTheme.typography.titleLarge)
@@ -74,12 +76,12 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
   } else if (finished) {
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
     Text("Resultado final", style = MaterialTheme.typography.titleLarge)
-    Text("$score de ${n4FinalAssessment.size} respuestas correctas · ${score * 100 / n4FinalAssessment.size}%")
+    Text("$score de ${assessmentQuestions.size} respuestas correctas · ${score * 100 / n4FinalAssessment.size}%")
     Text(if (score * 100 / n4FinalAssessment.size >= 70) "Evaluación aprobada." else "Todavía no está aprobada. Repasá las explicaciones y volvé a intentarlo.")
-    Button(onClick = { index = 0; selected = -1; score = 0; finished = false; confirmed = false }, modifier = Modifier.fillMaxWidth()) { Text("Repetir evaluación") }
+    Button(onClick = { index = 0; selected = -1; score = 0; finished = false; confirmed = false; attempt++ }, modifier = Modifier.fillMaxWidth()) { Text("Repetir evaluación") }
    } }
   } else {
-   val question = n4FinalAssessment[index]
+   val question = assessmentQuestions[index]
    LinearProgressIndicator(progress = { (index + 1).toFloat() / n4FinalAssessment.size }, modifier = Modifier.fillMaxWidth())
    Text("Mejor resultado guardado: $bestScore%")
    Card(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -92,7 +94,7 @@ internal fun N4AssessmentScreen(ds: DataStore<Preferences>, modifier: Modifier =
      Text(if (selected == question.answer) "Correcto" else "Respuesta: ${question.options[question.answer]}", color = MaterialTheme.colorScheme.primary)
      Text(question.explanation, color = MaterialTheme.colorScheme.onSurfaceVariant)
      Button(onClick = {
-      if (index == n4FinalAssessment.lastIndex) {
+      if (index == assessmentQuestions.lastIndex) {
        finished = true
        scope.launch { ds.edit { prefs -> val percent = score * 100 / n4FinalAssessment.size; if (percent > (prefs[n4BestAssessmentKey] ?: 0)) prefs[n4BestAssessmentKey] = percent } }
       } else { index++; selected = -1; confirmed = false }
