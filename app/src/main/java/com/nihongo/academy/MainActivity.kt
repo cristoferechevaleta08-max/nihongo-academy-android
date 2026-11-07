@@ -1,5 +1,17 @@
 package com.nihongo.academy
 
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.MenuBook
+import androidx.compose.material.icons.outlined.Translate
+import androidx.compose.material.icons.outlined.Headphones
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.FolderOpen
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
