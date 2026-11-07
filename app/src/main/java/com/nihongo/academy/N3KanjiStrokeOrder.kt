@@ -124,7 +124,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
         Text(
             when {
                 loading -> "Cargando guía de escritura…"
-                paths.isEmpty() -> "No se pudo cargar la guía. Comprobá tu conexión e intentá de nuevo."
+                paths.isEmpty() -> "No se pudo cargar la guía. Comprueba tu conexión e intenta de nuevo."
                 paths.size != expectedStrokeCount -> "La guía tiene ${paths.size} trazos y la ficha espera ${expectedStrokeCount}. No se mostrará una guía incorrecta."
                 else -> "Trazo ${activeStroke.coerceAtMost(paths.size)} de ${paths.size}"
             },
@@ -171,7 +171,7 @@ internal fun N3KanjiStrokeOrder(character: String, expectedStrokeCount: Int) {
                 }
             }
             if (practiceMode) {
-                Text("Dibujá el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
+                Text("Dibuja el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
                 Canvas(
                     Modifier.fillMaxWidth().aspectRatio(1f)
                         .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp))
