@@ -101,7 +101,7 @@ internal fun N5KanjiStrokeOrder(entry: N5KanjiEntry) {
                 }
             }
             if (practiceMode) {
-                Text("Dibujá el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
+                Text("Dibuja el kanji con el dedo siguiendo el modelo.", style = MaterialTheme.typography.bodySmall)
                 Canvas(
                     Modifier.fillMaxWidth().aspectRatio(1f)
                         .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(20.dp))
