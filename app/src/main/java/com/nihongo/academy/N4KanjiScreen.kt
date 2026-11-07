@@ -137,10 +137,18 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
   }
   Text("Aprendidos: ${learned.intersect(n4KanjiCatalog.map{it.character}.toSet()).size} / ${n4KanjiCatalog.size} · Mejor prueba: $best/10")
   LazyColumn(verticalArrangement=Arrangement.spacedBy(8.dp),contentPadding=PaddingValues(bottom=12.dp)){
+   if(filtered.isEmpty()) item {
+    Column(Modifier.fillMaxWidth().padding(28.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(10.dp)){
+     androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.SearchOff,contentDescription=null,tint=MaterialTheme.colorScheme.primary)
+     Text("No se encontraron kanji",style=MaterialTheme.typography.titleMedium)
+     Text("Prueba con otro término o limpia la búsqueda.",color=MaterialTheme.colorScheme.onSurfaceVariant)
+     OutlinedButton(onClick={query=""}){Text("Mostrar todos los kanji")}
+    }
+   }
    items(filtered,key={it.character}){e->
     Card(Modifier.fillMaxWidth().clickable{selected=e},shape=RoundedCornerShape(16.dp)){
      Row(Modifier.fillMaxWidth().padding(14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)){
-      Text(e.character,style=MaterialTheme.typography.headlineLarge)
+      Box(Modifier.width(64.dp).heightIn(min=64.dp),contentAlignment=Alignment.Center){Text(e.character,style=MaterialTheme.typography.headlineLarge,maxLines=1)}
       Column(Modifier.weight(1f)){Text(e.meaningEs,style=MaterialTheme.typography.titleMedium);Text(e.vocabulary.first().word+" · "+e.vocabulary.first().reading,color=MaterialTheme.colorScheme.onSurfaceVariant)}
       if(e.character in learned)Text("✓",color=MaterialTheme.colorScheme.primary)
      }
