@@ -215,7 +215,7 @@ internal fun N3KanjiScreen(
         ) {
             if (visibleEntries.isEmpty()) item {
                 Column(Modifier.fillMaxWidth().padding(28.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.SearchOff, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Text("No se encontraron kanji", style = MaterialTheme.typography.titleMedium)
                     Text("Prueba con otro término.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     OutlinedButton(onClick = { query = "" }) { Text("Mostrar todos los kanji") }
