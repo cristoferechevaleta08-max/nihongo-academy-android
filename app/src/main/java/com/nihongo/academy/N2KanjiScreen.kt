@@ -126,7 +126,7 @@ internal fun N2KanjiScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(entry.character, style = MaterialTheme.typography.displayLarge)
+                    Text(entry.character, style = JapaneseGlyphStyle)
                     Text("Selecciona el significado correcto.", style = MaterialTheme.typography.titleMedium)
                 }
             }
@@ -197,7 +197,7 @@ internal fun N2KanjiScreen(
                 Text(
                     entry.character,
                     modifier = Modifier.align(Alignment.Center),
-                    style = MaterialTheme.typography.displayLarge,
+                    style = JapaneseGlyphStyle,
                     color = writingGuideColor
                 )
                 Canvas(Modifier.fillMaxSize()) {
@@ -276,7 +276,7 @@ internal fun N2KanjiScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(entry.character, style = MaterialTheme.typography.displayLarge)
+                    Text(entry.character, style = JapaneseGlyphStyle)
                     Text("¿Qué significa este kanji?", style = MaterialTheme.typography.titleMedium)
                 }
             }
@@ -346,7 +346,7 @@ internal fun N2KanjiScreen(
         ) {
             TextButton(onClick = { selected = null }) { Text("← Biblioteca N2") }
             Text("N2 · Kanji", color = MaterialTheme.colorScheme.primary)
-            Text(entry.character, style = MaterialTheme.typography.displayLarge)
+            Text(entry.character, style = JapaneseGlyphStyle)
             Text(entry.meaningEs, style = MaterialTheme.typography.headlineSmall)
             Text("Trazos: ${entry.strokeCount}")
             N2KanjiStrokeOrder(entry.character, entry.strokeCount)
