@@ -1,5 +1,7 @@
 package com.nihongo.academy
 
+import androidx.compose.material.icons.outlined.Search
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
