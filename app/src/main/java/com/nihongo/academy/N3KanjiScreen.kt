@@ -213,6 +213,14 @@ internal fun N3KanjiScreen(
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            if (visibleEntries.isEmpty()) item {
+                Column(Modifier.fillMaxWidth().padding(28.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Outlined.SearchOff, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    Text("No se encontraron kanji", style = MaterialTheme.typography.titleMedium)
+                    Text("Prueba con otro término.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    OutlinedButton(onClick = { query = "" }) { Text("Mostrar todos los kanji") }
+                }
+            }
             items(visibleEntries, key = { it.character }) { entry ->
                 val isLearned = entry.character in learnedSet
                 Card(
@@ -223,7 +231,7 @@ internal fun N3KanjiScreen(
                         Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(entry.character, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.width(64.dp))
+                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = MaterialTheme.typography.headlineLarge, maxLines = 1) }
                         Column(Modifier.weight(1f)) {
                             Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall)
                             Text("On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
