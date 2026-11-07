@@ -89,8 +89,8 @@ internal fun N5KanjiScreen(
                 Text("Examen N5 completado", style = MaterialTheme.typography.headlineMedium)
                 Text("$examScore / ${examQuestions.size}", style = MaterialTheme.typography.displayMedium)
                 Text(
-                    if (examScore >= 8) "¡Muy buen trabajo! Seguí repasando para consolidar los kanji."
-                    else "Buen intento. Revisá tus errores y volvé a practicar."
+                    if (examScore >= 8) "¡Muy buen trabajo! Sigue repasando para consolidar los kanji."
+                    else "Buen intento. Revisa tus errores y vuelve a practicar."
                 )
                 Text("Mejor resultado: $bestExamScore / 10", color = MaterialTheme.colorScheme.primary)
                 Button(onClick = {
@@ -127,7 +127,7 @@ internal fun N5KanjiScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(entry.character, style = MaterialTheme.typography.displayLarge)
-                    Text("Seleccioná el significado correcto.", style = MaterialTheme.typography.titleMedium)
+                    Text("Selecciona el significado correcto.", style = MaterialTheme.typography.titleMedium)
                 }
             }
             options.forEach { option ->
@@ -175,7 +175,7 @@ internal fun N5KanjiScreen(
             TextButton(onClick = { writingEntry = null }) { Text("← Volver a la ficha") }
             Text("Escritura de kanji N5", color = MaterialTheme.colorScheme.primary)
             Text(entry.character, style = MaterialTheme.typography.headlineMedium)
-            Text("Trazá el carácter siguiendo el modelo.")
+            Text("Traza el carácter siguiendo el modelo.")
             val writingGuideColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.13f)
             val writingStrokeColor = MaterialTheme.colorScheme.primary
             Box(
