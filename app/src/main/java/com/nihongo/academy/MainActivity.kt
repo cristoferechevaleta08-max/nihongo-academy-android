@@ -447,14 +447,20 @@ Column(m.fillMaxSize()){
    BoxCard{
     Text(pair.first+" · "+pair.second,style=MaterialTheme.typography.titleLarge)
     val items=lessons.filter{it.level==pair.first}
+    val completedInLevel=items.count{it.id in done}
+    Text("$completedInLevel / ${items.size} lecciones completadas",style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+    LinearProgressIndicator(progress={if(items.isEmpty())0f else completedInLevel.toFloat()/items.size.toFloat()},modifier=Modifier.fillMaxWidth())
     if(items.isEmpty())Text("Este nivel está previsto en la ruta, pero su catálogo todavía no está publicado.")
-    
-    items.forEach{l->val unlocked=isLessonUnlocked(l.id,done);OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text((if(l.id in done)"✓ " else if(!unlocked)"🔒 " else "")+l.title)}}
+    items.forEach{l->
+     val unlocked=isLessonUnlocked(l.id,done)
+     val stateIcon=when{l.id in done->"✓ ";!unlocked->"🔒 ";else->"▶ "}
+     OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text(stateIcon+l.title)}
+    }
    }
   }
  }else BoxCard{
   Text("Ruta de "+languages.first{it.code==lang}.name,style=MaterialTheme.typography.titleLarge)
-  Text("El catálogo de 15 idiomas está configurado. Esta versión publica únicamente lecciones japonesas; los demás cursos se incorporarán con contenido propio revisado.")
+  Text("El catálogo de 15 idiomas está configurado. Por ahora, solo están publicadas las lecciones de japonés; los demás cursos se incorporarán con contenido revisado.")
  }
  if(mistakes.isNotEmpty())BoxCard{
   Text("Cuaderno de errores",style=MaterialTheme.typography.titleLarge)
