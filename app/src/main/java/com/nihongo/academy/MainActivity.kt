@@ -601,7 +601,7 @@ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),vert
  if(!started)BoxCard{
   Text("Simulacro de práctica",style=MaterialTheme.typography.titleLarge)
   Text(examQuestions.size.toString()+" preguntas · 10 minutos · vocabulario, gramática, lectura y comprensión.")
-  Text("Mejor resultado: "+bestScore+"%")
+  Text("Mejor resultado: "+(bestScore/10)+" / 10 ("+bestScore+"%)")
   Text("Este ejercicio es una práctica breve, no un examen oficial JLPT. Los tiempos y criterios oficiales deben verificarse en jlpt.jp.",color=MaterialTheme.colorScheme.onSurfaceVariant)
   Button(onClick={started=true},modifier=Modifier.fillMaxWidth()){Text("Comenzar examen")}
  }
