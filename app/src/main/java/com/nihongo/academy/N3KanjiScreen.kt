@@ -227,20 +227,26 @@ internal fun N3KanjiScreen(
                 val isLearned = entry.character in learnedSet
                 Card(
                     modifier = Modifier.fillMaxWidth().clickable { selected = entry },
-                    shape = RoundedCornerShape(14.dp)
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
                     Row(
-                        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                        Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Box(Modifier.width(64.dp).heightIn(min = 64.dp), contentAlignment = Alignment.Center) { Text(entry.character, style = JapaneseGlyphStyle, maxLines = 1) }
-                        Column(Modifier.weight(1f)) {
-                            Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall)
-                            Text("On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
-                            Text("Kun: ${entry.kunyomi.joinToString("、") { displayN3KunYomi(it) }.ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall)
+                        Box(Modifier.size(64.dp).background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(16.dp)), contentAlignment = Alignment.Center) {
+                            Text(entry.character, style = JapaneseGlyphStyle, maxLines = 1, color = MaterialTheme.colorScheme.onSecondaryContainer)
+                        }
+                        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                            Text(entry.meaningEs, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurface)
+                            Text("On: ${entry.onyomi.joinToString("、").ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text("Kun: ${entry.kunyomi.joinToString("、") { displayN3KunYomi(it) }.ifBlank { "—" }}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text("${entry.strokeCount} trazos", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        if (isLearned) Text("✓", color = MaterialTheme.colorScheme.primary)
+                        if (isLearned) Text("✓", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleLarge)
                     }
                 }
             }
