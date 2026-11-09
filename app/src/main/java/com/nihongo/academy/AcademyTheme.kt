@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -15,12 +16,13 @@ import androidx.compose.ui.unit.dp
 /** Paisaje japonés monocromático: luna, montañas y pagoda, sin personajes. */
 @Composable
 internal fun AcademyMotif(modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.colorScheme
     Canvas(modifier = modifier.fillMaxWidth().height(144.dp)) {
         val w = size.width
         val h = size.height
-        val ink = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
-        val muted = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
-        val surface = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant
+        val ink = colors.onSurface
+        val muted = colors.onSurfaceVariant
+        val surface = colors.surfaceVariant
 
         // Luna
         drawCircle(
@@ -83,6 +85,7 @@ internal fun AcademyMotif(modifier: Modifier = Modifier) {
 /** Sobre visual de la colección; conserva su presentación sin colores de acento. */
 @Composable
 internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.colorScheme
     Canvas(modifier = modifier.fillMaxWidth().height(126.dp)) {
         val left = size.width * 0.27f
         val top = size.height * 0.10f
