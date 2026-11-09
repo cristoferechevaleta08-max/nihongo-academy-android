@@ -177,7 +177,7 @@ internal fun N4ListeningPractice(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("Comprensión auditiva N4", style = MaterialTheme.typography.headlineMedium)
         Text("Seis diálogos originales de situaciones cotidianas. Escuchá primero, respondé y después revisá el texto y la traducción.", color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Card(Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("Audio sin descargas", style = MaterialTheme.typography.titleMedium)
                 Text(voiceMessage, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -193,7 +193,7 @@ internal fun N4ListeningPractice(modifier: Modifier = Modifier) {
                 Text((if (selectedId == dialogue.id) "● " else "○ ") + dialogue.title)
             }
         }
-        Card(Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(selected.title, style = MaterialTheme.typography.titleLarge)
                 Text(selected.situation, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -218,7 +218,7 @@ internal fun N4ListeningPractice(modifier: Modifier = Modifier) {
                 Text((if (readingIndex == index) "● " else "○ ") + item.title)
             }
         }
-        Card(Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(passage.title, style = MaterialTheme.typography.titleMedium)
                 OutlinedButton(onClick = { showReadingText = !showReadingText }, modifier = Modifier.fillMaxWidth()) { Text(if (showReadingText) "Ocultar lectura" else "Mostrar lectura japonesa") }
@@ -244,7 +244,7 @@ internal fun N4ListeningPractice(modifier: Modifier = Modifier) {
         }
         Text("Comprensión auditiva: preguntas")
         selected.questions.forEachIndexed { index, question ->
-            Card(Modifier.fillMaxWidth()) {
+            Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("${index + 1}. ${question.prompt}", style = MaterialTheme.typography.titleMedium)
                     question.options.forEachIndexed { optionIndex, option ->
