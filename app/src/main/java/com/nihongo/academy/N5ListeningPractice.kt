@@ -140,7 +140,7 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
         }
         Text("Elegí una situación", style = MaterialTheme.typography.titleLarge)
         n5ListeningDialogues.forEach { dialogue ->
-            OutlinedButton(onClick = { selectedId = dialogue.id; answers = emptyMap(); showReading = false; showTranslation = false }, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(onClick = { selectedId = dialogue.id; answers = emptyMap(); showReading = false; showTranslation = false }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.outlinedButtonColors(containerColor = if (selectedId == dialogue.id) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface)) {
                 Text((if (selectedId == dialogue.id) "● " else "○ ") + dialogue.title)
             }
         }
