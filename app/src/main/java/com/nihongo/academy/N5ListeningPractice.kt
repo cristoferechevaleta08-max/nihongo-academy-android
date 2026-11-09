@@ -124,7 +124,7 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         Text("Comprensión auditiva N5", style = MaterialTheme.typography.headlineMedium)
         Text("Diálogos originales de Nihongo Academy. Escuchá primero sin mirar la traducción y después comprobá cuánto entendiste.", color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Card(Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("Audio del dispositivo", style = MaterialTheme.typography.titleMedium)
                 Text(voiceMessage, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -143,7 +143,7 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
                 Text((if (selectedId == dialogue.id) "● " else "○ ") + dialogue.title)
             }
         }
-        Card(Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(selected.title, style = MaterialTheme.typography.titleLarge)
                 Text(selected.situation, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -164,7 +164,7 @@ internal fun N5ListeningPractice(modifier: Modifier = Modifier) {
         }
         Text("Comprobá tu comprensión", style = MaterialTheme.typography.titleLarge)
         selected.questions.forEachIndexed { index, question ->
-            Card(Modifier.fillMaxWidth()) {
+            Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant), elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("${index + 1}. ${question.prompt}", style = MaterialTheme.typography.titleMedium)
                     question.options.forEachIndexed { optionIndex, option ->
