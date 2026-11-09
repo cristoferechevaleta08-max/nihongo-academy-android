@@ -236,8 +236,7 @@ var sessionElapsed by remember{mutableIntStateOf(0)}
 LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed++}}
 var tab by remember{mutableStateOf("Inicio")}
 var studyDestination by remember{mutableStateOf("Lecciones")}
-val scheme=academyColorScheme(dark)
-MaterialTheme(colorScheme=scheme,typography=AcademyTypography,shapes=AcademyShapes){Scaffold(bottomBar={
+NihongoAcademyTheme(darkTheme=dark){Scaffold(bottomBar={
  NavigationBar {
   val destinations=listOf("Inicio","Estudiar","Kanji","Escucha","Perfil")
   destinations.forEach { destination ->
