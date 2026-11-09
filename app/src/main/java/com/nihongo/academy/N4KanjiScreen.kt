@@ -151,7 +151,12 @@ internal fun N4KanjiScreen(dataStore:DataStore<Preferences>,modifier:Modifier=Mo
     Card(Modifier.fillMaxWidth().clickable{selected=e},shape=RoundedCornerShape(20.dp),colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surface),border=androidx.compose.foundation.BorderStroke(1.dp,MaterialTheme.colorScheme.outlineVariant),elevation=CardDefaults.cardElevation(defaultElevation=2.dp)){
      Row(Modifier.fillMaxWidth().padding(14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(14.dp)){
       Box(Modifier.size(64.dp).background(MaterialTheme.colorScheme.secondaryContainer,RoundedCornerShape(16.dp)),contentAlignment=Alignment.Center){Text(e.character,style=MaterialTheme.typography.headlineLarge,maxLines=1,color=MaterialTheme.colorScheme.onSecondaryContainer)}
-      Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)){Text(e.meaningEs,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.onSurface);Text(e.vocabulary.first().word+" · "+e.vocabulary.first().reading,color=MaterialTheme.colorScheme.onSurfaceVariant)}
+      Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)){
+        Text(e.meaningEs,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.onSurface)
+        Text("On: "+e.onyomi.joinToString(" · ").ifBlank{"—"},style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("Kun: "+e.kunyomi.joinToString(" · ").ifBlank{"—"},style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+        Text("${e.strokeCount} trazos · "+e.vocabulary.first().word+" · "+e.vocabulary.first().reading,style=MaterialTheme.typography.labelSmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+       }
       if(e.character in learned)Text("✓",color=MaterialTheme.colorScheme.primary,style=MaterialTheme.typography.titleLarge)
      }
     }
