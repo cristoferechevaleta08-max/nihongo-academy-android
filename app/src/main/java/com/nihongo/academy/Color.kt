@@ -10,7 +10,11 @@ internal object AcademyColors {
     val Gray700 = Color(0xFF525252)
     val Gray500 = Color(0xFF737373)
     val Gray300 = Color(0xFFD4D4D4)
-    val Gray100 = Color(0xFFF5F5F5)
+    val Gray100 = Color(0xFFF3F0F6)
+    val Lavender = Color(0xFFE6E0EA)
+    val Ink = Color(0xFF111111)
+    val InkMuted = Color(0xFF6B6573)
+    val Outline = Color(0xFFD4CEDB)
 }
 
 /** Alias temporales para conservar compatibilidad durante la migración de pantallas. */
