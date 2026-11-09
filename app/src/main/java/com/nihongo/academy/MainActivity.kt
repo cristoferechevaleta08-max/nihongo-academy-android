@@ -220,7 +220,8 @@ private val cards=mapOf("sakura" to ("桜" to "Sakura · flor de cerezo"),"fuji"
 class MainActivity:ComponentActivity(){override fun onCreate(savedInstanceState:Bundle?){super.onCreate(savedInstanceState);setContent{Root()}}}
 @Composable private fun Root(){
 val context=LocalContext.current;val ds=context.store;val scope=rememberCoroutineScope()
-val darkPreference by ds.data.map{it[darkKey]}.collectAsState(initial=null)\nval dark = darkPreference ?: androidx.compose.foundation.isSystemInDarkTheme()
+val darkPreference by ds.data.map{it[darkKey]}.collectAsState(initial=null)
+ val dark = darkPreference ?: androidx.compose.foundation.isSystemInDarkTheme()
 val lang by ds.data.map{it[langKey]?:"ja"}.collectAsState(initial="ja")
 val showRomaji by ds.data.map{it[romajiKey]?:true}.collectAsState(initial=true)
 val name by ds.data.map{it[nameKey]?:"Estudiante"}.collectAsState(initial="Estudiante")
