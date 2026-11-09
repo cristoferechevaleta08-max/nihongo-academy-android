@@ -93,8 +93,8 @@ internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
         val height = size.height * 0.78f
         val right = left + width
         val bottom = top + height
-        val ink = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
-        val surface = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant
+        val ink = colors.onSurface
+        val surface = colors.surfaceVariant
 
         drawRoundRect(
             color = surface,
