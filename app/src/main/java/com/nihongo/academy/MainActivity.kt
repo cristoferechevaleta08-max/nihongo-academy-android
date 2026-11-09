@@ -238,7 +238,7 @@ LaunchedEffect(sessionRunning){while(sessionRunning){delay(1000);sessionElapsed+
 var tab by remember{mutableStateOf("Inicio")}
 var studyDestination by remember{mutableStateOf("Lecciones")}
 NihongoAcademyTheme(darkTheme=dark){Scaffold(bottomBar={
- NavigationBar {
+ NavigationBar(containerColor=MaterialTheme.colorScheme.secondaryContainer,tonalElevation=0.dp) {
   val destinations=listOf("Inicio","Estudiar","Kanji","Escucha","Perfil")
   destinations.forEach { destination ->
    val selected=tab==destination
@@ -256,7 +256,8 @@ NihongoAcademyTheme(darkTheme=dark){Scaffold(bottomBar={
      androidx.compose.material3.Icon(icon,contentDescription=destination)
     },
     label={Text(destination,maxLines=1,softWrap=false,style=MaterialTheme.typography.labelSmall)},
-    alwaysShowLabel=true
+    alwaysShowLabel=true,
+    colors=NavigationBarItemDefaults.colors(selectedIconColor=MaterialTheme.colorScheme.primary,selectedTextColor=MaterialTheme.colorScheme.primary,unselectedIconColor=MaterialTheme.colorScheme.onSurfaceVariant,unselectedTextColor=MaterialTheme.colorScheme.onSurfaceVariant,indicatorColor=MaterialTheme.colorScheme.surface)
    )
   }
  }
@@ -297,7 +298,7 @@ else->Profile(ds,name,lang,Modifier.padding(p))
  val entries=kanaForWeek(week)
  val assessment=weeklyAssessmentForWeek(week)
  val weekDays=when(week){1->n5KanaWeeks.take(7);2->n5KanaWeeks.drop(7).take(7);3,4->grammarDaysForWeek(week);5,6->verbDaysForWeek(week);7,8->adjectiveDaysForWeek(week);9,10->kanjiDaysForWeek(week);11,12->finalPlanDaysForWeek(week);else->emptyList()}
- Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+ Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal=20.dp, vertical=24.dp),verticalArrangement=Arrangement.spacedBy(24.dp)){
   Heading("Plan N5 · 12 semanas","30 minutos diarios · semana actual: $week de 12")
   LinearProgressIndicator(progress={progress.completedWeeks.size/12f},modifier=Modifier.fillMaxWidth())
   BoxCard{
@@ -403,8 +404,22 @@ else->Profile(ds,name,lang,Modifier.padding(p))
   }
  }
 }
-@Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){Card(Modifier.fillMaxWidth(),shape=RoundedCornerShape(20.dp)){Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(10.dp),content=content)}}
-@Composable private fun Heading(a:String,b:String){Text(a,style=MaterialTheme.typography.headlineMedium);Text(b,color=MaterialTheme.colorScheme.onSurfaceVariant)}
+@Composable private fun BoxCard(content:@Composable ColumnScope.()->Unit){
+ Card(
+  modifier=Modifier.fillMaxWidth(),
+  shape=RoundedCornerShape(22.dp),
+  colors=CardDefaults.cardColors(containerColor=MaterialTheme.colorScheme.surface),
+  border=androidx.compose.foundation.BorderStroke(1.dp,MaterialTheme.colorScheme.outline)
+ ){
+  Column(Modifier.padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp),content=content)
+ }
+}
+@Composable private fun Heading(a:String,b:String){
+ Column(verticalArrangement=Arrangement.spacedBy(8.dp)){
+  Text(a,style=MaterialTheme.typography.headlineMedium,color=MaterialTheme.colorScheme.onBackground)
+  Text(b,style=MaterialTheme.typography.bodyMedium,color=MaterialTheme.colorScheme.onSurfaceVariant)
+ }
+}
 @Composable private fun Home(name:String,xp:Int,done:Int,mistakes:Int,ownedCount:Int,dailySeconds:Int,streak:Int,sessionRunning:Boolean,sessionElapsed:Int,startSession:()->Unit,stopSession:()->Unit,study:()->Unit,exam:()->Unit,collection:()->Unit,m:Modifier){
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(16.dp)){
 Text("NIHONGO ACADEMY",color=MaterialTheme.colorScheme.primary);Heading("こんにちは, "+name,"Tu camino para aprender un idioma empieza hoy.")
@@ -447,7 +462,7 @@ Column(m.fillMaxSize()){
   FilterChip(selected=true,onClick={onDestinationChange("Lecciones")},label={Text("Lecciones")})
   FilterChip(selected=false,onClick={onDestinationChange("Plan")},label={Text("Plan")})
  }
- Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
+ Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal=20.dp, vertical=24.dp),verticalArrangement=Arrangement.spacedBy(24.dp)){
  Heading("Tu ruta de estudio","Elige idioma, nivel y lección. Las lecciones publicadas funcionan sin conexión.")
  OutlinedButton(onClick={picker=true},modifier=Modifier.fillMaxWidth()){val l=languages.first{it.code==lang};Text(l.flag+" "+l.name+" · Cambiar idioma")}
  if(picker) AlertDialog(
@@ -650,8 +665,8 @@ val scope=rememberCoroutineScope();val dark by ds.data.map{it[darkKey]?:true}.co
 Column(m.fillMaxSize().verticalScroll(rememberScrollState()).padding(20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)){
 Heading("Perfil y ajustes","Preferencias, privacidad y accesibilidad.")
 BoxCard{Text("Tu perfil",style=MaterialTheme.typography.titleLarge);OutlinedTextField(value=edit,onValueChange={edit=it},label={Text("Nombre visible")},modifier=Modifier.fillMaxWidth());Button(onClick={scope.launch{ds.edit{it[nameKey]=edit.trim().ifBlank{"Estudiante"}}}}){Text("Guardar nombre")};Text("Idioma: "+languages.first{it.code==lang}.name)}
-BoxCard{Text("Apariencia",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(dark)"Tema oscuro" else "Tema claro");Switch(checked=dark,onCheckedChange={v->scope.launch{ds.edit{it[darkKey]=v}}})}}
-BoxCard{Text("Lectura japonesa",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(showRomaji)"Mostrar romaji" else "Mostrar kana");Switch(checked=showRomaji,onCheckedChange={v->scope.launch{ds.edit{it[romajiKey]=v}}})};Text("Alterná entre romaji y kana en el vocabulario de las unidades.")}
+BoxCard{Text("Apariencia",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(dark)"Tema oscuro" else "Tema claro");Switch(checked=dark,onCheckedChange={v->scope.launch{ds.edit{it[darkKey]=v}}},colors=SwitchDefaults.colors(checkedThumbColor=MaterialTheme.colorScheme.surface,checkedTrackColor=MaterialTheme.colorScheme.primary,checkedBorderColor=MaterialTheme.colorScheme.primary,uncheckedThumbColor=MaterialTheme.colorScheme.surface,uncheckedTrackColor=MaterialTheme.colorScheme.outline,uncheckedBorderColor=MaterialTheme.colorScheme.outline))}}
+BoxCard{Text("Lectura japonesa",style=MaterialTheme.typography.titleLarge);Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween){Text(if(showRomaji)"Mostrar romaji" else "Mostrar kana");Switch(checked=showRomaji,onCheckedChange={v->scope.launch{ds.edit{it[romajiKey]=v}}},colors=SwitchDefaults.colors(checkedThumbColor=MaterialTheme.colorScheme.surface,checkedTrackColor=MaterialTheme.colorScheme.primary,checkedBorderColor=MaterialTheme.colorScheme.primary,uncheckedThumbColor=MaterialTheme.colorScheme.surface,uncheckedTrackColor=MaterialTheme.colorScheme.outline,uncheckedBorderColor=MaterialTheme.colorScheme.outline))};Text("Alterná entre romaji y kana en el vocabulario de las unidades.")}
 BoxCard{Text("Privacidad y sincronización",style=MaterialTheme.typography.titleLarge);Text("El progreso se guarda localmente. Las cuentas online y la sincronización entre dispositivos requieren integrar un backend seguro.")}
 BoxCard{Text("Comunidad",style=MaterialTheme.typography.titleLarge);Text("Preguntas, respuestas, votos y moderación necesitan un servicio online. No se muestran publicaciones ficticias.")}
 BoxCard{Text("Pronunciación",style=MaterialTheme.typography.titleLarge);VoicePractice()}
