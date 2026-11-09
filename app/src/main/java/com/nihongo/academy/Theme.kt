@@ -10,7 +10,7 @@ internal fun academyColorScheme(dark: Boolean) = if (dark) {
     darkColorScheme(
         primary = AcademyColors.White,
         onPrimary = AcademyColors.Black,
-        secondary = AcademyColors.Gray300,
+        secondary = AcademyColors.Lavender,
         onSecondary = AcademyColors.Black,
         secondaryContainer = AcademyColors.Gray900,
         onSecondaryContainer = AcademyColors.White,
@@ -19,7 +19,7 @@ internal fun academyColorScheme(dark: Boolean) = if (dark) {
         surface = AcademyColors.Gray900,
         onSurface = AcademyColors.White,
         surfaceVariant = AcademyColors.Gray900,
-        onSurfaceVariant = AcademyColors.Gray300,
+        onSurfaceVariant = AcademyColors.Lavender,
         outline = AcademyColors.Gray700,
         outlineVariant = AcademyColors.Gray900,
         error = AcademyColors.Gray300,
@@ -27,26 +27,23 @@ internal fun academyColorScheme(dark: Boolean) = if (dark) {
     )
 } else {
     lightColorScheme(
-        primary = AcademyColors.Black,
+        primary = AcademyColors.Ink,
         onPrimary = AcademyColors.White,
-        secondary = AcademyColors.Gray700,
-        onSecondary = AcademyColors.White,
+        secondary = AcademyColors.Lavender,
+        onSecondary = AcademyColors.Ink,
         secondaryContainer = AcademyColors.Gray100,
-        onSecondaryContainer = AcademyColors.Black,
+        onSecondaryContainer = AcademyColors.Ink,
         background = AcademyColors.White,
-        onBackground = AcademyColors.Black,
+        onBackground = AcademyColors.Ink,
         surface = AcademyColors.White,
-        onSurface = AcademyColors.Black,
-        surfaceVariant = AcademyColors.Gray100,
-        onSurfaceVariant = AcademyColors.Gray700,
-        outline = AcademyColors.Gray300,
-        outlineVariant = AcademyColors.Gray100,
-        error = AcademyColors.Gray900,
-        onError = AcademyColors.White
+        onSurface = AcademyColors.Ink,
+        surfaceVariant = AcademyColors.Lavender,
+        onSurfaceVariant = AcademyColors.InkMuted,
+        outline = AcademyColors.Outline,
+        outlineVariant = AcademyColors.Lavender
     )
 }
 
-/** Por defecto respeta el tema del sistema; una preferencia guardada puede sobrescribirlo. */
 @Composable
 internal fun NihongoAcademyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
