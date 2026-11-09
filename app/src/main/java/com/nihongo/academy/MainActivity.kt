@@ -485,7 +485,20 @@ Column(m.fillMaxSize()){
     items.forEach{l->
      val unlocked=isLessonUnlocked(l.id,done)
      val stateIcon=when{l.id in done->"✓ ";!unlocked->"🔒 ";else->"▶ "}
-     OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()){Text(stateIcon+l.title)}
+     BoxCard {
+      Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
+       Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(5.dp)) {
+        Text(l.title,style=MaterialTheme.typography.titleMedium,color=MaterialTheme.colorScheme.onSurface)
+        Text("${l.exercises.size} actividades · "+when { l.id in done -> "Completada"; !unlocked -> "Bloqueada"; else -> "Disponible" },
+         style=MaterialTheme.typography.bodySmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
+       }
+       Text(when { l.id in done -> "✓"; !unlocked -> "🔒"; else -> "→" },
+        style=MaterialTheme.typography.titleLarge,color=MaterialTheme.colorScheme.primary)
+      }
+      OutlinedButton(onClick={selected=l},enabled=unlocked,modifier=Modifier.fillMaxWidth()) {
+       Text(when { l.id in done -> "Repasar lección"; !unlocked -> "Completa la anterior"; else -> "Comenzar lección" })
+      }
+     }
     }
    }
   }
