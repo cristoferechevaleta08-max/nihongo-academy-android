@@ -3,121 +3,84 @@ package com.nihongo.academy
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
-import androidx.compose.material3.Typography
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
-/**
- * Ilustración vectorial ligera: zorro con bufanda, Fuji y pagoda.
- * No carga imágenes ni depende de servicios externos.
- */
+/** Paisaje japonés monocromático: luna, montañas y pagoda, sin personajes. */
 @Composable
 internal fun AcademyMotif(modifier: Modifier = Modifier) {
-    Canvas(modifier = modifier.fillMaxWidth().height(112.dp)) {
+    Canvas(modifier = modifier.fillMaxWidth().height(144.dp)) {
         val w = size.width
         val h = size.height
+        val ink = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
+        val muted = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant
+        val surface = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant
 
-        // Monte Fuji
-        val fuji = Path().apply {
-            moveTo(w * 0.28f, h * 0.88f)
-            lineTo(w * 0.48f, h * 0.16f)
-            lineTo(w * 0.68f, h * 0.88f)
+        // Luna
+        drawCircle(
+            brush = Brush.radialGradient(listOf(ink.copy(alpha = 0.16f), ink.copy(alpha = 0.04f))),
+            radius = h * 0.29f,
+            center = Offset(w * 0.72f, h * 0.34f)
+        )
+        drawCircle(color = surface, radius = h * 0.235f, center = Offset(w * 0.72f, h * 0.34f))
+
+        // Montañas en dos planos suaves
+        val distant = Path().apply {
+            moveTo(0f, h * 0.91f)
+            lineTo(w * 0.24f, h * 0.43f)
+            lineTo(w * 0.43f, h * 0.91f)
             close()
         }
-        drawPath(fuji, SakuraNightTokens.SurfaceVariant)
-        val snow = Path().apply {
-            moveTo(w * 0.415f, h * 0.40f)
-            lineTo(w * 0.48f, h * 0.16f)
-            lineTo(w * 0.545f, h * 0.40f)
-            lineTo(w * 0.505f, h * 0.36f)
-            lineTo(w * 0.48f, h * 0.43f)
-            lineTo(w * 0.455f, h * 0.36f)
+        drawPath(distant, muted.copy(alpha = 0.22f))
+        val near = Path().apply {
+            moveTo(w * 0.18f, h)
+            lineTo(w * 0.47f, h * 0.53f)
+            lineTo(w * 0.76f, h)
             close()
         }
-        drawPath(snow, SakuraNightTokens.OnSurface.copy(alpha = 0.92f))
+        drawPath(near, muted.copy(alpha = 0.13f))
 
-        // Pagoda de tres niveles
-        val px = w * 0.82f
-        val roofColor = SakuraNightTokens.PrimaryDeep
-        for (i in 0..2) {
-            val y = h * (0.40f + i * 0.19f)
-            val half = w * (0.105f - i * 0.018f)
+        // Pagoda de tres tejados
+        val px = w * 0.86f
+        for (level in 0..2) {
+            val y = h * (0.49f + level * 0.16f)
+            val half = w * (0.105f - level * 0.017f)
             val roof = Path().apply {
                 moveTo(px - half, y + h * 0.035f)
-                lineTo(px, y - h * 0.045f)
+                lineTo(px, y - h * 0.035f)
                 lineTo(px + half, y + h * 0.035f)
                 lineTo(px + half * 0.78f, y + h * 0.035f)
-                lineTo(px, y + h * 0.005f)
+                lineTo(px, y + h * 0.006f)
                 lineTo(px - half * 0.78f, y + h * 0.035f)
                 close()
             }
-            drawPath(roof, roofColor.copy(alpha = 0.9f - i * 0.12f))
+            drawPath(roof, ink.copy(alpha = 0.88f))
             drawRoundRect(
-                color = SakuraNightTokens.SurfaceElevated,
-                topLeft = Offset(px - half * 0.48f, y + h * 0.035f),
-                size = Size(half * 0.96f, h * 0.12f),
-                cornerRadius = androidx.compose.ui.geometry.CornerRadius(5f, 5f)
+                color = surface,
+                topLeft = Offset(px - half * 0.42f, y + h * 0.04f),
+                size = Size(half * 0.84f, h * 0.105f),
+                cornerRadius = CornerRadius(4.dp.toPx(), 4.dp.toPx())
             )
         }
-        drawLine(roofColor, Offset(px, h * 0.17f), Offset(px, h * 0.30f), strokeWidth = 2.dp.toPx())
+        drawLine(ink, Offset(px, h * 0.20f), Offset(px, h * 0.43f), strokeWidth = 2.dp.toPx())
 
-        // Zorro estilizado a la izquierda
-        val fx = w * 0.14f
-        val fy = h * 0.60f
-        val fox = SakuraNightTokens.FoxFur
-        val ears = Path().apply {
-            moveTo(fx - w * 0.075f, fy - h * 0.02f)
-            lineTo(fx - w * 0.065f, fy - h * 0.34f)
-            lineTo(fx - w * 0.005f, fy - h * 0.12f)
-            lineTo(fx + w * 0.055f, fy - h * 0.34f)
-            lineTo(fx + w * 0.078f, fy - h * 0.02f)
-            close()
-        }
-        drawPath(ears, fox)
-        drawCircle(fox, radius = h * 0.235f, center = Offset(fx, fy))
-        drawCircle(SakuraNightTokens.FoxMuzzle, radius = h * 0.105f, center = Offset(fx, fy + h * 0.075f))
-        drawCircle(SakuraNightTokens.Background, radius = h * 0.018f, center = Offset(fx - w * 0.035f, fy - h * 0.015f))
-        drawCircle(SakuraNightTokens.Background, radius = h * 0.018f, center = Offset(fx + w * 0.035f, fy - h * 0.015f))
-        drawCircle(SakuraNightTokens.Background, radius = h * 0.018f, center = Offset(fx, fy + h * 0.075f))
-        drawLine(
-            SakuraNightTokens.ScarfRed,
-            Offset(fx - w * 0.105f, fy + h * 0.16f),
-            Offset(fx + w * 0.105f, fy + h * 0.16f),
-            strokeWidth = h * 0.075f,
-            cap = androidx.compose.ui.graphics.StrokeCap.Round
-        )
-        drawLine(
-            SakuraNightTokens.ScarfRed,
-            Offset(fx + w * 0.055f, fy + h * 0.16f),
-            Offset(fx + w * 0.095f, fy + h * 0.31f),
-            strokeWidth = h * 0.055f,
-            cap = androidx.compose.ui.graphics.StrokeCap.Round
-        )
-
-        // Pequeños pétalos de sakura, sin competir con el contenido.
-        listOf(Offset(w * 0.22f, h * 0.20f), Offset(w * 0.72f, h * 0.20f), Offset(w * 0.93f, h * 0.13f)).forEach {
-            drawCircle(SakuraNightTokens.Primary.copy(alpha = 0.7f), radius = h * 0.025f, center = it)
+        // Nubes y líneas de viento
+        for (i in 0..2) {
+            val x = w * (0.08f + i * 0.055f)
+            val y = h * (0.23f + i * 0.09f)
+            drawLine(muted.copy(alpha = 0.6f), Offset(x, y), Offset(x + w * 0.13f, y), 1.4.dp.toPx())
+            drawLine(muted.copy(alpha = 0.45f), Offset(x + w * 0.035f, y + h * 0.045f), Offset(x + w * 0.16f, y + h * 0.045f), 1.2.dp.toPx())
         }
     }
 }
 
-/** Sobre ilustrado de la colección; es solo presentación y no altera la recompensa diaria. */
+/** Sobre visual de la colección; conserva su presentación sin colores de acento. */
 @Composable
 internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
     Canvas(modifier = modifier.fillMaxWidth().height(126.dp)) {
@@ -127,16 +90,14 @@ internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
         val height = size.height * 0.78f
         val right = left + width
         val bottom = top + height
+        val ink = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
+        val surface = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant
 
         drawRoundRect(
-            brush = Brush.linearGradient(
-                listOf(SakuraNightTokens.PrimaryDeep, SakuraNightTokens.Primary, SakuraNightTokens.PrimaryLight),
-                start = Offset(left, top),
-                end = Offset(right, bottom)
-            ),
+            color = surface,
             topLeft = Offset(left, top),
             size = Size(width, height),
-            cornerRadius = androidx.compose.ui.geometry.CornerRadius(18.dp.toPx(), 18.dp.toPx())
+            cornerRadius = CornerRadius(18.dp.toPx(), 18.dp.toPx())
         )
         val flap = Path().apply {
             moveTo(left, top + height * 0.08f)
@@ -144,38 +105,9 @@ internal fun AcademyEnvelope(modifier: Modifier = Modifier) {
             lineTo(right, top + height * 0.08f)
             close()
         }
-        drawPath(flap, SakuraNightTokens.PrimaryLight.copy(alpha = 0.9f))
-        drawLine(
-            SakuraNightTokens.White.copy(alpha = 0.55f),
-            Offset(left + width * 0.04f, bottom - height * 0.34f),
-            Offset(left + width * 0.5f, bottom - height * 0.02f),
-            strokeWidth = 1.5.dp.toPx()
-        )
-        drawLine(
-            SakuraNightTokens.White.copy(alpha = 0.55f),
-            Offset(right - width * 0.04f, bottom - height * 0.34f),
-            Offset(left + width * 0.5f, bottom - height * 0.02f),
-            strokeWidth = 1.5.dp.toPx()
-        )
-        drawCircle(
-            color = SakuraNightTokens.ScarfRed,
-            radius = height * 0.105f,
-            center = Offset(left + width * 0.5f, top + height * 0.61f)
-        )
-        drawCircle(
-            color = SakuraNightTokens.White.copy(alpha = 0.85f),
-            radius = height * 0.035f,
-            center = Offset(left + width * 0.5f, top + height * 0.61f)
-        )
-        drawPath(
-            Path().apply {
-                moveTo(left + width * 0.15f, bottom - height * 0.13f)
-                lineTo(left + width * 0.27f, bottom - height * 0.25f)
-                lineTo(left + width * 0.35f, bottom - height * 0.13f)
-                lineTo(left + width * 0.27f, bottom - height * 0.02f)
-                close()
-            },
-            SakuraNightTokens.White.copy(alpha = 0.28f)
-        )
+        drawPath(flap, ink.copy(alpha = 0.12f))
+        drawLine(ink.copy(alpha = 0.5f), Offset(left + width * 0.04f, bottom - height * 0.34f), Offset(left + width * 0.5f, bottom - height * 0.02f), 1.5.dp.toPx())
+        drawLine(ink.copy(alpha = 0.5f), Offset(right - width * 0.04f, bottom - height * 0.34f), Offset(left + width * 0.5f, bottom - height * 0.02f), 1.5.dp.toPx())
+        drawCircle(ink.copy(alpha = 0.7f), height * 0.09f, Offset(left + width * 0.5f, top + height * 0.61f))
     }
 }
